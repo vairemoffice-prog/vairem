@@ -257,6 +257,7 @@ button { font-family: inherit; }
 }
 .hero-ctas {
   display: flex;
+  justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
   padding-top: 32px;
@@ -290,9 +291,9 @@ button { font-family: inherit; }
   z-index: 1;
   padding: 96px 0 64px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
-.hero-copy { max-width: 760px; width: 100%; }
+.hero-copy { max-width: 760px; width: 100%; text-align: center; }
 .hero-copy .eyebrow { padding-bottom: 10cm; }
 
 .hero-stats {
