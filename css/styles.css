@@ -5,36 +5,24 @@
    ========================================================================== */
 
 :root {
-  /* Official closed palette (Vairem Brand Book v2):
-     Vairem 01 — Powder Blue #A8BACB (leading, ~70%, background/space)
-     Vairem 02 — Slate Grey #525A65 (contrast, ~30%, typography/accents)
-     Every other token below is a tint/shade of these two via opacity — no new hues. */
-  --bg: #A8BACB;
+  --bg: #E8F4FC;
   --text: #525A65;
-  --text-hover: #3A414B;
-  --muted: rgba(82, 90, 101, 0.55);
-  --muted-strong: rgba(82, 90, 101, 0.75);
+  --text-hover: #6C7C88;
+  --muted: #93A0A9;
+  --muted-strong: #6C7C88;
 
-  --border: rgba(82, 90, 101, 0.35);
-  --border-light: rgba(82, 90, 101, 0.18);
-  --border-strong: rgba(82, 90, 101, 0.55);
+  --border: #6C7C88;
+  --border-light: #8A93A0;
+  --border-strong: #B9C4CC;
 
-  /* Gentle blue scale — Powder Blue tinted toward white, for soft
-     surfaces/panels that need a lighter touch than the full --bg. */
-  --blue-pale-100: #F4F6F8;
-  --blue-pale-200: #E7ECF0;
-  --blue-pale-300: #D3DCE3;
-  --blue-pale-400: #BEC9D4;
-  --blue-pale-500: #A8BACB;
-
-  --row-bg: rgba(82, 90, 101, 0.06);
-  --row-hover: rgba(82, 90, 101, 0.14);
+  --row-bg: #F4F7F8;
+  --row-hover: #D8DBDE;
 
   --dark: #525A65;
-  --dark-hover: #3A414B;
+  --dark-hover: #5E6773;
 
-  --header-bg: rgba(168, 186, 203, 0.85);
-  --scrim-bg: rgba(82, 90, 101, 0.45);
+  --header-bg: rgba(232, 244, 252, 0.15);
+  --scrim-bg: rgba(38, 45, 51, 0.32);
 
   --green-accent: #7C9B84;
   --green-accent-hover: #9DBAA4;
@@ -84,14 +72,6 @@
   --newsletter-border: #C3CBD1;
   --newsletter-copy: #4A525C;
   --newsletter-panel-bg: #DDE3E7;
-
-  /* Gentle blue scale, dark-mode variant — Powder Blue tinted toward the
-     night background instead of white, keeping the same 5-step feel. */
-  --blue-pale-100: #383F49;
-  --blue-pale-200: #444C57;
-  --blue-pale-300: #5D6874;
-  --blue-pale-400: #7C8A98;
-  --blue-pale-500: #A8BACB;
 }
 
 * { box-sizing: border-box; }
@@ -344,7 +324,7 @@ button { font-family: inherit; }
   padding: 16px 14px;
   display: block;
 }
-.hero-strip-cell:hover { background: var(--blue-pale-300); }
+.hero-strip-cell:hover { background: #6FA8DC; }
 .hero-strip-cell .cell-nr { font-size: 10px; letter-spacing: 0.16em; color: var(--muted); }
 .hero-strip-cell .cell-formula { font-size: 12px; color: var(--muted-strong); padding-top: 10px; }
 .hero-strip-cell .cell-name { font-size: 14px; padding-top: 4px; letter-spacing: -0.01em; color: var(--text); }
@@ -371,7 +351,7 @@ button { font-family: inherit; }
   grid-template-columns: 52px minmax(120px, 1.1fr) 96px 64px minmax(160px, 1.6fr) 110px 52px 86px 96px;
 }
 .index-row--head {
-  background: var(--row-bg);
+  background: #E6F2FB;
   border-bottom: 1px solid var(--border);
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -384,7 +364,7 @@ button { font-family: inherit; }
   border-bottom: 1px solid var(--border-light);
   background: var(--bg);
 }
-.index-row--body:hover { background: var(--row-hover); }
+.index-row--body:hover { background: #9FB3C4; }
 .index-row--body > div { padding: 14px; }
 .cell-nr { font-size: 11px; color: var(--muted); }
 .cell-name { font-size: 16px; letter-spacing: -0.01em; }
@@ -423,7 +403,7 @@ button { font-family: inherit; }
   gap: 20px;
   flex-wrap: wrap;
   padding: 14px;
-  background: var(--row-bg);
+  background: #E6F2FB;
   font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--muted);
