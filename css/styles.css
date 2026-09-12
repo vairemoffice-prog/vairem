@@ -249,7 +249,7 @@ button { font-family: inherit; }
   text-wrap: balance;
 }
 .hero-lede {
-  margin: 10cm 0 0;
+  margin: 10cm auto 0;
   max-width: 44ch;
   font-size: 16px;
   line-height: 1.6;
