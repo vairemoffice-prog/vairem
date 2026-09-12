@@ -5,24 +5,28 @@
    ========================================================================== */
 
 :root {
-  --bg: #E8F4FC;
+  /* Official closed palette (Vairem Brand Book v2):
+     Vairem 01 — Powder Blue #A8BACB (leading, ~70%, background/space)
+     Vairem 02 — Slate Grey #525A65 (contrast, ~30%, typography/accents)
+     Every other token below is a tint/shade of these two via opacity — no new hues. */
+  --bg: #A8BACB;
   --text: #525A65;
-  --text-hover: #6C7C88;
-  --muted: #93A0A9;
-  --muted-strong: #6C7C88;
+  --text-hover: #3A414B;
+  --muted: rgba(82, 90, 101, 0.55);
+  --muted-strong: rgba(82, 90, 101, 0.75);
 
-  --border: #6C7C88;
-  --border-light: #8A93A0;
-  --border-strong: #B9C4CC;
+  --border: rgba(82, 90, 101, 0.35);
+  --border-light: rgba(82, 90, 101, 0.18);
+  --border-strong: rgba(82, 90, 101, 0.55);
 
-  --row-bg: #F4F7F8;
-  --row-hover: #D8DBDE;
+  --row-bg: rgba(82, 90, 101, 0.06);
+  --row-hover: rgba(82, 90, 101, 0.14);
 
   --dark: #525A65;
-  --dark-hover: #5E6773;
+  --dark-hover: #3A414B;
 
-  --header-bg: rgba(232, 244, 252, 0.15);
-  --scrim-bg: rgba(38, 45, 51, 0.32);
+  --header-bg: rgba(168, 186, 203, 0.85);
+  --scrim-bg: rgba(82, 90, 101, 0.45);
 
   --green-accent: #7C9B84;
   --green-accent-hover: #9DBAA4;
@@ -324,7 +328,7 @@ button { font-family: inherit; }
   padding: 16px 14px;
   display: block;
 }
-.hero-strip-cell:hover { background: #6FA8DC; }
+.hero-strip-cell:hover { background: var(--row-hover); }
 .hero-strip-cell .cell-nr { font-size: 10px; letter-spacing: 0.16em; color: var(--muted); }
 .hero-strip-cell .cell-formula { font-size: 12px; color: var(--muted-strong); padding-top: 10px; }
 .hero-strip-cell .cell-name { font-size: 14px; padding-top: 4px; letter-spacing: -0.01em; color: var(--text); }
@@ -351,7 +355,7 @@ button { font-family: inherit; }
   grid-template-columns: 52px minmax(120px, 1.1fr) 96px 64px minmax(160px, 1.6fr) 110px 52px 86px 96px;
 }
 .index-row--head {
-  background: #E6F2FB;
+  background: var(--row-bg);
   border-bottom: 1px solid var(--border);
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -364,7 +368,7 @@ button { font-family: inherit; }
   border-bottom: 1px solid var(--border-light);
   background: var(--bg);
 }
-.index-row--body:hover { background: #9FB3C4; }
+.index-row--body:hover { background: var(--row-hover); }
 .index-row--body > div { padding: 14px; }
 .cell-nr { font-size: 11px; color: var(--muted); }
 .cell-name { font-size: 16px; letter-spacing: -0.01em; }
@@ -403,7 +407,7 @@ button { font-family: inherit; }
   gap: 20px;
   flex-wrap: wrap;
   padding: 14px;
-  background: #E6F2FB;
+  background: var(--row-bg);
   font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--muted);
