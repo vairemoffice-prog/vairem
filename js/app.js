@@ -573,10 +573,7 @@
   const revealObserver = ('IntersectionObserver' in window)
     ? new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
     : null;
@@ -591,7 +588,8 @@
         groupIndex.set(parent, n + 1);
         el.style.transitionDelay = Math.min(n * 70, 420) + 'ms';
       }
-      if (!el.classList.contains('is-visible')) {
+      if (!el.dataset.revealObserved) {
+        el.dataset.revealObserved = '1';
         if (revealObserver) revealObserver.observe(el);
         else el.classList.add('is-visible');
       }
