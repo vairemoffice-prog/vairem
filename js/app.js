@@ -578,16 +578,68 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
     : null;
 
+  // Splits an element's own text (plain text + <br> only) into per-letter
+  // spans so it can dissolve in/out letter by letter. Elements that contain
+  // other markup (buttons, images, nested tags) are left untouched and fall
+  // back to the whole-block fade instead.
+  function wrapChars(el) {
+    const nodes = Array.from(el.childNodes);
+    const isLeaf = nodes.length > 0 && nodes.every(n =>
+      n.nodeType === Node.TEXT_NODE || (n.nodeType === Node.ELEMENT_NODE && n.tagName === 'BR')
+    );
+    if (!isLeaf) return false;
+
+    let i = 0;
+    const frag = document.createDocumentFragment();
+    nodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        frag.appendChild(document.createElement('br'));
+        return;
+      }
+      node.textContent.split(/(\s+)/).forEach(chunk => {
+        if (chunk === '') return;
+        if (/^\s+$/.test(chunk)) {
+          frag.appendChild(document.createTextNode(chunk));
+          return;
+        }
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'word';
+        Array.from(chunk).forEach(ch => {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'char';
+          charSpan.style.setProperty('--i', i++);
+          charSpan.textContent = ch;
+          wordSpan.appendChild(charSpan);
+        });
+        frag.appendChild(wordSpan);
+      });
+    });
+    el.innerHTML = '';
+    el.appendChild(frag);
+    return true;
+  }
+
   function applyReveal(root = document) {
     const groupIndex = new Map();
     root.querySelectorAll(REVEAL_SELECTOR).forEach(el => {
-      if (!el.classList.contains('reveal')) {
-        el.classList.add('reveal');
-        const parent = el.parentElement;
-        const n = groupIndex.get(parent) || 0;
-        groupIndex.set(parent, n + 1);
-        el.style.transitionDelay = Math.min(n * 70, 420) + 'ms';
+      if (!el.dataset.revealMode) {
+        const isChars = wrapChars(el);
+        el.dataset.revealMode = isChars ? 'chars' : 'block';
+        el.classList.add(isChars ? 'reveal-chars' : 'reveal');
+      } else if (el.dataset.revealMode === 'chars') {
+        wrapChars(el);
       }
+
+      const parent = el.parentElement;
+      const n = groupIndex.get(parent) || 0;
+      groupIndex.set(parent, n + 1);
+      const delay = Math.min(n * 70, 420);
+      if (el.dataset.revealMode === 'chars') {
+        el.style.setProperty('--group-delay', delay + 'ms');
+      } else {
+        el.style.transitionDelay = delay + 'ms';
+      }
+
       if (!el.dataset.revealObserved) {
         el.dataset.revealObserved = '1';
         if (revealObserver) revealObserver.observe(el);

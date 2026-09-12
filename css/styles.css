@@ -808,8 +808,29 @@ button { font-family: inherit; }
   transform: none;
 }
 
+.reveal-chars .word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.reveal-chars .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 18ms));
+}
+.reveal-chars.is-visible .char {
+  opacity: 1;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .reveal-chars .char {
     transition: none;
     opacity: 1;
     transform: none;
