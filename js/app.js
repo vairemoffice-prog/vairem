@@ -429,8 +429,8 @@
 
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const COUNT = 420;
-    const REPEL_RADIUS = 42;
-    const REPEL_STRENGTH = 1300;
+    const REPEL_RADIUS = 100;
+    const REPEL_STRENGTH = 3200;
     const FRICTION = 0.95;
     const DRIFT = 0.3;
 
