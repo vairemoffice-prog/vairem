@@ -139,7 +139,7 @@ button { font-family: inherit; }
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 24px;
-  height: 56px;
+  height: 96px;
 }
 
 .brand { display: flex; align-items: baseline; gap: 10px; }
