@@ -350,7 +350,7 @@ button { font-family: inherit; }
   grid-template-columns: 52px minmax(120px, 1.1fr) 96px 64px minmax(160px, 1.6fr) 110px 52px 86px 96px;
 }
 .index-row--head {
-  background: #A8AFB6;
+  background: #9FB3C4;
   border-bottom: 1px solid var(--border);
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -402,7 +402,7 @@ button { font-family: inherit; }
   gap: 20px;
   flex-wrap: wrap;
   padding: 14px;
-  background: #A8AFB6;
+  background: #9FB3C4;
   font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--muted);
