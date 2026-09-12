@@ -820,8 +820,8 @@ button { font-family: inherit; }
   transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 12ms));
 }
 .hero-title.reveal-chars .char {
-  transition: opacity 1.2s ease, transform 1.2s ease;
-  transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 150ms));
+  transition: opacity 2s ease, transform 2s ease;
+  transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 300ms));
 }
 .reveal-chars.is-visible .char {
   opacity: 1;
