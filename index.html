@@ -56,17 +56,8 @@
       <canvas id="molecule-canvas" class="molecule-canvas"></canvas>
     </div>
 
-    <div class="hero-tabbar mono">
-      <span data-i18n="tabbar.label">WARIANT HERO</span>
-      <div class="tabs" id="hero-tabs">
-        <button type="button" class="tab-btn" data-variant="1">01 · DATASHEET</button>
-        <button type="button" class="tab-btn" data-variant="2"><span data-i18n="tab.tablica">02 · TABLICA</span></button>
-        <button type="button" class="tab-btn" data-variant="3"><span data-i18n="tab.wykres">03 · WYKRES</span></button>
-      </div>
-    </div>
-
     <!-- HERO 01 — DATASHEET -->
-    <section class="hero hero-datasheet" id="hero-1" data-hero="1">
+    <section class="hero hero-datasheet" id="hero-1">
       <div class="hero-top">
         <div class="hero-copy">
           <div class="eyebrow mono" data-i18n="hero1.eyebrow">MOLEKULARNY ZAPACH DO WNĘTRZ · SIEDEM ZWIĄZKÓW</div>
@@ -87,49 +78,6 @@
       <div class="hero-strip" id="hero-datasheet-rows"></div>
     </section>
   </div>
-
-  <!-- HERO 02 — TABLICA -->
-  <section class="hero hero-tablica" id="hero-2" data-hero="2">
-    <div class="tablica-grid" id="hero-tablica-grid">
-      <div class="tablica-intro">
-        <div class="eyebrow mono" data-i18n="hero2.eyebrow">TABLICA ZWIĄZKÓW · 01—07</div>
-        <h1 class="hero-title hero-title--tablica" data-i18n="hero2.title">Siedem cząsteczek. Żadnych kompozycji.</h1>
-        <p class="hero-lede hero-lede--tablica" data-i18n="hero2.lede">Wybierasz związek, nie perfumę. Każde naczynie zawiera jedną molekułę, nazwaną na etykiecie wraz ze wzorem.</p>
-        <a href="#indeks" class="btn btn-dark mono" data-i18n="cta.pelny_indeks">PEŁNY INDEKS →</a>
-      </div>
-      <!-- 7 compound tiles injected here by JS -->
-      <div class="tablica-upcoming">
-        <div class="upcoming-range mono">08 — 12</div>
-        <div class="upcoming-copy" data-i18n-html="upcoming.copy">W badaniu.<br>Cztery razy w roku.</div>
-        <a href="#list" class="upcoming-link mono" data-i18n="cta.zapisz">ZAPISZ SIĘ →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- HERO 03 — WYKRES -->
-  <section class="hero hero-wykres" id="hero-3" data-hero="3">
-    <div class="eyebrow mono" data-i18n="hero3.eyebrow">KRZYWA UWALNIANIA · POMIAR WŁASNY · 40 M²</div>
-    <div class="wykres-grid">
-      <div>
-        <h1 class="hero-title hero-title--wykres" data-i18n-html="hero3.title">Zapach jako<br>funkcja czasu.</h1>
-        <p class="hero-lede hero-lede--wykres" data-i18n="hero3.lede">Dyfuzja pasywna w temperaturze pomieszczenia. Molekuła opuszcza nośnik w tempie, jakiego żąda wnętrze — cieplejsze pomieszczenia czytają po prostu głośniej.</p>
-        <div class="hero-ctas">
-          <a href="#indeks" class="btn btn-dark mono" data-i18n="cta.wybierz">WYBIERZ ZWIĄZEK →</a>
-          <a href="#metoda" class="btn btn-outline mono" data-i18n="cta.metoda">METODA</a>
-        </div>
-      </div>
-      <div class="wykres-panel">
-        <div class="wykres-panel-head mono"><span data-i18n="wykres.intensywnosc">INTENSYWNOŚĆ / TYDZIEŃ</span><span>01 ISO E SUPER</span></div>
-        <div class="wykres-bars" id="wykres-bars"></div>
-        <div class="wykres-labels mono" id="wykres-labels"></div>
-        <div class="wykres-metrics">
-          <div><div class="metric-label mono" data-i18n="metric.prog">PRÓG</div><div class="metric-value">0,4 ppb</div></div>
-          <div><div class="metric-label mono" data-i18n="metric.zasieg">ZASIĘG</div><div class="metric-value">40 m²</div></div>
-          <div><div class="metric-label mono" data-i18n="metric.cena">CENA</div><div class="metric-value">275 zł</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- INDEKS -->
   <section id="indeks" class="section-indeks">
