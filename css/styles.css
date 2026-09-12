@@ -1,7 +1,7 @@
 /* ==========================================================================
    VAIREM — molekularny zapach do wnętrz
    Static implementation of the "laboratoryjny arkusz danych" design
-   (Cabinet Grotesk + IBM Plex Mono, hairline grids, same palette).
+   (Cabinet Grotesk + Martian Mono, hairline grids, same palette).
    ========================================================================== */
 
 :root {
@@ -90,11 +90,11 @@ body {
 
 a { color: var(--text); text-decoration: none; }
 a:hover { color: var(--text-hover); }
-input { font-family: 'IBM Plex Mono', monospace; }
+input { font-family: 'Martian Mono', monospace; }
 button { font-family: inherit; }
 ::selection { background: var(--blue-panel); }
 
-.mono { font-family: 'IBM Plex Mono', monospace; }
+.mono { font-family: 'Martian Mono', monospace; }
 
 .wrap {
   max-width: 1280px;
@@ -253,7 +253,7 @@ button { font-family: inherit; }
 
 .tab-btn {
   cursor: pointer;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Martian Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.14em;
   padding: 6px 10px;
