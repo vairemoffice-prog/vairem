@@ -293,7 +293,7 @@ button { font-family: inherit; }
   justify-content: flex-end;
 }
 .hero-copy { max-width: 760px; width: 100%; }
-.hero-copy .eyebrow { padding-bottom: 26px; }
+.hero-copy .eyebrow { padding-bottom: 10cm; }
 
 .hero-stats {
   display: grid;
