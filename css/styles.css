@@ -816,8 +816,8 @@ button { font-family: inherit; }
   display: inline-block;
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 18ms));
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 8ms));
 }
 .reveal-chars.is-visible .char {
   opacity: 1;

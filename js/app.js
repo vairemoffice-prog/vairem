@@ -633,7 +633,7 @@
       const parent = el.parentElement;
       const n = groupIndex.get(parent) || 0;
       groupIndex.set(parent, n + 1);
-      const delay = Math.min(n * 70, 420);
+      const delay = Math.min(n * 40, 240);
       if (el.dataset.revealMode === 'chars') {
         el.style.setProperty('--group-delay', delay + 'ms');
       } else {
