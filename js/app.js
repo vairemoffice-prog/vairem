@@ -11,8 +11,6 @@
     { nr: '07', name: 'Timbersilk', formula: 'C16H26O', mw: '234,4', weeks: 12, price: 249, intensity: 42 }
   ];
 
-  const CURVE = [38, 62, 84, 96, 100, 97, 92, 84, 73, 60, 44, 26];
-
   const productByNr = nr => PRODUCTS.find(p => p.nr === nr);
 
   // ---------- i18n ----------
@@ -556,12 +554,9 @@
 
   const REVEAL_SELECTOR = [
     '.brand', '.main-nav a', '.cart-btn',
-    '.hero-tabbar > span', '.tab-btn',
     '.eyebrow', '.hero-title', '.hero-lede', '.hero-ctas',
     '.section-title', '.karta-title', '.list-title',
     '.stat', '.hero-strip-cell',
-    '.tablica-tile', '.tablica-upcoming',
-    '.wykres-panel-head', '.wykres-metrics > div',
     '.section-note', '.index-row--body', '.index-foot > span',
     '.karta-image-tag', '.karta-brand', '.karta-name', '.karta-thumb',
     '.karta-lede', '.spec', '.buy-box', '.karta-badges',
@@ -600,7 +595,6 @@
   }
 
   const state = {
-    heroVariant: 1,
     cart: [{ nr: '01', qty: 1 }],
     cartOpen: false,
     heroQty: 1,
@@ -618,34 +612,6 @@
         <div class="cell-name">${p.name}</div>
       </a>
     `).join('');
-  }
-
-  function renderTablicaTiles() {
-    const grid = document.getElementById('hero-tablica-grid');
-    const upcoming = grid.querySelector('.tablica-upcoming');
-    const frag = document.createDocumentFragment();
-    PRODUCTS.forEach(p => {
-      const a = document.createElement('a');
-      a.href = '#karta';
-      a.className = 'tablica-tile';
-      a.innerHTML = `
-        <div class="tablica-tile-head mono"><span>${p.nr}</span><span>${p.mw}</span></div>
-        <div class="tablica-tile-formula mono">${p.formula}</div>
-        <div class="tablica-tile-name">${p.name}</div>
-        <div class="tablica-tile-meta mono">${p.price} zł · ${p.weeks} ${t('tile.weeks_suffix')}</div>
-      `;
-      frag.appendChild(a);
-    });
-    grid.insertBefore(frag, upcoming);
-  }
-
-  function renderWykres() {
-    const bars = document.getElementById('wykres-bars');
-    const labels = document.getElementById('wykres-labels');
-    bars.innerHTML = CURVE.map(v => `
-      <div class="wykres-bar-col"><div class="wykres-bar" style="height:${v}%"></div></div>
-    `).join('');
-    labels.innerHTML = CURVE.map((_, i) => `<span>${String(i + 1).padStart(2, '0')}</span>`).join('');
   }
 
   function renderIndexRows() {
@@ -684,18 +650,6 @@
     document.querySelectorAll('.intensity-fill').forEach(el => {
       if (intensityObserver) intensityObserver.observe(el);
       else el.style.width = el.dataset.width;
-    });
-  }
-
-  // ---------- hero variant tabs ----------
-
-  function setHeroVariant(v) {
-    state.heroVariant = v;
-    document.querySelectorAll('.hero[data-hero]').forEach(section => {
-      section.hidden = Number(section.dataset.hero) !== v;
-    });
-    document.querySelectorAll('.tab-btn[data-variant]').forEach(btn => {
-      btn.classList.toggle('is-active', Number(btn.dataset.variant) === v);
     });
   }
 
@@ -825,7 +779,6 @@
   }
 
   function refreshDynamicContent() {
-    renderTablicaTiles();
     renderIndexRows();
     renderCart();
     applyReveal();
@@ -920,10 +873,7 @@
 
   function init() {
     renderHeroDatasheetRows();
-    renderTablicaTiles();
-    renderWykres();
     renderIndexRows();
-    setHeroVariant(state.heroVariant);
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -931,12 +881,6 @@
     initThemeToggle();
     initLangSwitcher();
     initCookieBanner();
-
-    document.getElementById('hero-tabs').addEventListener('click', e => {
-      const btn = e.target.closest('.tab-btn');
-      if (!btn) return;
-      setHeroVariant(Number(btn.dataset.variant));
-    });
 
     document.getElementById('index-rows').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');
