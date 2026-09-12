@@ -19,6 +19,14 @@
   --border-light: rgba(82, 90, 101, 0.18);
   --border-strong: rgba(82, 90, 101, 0.55);
 
+  /* Gentle blue scale — Powder Blue tinted toward white, for soft
+     surfaces/panels that need a lighter touch than the full --bg. */
+  --blue-pale-100: #F4F6F8;
+  --blue-pale-200: #E7ECF0;
+  --blue-pale-300: #D3DCE3;
+  --blue-pale-400: #BEC9D4;
+  --blue-pale-500: #A8BACB;
+
   --row-bg: rgba(82, 90, 101, 0.06);
   --row-hover: rgba(82, 90, 101, 0.14);
 
@@ -76,6 +84,14 @@
   --newsletter-border: #C3CBD1;
   --newsletter-copy: #4A525C;
   --newsletter-panel-bg: #DDE3E7;
+
+  /* Gentle blue scale, dark-mode variant — Powder Blue tinted toward the
+     night background instead of white, keeping the same 5-step feel. */
+  --blue-pale-100: #383F49;
+  --blue-pale-200: #444C57;
+  --blue-pale-300: #5D6874;
+  --blue-pale-400: #7C8A98;
+  --blue-pale-500: #A8BACB;
 }
 
 * { box-sizing: border-box; }
