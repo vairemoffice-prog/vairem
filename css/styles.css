@@ -631,6 +631,7 @@ button { font-family: inherit; }
 .footer-bottom {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 20px;
   flex-wrap: wrap;
   border-top: 1px solid var(--border);
@@ -639,6 +640,21 @@ button { font-family: inherit; }
   font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--muted);
+}
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.footer-social a {
+  display: flex;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+.footer-social a:hover { color: var(--text); }
+.footer-social svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* ---------- cart drawer ---------- */
