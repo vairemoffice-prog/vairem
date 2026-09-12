@@ -1,0 +1,977 @@
+(() => {
+  'use strict';
+
+  const PRODUCTS = [
+    { nr: '01', name: 'Iso E Super', formula: 'C16H26O', mw: '234,4', weeks: 12, price: 275, intensity: 34 },
+    { nr: '02', name: 'Ambroxan', formula: 'C16H28O', mw: '236,4', weeks: 12, price: 295, intensity: 56 },
+    { nr: '03', name: 'Cashmeran', formula: 'C14H22O', mw: '206,3', weeks: 10, price: 269, intensity: 72 },
+    { nr: '04', name: 'Cedramber', formula: 'C17H28O', mw: '248,4', weeks: 12, price: 285, intensity: 48 },
+    { nr: '05', name: 'Javanol', formula: 'C16H28O', mw: '236,4', weeks: 10, price: 335, intensity: 88 },
+    { nr: '06', name: 'Ambrocenide', formula: 'C15H24O', mw: '220,4', weeks: 14, price: 309, intensity: 64 },
+    { nr: '07', name: 'Timbersilk', formula: 'C16H26O', mw: '234,4', weeks: 12, price: 249, intensity: 42 }
+  ];
+
+  const CURVE = [38, 62, 84, 96, 100, 97, 92, 84, 73, 60, 44, 26];
+
+  const productByNr = nr => PRODUCTS.find(p => p.nr === nr);
+
+  // ---------- i18n ----------
+
+  const CHARACTER_I18N = {
+    pl: {
+      '01': 'Suchy cedr na granicy percepcji',
+      '02': 'Mineralny, lekko słony, twarde powierzchnie',
+      '03': 'Ciepła wełna, wióry z ołówka, blisko',
+      '04': 'Ciepły papier, zaplecze księgarni',
+      '05': 'Kremowe drzewo sandałowe, mleko, skóra',
+      '06': 'Glina, suszona figa, słońce na tynku',
+      '07': 'Cięta sosna, zimny warsztat, czysto'
+    },
+    en: {
+      '01': 'Dry cedar at the edge of perception',
+      '02': 'Mineral, faintly salty, hard surfaces',
+      '03': 'Warm wool, pencil shavings, close',
+      '04': 'Warm paper, back of a bookshop',
+      '05': 'Creamy sandalwood, milk, skin',
+      '06': 'Clay, dried fig, sun on plaster',
+      '07': 'Cut pine, cold workshop, clean'
+    },
+    es: {
+      '01': 'Cedro seco en el límite de la percepción',
+      '02': 'Mineral, ligeramente salado, superficies duras',
+      '03': 'Lana cálida, virutas de lápiz, cercano',
+      '04': 'Papel cálido, trastienda de librería',
+      '05': 'Sándalo cremoso, leche, piel',
+      '06': 'Arcilla, higo seco, sol sobre el yeso',
+      '07': 'Pino cortado, taller frío, limpio'
+    },
+    uk: {
+      '01': 'Сухий кедр на межі сприйняття',
+      '02': 'Мінеральний, злегка солоний, тверді поверхні',
+      '03': 'Тепла вовна, стружка від олівця, близько',
+      '04': 'Теплий папір, підсобка книгарні',
+      '05': 'Кремове сандалове дерево, молоко, шкіра',
+      '06': 'Глина, сушений інжир, сонце на тиньку',
+      '07': 'Зрізана сосна, холодна майстерня, чисто'
+    },
+    fr: {
+      '01': 'Cèdre sec à la limite de la perception',
+      '02': 'Minéral, légèrement salé, surfaces dures',
+      '03': 'Laine chaude, copeaux de crayon, proche',
+      '04': 'Papier chaud, arrière-boutique de librairie',
+      '05': 'Bois de santal crémeux, lait, peau',
+      '06': 'Argile, figue séchée, soleil sur le plâtre',
+      '07': 'Pin coupé, atelier froid, propre'
+    }
+  };
+
+  const I18N = {
+    pl: {
+      'nav.indeks': 'INDEKS', 'nav.metoda': 'METODA', 'nav.list': 'LIST',
+      'theme.day': 'DZIEŃ', 'theme.night': 'NOC', 'cart.label': 'KOSZYK',
+      'tabbar.label': 'WARIANT HERO', 'tab.tablica': '02 · TABLICA', 'tab.wykres': '03 · WYKRES',
+      'hero1.eyebrow': 'MOLEKULARNY ZAPACH DO WNĘTRZ · SIEDEM ZWIĄZKÓW',
+      'hero1.title': 'Powietrze,<br>opisane<br>precyzyjnie.',
+      'hero1.lede': 'Jedna molekuła zapachowa naraz, nierozcieńczona opowieścią. Bez nuty głowy, bez wytrącania, bez ogrodu w Grasse — jeden związek uwalniany pasywnie przez dwanaście tygodni.',
+      'cta.wybierz': 'WYBIERZ ZWIĄZEK →', 'cta.metoda_dyfuzji': 'METODA DYFUZJI',
+      'stat.zwiazkow': 'ZWIĄZKÓW W INDEKSIE', 'stat.stezenie': 'STĘŻENIE', 'stat.pojemnosc': 'POJEMNOŚĆ',
+      'stat.czas': 'CZAS TRWANIA', 'stat.czas_value': '10–14 tyg.',
+      'hero2.eyebrow': 'TABLICA ZWIĄZKÓW · 01—07',
+      'hero2.title': 'Siedem cząsteczek. Żadnych kompozycji.',
+      'hero2.lede': 'Wybierasz związek, nie perfumę. Każde naczynie zawiera jedną molekułę, nazwaną na etykiecie wraz ze wzorem.',
+      'cta.pelny_indeks': 'PEŁNY INDEKS →', 'upcoming.copy': 'W badaniu.<br>Cztery razy w roku.', 'cta.zapisz': 'ZAPISZ SIĘ →',
+      'hero3.eyebrow': 'KRZYWA UWALNIANIA · POMIAR WŁASNY · 40 M²',
+      'hero3.title': 'Zapach jako<br>funkcja czasu.',
+      'hero3.lede': 'Dyfuzja pasywna w temperaturze pomieszczenia. Molekuła opuszcza nośnik w tempie, jakiego żąda wnętrze — cieplejsze pomieszczenia czytają po prostu głośniej.',
+      'cta.metoda': 'METODA', 'wykres.intensywnosc': 'INTENSYWNOŚĆ / TYDZIEŃ',
+      'metric.prog': 'PRÓG', 'metric.zasieg': 'ZASIĘG', 'metric.cena': 'CENA',
+      'indeks.title': 'Indeks', 'indeks.note': 'SIEDEM ZWIĄZKÓW · PO 200 ML · CENA ZA NACZYNIE',
+      'th.nr': 'NR', 'th.zwiazek': 'ZWIĄZEK', 'th.wzor': 'WZÓR', 'th.mw': 'M [G/MOL]',
+      'th.charakter': 'CHARAKTER', 'th.intensywnosc': 'INTENSYWNOŚĆ', 'th.tyg': 'TYG.', 'th.cena': 'CENA',
+      'index.foot1': 'INTENSYWNOŚĆ MIERZONA PRZY 0,8% W NEUTRALNYM NOŚNIKU, 22 °C',
+      'index.foot2': 'DOSTAWA 3–5 DNI · PL / EU',
+      'karta.image_tag': 'ZDJĘCIE PRODUKTU — NACZYNIE, 4:5',
+      'karta.thumb.etykieta': 'ETYKIETA', 'karta.thumb.nosnik': 'NOŚNIK', 'karta.thumb.wnetrze': 'WNĘTRZE', 'karta.thumb.detal': 'DETAL',
+      'karta.eyebrow': '01 · TEN CICHY', 'karta.title': 'Nie pachnie niczym.',
+      'karta.lede': 'Sprawia, że wnętrze pachnie sobą, tylko cieplej — suchy cedr na granicy percepcji, bliżej temperatury niż zapachu. Molekuła, którą większość ludzi nosiła, nie wiedząc o tym; tutaj sama i nieuperfumowana.',
+      'spec.stezenie': 'STĘŻENIE', 'spec.stezenie_value': '0,8 % w neutralnym nośniku',
+      'spec.dyfuzja': 'DYFUZJA', 'spec.dyfuzja_value': 'pasywna, bez ciepła',
+      'spec.wielkosc': 'WIELKOŚĆ WNĘTRZA', 'spec.wielkosc_value': 'do 40 m²',
+      'spec.czas': 'CZAS TRWANIA', 'spec.czas_value': 'dwanaście tygodni',
+      'spec.masa': 'MASA MOLOWA', 'spec.prog': 'PRÓG WYKRYWALNOŚCI',
+      'karta.shipping': 'Wysyłka 3–5 dni · zwrot 30 dni', 'cta.do_koszyka': 'DO KOSZYKA',
+      'badge.szklo': 'SZKŁO WIELOKROTNEGO UŻYTKU', 'badge.nosnik': 'NOŚNIK BIODEGRADOWALNY', 'badge.alkohol': 'BEZ ALKOHOLU',
+      'metoda.title': 'Trzy decyzje i nic więcej.', 'metoda.note': 'METODA · DYFUZJA PASYWNA',
+      'metoda1.title': 'Jeden związek',
+      'metoda1.copy': 'Nie akord, nie kompozycja. Każde naczynie zawiera jedną molekułę zapachową, nazwaną na etykiecie wraz ze wzorem, żebyś mógł się nauczyć, co naprawdę lubisz.',
+      'metoda1.caption': '1 SKŁADNIK / 5 MIEJSC',
+      'metoda2.title': 'Bez ciepła',
+      'metoda2.copy': 'Dyfuzja pasywna w temperaturze pomieszczenia. Molekuła opuszcza nośnik w tempie, jakiego żąda wnętrze — cieplejsze pomieszczenia czytają po prostu głośniej.',
+      'metoda3.title': 'Dwanaście tygodni',
+      'metoda3.copy': 'Potem się kończy. Naczynia są szklane i do wielokrotnego napełniania, nośnik biodegradowalny. Nic nie jest pachnące, jeśli nie musi być.',
+      'metoda3.caption': 'TYDZIEŃ 01 → 12',
+      'list.eyebrow': 'VAIREM.PL/LIST · 4–5 WYSYŁEK W ROKU',
+      'list.title': 'List, kiedy dochodzi nowa molekuła.',
+      'list.lede': 'Jeden związek wyjaśniony wprost, z powodem, dla którego zajęło to chwilę. Bez ofert, bez odliczania.',
+      'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'ZAPISZ SIĘ',
+      'list.note': 'BEZ OFERT. WYPISUJESZ SIĘ JEDNYM KLIKNIĘCIEM.',
+      'archive.next': 'NAJBLIŻSZY LIST', 'archive.next_value': '08 · Ambrettolide — w badaniu',
+      'archive.last': 'OSTATNI', 'archive.last_value': '07 · Timbersilk — dlaczego zimno',
+      'archive.archive': 'ARCHIWUM', 'archive.archive_value': '01—07 · pełne noty',
+      'footer.address': 'MOLEKULARNY ZAPACH DO WNĘTRZ<br>WARSZAWA · PL<br>NIP 000 000 00 00',
+      'footer.pelny_indeks': 'Pełny indeks →', 'footer.marka': 'MARKA',
+      'footer.metoda': 'Metoda', 'footer.list': 'List', 'footer.refill': 'Naczynia i refill',
+      'footer.obsluga': 'OBSŁUGA', 'footer.kontakt': 'Kontakt', 'footer.wysylka': 'Wysyłka i zwroty', 'footer.regulamin': 'Regulamin',
+      'footer.vat': 'CENY W PLN, ZAWIERAJĄ VAT',
+      'cart.close': 'ZAMKNIJ ✕', 'cart.shipping': 'WYSYŁKA', 'cart.total': 'DO ZAPŁATY',
+      'cta.checkout': 'PRZEJDŹ DO PŁATNOŚCI →', 'cart.note': 'ZWROT 30 DNI · SZKŁO DO REFILLU',
+      'cart.title_tpl': n => `KOSZYK · ${n} POZ.`,
+      'cart.empty': 'KOSZYK PUSTY — WYBIERZ ZWIĄZEK Z INDEKSU.', 'cart.remove': 'USUŃ',
+      'newsletter.subscribed': 'ZAPISANO ✓', 'newsletter.thanks': 'DZIĘKUJEMY — POTWIERDŹ LINK W POCZCIE.',
+      'tile.weeks_suffix': 'TYG.', 'add_btn': 'DODAJ',
+      'cookie.title': 'PLIKI COOKIE',
+      'cookie.text': 'Używamy plików cookie, żeby zapamiętać Twój język, motyw i zawartość koszyka oraz zrozumieć, jak korzystasz ze strony. Bez zgody podstawowe funkcje nadal działają.',
+      'cookie.accept': 'AKCEPTUJ', 'cookie.reject': 'ODRZUĆ'
+    },
+    en: {
+      'nav.indeks': 'INDEX', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER',
+      'theme.day': 'DAY', 'theme.night': 'NIGHT', 'cart.label': 'CART',
+      'tabbar.label': 'HERO VARIANT', 'tab.tablica': '02 · BOARD', 'tab.wykres': '03 · CHART',
+      'hero1.eyebrow': 'MOLECULAR HOME FRAGRANCE · SEVEN COMPOUNDS',
+      'hero1.title': 'Air,<br>described<br>precisely.',
+      'hero1.lede': 'One fragrance molecule at a time, undiluted by a story. No top note, no drydown, no garden in Grasse — one compound released passively for twelve weeks.',
+      'cta.wybierz': 'CHOOSE A COMPOUND →', 'cta.metoda_dyfuzji': 'DIFFUSION METHOD',
+      'stat.zwiazkow': 'COMPOUNDS IN THE INDEX', 'stat.stezenie': 'CONCENTRATION', 'stat.pojemnosc': 'VOLUME',
+      'stat.czas': 'DURATION', 'stat.czas_value': '10–14 wks',
+      'hero2.eyebrow': 'COMPOUND BOARD · 01—07',
+      'hero2.title': 'Seven molecules. No compositions.',
+      'hero2.lede': 'You choose a compound, not a perfume. Each vessel holds a single molecule, named on the label along with its formula.',
+      'cta.pelny_indeks': 'FULL INDEX →', 'upcoming.copy': 'In research.<br>Four times a year.', 'cta.zapisz': 'SUBSCRIBE →',
+      'hero3.eyebrow': 'RELEASE CURVE · OWN MEASUREMENT · 40 M²',
+      'hero3.title': 'Scent as<br>a function of time.',
+      'hero3.lede': 'Passive diffusion at room temperature. The molecule leaves the carrier at the rate the room demands — warmer rooms simply read louder.',
+      'cta.metoda': 'METHOD', 'wykres.intensywnosc': 'INTENSITY / WEEK',
+      'metric.prog': 'THRESHOLD', 'metric.zasieg': 'RANGE', 'metric.cena': 'PRICE',
+      'indeks.title': 'Index', 'indeks.note': 'SEVEN COMPOUNDS · 200 ML EACH · PRICE PER VESSEL',
+      'th.nr': 'NO.', 'th.zwiazek': 'COMPOUND', 'th.wzor': 'FORMULA', 'th.mw': 'M [G/MOL]',
+      'th.charakter': 'CHARACTER', 'th.intensywnosc': 'INTENSITY', 'th.tyg': 'WKS', 'th.cena': 'PRICE',
+      'index.foot1': 'INTENSITY MEASURED AT 0.8% IN NEUTRAL CARRIER, 22 °C',
+      'index.foot2': 'DELIVERY 3–5 DAYS · PL / EU',
+      'karta.image_tag': 'PRODUCT PHOTO — VESSEL, 4:5',
+      'karta.thumb.etykieta': 'LABEL', 'karta.thumb.nosnik': 'CARRIER', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETAIL',
+      'karta.eyebrow': '01 · THE QUIET ONE', 'karta.title': 'Smells like nothing.',
+      'karta.lede': 'Makes a room smell like itself, only warmer — dry cedar at the edge of perception, closer to temperature than scent. The molecule most people have worn without knowing it; here alone and unperfumed.',
+      'spec.stezenie': 'CONCENTRATION', 'spec.stezenie_value': '0.8% in neutral carrier',
+      'spec.dyfuzja': 'DIFFUSION', 'spec.dyfuzja_value': 'passive, no heat',
+      'spec.wielkosc': 'ROOM SIZE', 'spec.wielkosc_value': 'up to 40 m²',
+      'spec.czas': 'DURATION', 'spec.czas_value': 'twelve weeks',
+      'spec.masa': 'MOLAR MASS', 'spec.prog': 'DETECTION THRESHOLD',
+      'karta.shipping': 'Ships in 3–5 days · 30-day returns', 'cta.do_koszyka': 'ADD TO CART',
+      'badge.szklo': 'REUSABLE GLASS', 'badge.nosnik': 'BIODEGRADABLE CARRIER', 'badge.alkohol': 'ALCOHOL-FREE',
+      'metoda.title': 'Three decisions and nothing else.', 'metoda.note': 'METHOD · PASSIVE DIFFUSION',
+      'metoda1.title': 'One compound',
+      'metoda1.copy': 'Not an accord, not a composition. Each vessel holds a single fragrance molecule, named on the label along with its formula, so you can learn what you actually like.',
+      'metoda1.caption': '1 INGREDIENT / 5 PLACES',
+      'metoda2.title': 'No heat',
+      'metoda2.copy': 'Passive diffusion at room temperature. The molecule leaves the carrier at the rate the room demands — warmer rooms simply read louder.',
+      'metoda3.title': 'Twelve weeks',
+      'metoda3.copy': "Then it ends. Vessels are glass and refillable, carrier biodegradable. Nothing is fragrant if it doesn't have to be.",
+      'metoda3.caption': 'WEEK 01 → 12',
+      'list.eyebrow': 'VAIREM.PL/LIST · 4–5 MAILINGS A YEAR',
+      'list.title': 'A letter, when a new molecule arrives.',
+      'list.lede': 'One compound explained plainly, with the reason it took a while. No offers, no countdowns.',
+      'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'SUBSCRIBE',
+      'list.note': 'NO OFFERS. UNSUBSCRIBE WITH ONE CLICK.',
+      'archive.next': 'NEXT LETTER', 'archive.next_value': '08 · Ambrettolide — in research',
+      'archive.last': 'LAST', 'archive.last_value': '07 · Timbersilk — why cold',
+      'archive.archive': 'ARCHIVE', 'archive.archive_value': '01—07 · full notes',
+      'footer.address': 'MOLECULAR HOME FRAGRANCE<br>WARSAW · PL<br>VAT 000 000 00 00',
+      'footer.pelny_indeks': 'Full index →', 'footer.marka': 'BRAND',
+      'footer.metoda': 'Method', 'footer.list': 'Letter', 'footer.refill': 'Vessels & refills',
+      'footer.obsluga': 'SUPPORT', 'footer.kontakt': 'Contact', 'footer.wysylka': 'Shipping & returns', 'footer.regulamin': 'Terms',
+      'footer.vat': 'PRICES IN PLN, VAT INCLUDED',
+      'cart.close': 'CLOSE ✕', 'cart.shipping': 'SHIPPING', 'cart.total': 'TOTAL DUE',
+      'cta.checkout': 'PROCEED TO PAYMENT →', 'cart.note': '30-DAY RETURNS · REFILLABLE GLASS',
+      'cart.title_tpl': n => `CART · ${n} ITEMS`,
+      'cart.empty': 'CART EMPTY — CHOOSE A COMPOUND FROM THE INDEX.', 'cart.remove': 'REMOVE',
+      'newsletter.subscribed': 'SUBSCRIBED ✓', 'newsletter.thanks': 'THANK YOU — CONFIRM THE LINK IN YOUR INBOX.',
+      'tile.weeks_suffix': 'WKS', 'add_btn': 'ADD',
+      'cookie.title': 'COOKIES',
+      'cookie.text': 'We use cookies to remember your language, theme and cart contents, and to understand how you use the site. Basic functions still work without consent.',
+      'cookie.accept': 'ACCEPT', 'cookie.reject': 'DECLINE'
+    },
+    es: {
+      'nav.indeks': 'ÍNDICE', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA',
+      'theme.day': 'DÍA', 'theme.night': 'NOCHE', 'cart.label': 'CARRITO',
+      'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLERO', 'tab.wykres': '03 · GRÁFICO',
+      'hero1.eyebrow': 'FRAGANCIA MOLECULAR PARA EL HOGAR · SIETE COMPUESTOS',
+      'hero1.title': 'Aire,<br>descrito<br>con precisión.',
+      'hero1.lede': 'Una molécula olfativa a la vez, sin diluir en una historia. Sin salida de cabeza, sin decantación, sin jardín en Grasse — un compuesto liberado pasivamente durante doce semanas.',
+      'cta.wybierz': 'ELIGE UN COMPUESTO →', 'cta.metoda_dyfuzji': 'MÉTODO DE DIFUSIÓN',
+      'stat.zwiazkow': 'COMPUESTOS EN EL ÍNDICE', 'stat.stezenie': 'CONCENTRACIÓN', 'stat.pojemnosc': 'VOLUMEN',
+      'stat.czas': 'DURACIÓN', 'stat.czas_value': '10–14 sem.',
+      'hero2.eyebrow': 'TABLERO DE COMPUESTOS · 01—07',
+      'hero2.title': 'Siete moléculas. Ninguna composición.',
+      'hero2.lede': 'Eliges un compuesto, no un perfume. Cada frasco contiene una sola molécula, indicada en la etiqueta junto con su fórmula.',
+      'cta.pelny_indeks': 'ÍNDICE COMPLETO →', 'upcoming.copy': 'En estudio.<br>Cuatro veces al año.', 'cta.zapisz': 'SUSCRIBIRSE →',
+      'hero3.eyebrow': 'CURVA DE LIBERACIÓN · MEDICIÓN PROPIA · 40 M²',
+      'hero3.title': 'El aroma como<br>función del tiempo.',
+      'hero3.lede': 'Difusión pasiva a temperatura ambiente. La molécula abandona el soporte al ritmo que exige la habitación — las habitaciones más cálidas simplemente suenan más fuerte.',
+      'cta.metoda': 'MÉTODO', 'wykres.intensywnosc': 'INTENSIDAD / SEMANA',
+      'metric.prog': 'UMBRAL', 'metric.zasieg': 'ALCANCE', 'metric.cena': 'PRECIO',
+      'indeks.title': 'Índice', 'indeks.note': 'SIETE COMPUESTOS · 200 ML CADA UNO · PRECIO POR FRASCO',
+      'th.nr': 'N.º', 'th.zwiazek': 'COMPUESTO', 'th.wzor': 'FÓRMULA', 'th.mw': 'M [G/MOL]',
+      'th.charakter': 'CARÁCTER', 'th.intensywnosc': 'INTENSIDAD', 'th.tyg': 'SEM.', 'th.cena': 'PRECIO',
+      'index.foot1': 'INTENSIDAD MEDIDA AL 0,8% EN SOPORTE NEUTRO, 22 °C',
+      'index.foot2': 'ENTREGA 3–5 DÍAS · PL / UE',
+      'karta.image_tag': 'FOTO DEL PRODUCTO — FRASCO, 4:5',
+      'karta.thumb.etykieta': 'ETIQUETA', 'karta.thumb.nosnik': 'SOPORTE', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETALLE',
+      'karta.eyebrow': '01 · EL SILENCIOSO', 'karta.title': 'No huele a nada.',
+      'karta.lede': 'Hace que la habitación huela a sí misma, solo que más cálida — cedro seco en el límite de la percepción, más cerca de la temperatura que del aroma. La molécula que la mayoría ha llevado sin saberlo; aquí sola y sin perfumar.',
+      'spec.stezenie': 'CONCENTRACIÓN', 'spec.stezenie_value': '0,8 % en soporte neutro',
+      'spec.dyfuzja': 'DIFUSIÓN', 'spec.dyfuzja_value': 'pasiva, sin calor',
+      'spec.wielkosc': 'TAMAÑO DE LA HABITACIÓN', 'spec.wielkosc_value': 'hasta 40 m²',
+      'spec.czas': 'DURACIÓN', 'spec.czas_value': 'doce semanas',
+      'spec.masa': 'MASA MOLAR', 'spec.prog': 'UMBRAL DE DETECCIÓN',
+      'karta.shipping': 'Envío en 3–5 días · devolución 30 días', 'cta.do_koszyka': 'AÑADIR AL CARRITO',
+      'badge.szklo': 'VIDRIO REUTILIZABLE', 'badge.nosnik': 'SOPORTE BIODEGRADABLE', 'badge.alkohol': 'SIN ALCOHOL',
+      'metoda.title': 'Tres decisiones y nada más.', 'metoda.note': 'MÉTODO · DIFUSIÓN PASIVA',
+      'metoda1.title': 'Un compuesto',
+      'metoda1.copy': 'Ni un acorde, ni una composición. Cada frasco contiene una sola molécula olfativa, indicada en la etiqueta junto con su fórmula, para que aprendas lo que realmente te gusta.',
+      'metoda1.caption': '1 INGREDIENTE / 5 LUGARES',
+      'metoda2.title': 'Sin calor',
+      'metoda2.copy': 'Difusión pasiva a temperatura ambiente. La molécula abandona el soporte al ritmo que exige la habitación — las habitaciones más cálidas simplemente suenan más fuerte.',
+      'metoda3.title': 'Doce semanas',
+      'metoda3.copy': 'Luego se acaba. Los frascos son de vidrio y recargables, el soporte biodegradable. Nada es aromático si no tiene que serlo.',
+      'metoda3.caption': 'SEMANA 01 → 12',
+      'list.eyebrow': 'VAIREM.PL/LIST · 4–5 ENVÍOS AL AÑO',
+      'list.title': 'Una carta, cuando llega una nueva molécula.',
+      'list.lede': 'Un compuesto explicado con claridad, con el motivo por el que llevó su tiempo. Sin ofertas, sin cuentas atrás.',
+      'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'SUSCRIBIRSE',
+      'list.note': 'SIN OFERTAS. TE DAS DE BAJA CON UN CLIC.',
+      'archive.next': 'PRÓXIMA CARTA', 'archive.next_value': '08 · Ambrettolide — en estudio',
+      'archive.last': 'ÚLTIMA', 'archive.last_value': '07 · Timbersilk — por qué frío',
+      'archive.archive': 'ARCHIVO', 'archive.archive_value': '01—07 · notas completas',
+      'footer.address': 'FRAGANCIA MOLECULAR PARA EL HOGAR<br>VARSOVIA · PL<br>NIF 000 000 00 00',
+      'footer.pelny_indeks': 'Índice completo →', 'footer.marka': 'MARCA',
+      'footer.metoda': 'Método', 'footer.list': 'Carta', 'footer.refill': 'Frascos y recambios',
+      'footer.obsluga': 'ATENCIÓN AL CLIENTE', 'footer.kontakt': 'Contacto', 'footer.wysylka': 'Envíos y devoluciones', 'footer.regulamin': 'Términos',
+      'footer.vat': 'PRECIOS EN PLN, IVA INCLUIDO',
+      'cart.close': 'CERRAR ✕', 'cart.shipping': 'ENVÍO', 'cart.total': 'TOTAL A PAGAR',
+      'cta.checkout': 'PROCEDER AL PAGO →', 'cart.note': 'DEVOLUCIÓN 30 DÍAS · VIDRIO RECARGABLE',
+      'cart.title_tpl': n => `CARRITO · ${n} UDS.`,
+      'cart.empty': 'CARRITO VACÍO — ELIGE UN COMPUESTO DEL ÍNDICE.', 'cart.remove': 'QUITAR',
+      'newsletter.subscribed': 'SUSCRITO ✓', 'newsletter.thanks': 'GRACIAS — CONFIRMA EL ENLACE EN TU CORREO.',
+      'tile.weeks_suffix': 'SEM.', 'add_btn': 'AÑADIR',
+      'cookie.title': 'COOKIES',
+      'cookie.text': 'Usamos cookies para recordar tu idioma, tema y el contenido del carrito, y para entender cómo usas el sitio. Las funciones básicas siguen funcionando sin tu consentimiento.',
+      'cookie.accept': 'ACEPTAR', 'cookie.reject': 'RECHAZAR'
+    },
+    uk: {
+      'nav.indeks': 'ІНДЕКС', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ',
+      'theme.day': 'ДЕНЬ', 'theme.night': 'НІЧ', 'cart.label': 'КОШИК',
+      'tabbar.label': 'ВАРІАНТ HERO', 'tab.tablica': '02 · ТАБЛИЦЯ', 'tab.wykres': '03 · ГРАФІК',
+      'hero1.eyebrow': 'МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ · СІМ СПОЛУК',
+      'hero1.title': 'Повітря,<br>описане<br>точно.',
+      'hero1.lede': 'Одна ароматична молекула за раз, не розбавлена історією. Без нот верху, без осаду, без саду в Грасі — одна сполука пасивно вивільняється протягом дванадцяти тижнів.',
+      'cta.wybierz': 'ОБЕРИ СПОЛУКУ →', 'cta.metoda_dyfuzji': 'МЕТОД ДИФУЗІЇ',
+      'stat.zwiazkow': "СПОЛУК В ІНДЕКСІ", 'stat.stezenie': 'КОНЦЕНТРАЦІЯ', 'stat.pojemnosc': "ОБ'ЄМ",
+      'stat.czas': 'ТРИВАЛІСТЬ', 'stat.czas_value': '10–14 тиж.',
+      'hero2.eyebrow': 'ТАБЛИЦЯ СПОЛУК · 01—07',
+      'hero2.title': 'Сім молекул. Жодних композицій.',
+      'hero2.lede': "Ти обираєш сполуку, а не парфум. Кожна посудина містить одну молекулу, названу на етикетці разом із формулою.",
+      'cta.pelny_indeks': 'ПОВНИЙ ІНДЕКС →', 'upcoming.copy': 'У дослідженні.<br>Чотири рази на рік.', 'cta.zapisz': 'ПІДПИСАТИСЯ →',
+      'hero3.eyebrow': 'КРИВА ВИВІЛЬНЕННЯ · ВЛАСНИЙ ВИМІР · 40 М²',
+      'hero3.title': 'Аромат як<br>функція часу.',
+      'hero3.lede': 'Пасивна дифузія за кімнатної температури. Молекула залишає носій у темпі, якого вимагає приміщення — тепліші кімнати просто звучать голосніше.',
+      'cta.metoda': 'МЕТОД', 'wykres.intensywnosc': 'ІНТЕНСИВНІСТЬ / ТИЖДЕНЬ',
+      'metric.prog': 'ПОРІГ', 'metric.zasieg': 'ОХОПЛЕННЯ', 'metric.cena': 'ЦІНА',
+      'indeks.title': 'Індекс', 'indeks.note': 'СІМ СПОЛУК · ПО 200 МЛ · ЦІНА ЗА ПОСУДИНУ',
+      'th.nr': '№', 'th.zwiazek': 'СПОЛУКА', 'th.wzor': 'ФОРМУЛА', 'th.mw': 'M [Г/МОЛЬ]',
+      'th.charakter': 'ХАРАКТЕР', 'th.intensywnosc': 'ІНТЕНСИВНІСТЬ', 'th.tyg': 'ТИЖ.', 'th.cena': 'ЦІНА',
+      'index.foot1': 'ІНТЕНСИВНІСТЬ ВИМІРЯНА ПРИ 0,8% У НЕЙТРАЛЬНОМУ НОСІЇ, 22 °C',
+      'index.foot2': 'ДОСТАВКА 3–5 ДНІВ · PL / ЄС',
+      'karta.image_tag': "ФОТО ПРОДУКТУ — ПОСУДИНА, 4:5",
+      'karta.thumb.etykieta': 'ЕТИКЕТКА', 'karta.thumb.nosnik': 'НОСІЙ', 'karta.thumb.wnetrze': "ІНТЕР'ЄР", 'karta.thumb.detal': 'ДЕТАЛЬ',
+      'karta.eyebrow': '01 · ТОЙ ТИХИЙ', 'karta.title': 'Не пахне нічим.',
+      'karta.lede': "Робить так, що приміщення пахне собою, лише тепліше — сухий кедр на межі сприйняття, ближче до температури, ніж до запаху. Молекула, яку більшість людей носила, не знаючи про це; тут — сама і без парфумування.",
+      'spec.stezenie': 'КОНЦЕНТРАЦІЯ', 'spec.stezenie_value': 'у нейтральному носії 0,8 %',
+      'spec.dyfuzja': 'ДИФУЗІЯ', 'spec.dyfuzja_value': 'пасивна, без тепла',
+      'spec.wielkosc': 'РОЗМІР ПРИМІЩЕННЯ', 'spec.wielkosc_value': 'до 40 м²',
+      'spec.czas': 'ТРИВАЛІСТЬ', 'spec.czas_value': 'дванадцять тижнів',
+      'spec.masa': 'МОЛЯРНА МАСА', 'spec.prog': 'ПОРІГ ВИЯВЛЕННЯ',
+      'karta.shipping': 'Доставка 3–5 днів · повернення 30 днів', 'cta.do_koszyka': 'ДО КОШИКА',
+      'badge.szklo': 'СКЛО БАГАТОРАЗОВОГО ВИКОРИСТАННЯ', 'badge.nosnik': 'БІОРОЗКЛАДНИЙ НОСІЙ', 'badge.alkohol': 'БЕЗ АЛКОГОЛЮ',
+      'metoda.title': 'Три рішення і нічого більше.', 'metoda.note': 'МЕТОД · ПАСИВНА ДИФУЗІЯ',
+      'metoda1.title': 'Одна сполука',
+      'metoda1.copy': 'Не акорд, не композиція. Кожна посудина містить одну ароматичну молекулу, названу на етикетці разом із формулою, щоб ти міг зрозуміти, що тобі справді подобається.',
+      'metoda1.caption': '1 КОМПОНЕНТ / 5 МІСЦЬ',
+      'metoda2.title': 'Без тепла',
+      'metoda2.copy': 'Пасивна дифузія за кімнатної температури. Молекула залишає носій у темпі, якого вимагає приміщення — тепліші кімнати просто звучать голосніше.',
+      'metoda3.title': 'Дванадцять тижнів',
+      'metoda3.copy': 'Потім усе закінчується. Посудини скляні й придатні для повторного наповнення, носій біорозкладний. Ніщо не пахне, якщо в цьому немає потреби.',
+      'metoda3.caption': 'ТИЖДЕНЬ 01 → 12',
+      'list.eyebrow': 'VAIREM.PL/LIST · 4–5 РОЗСИЛОК НА РІК',
+      'list.title': "Лист, коли з'являється нова молекула.",
+      'list.lede': 'Одна сполука, пояснена прямо, з причиною, чому це зайняло час. Без пропозицій, без відліку.',
+      'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'ПІДПИСАТИСЯ',
+      'list.note': 'БЕЗ ПРОПОЗИЦІЙ. ВІДПИСКА ОДНИМ КЛІКОМ.',
+      'archive.next': 'НАЙБЛИЖЧИЙ ЛИСТ', 'archive.next_value': '08 · Ambrettolide — у дослідженні',
+      'archive.last': 'ОСТАННІЙ', 'archive.last_value': '07 · Timbersilk — чому холод',
+      'archive.archive': 'АРХІВ', 'archive.archive_value': '01—07 · повні нотатки',
+      'footer.address': "МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ<br>ВАРШАВА · PL<br>НІП 000 000 00 00",
+      'footer.pelny_indeks': 'Повний індекс →', 'footer.marka': 'БРЕНД',
+      'footer.metoda': 'Метод', 'footer.list': 'Лист', 'footer.refill': 'Посудини й дозаправка',
+      'footer.obsluga': 'ПІДТРИМКА', 'footer.kontakt': 'Контакти', 'footer.wysylka': 'Доставка і повернення', 'footer.regulamin': 'Умови',
+      'footer.vat': 'ЦІНИ В PLN, З ПДВ',
+      'cart.close': 'ЗАКРИТИ ✕', 'cart.shipping': 'ДОСТАВКА', 'cart.total': 'ДО СПЛАТИ',
+      'cta.checkout': 'ПЕРЕЙТИ ДО ОПЛАТИ →', 'cart.note': 'ПОВЕРНЕННЯ 30 ДНІВ · СКЛО ДЛЯ ДОЗАПРАВКИ',
+      'cart.title_tpl': n => `КОШИК · ${n} ПОЗ.`,
+      'cart.empty': 'КОШИК ПОРОЖНІЙ — ОБЕРИ СПОЛУКУ З ІНДЕКСУ.', 'cart.remove': 'ВИДАЛИТИ',
+      'newsletter.subscribed': 'ПІДПИСАНО ✓', 'newsletter.thanks': 'ДЯКУЄМО — ПІДТВЕРДЬ ПОСИЛАННЯ В ПОШТІ.',
+      'tile.weeks_suffix': 'ТИЖ.', 'add_btn': 'ДОДАТИ',
+      'cookie.title': 'ФАЙЛИ COOKIE',
+      'cookie.text': "Ми використовуємо файли cookie, щоб запам'ятати вашу мову, тему й вміст кошика, а також зрозуміти, як ви користуєтесь сайтом. Основні функції працюють і без згоди.",
+      'cookie.accept': 'ПРИЙНЯТИ', 'cookie.reject': 'ВІДХИЛИТИ'
+    },
+    fr: {
+      'nav.indeks': 'INDEX', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE',
+      'theme.day': 'JOUR', 'theme.night': 'NUIT', 'cart.label': 'PANIER',
+      'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLEAU', 'tab.wykres': '03 · GRAPHIQUE',
+      'hero1.eyebrow': "PARFUM MOLÉCULAIRE D'INTÉRIEUR · SEPT COMPOSÉS",
+      'hero1.title': "L'air,<br>décrit<br>avec précision.",
+      'hero1.lede': "Une molécule olfactive à la fois, non diluée par une histoire. Pas de note de tête, pas de décantation, pas de jardin à Grasse — un composé diffusé passivement pendant douze semaines.",
+      'cta.wybierz': 'CHOISIR UN COMPOSÉ →', 'cta.metoda_dyfuzji': 'MÉTHODE DE DIFFUSION',
+      'stat.zwiazkow': "COMPOSÉS DANS L'INDEX", 'stat.stezenie': 'CONCENTRATION', 'stat.pojemnosc': 'VOLUME',
+      'stat.czas': 'DURÉE', 'stat.czas_value': '10–14 sem.',
+      'hero2.eyebrow': 'TABLEAU DES COMPOSÉS · 01—07',
+      'hero2.title': 'Sept molécules. Aucune composition.',
+      'hero2.lede': "Vous choisissez un composé, pas un parfum. Chaque flacon contient une seule molécule, nommée sur l'étiquette avec sa formule.",
+      'cta.pelny_indeks': 'INDEX COMPLET →', 'upcoming.copy': "À l'étude.<br>Quatre fois par an.", 'cta.zapisz': "S'ABONNER →",
+      'hero3.eyebrow': 'COURBE DE DIFFUSION · MESURE MAISON · 40 M²',
+      'hero3.title': 'Le parfum comme<br>fonction du temps.',
+      'hero3.lede': "Diffusion passive à température ambiante. La molécule quitte le support au rythme que demande la pièce — les pièces plus chaudes se font simplement entendre plus fort.",
+      'cta.metoda': 'MÉTHODE', 'wykres.intensywnosc': 'INTENSITÉ / SEMAINE',
+      'metric.prog': 'SEUIL', 'metric.zasieg': 'PORTÉE', 'metric.cena': 'PRIX',
+      'indeks.title': 'Index', 'indeks.note': 'SEPT COMPOSÉS · 200 ML CHACUN · PRIX PAR FLACON',
+      'th.nr': 'N°', 'th.zwiazek': 'COMPOSÉ', 'th.wzor': 'FORMULE', 'th.mw': 'M [G/MOL]',
+      'th.charakter': 'CARACTÈRE', 'th.intensywnosc': 'INTENSITÉ', 'th.tyg': 'SEM.', 'th.cena': 'PRIX',
+      'index.foot1': 'INTENSITÉ MESURÉE À 0,8 % DANS UN SUPPORT NEUTRE, 22 °C',
+      'index.foot2': 'LIVRAISON 3–5 JOURS · PL / UE',
+      'karta.image_tag': 'PHOTO PRODUIT — FLACON, 4:5',
+      'karta.thumb.etykieta': 'ÉTIQUETTE', 'karta.thumb.nosnik': 'SUPPORT', 'karta.thumb.wnetrze': 'INTÉRIEUR', 'karta.thumb.detal': 'DÉTAIL',
+      'karta.eyebrow': '01 · LE DISCRET', 'karta.title': 'Ne sent rien.',
+      'karta.lede': "Fait sentir la pièce elle-même, en plus chaud — cèdre sec à la limite de la perception, plus proche de la température que de l'odeur. La molécule que la plupart des gens ont portée sans le savoir ; ici, seule et sans parfum.",
+      'spec.stezenie': 'CONCENTRATION', 'spec.stezenie_value': 'dans un support neutre 0,8 %',
+      'spec.dyfuzja': 'DIFFUSION', 'spec.dyfuzja_value': 'passive, sans chaleur',
+      'spec.wielkosc': 'TAILLE DE LA PIÈCE', 'spec.wielkosc_value': "jusqu'à 40 m²",
+      'spec.czas': 'DURÉE', 'spec.czas_value': 'douze semaines',
+      'spec.masa': 'MASSE MOLAIRE', 'spec.prog': 'SEUIL DE DÉTECTION',
+      'karta.shipping': 'Livraison 3–5 jours · retour sous 30 jours', 'cta.do_koszyka': 'AJOUTER AU PANIER',
+      'badge.szklo': 'VERRE RÉUTILISABLE', 'badge.nosnik': 'SUPPORT BIODÉGRADABLE', 'badge.alkohol': 'SANS ALCOOL',
+      'metoda.title': 'Trois décisions, rien de plus.', 'metoda.note': 'MÉTHODE · DIFFUSION PASSIVE',
+      'metoda1.title': 'Un seul composé',
+      'metoda1.copy': "Ni accord, ni composition. Chaque flacon contient une seule molécule olfactive, nommée sur l'étiquette avec sa formule, pour que vous appreniez ce que vous aimez vraiment.",
+      'metoda1.caption': '1 INGRÉDIENT / 5 LIEUX',
+      'metoda2.title': 'Sans chaleur',
+      'metoda2.copy': "Diffusion passive à température ambiante. La molécule quitte le support au rythme que demande la pièce — les pièces plus chaudes se font simplement entendre plus fort.",
+      'metoda3.title': 'Douze semaines',
+      'metoda3.copy': "Puis cela s'arrête. Les flacons sont en verre et rechargeables, le support biodégradable. Rien n'est parfumé si ce n'est pas nécessaire.",
+      'metoda3.caption': 'SEMAINE 01 → 12',
+      'list.eyebrow': 'VAIREM.PL/LIST · 4 À 5 ENVOIS PAR AN',
+      'list.title': "Une lettre, à l'arrivée d'une nouvelle molécule.",
+      'list.lede': "Un composé expliqué simplement, avec la raison pour laquelle cela a pris du temps. Pas d'offres, pas de compte à rebours.",
+      'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': "S'ABONNER",
+      'list.note': "PAS D'OFFRES. DÉSABONNEMENT EN UN CLIC.",
+      'archive.next': 'PROCHAINE LETTRE', 'archive.next_value': "08 · Ambrettolide — à l'étude",
+      'archive.last': 'DERNIÈRE', 'archive.last_value': '07 · Timbersilk — pourquoi le froid',
+      'archive.archive': 'ARCHIVES', 'archive.archive_value': '01—07 · notes complètes',
+      'footer.address': "PARFUM MOLÉCULAIRE D'INTÉRIEUR<br>VARSOVIE · PL<br>TVA 000 000 00 00",
+      'footer.pelny_indeks': 'Index complet →', 'footer.marka': 'MARQUE',
+      'footer.metoda': 'Méthode', 'footer.list': 'Lettre', 'footer.refill': 'Flacons et recharges',
+      'footer.obsluga': 'SERVICE CLIENT', 'footer.kontakt': 'Contact', 'footer.wysylka': 'Livraison et retours', 'footer.regulamin': 'Conditions',
+      'footer.vat': 'PRIX EN PLN, TVA INCLUSE',
+      'cart.close': 'FERMER ✕', 'cart.shipping': 'LIVRAISON', 'cart.total': 'TOTAL À PAYER',
+      'cta.checkout': 'PROCÉDER AU PAIEMENT →', 'cart.note': 'RETOUR 30 JOURS · VERRE RECHARGEABLE',
+      'cart.title_tpl': n => `PANIER · ${n} ART.`,
+      'cart.empty': "PANIER VIDE — CHOISISSEZ UN COMPOSÉ DANS L'INDEX.", 'cart.remove': 'RETIRER',
+      'newsletter.subscribed': 'ABONNÉ ✓', 'newsletter.thanks': 'MERCI — CONFIRMEZ LE LIEN DANS VOTRE BOÎTE MAIL.',
+      'tile.weeks_suffix': 'SEM.', 'add_btn': 'AJOUTER',
+      'cookie.title': 'COOKIES',
+      'cookie.text': 'Nous utilisons des cookies pour mémoriser votre langue, votre thème et le contenu de votre panier, et pour comprendre comment vous utilisez le site. Les fonctions de base restent disponibles sans consentement.',
+      'cookie.accept': 'ACCEPTER', 'cookie.reject': 'REFUSER'
+    }
+  };
+
+  const LANGS = ['pl', 'en', 'es', 'uk', 'fr'];
+  let currentLang = 'pl';
+
+  function t(key) {
+    const dict = I18N[currentLang] || I18N.pl;
+    const v = dict[key] !== undefined ? dict[key] : I18N.pl[key];
+    return v === undefined ? key : v;
+  }
+
+  function characterFor(nr) {
+    const dict = CHARACTER_I18N[currentLang] || CHARACTER_I18N.pl;
+    return dict[nr] || CHARACTER_I18N.pl[nr] || '';
+  }
+
+  // ---------- hero visual: floating molecules that flee the cursor ----------
+
+  function initMoleculeField(canvas) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const DOT_COLOR_NIGHT = '#5B6572';
+    const DOT_COLOR_DAY = '#525A65';
+    const currentDotColor = () => (
+      document.documentElement.getAttribute('data-theme') === 'night' ? DOT_COLOR_NIGHT : DOT_COLOR_DAY
+    );
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const COUNT = 420;
+    const REPEL_RADIUS = 42;
+    const REPEL_STRENGTH = 1300;
+    const FRICTION = 0.95;
+    const DRIFT = 0.3;
+
+    let width = 0;
+    let height = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let particles = [];
+    let pointer = null;
+    let rafId = null;
+
+    function rand(min, max) { return min + Math.random() * (max - min); }
+
+    function makeParticle() {
+      const depth = Math.random();
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: rand(-DRIFT, DRIFT),
+        vy: rand(-DRIFT, DRIFT),
+        driftAngle: rand(0, Math.PI * 2),
+        depth,
+        r: 0.9 + depth * 1.7,
+        alpha: 0.35 + depth * 0.55
+      };
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (particles.length === 0 && width > 0 && height > 0) {
+        particles = Array.from({ length: COUNT }, makeParticle);
+      } else {
+        particles.forEach(p => {
+          p.x = Math.min(p.x, width);
+          p.y = Math.min(p.y, height);
+        });
+      }
+    }
+
+    function drawParticle(p) {
+      ctx.globalAlpha = p.alpha;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function step() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = currentDotColor();
+
+      particles.forEach(p => {
+        p.driftAngle += 0.02;
+        p.vx += Math.cos(p.driftAngle) * 0.016;
+        p.vy += Math.sin(p.driftAngle * 1.3) * 0.016;
+
+        if (pointer) {
+          const dx = p.x - pointer.x;
+          const dy = p.y - pointer.y;
+          const dist = Math.hypot(dx, dy) || 1;
+          if (dist < REPEL_RADIUS) {
+            const force = ((REPEL_RADIUS - dist) / REPEL_RADIUS) * REPEL_STRENGTH;
+            p.vx += (dx / dist) * force * 0.00035;
+            p.vy += (dy / dist) * force * 0.00035;
+          }
+        }
+
+        p.vx *= FRICTION;
+        p.vy *= FRICTION;
+        p.x += p.vx;
+        p.y += p.vy;
+
+        const margin = 16;
+        if (p.x < -margin) p.x = width + margin;
+        if (p.x > width + margin) p.x = -margin;
+        if (p.y < -margin) p.y = height + margin;
+        if (p.y > height + margin) p.y = -margin;
+
+        drawParticle(p);
+      });
+
+      rafId = requestAnimationFrame(step);
+    }
+
+    function drawStatic() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = currentDotColor();
+      particles.forEach(drawParticle);
+    }
+
+    window.addEventListener('pointermove', e => {
+      const rect = canvas.getBoundingClientRect();
+      pointer = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    });
+
+    const ro = ('ResizeObserver' in window) ? new ResizeObserver(() => resize()) : null;
+    if (ro) ro.observe(canvas.parentElement);
+    else window.addEventListener('resize', resize);
+
+    resize();
+
+    if (reduceMotion) {
+      drawStatic();
+    } else {
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        } else if (!document.hidden && !rafId) {
+          rafId = requestAnimationFrame(step);
+        }
+      });
+      rafId = requestAnimationFrame(step);
+    }
+  }
+
+  // ---------- text reveal (fade + rise in as it enters view) ----------
+
+  const REVEAL_SELECTOR = [
+    '.brand', '.main-nav a', '.cart-btn',
+    '.hero-tabbar > span', '.tab-btn',
+    '.eyebrow', '.hero-title', '.hero-lede', '.hero-ctas',
+    '.section-title', '.karta-title', '.list-title',
+    '.stat', '.hero-strip-cell',
+    '.tablica-tile', '.tablica-upcoming',
+    '.wykres-panel-head', '.wykres-metrics > div',
+    '.section-note', '.index-row--body', '.index-foot > span',
+    '.karta-image-tag', '.karta-brand', '.karta-name', '.karta-thumb',
+    '.karta-lede', '.spec', '.buy-box', '.karta-badges',
+    '.metoda-card',
+    '.list-lede', '.list-form', '.list-note', '.archive-item',
+    '.footer-grid > div', '.footer-bottom > span',
+    '.cart-drawer-head > div', '.cart-item', '.cart-empty', '.cart-total-row', '.cart-drawer-note'
+  ].join(', ');
+
+  const revealObserver = ('IntersectionObserver' in window)
+    ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+    : null;
+
+  function applyReveal(root = document) {
+    const groupIndex = new Map();
+    root.querySelectorAll(REVEAL_SELECTOR).forEach(el => {
+      if (!el.classList.contains('reveal')) {
+        el.classList.add('reveal');
+        const parent = el.parentElement;
+        const n = groupIndex.get(parent) || 0;
+        groupIndex.set(parent, n + 1);
+        el.style.transitionDelay = Math.min(n * 70, 420) + 'ms';
+      }
+      if (!el.classList.contains('is-visible')) {
+        if (revealObserver) revealObserver.observe(el);
+        else el.classList.add('is-visible');
+      }
+    });
+  }
+
+  const state = {
+    heroVariant: 1,
+    cart: [{ nr: '01', qty: 1 }],
+    cartOpen: false,
+    heroQty: 1,
+    subscribed: false
+  };
+
+  // ---------- one-time render of static-per-load lists ----------
+
+  function renderHeroDatasheetRows() {
+    const el = document.getElementById('hero-datasheet-rows');
+    el.innerHTML = PRODUCTS.map(p => `
+      <a href="#indeks" class="hero-strip-cell">
+        <div class="cell-nr mono">${p.nr}</div>
+        <div class="cell-formula mono">${p.formula}</div>
+        <div class="cell-name">${p.name}</div>
+      </a>
+    `).join('');
+  }
+
+  function renderTablicaTiles() {
+    const grid = document.getElementById('hero-tablica-grid');
+    const upcoming = grid.querySelector('.tablica-upcoming');
+    const frag = document.createDocumentFragment();
+    PRODUCTS.forEach(p => {
+      const a = document.createElement('a');
+      a.href = '#karta';
+      a.className = 'tablica-tile';
+      a.innerHTML = `
+        <div class="tablica-tile-head mono"><span>${p.nr}</span><span>${p.mw}</span></div>
+        <div class="tablica-tile-formula mono">${p.formula}</div>
+        <div class="tablica-tile-name">${p.name}</div>
+        <div class="tablica-tile-meta mono">${p.price} zł · ${p.weeks} ${t('tile.weeks_suffix')}</div>
+      `;
+      frag.appendChild(a);
+    });
+    grid.insertBefore(frag, upcoming);
+  }
+
+  function renderWykres() {
+    const bars = document.getElementById('wykres-bars');
+    const labels = document.getElementById('wykres-labels');
+    bars.innerHTML = CURVE.map(v => `
+      <div class="wykres-bar-col"><div class="wykres-bar" style="height:${v}%"></div></div>
+    `).join('');
+    labels.innerHTML = CURVE.map((_, i) => `<span>${String(i + 1).padStart(2, '0')}</span>`).join('');
+  }
+
+  function renderIndexRows() {
+    const el = document.getElementById('index-rows');
+    el.innerHTML = PRODUCTS.map(p => `
+      <div class="index-row index-row--body" data-nr="${p.nr}">
+        <div class="cell-nr mono">${p.nr}</div>
+        <div class="cell-name">${p.name}</div>
+        <div class="cell-formula mono">${p.formula}</div>
+        <div class="cell-mw mono ta-r">${p.mw}</div>
+        <div class="cell-character">${characterFor(p.nr)}</div>
+        <div>
+          <div class="intensity-track"><div class="intensity-fill" data-width="${p.intensity}%"></div></div>
+        </div>
+        <div class="cell-weeks mono ta-r">${p.weeks}</div>
+        <div class="cell-price mono ta-r">${p.price} zł</div>
+        <div class="index-add-cell">
+          <button type="button" class="index-add-btn mono" data-add="${p.nr}">${t('add_btn')}</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const intensityObserver = ('IntersectionObserver' in window)
+    ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.width = entry.target.dataset.width;
+          intensityObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+    : null;
+
+  function applyIntensityBars() {
+    document.querySelectorAll('.intensity-fill').forEach(el => {
+      if (intensityObserver) intensityObserver.observe(el);
+      else el.style.width = el.dataset.width;
+    });
+  }
+
+  // ---------- hero variant tabs ----------
+
+  function setHeroVariant(v) {
+    state.heroVariant = v;
+    document.querySelectorAll('.hero[data-hero]').forEach(section => {
+      section.hidden = Number(section.dataset.hero) !== v;
+    });
+    document.querySelectorAll('.tab-btn[data-variant]').forEach(btn => {
+      btn.classList.toggle('is-active', Number(btn.dataset.variant) === v);
+    });
+  }
+
+  // ---------- cart ----------
+
+  function addToCart(nr, qty) {
+    const existing = state.cart.find(i => i.nr === nr);
+    if (existing) existing.qty += qty;
+    else state.cart.push({ nr, qty });
+    state.cartOpen = true;
+    renderCart();
+  }
+
+  function removeFromCart(nr) {
+    state.cart = state.cart.filter(i => i.nr !== nr);
+    renderCart();
+  }
+
+  function cartCount() {
+    return state.cart.reduce((sum, i) => sum + i.qty, 0);
+  }
+
+  function cartTotal() {
+    return state.cart.reduce((sum, i) => sum + productByNr(i.nr).price * i.qty, 0);
+  }
+
+  function toggleCart(open) {
+    state.cartOpen = typeof open === 'boolean' ? open : !state.cartOpen;
+    renderCart();
+  }
+
+  function renderCart() {
+    const count = cartCount();
+    document.getElementById('cart-badge').textContent = String(count);
+    document.getElementById('cart-drawer-title').textContent = t('cart.title_tpl')(count);
+    document.getElementById('cart-total').textContent = `${cartTotal()} zł`;
+
+    const itemsEl = document.getElementById('cart-items');
+    if (state.cart.length === 0) {
+      itemsEl.innerHTML = `<div class="cart-empty mono">${t('cart.empty')}</div>`;
+    } else {
+      itemsEl.innerHTML = state.cart.map(item => {
+        const p = productByNr(item.nr);
+        return `
+          <div class="cart-item" data-nr="${p.nr}">
+            <div class="cart-item-swatch"></div>
+            <div>
+              <div class="cart-item-meta mono">${p.nr} · ${p.formula}</div>
+              <div class="cart-item-name">${p.name}</div>
+              <div class="cart-item-qty mono">200 ml · ${item.qty} ×</div>
+              <button type="button" class="cart-item-remove mono" data-remove="${p.nr}">${t('cart.remove')}</button>
+            </div>
+            <div class="cart-item-price mono">${p.price * item.qty} zł</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    const overlay = document.getElementById('cart-overlay');
+    overlay.hidden = !state.cartOpen;
+
+    applyReveal(itemsEl);
+  }
+
+  // ---------- product card qty stepper ----------
+
+  function setHeroQty(qty) {
+    state.heroQty = Math.max(1, qty);
+    document.getElementById('qty-value').textContent = String(state.heroQty);
+  }
+
+  // ---------- day / night theme ----------
+
+  function refreshThemeLabel() {
+    const btn = document.getElementById('theme-toggle');
+    const isNight = document.documentElement.getAttribute('data-theme') === 'night';
+    btn.textContent = isNight ? t('theme.night') : t('theme.day');
+  }
+
+  function initThemeToggle() {
+    const btn = document.getElementById('theme-toggle');
+    const root = document.documentElement;
+
+    function apply(theme) {
+      if (theme === 'night') {
+        root.setAttribute('data-theme', 'night');
+      } else {
+        root.removeAttribute('data-theme');
+      }
+      btn.textContent = theme === 'night' ? t('theme.night') : t('theme.day');
+      try { localStorage.setItem('vairem-theme', theme); } catch (e) {}
+    }
+
+    let saved = 'day';
+    try { saved = localStorage.getItem('vairem-theme') || 'day'; } catch (e) {}
+    apply(saved);
+
+    btn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme') === 'night' ? 'night' : 'day';
+      apply(current === 'night' ? 'day' : 'night');
+    });
+  }
+
+  // ---------- newsletter ----------
+
+  function subscribe(email) {
+    if (!email) return;
+    state.subscribed = true;
+    const btn = document.getElementById('newsletter-submit');
+    const note = document.getElementById('newsletter-note');
+    btn.textContent = t('newsletter.subscribed');
+    note.textContent = t('newsletter.thanks');
+  }
+
+  // ---------- language switcher ----------
+
+  function applyI18n(root = document) {
+    root.querySelectorAll('[data-i18n]').forEach(el => {
+      el.textContent = t(el.dataset.i18n);
+    });
+    root.querySelectorAll('[data-i18n-html]').forEach(el => {
+      el.innerHTML = t(el.dataset.i18nHtml);
+    });
+    root.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      el.setAttribute('placeholder', t(el.dataset.i18nPlaceholder));
+    });
+  }
+
+  function refreshDynamicContent() {
+    renderTablicaTiles();
+    renderIndexRows();
+    renderCart();
+    applyReveal();
+    applyIntensityBars();
+    refreshThemeLabel();
+  }
+
+  function setLanguage(lang) {
+    if (!LANGS.includes(lang)) return;
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    try { localStorage.setItem('vairem-lang', lang); } catch (e) {}
+
+    applyI18n();
+    refreshDynamicContent();
+
+    const toggle = document.getElementById('lang-toggle');
+    if (toggle) toggle.textContent = lang.toUpperCase();
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.lang === lang);
+    });
+  }
+
+  function initLangSwitcher() {
+    const wrap = document.getElementById('lang-switcher');
+    const toggle = document.getElementById('lang-toggle');
+    const menu = document.getElementById('lang-menu');
+    if (!wrap || !toggle || !menu) return;
+
+    function closeMenu() {
+      menu.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    function openMenu() {
+      menu.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    toggle.addEventListener('click', e => {
+      e.stopPropagation();
+      if (menu.hidden) openMenu(); else closeMenu();
+    });
+
+    menu.addEventListener('click', e => {
+      const btn = e.target.closest('.lang-option');
+      if (!btn) return;
+      setLanguage(btn.dataset.lang);
+      closeMenu();
+    });
+
+    document.addEventListener('click', e => {
+      if (!wrap.contains(e.target)) closeMenu();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    let saved = 'pl';
+    try { saved = localStorage.getItem('vairem-lang') || 'pl'; } catch (e) {}
+    setLanguage(LANGS.includes(saved) ? saved : 'pl');
+  }
+
+  // ---------- cookie consent ----------
+
+  function initCookieBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+
+    let saved = null;
+    try { saved = localStorage.getItem('vairem-cookie-consent'); } catch (e) {}
+
+    function hide() {
+      banner.classList.remove('is-visible');
+      window.setTimeout(() => { banner.hidden = true; }, 420);
+    }
+
+    function decide(choice) {
+      try { localStorage.setItem('vairem-cookie-consent', choice); } catch (e) {}
+      hide();
+    }
+
+    document.getElementById('cookie-accept').addEventListener('click', () => decide('accepted'));
+    document.getElementById('cookie-reject').addEventListener('click', () => decide('rejected'));
+
+    if (!saved) {
+      banner.hidden = false;
+      window.setTimeout(() => banner.classList.add('is-visible'), 500);
+    }
+  }
+
+  // ---------- wire up ----------
+
+  function init() {
+    renderHeroDatasheetRows();
+    renderTablicaTiles();
+    renderWykres();
+    renderIndexRows();
+    setHeroVariant(state.heroVariant);
+    renderCart();
+    applyReveal();
+    applyIntensityBars();
+    initMoleculeField(document.getElementById('molecule-canvas'));
+    initThemeToggle();
+    initLangSwitcher();
+    initCookieBanner();
+
+    document.getElementById('hero-tabs').addEventListener('click', e => {
+      const btn = e.target.closest('.tab-btn');
+      if (!btn) return;
+      setHeroVariant(Number(btn.dataset.variant));
+    });
+
+    document.getElementById('index-rows').addEventListener('click', e => {
+      const btn = e.target.closest('[data-add]');
+      if (!btn) return;
+      addToCart(btn.dataset.add, 1);
+    });
+
+    document.getElementById('qty-dec').addEventListener('click', () => setHeroQty(state.heroQty - 1));
+    document.getElementById('qty-inc').addEventListener('click', () => setHeroQty(state.heroQty + 1));
+    document.getElementById('add-hero').addEventListener('click', () => addToCart('01', state.heroQty));
+
+    document.getElementById('cart-toggle').addEventListener('click', () => toggleCart());
+    document.getElementById('cart-close').addEventListener('click', () => toggleCart(false));
+    document.getElementById('cart-scrim').addEventListener('click', () => toggleCart(false));
+
+    document.getElementById('cart-items').addEventListener('click', e => {
+      const btn = e.target.closest('[data-remove]');
+      if (!btn) return;
+      removeFromCart(btn.dataset.remove);
+    });
+
+    document.getElementById('newsletter-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const input = document.getElementById('newsletter-email');
+      subscribe(input.value.trim());
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && state.cartOpen) toggleCart(false);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

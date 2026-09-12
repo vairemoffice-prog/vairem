@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VAIREM — molekularny zapach do wnętrz</title>
+<meta name="description" content="VAIREM — molekularny zapach do wnętrz. Siedem związków, jedna molekuła naraz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <span class="brand-name">VAIREM</span>
+      <span class="brand-tag mono">WARSZAWA</span>
+    </div>
+    <nav class="main-nav mono">
+      <a href="#indeks" data-i18n="nav.indeks">INDEKS</a>
+      <a href="#metoda" data-i18n="nav.metoda">METODA</a>
+      <a href="#karta">01 ISO E SUPER</a>
+      <a href="#list" data-i18n="nav.list">LIST</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switcher" id="lang-switcher">
+        <button type="button" id="lang-toggle" class="lang-toggle mono" aria-haspopup="true" aria-expanded="false">PL</button>
+        <div class="lang-menu" id="lang-menu" hidden>
+          <button type="button" class="lang-option mono" data-lang="pl">PL · POLSKI</button>
+          <button type="button" class="lang-option mono" data-lang="en">EN · ENGLISH</button>
+          <button type="button" class="lang-option mono" data-lang="es">ES · ESPAÑOL</button>
+          <button type="button" class="lang-option mono" data-lang="uk">UK · УКРАЇНСЬКА</button>
+          <button type="button" class="lang-option mono" data-lang="fr">FR · FRANÇAIS</button>
+        </div>
+      </div>
+      <button type="button" id="theme-toggle" class="theme-toggle mono" data-i18n="theme.day">DZIEŃ</button>
+      <button type="button" id="cart-toggle" class="cart-btn mono">
+        <span data-i18n="cart.label">KOSZYK</span>
+        <span id="cart-badge" class="cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero-region">
+    <div class="hero-bg" aria-hidden="true">
+      <canvas id="molecule-canvas" class="molecule-canvas"></canvas>
+    </div>
+
+    <div class="hero-tabbar mono">
+      <span data-i18n="tabbar.label">WARIANT HERO</span>
+      <div class="tabs" id="hero-tabs">
+        <button type="button" class="tab-btn" data-variant="1">01 · DATASHEET</button>
+        <button type="button" class="tab-btn" data-variant="2"><span data-i18n="tab.tablica">02 · TABLICA</span></button>
+        <button type="button" class="tab-btn" data-variant="3"><span data-i18n="tab.wykres">03 · WYKRES</span></button>
+      </div>
+    </div>
+
+    <!-- HERO 01 — DATASHEET -->
+    <section class="hero hero-datasheet" id="hero-1" data-hero="1">
+      <div class="hero-top">
+        <div class="hero-copy">
+          <div class="eyebrow mono" data-i18n="hero1.eyebrow">MOLEKULARNY ZAPACH DO WNĘTRZ · SIEDEM ZWIĄZKÓW</div>
+          <h1 class="hero-title" data-i18n-html="hero1.title">Powietrze,<br>opisane<br>precyzyjnie.</h1>
+          <p class="hero-lede" data-i18n="hero1.lede">Jedna molekuła zapachowa naraz, nierozcieńczona opowieścią. Bez nuty głowy, bez wytrącania, bez ogrodu w Grasse — jeden związek uwalniany pasywnie przez dwanaście tygodni.</p>
+          <div class="hero-ctas">
+            <a href="#indeks" class="btn btn-dark mono" data-i18n="cta.wybierz">WYBIERZ ZWIĄZEK →</a>
+            <a href="#metoda" class="btn btn-outline mono" data-i18n="cta.metoda_dyfuzji">METODA DYFUZJI</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><div class="stat-label mono" data-i18n="stat.zwiazkow">ZWIĄZKÓW W INDEKSIE</div><div class="stat-value">07</div></div>
+            <div class="stat"><div class="stat-label mono" data-i18n="stat.stezenie">STĘŻENIE</div><div class="stat-value">0,8 %</div></div>
+            <div class="stat"><div class="stat-label mono" data-i18n="stat.pojemnosc">POJEMNOŚĆ</div><div class="stat-value">200 ml</div></div>
+            <div class="stat"><div class="stat-label mono" data-i18n="stat.czas">CZAS TRWANIA</div><div class="stat-value" data-i18n="stat.czas_value">10–14 tyg.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-strip" id="hero-datasheet-rows"></div>
+    </section>
+  </div>
+
+  <!-- HERO 02 — TABLICA -->
+  <section class="hero hero-tablica" id="hero-2" data-hero="2">
+    <div class="tablica-grid" id="hero-tablica-grid">
+      <div class="tablica-intro">
+        <div class="eyebrow mono" data-i18n="hero2.eyebrow">TABLICA ZWIĄZKÓW · 01—07</div>
+        <h1 class="hero-title hero-title--tablica" data-i18n="hero2.title">Siedem cząsteczek. Żadnych kompozycji.</h1>
+        <p class="hero-lede hero-lede--tablica" data-i18n="hero2.lede">Wybierasz związek, nie perfumę. Każde naczynie zawiera jedną molekułę, nazwaną na etykiecie wraz ze wzorem.</p>
+        <a href="#indeks" class="btn btn-dark mono" data-i18n="cta.pelny_indeks">PEŁNY INDEKS →</a>
+      </div>
+      <!-- 7 compound tiles injected here by JS -->
+      <div class="tablica-upcoming">
+        <div class="upcoming-range mono">08 — 12</div>
+        <div class="upcoming-copy" data-i18n-html="upcoming.copy">W badaniu.<br>Cztery razy w roku.</div>
+        <a href="#list" class="upcoming-link mono" data-i18n="cta.zapisz">ZAPISZ SIĘ →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERO 03 — WYKRES -->
+  <section class="hero hero-wykres" id="hero-3" data-hero="3">
+    <div class="eyebrow mono" data-i18n="hero3.eyebrow">KRZYWA UWALNIANIA · POMIAR WŁASNY · 40 M²</div>
+    <div class="wykres-grid">
+      <div>
+        <h1 class="hero-title hero-title--wykres" data-i18n-html="hero3.title">Zapach jako<br>funkcja czasu.</h1>
+        <p class="hero-lede hero-lede--wykres" data-i18n="hero3.lede">Dyfuzja pasywna w temperaturze pomieszczenia. Molekuła opuszcza nośnik w tempie, jakiego żąda wnętrze — cieplejsze pomieszczenia czytają po prostu głośniej.</p>
+        <div class="hero-ctas">
+          <a href="#indeks" class="btn btn-dark mono" data-i18n="cta.wybierz">WYBIERZ ZWIĄZEK →</a>
+          <a href="#metoda" class="btn btn-outline mono" data-i18n="cta.metoda">METODA</a>
+        </div>
+      </div>
+      <div class="wykres-panel">
+        <div class="wykres-panel-head mono"><span data-i18n="wykres.intensywnosc">INTENSYWNOŚĆ / TYDZIEŃ</span><span>01 ISO E SUPER</span></div>
+        <div class="wykres-bars" id="wykres-bars"></div>
+        <div class="wykres-labels mono" id="wykres-labels"></div>
+        <div class="wykres-metrics">
+          <div><div class="metric-label mono" data-i18n="metric.prog">PRÓG</div><div class="metric-value">0,4 ppb</div></div>
+          <div><div class="metric-label mono" data-i18n="metric.zasieg">ZASIĘG</div><div class="metric-value">40 m²</div></div>
+          <div><div class="metric-label mono" data-i18n="metric.cena">CENA</div><div class="metric-value">275 zł</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDEKS -->
+  <section id="indeks" class="section-indeks">
+    <div class="section-head">
+      <h2 class="section-title" data-i18n="indeks.title">Indeks</h2>
+      <div class="section-note mono" data-i18n="indeks.note">SIEDEM ZWIĄZKÓW · PO 200 ML · CENA ZA NACZYNIE</div>
+    </div>
+
+    <div class="index-table">
+      <div class="index-row index-row--head mono">
+        <div data-i18n="th.nr">NR</div>
+        <div data-i18n="th.zwiazek">ZWIĄZEK</div>
+        <div data-i18n="th.wzor">WZÓR</div>
+        <div class="ta-r" data-i18n="th.mw">M [G/MOL]</div>
+        <div data-i18n="th.charakter">CHARAKTER</div>
+        <div data-i18n="th.intensywnosc">INTENSYWNOŚĆ</div>
+        <div class="ta-r" data-i18n="th.tyg">TYG.</div>
+        <div class="ta-r" data-i18n="th.cena">CENA</div>
+        <div></div>
+      </div>
+      <div id="index-rows"></div>
+      <div class="index-foot mono">
+        <span data-i18n="index.foot1">INTENSYWNOŚĆ MIERZONA PRZY 0,8% W NEUTRALNYM NOŚNIKU, 22 °C</span>
+        <span data-i18n="index.foot2">DOSTAWA 3–5 DNI · PL / EU</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- KARTA ZWIĄZKU 01 -->
+  <section id="karta" class="section-karta">
+    <div class="karta-grid">
+      <div>
+        <div class="karta-image">
+          <div class="karta-image-top mono"><span>C16H26O · 01</span><span>200 ML</span></div>
+          <div class="karta-image-bottom">
+            <div class="karta-image-tag mono" data-i18n="karta.image_tag">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+            <div class="karta-brand">VAIREM</div>
+            <div class="karta-name">Iso E Super</div>
+          </div>
+        </div>
+        <div class="karta-thumbs">
+          <div class="karta-thumb mono" data-i18n="karta.thumb.etykieta">ETYKIETA</div>
+          <div class="karta-thumb mono" data-i18n="karta.thumb.nosnik">NOŚNIK</div>
+          <div class="karta-thumb mono" data-i18n="karta.thumb.wnetrze">WNĘTRZE</div>
+          <div class="karta-thumb mono" data-i18n="karta.thumb.detal">DETAL</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow mono" data-i18n="karta.eyebrow">01 · TEN CICHY</div>
+        <h2 class="karta-title" data-i18n="karta.title">Nie pachnie niczym.</h2>
+        <p class="karta-lede" data-i18n="karta.lede">Sprawia, że wnętrze pachnie sobą, tylko cieplej — suchy cedr na granicy percepcji, bliżej temperatury niż zapachu. Molekuła, którą większość ludzi nosiła, nie wiedząc o tym; tutaj sama i nieuperfumowana.</p>
+
+        <div class="spec-grid">
+          <div class="spec"><div class="spec-label mono" data-i18n="spec.stezenie">STĘŻENIE</div><div class="spec-value mono" data-i18n="spec.stezenie_value">0,8 % w neutralnym nośniku</div></div>
+          <div class="spec"><div class="spec-label mono" data-i18n="spec.dyfuzja">DYFUZJA</div><div class="spec-value mono" data-i18n="spec.dyfuzja_value">pasywna, bez ciepła</div></div>
+          <div class="spec"><div class="spec-label mono" data-i18n="spec.wielkosc">WIELKOŚĆ WNĘTRZA</div><div class="spec-value mono" data-i18n="spec.wielkosc_value">do 40 m²</div></div>
+          <div class="spec"><div class="spec-label mono" data-i18n="spec.czas">CZAS TRWANIA</div><div class="spec-value mono" data-i18n="spec.czas_value">dwanaście tygodni</div></div>
+          <div class="spec"><div class="spec-label mono" data-i18n="spec.masa">MASA MOLOWA</div><div class="spec-value mono">234,4 g/mol</div></div>
+          <div class="spec"><div class="spec-label mono" data-i18n="spec.prog">PRÓG WYKRYWALNOŚCI</div><div class="spec-value mono">0,4 ppb</div></div>
+        </div>
+
+        <div class="buy-box">
+          <div>
+            <div class="buy-price-row">
+              <span class="buy-price">275 zł</span>
+              <span class="buy-unit mono">200 ML · 1,38 zł/ML</span>
+            </div>
+            <div class="buy-shipping mono" data-i18n="karta.shipping">Wysyłka 3–5 dni · zwrot 30 dni</div>
+          </div>
+          <div class="buy-controls">
+            <div class="qty-stepper">
+              <button type="button" id="qty-dec" class="qty-btn mono">−</button>
+              <div id="qty-value" class="qty-value mono">1</div>
+              <button type="button" id="qty-inc" class="qty-btn mono">+</button>
+            </div>
+            <button type="button" id="add-hero" class="btn btn-green mono" data-i18n="cta.do_koszyka">DO KOSZYKA</button>
+          </div>
+        </div>
+
+        <div class="karta-badges mono">
+          <span data-i18n="badge.szklo">SZKŁO WIELOKROTNEGO UŻYTKU</span>
+          <span data-i18n="badge.nosnik">NOŚNIK BIODEGRADOWALNY</span>
+          <span data-i18n="badge.alkohol">BEZ ALKOHOLU</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METODA -->
+  <section id="metoda" class="section-metoda">
+    <div class="section-head section-head--bordered">
+      <h2 class="section-title" data-i18n="metoda.title">Trzy decyzje i nic więcej.</h2>
+      <div class="section-note mono" data-i18n="metoda.note">METODA · DYFUZJA PASYWNA</div>
+    </div>
+    <div class="metoda-grid">
+      <div class="metoda-card">
+        <div class="metoda-index mono">01</div>
+        <div class="metoda-title" data-i18n="metoda1.title">Jeden związek</div>
+        <p class="metoda-copy" data-i18n="metoda1.copy">Nie akord, nie kompozycja. Każde naczynie zawiera jedną molekułę zapachową, nazwaną na etykiecie wraz ze wzorem, żebyś mógł się nauczyć, co naprawdę lubisz.</p>
+        <div class="metoda-bars metoda-bars--five">
+          <div class="metoda-bar" style="background:var(--green-mid)"></div>
+          <div class="metoda-bar" style="background:var(--bar-lighter)"></div>
+          <div class="metoda-bar" style="background:var(--bar-lighter)"></div>
+          <div class="metoda-bar" style="background:var(--bar-lighter)"></div>
+          <div class="metoda-bar" style="background:var(--bar-lighter)"></div>
+        </div>
+        <div class="metoda-caption mono" data-i18n="metoda1.caption">1 SKŁADNIK / 5 MIEJSC</div>
+      </div>
+      <div class="metoda-card">
+        <div class="metoda-index mono">02</div>
+        <div class="metoda-title" data-i18n="metoda2.title">Bez ciepła</div>
+        <p class="metoda-copy" data-i18n="metoda2.copy">Dyfuzja pasywna w temperaturze pomieszczenia. Molekuła opuszcza nośnik w tempie, jakiego żąda wnętrze — cieplejsze pomieszczenia czytają po prostu głośniej.</p>
+        <div class="metoda-bars metoda-bars--rising">
+          <div class="metoda-bar" style="height:40%;background:var(--blue-panel)"></div>
+          <div class="metoda-bar" style="height:58%;background:var(--blue-panel)"></div>
+          <div class="metoda-bar" style="height:74%;background:var(--green-soft)"></div>
+          <div class="metoda-bar" style="height:88%;background:var(--green-mid)"></div>
+          <div class="metoda-bar" style="height:100%;background:var(--green-mid)"></div>
+        </div>
+        <div class="metoda-caption mono">18 °C → 26 °C</div>
+      </div>
+      <div class="metoda-card">
+        <div class="metoda-index mono">03</div>
+        <div class="metoda-title" data-i18n="metoda3.title">Dwanaście tygodni</div>
+        <p class="metoda-copy" data-i18n="metoda3.copy">Potem się kończy. Naczynia są szklane i do wielokrotnego napełniania, nośnik biodegradowalny. Nic nie jest pachnące, jeśli nie musi być.</p>
+        <div class="metoda-bars metoda-bars--twelve">
+          <div class="metoda-bar" style="background:var(--green-mid)"></div>
+          <div class="metoda-bar" style="background:var(--green-mid)"></div>
+          <div class="metoda-bar" style="background:var(--green-mid)"></div>
+          <div class="metoda-bar" style="background:var(--green-soft)"></div>
+          <div class="metoda-bar" style="background:var(--green-soft)"></div>
+          <div class="metoda-bar" style="background:var(--green-soft)"></div>
+          <div class="metoda-bar" style="background:var(--blue-panel)"></div>
+          <div class="metoda-bar" style="background:var(--blue-panel)"></div>
+          <div class="metoda-bar" style="background:var(--blue-panel)"></div>
+          <div class="metoda-bar" style="background:var(--bar-lighter)"></div>
+          <div class="metoda-bar" style="background:var(--bar-lighter)"></div>
+          <div class="metoda-bar" style="background:var(--bar-lightest)"></div>
+        </div>
+        <div class="metoda-caption mono" data-i18n="metoda3.caption">TYDZIEŃ 01 → 12</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WIDEO PEŁNOEKRANOWE -->
+  <section class="section-video" aria-hidden="true">
+    <video class="video-fullbleed" autoplay muted loop playsinline preload="metadata">
+      <source src="assets/video/molekuly-tlo.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="list" class="section-list">
+    <div class="list-panel">
+      <div class="list-copy">
+        <div class="eyebrow mono eyebrow--on-dark" data-i18n="list.eyebrow">VAIREM.PL/LIST · 4–5 WYSYŁEK W ROKU</div>
+        <h2 class="list-title" data-i18n="list.title">List, kiedy dochodzi nowa molekuła.</h2>
+        <p class="list-lede" data-i18n="list.lede">Jeden związek wyjaśniony wprost, z powodem, dla którego zajęło to chwilę. Bez ofert, bez odliczania.</p>
+        <form class="list-form" id="newsletter-form">
+          <input type="email" id="newsletter-email" placeholder="vairem.office@gmail.com" data-i18n-placeholder="list.placeholder" required>
+          <button type="submit" id="newsletter-submit" class="mono" data-i18n="cta.zapisz_plain">ZAPISZ SIĘ</button>
+        </form>
+        <div id="newsletter-note" class="list-note mono" data-i18n="list.note">BEZ OFERT. WYPISUJESZ SIĘ JEDNYM KLIKNIĘCIEM.</div>
+      </div>
+      <div class="list-archive">
+        <div class="archive-item"><div class="archive-label mono" data-i18n="archive.next">NAJBLIŻSZY LIST</div><div class="archive-value" data-i18n="archive.next_value">08 · Ambrettolide — w badaniu</div></div>
+        <div class="archive-item"><div class="archive-label mono" data-i18n="archive.last">OSTATNI</div><div class="archive-value" data-i18n="archive.last_value">07 · Timbersilk — dlaczego zimno</div></div>
+        <div class="archive-item"><div class="archive-label mono" data-i18n="archive.archive">ARCHIWUM</div><div class="archive-value" data-i18n="archive.archive_value">01—07 · pełne noty</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand-name">VAIREM</div>
+        <div class="footer-address mono" data-i18n-html="footer.address">MOLEKULARNY ZAPACH DO WNĘTRZ<br>WARSZAWA · PL<br>NIP 000 000 00 00</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label mono" data-i18n="nav.indeks">INDEKS</div>
+        <div class="footer-links">
+          <a href="#karta">01 Iso E Super</a>
+          <a href="#karta">02 Ambroxan</a>
+          <a href="#karta">03 Cashmeran</a>
+          <a href="#indeks" data-i18n="footer.pelny_indeks">Pełny indeks →</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label mono" data-i18n="footer.marka">MARKA</div>
+        <div class="footer-links">
+          <a href="#metoda" data-i18n="footer.metoda">Metoda</a>
+          <a href="#list" data-i18n="footer.list">List</a>
+          <a href="#indeks" data-i18n="footer.refill">Naczynia i refill</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label mono" data-i18n="footer.obsluga">OBSŁUGA</div>
+        <div class="footer-links">
+          <a href="#list" data-i18n="footer.kontakt">Kontakt</a>
+          <a href="#list" data-i18n="footer.wysylka">Wysyłka i zwroty</a>
+          <a href="#list" data-i18n="footer.regulamin">Regulamin</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom mono">
+      <span>© 2026 VAIREM</span>
+      <span data-i18n="footer.vat">CENY W PLN, ZAWIERAJĄ VAT</span>
+    </div>
+  </footer>
+
+</main>
+
+<!-- CART DRAWER -->
+<div id="cart-overlay" class="cart-overlay" hidden>
+  <div class="cart-scrim" id="cart-scrim"></div>
+  <aside class="cart-drawer">
+    <div class="cart-drawer-head">
+      <div id="cart-drawer-title" class="mono">KOSZYK · 0 POZ.</div>
+      <button type="button" id="cart-close" class="cart-close mono" data-i18n="cart.close">ZAMKNIJ ✕</button>
+    </div>
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-drawer-foot">
+      <div class="cart-shipping mono"><span data-i18n="cart.shipping">WYSYŁKA</span><span>0 zł · PL</span></div>
+      <div class="cart-total-row">
+        <span class="mono" data-i18n="cart.total">DO ZAPŁATY</span>
+        <span id="cart-total" class="cart-total">0 zł</span>
+      </div>
+      <button type="button" class="btn btn-green mono cart-checkout" data-i18n="cta.checkout">PRZEJDŹ DO PŁATNOŚCI →</button>
+      <div class="cart-drawer-note mono" data-i18n="cart.note">ZWROT 30 DNI · SZKŁO DO REFILLU</div>
+    </div>
+  </aside>
+</div>
+
+<!-- COOKIE CONSENT -->
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookies" hidden>
+  <div class="cookie-banner-title mono" data-i18n="cookie.title">PLIKI COOKIE</div>
+  <p class="cookie-banner-text" data-i18n="cookie.text">Używamy plików cookie, żeby zapamiętać Twój język, motyw i zawartość koszyka oraz zrozumieć, jak korzystasz ze strony. Bez zgody podstawowe funkcje nadal działają.</p>
+  <div class="cookie-banner-actions">
+    <button type="button" id="cookie-accept" class="btn btn-dark mono" data-i18n="cookie.accept">AKCEPTUJ</button>
+    <button type="button" id="cookie-reject" class="btn btn-outline mono" data-i18n="cookie.reject">ODRZUĆ</button>
+  </div>
+</div>
+
+<script src="js/app.js" defer></script>
+</body>
+</html>
