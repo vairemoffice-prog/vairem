@@ -21,7 +21,7 @@
   --dark: #525A65;
   --dark-hover: #5E6773;
 
-  --header-bg: rgba(179, 212, 240, 0.55);
+  --header-bg: rgba(179, 212, 240, 0.94);
   --scrim-bg: rgba(38, 45, 51, 0.32);
 
   --green-accent: #7C9B84;
@@ -130,8 +130,7 @@ button { font-family: inherit; }
   top: 0;
   z-index: 40;
   background: var(--header-bg);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--border);
 }
 
