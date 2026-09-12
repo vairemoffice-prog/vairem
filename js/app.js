@@ -70,7 +70,7 @@
       'tabbar.label': 'WARIANT HERO', 'tab.tablica': '02 · TABLICA', 'tab.wykres': '03 · WYKRES',
       'hero1.eyebrow': 'MOLEKULARNY ZAPACH DO WNĘTRZ · SIEDEM ZWIĄZKÓW',
       'hero1.title': 'Powietrze<br>nie jest<br>puste',
-      'hero1.lede': 'Jedna molekuła zapachowa naraz, nierozcieńczona opowieścią. Bez nuty głowy, bez wytrącania, bez ogrodu w Grasse — jeden związek uwalniany pasywnie przez dwanaście tygodni.',
+      'hero1.lede': 'Jedna molekuła zapachowa naraz, nierozcieńczona opowieścią. Bez nuty głowy, bez wytrącania, bez klasycznej piramidy — czysta forma zapachu, uwalniana powoli do powietrza.<br><br>To, czego nie widać, zmienia to, co czujesz. Nie możesz zobaczyć.<br>Możesz tylko sprawdzić, czy do Ciebie pasuje.<br>Przymierzysz?',
       'cta.wybierz': 'WYBIERZ ZWIĄZEK →', 'cta.metoda_dyfuzji': 'METODA DYFUZJI',
       'stat.zwiazkow': 'ZWIĄZKÓW W INDEKSIE', 'stat.stezenie': 'STĘŻENIE', 'stat.pojemnosc': 'POJEMNOŚĆ',
       'stat.czas': 'CZAS TRWANIA', 'stat.czas_value': '10–14 tyg.',
