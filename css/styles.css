@@ -363,7 +363,7 @@ button { font-family: inherit; }
   border-bottom: 1px solid var(--border-light);
   background: var(--bg);
 }
-.index-row--body:hover { background: var(--row-bg); }
+.index-row--body:hover { background: #9FB3C4; }
 .index-row--body > div { padding: 14px; }
 .cell-nr { font-size: 11px; color: var(--muted); }
 .cell-name { font-size: 16px; letter-spacing: -0.01em; }
