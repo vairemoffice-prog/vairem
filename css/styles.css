@@ -50,6 +50,7 @@
 
   --paper-noise: url("../assets/paper-texture.png");
   --paper-size: 180px 180px;
+  --ink-mask: url("../assets/ink-mask.png");
 }
 
 [data-theme="night"] {
@@ -97,16 +98,26 @@ body {
 }
 
 /* ---------- "printed on paper" text ---------- */
-/* Ink-like text blended into the paper grain beneath it; excludes buttons,
-   badges and other elements with a solid fill, where a multiply blend
-   would wash out light-on-color text. */
+/* Ink-like text blended into the paper grain beneath it, plus a worn-stamp
+   mask so the ink itself reads as unevenly applied (patches of missing ink,
+   like a dry letterpress run) rather than a flat digital fill. Excludes
+   buttons, badges and other elements with a solid fill, where either effect
+   would wash out or shred light-on-color labels. */
 p, h1, h2, h3, h4, h5, h6, li, dt, dd, blockquote, label, th, td,
 .eyebrow, .mono:not(button):not(.btn), a:not(.btn), .brand-mark {
   mix-blend-mode: multiply;
+  -webkit-mask-image: var(--ink-mask);
+  -webkit-mask-repeat: repeat;
+  -webkit-mask-size: 60px 60px;
+  mask-image: var(--ink-mask);
+  mask-repeat: repeat;
+  mask-size: 60px 60px;
 }
 
-h1, h2, h3, .legal-title, .brand-name {
+h1, h2, h3, h4, .legal-title, .brand-name, .brand-mark {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 -1px 0 rgba(38, 45, 51, 0.06);
+  -webkit-mask-size: 170px 170px;
+  mask-size: 170px 170px;
 }
 
 a { color: var(--text); text-decoration: none; }
