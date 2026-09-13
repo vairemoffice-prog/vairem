@@ -47,6 +47,9 @@
   --placeholder-label: #4A555D;
   --bar-lighter: #E0E6EA;
   --bar-lightest: #EEF2F5;
+
+  --paper-noise: url("../assets/paper-texture.png");
+  --paper-size: 180px 180px;
 }
 
 [data-theme="night"] {
@@ -72,6 +75,8 @@
   --newsletter-border: #C3CBD1;
   --newsletter-copy: #4A525C;
   --newsletter-panel-bg: #DDE3E7;
+
+  --paper-noise: url("../assets/paper-texture-dark.png");
 }
 
 * { box-sizing: border-box; }
@@ -79,13 +84,29 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--paper-noise);
+  background-repeat: repeat;
+  background-size: var(--paper-size);
 }
 
 body {
   font-family: 'Cabinet Grotesk', 'Space Grotesk', Helvetica, Arial, sans-serif;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- "printed on paper" text ---------- */
+/* Ink-like text blended into the paper grain beneath it; excludes buttons,
+   badges and other elements with a solid fill, where a multiply blend
+   would wash out light-on-color text. */
+p, h1, h2, h3, h4, h5, h6, li, dt, dd, blockquote, label, th, td,
+.eyebrow, .mono:not(button):not(.btn), a:not(.btn), .brand-mark {
+  mix-blend-mode: multiply;
+}
+
+h1, h2, h3, .legal-title, .brand-name {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 -1px 0 rgba(38, 45, 51, 0.06);
 }
 
 a { color: var(--text); text-decoration: none; }
