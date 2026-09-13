@@ -648,8 +648,25 @@
     });
   }
 
+  const CART_STORAGE_KEY = 'vairem-cart';
+
+  function loadCart() {
+    try {
+      const raw = localStorage.getItem(CART_STORAGE_KEY);
+      if (raw === null) return [{ nr: '01', qty: 1 }];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [{ nr: '01', qty: 1 }];
+    }
+  }
+
+  function saveCart() {
+    try { localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state.cart)); } catch (e) {}
+  }
+
   const state = {
-    cart: [{ nr: '01', qty: 1 }],
+    cart: loadCart(),
     cartOpen: false,
     heroQty: 1,
     subscribed: false
@@ -714,11 +731,13 @@
     if (existing) existing.qty += qty;
     else state.cart.push({ nr, qty });
     state.cartOpen = true;
+    saveCart();
     renderCart();
   }
 
   function removeFromCart(nr) {
     state.cart = state.cart.filter(i => i.nr !== nr);
+    saveCart();
     renderCart();
   }
 
@@ -764,6 +783,8 @@
 
     const overlay = document.getElementById('cart-overlay');
     overlay.hidden = !state.cartOpen;
+
+    document.getElementById('cart-checkout').disabled = state.cart.length === 0;
 
     applyReveal(itemsEl);
   }
@@ -954,6 +975,11 @@
       const btn = e.target.closest('[data-remove]');
       if (!btn) return;
       removeFromCart(btn.dataset.remove);
+    });
+
+    document.getElementById('cart-checkout').addEventListener('click', () => {
+      if (state.cart.length === 0) return;
+      window.location.href = 'checkout.html';
     });
 
     document.getElementById('newsletter-form').addEventListener('submit', e => {

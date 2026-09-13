@@ -122,6 +122,8 @@ button { font-family: inherit; }
 .btn-outline { border-color: var(--border-strong); color: var(--text); background: transparent; }
 .btn-green { border: 0; background: var(--green-deep); color: var(--green-btn-text); }
 .btn-green:hover { background: var(--green-deep-hover); }
+.btn[disabled] { cursor: not-allowed; opacity: 0.45; }
+.btn[disabled]:hover { background: var(--green-deep); }
 
 /* ---------- header ---------- */
 
