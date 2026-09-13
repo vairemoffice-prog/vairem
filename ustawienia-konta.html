@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ustawienia konta — VAIREM</title>
+<meta name="description" content="Zaloguj się, załóż konto lub zarządzaj swoimi danymi w VAIREM.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
+<style>
+  [hidden]{ display:none !important; }
+  .legal-header{ border-bottom:1px solid var(--border); padding-block:22px; }
+  .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
+  .legal-back:hover{ color:var(--text-hover); }
+
+  .ac-main{ padding-block:56px 96px; }
+  .ac-col{ max-width:560px; margin:0 auto; }
+  .ac-eyebrow{ font-size:11px; letter-spacing:0.2em; color:var(--muted); }
+  .ac-title{ margin:14px 0 8px; font-size:clamp(28px,4vw,38px); letter-spacing:-0.03em; font-weight:500; }
+  .ac-sub{ font-size:14px; color:var(--muted); margin:0 0 36px; max-width:52ch; line-height:1.6; }
+
+  /* account choice tiles (same pattern as checkout) */
+  .acct-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); }
+  .acct-tile{
+    background:var(--bg); border:0; margin:0; padding:24px 18px; display:flex; flex-direction:column; gap:10px;
+    align-items:flex-start; text-align:left; font-family:inherit; color:inherit; cursor:pointer;
+  }
+  .acct-tile:hover{ background:var(--row-bg); }
+  .acct-tile:focus-visible{ outline:2px solid var(--green-deep); outline-offset:-2px; }
+  .acct-icon{ width:26px; height:26px; color:var(--text); }
+  .acct-tile .name{ font-size:14px; }
+  .acct-tile .note{ font-size:11px; color:var(--muted); line-height:1.4; }
+  @media (max-width:520px){ .acct-grid{ grid-template-columns:1fr; } }
+
+  .ac-form{ margin-top:28px; }
+  .ac-fields{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  .ac-field{ display:flex; flex-direction:column; gap:6px; }
+  .ac-field.full{ grid-column:1 / -1; }
+  .ac-field label{ font-size:11px; letter-spacing:0.1em; color:var(--muted); font-family:'Martian Mono',monospace; }
+  .ac-field input{
+    border:1px solid var(--border-strong); background:var(--bg); color:var(--text);
+    padding:12px 14px; font-size:14px; font-family:inherit; outline:none;
+  }
+  .ac-field input:focus{ border-color:var(--green-deep); }
+  .ac-field input:disabled{ color:var(--muted); background:var(--row-bg); }
+
+  .ac-actions{ display:flex; justify-content:space-between; align-items:center; gap:16px; margin-top:28px; }
+  .ac-back-link{ font-size:11px; letter-spacing:0.14em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Martian Mono',monospace; }
+  .ac-back-link:hover{ color:var(--text-hover); }
+  .ac-error{ font-size:12px; color:#B0463F; margin-top:14px; }
+  .ac-note{ font-size:12px; color:var(--green-deep); margin-top:14px; }
+
+  .ac-status{
+    border:1px solid var(--border); padding:22px; display:flex; justify-content:space-between;
+    align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:36px;
+  }
+  .ac-status .name{ font-size:16px; }
+  .ac-status .meta{ font-size:11px; color:var(--muted); font-family:'Martian Mono',monospace; margin-top:4px; }
+  .ac-logout{ font-size:11px; letter-spacing:0.1em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Martian Mono',monospace; }
+  .ac-logout:hover{ color:var(--text-hover); }
+
+  .ac-section-label{ font-size:10px; letter-spacing:0.16em; color:var(--muted); font-family:'Martian Mono',monospace; margin:40px 0 18px; padding-top:28px; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<header class="legal-header">
+  <div class="wrap">
+    <a href="index.html" class="brand" style="text-decoration:none;">
+      <svg class="brand-mark" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
+        <text x="8" y="126" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">v</text>
+        <text x="58" y="134" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">ai</text>
+        <text x="62" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">r</text>
+        <text x="96" y="78" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">e</text>
+        <text x="120" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">m</text>
+      </svg>
+      <span class="brand-name">Vairem</span>
+    </a>
+    <a href="index.html" class="legal-back mono">← STRONA GŁÓWNA</a>
+  </div>
+</header>
+
+<main class="ac-main">
+  <div class="wrap">
+    <div class="ac-col">
+
+      <div class="ac-eyebrow mono">TWOJE KONTO</div>
+      <h1 class="ac-title" id="ac-heading">Ustawienia konta</h1>
+      <p class="ac-sub" id="ac-sub">Zaloguj się albo załóż konto, żeby zapisać dane dostawy na kolejne zamówienia.</p>
+
+      <!-- logged-out: choice -->
+      <div class="acct-grid" id="ac-grid">
+        <button type="button" class="acct-tile" data-account="login">
+          <svg class="acct-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <circle cx="20" cy="14" r="7"/><path d="M6 34c1.5-8 7-12 14-12s12.5 4 14 12" stroke-linecap="round"/>
+          </svg>
+          <span class="name">Zaloguj się</span>
+          <span class="note">Masz już konto VAIREM</span>
+        </button>
+        <button type="button" class="acct-tile" data-account="register">
+          <svg class="acct-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <circle cx="17" cy="14" r="7"/><path d="M3 34c1.5-8 7-12 14-12 2.3 0 4.4.4 6.2 1.2" stroke-linecap="round"/>
+            <path d="M31 17v10M26 22h10" stroke-linecap="round"/>
+          </svg>
+          <span class="name">Załóż konto</span>
+          <span class="note">Zajmie mniej niż minutę</span>
+        </button>
+      </div>
+
+      <form id="ac-login-form" class="ac-form" hidden novalidate>
+        <div class="ac-fields" style="grid-template-columns:1fr;">
+          <div class="ac-field"><label for="login-email">E-MAIL</label><input id="login-email" type="email" autocomplete="email" required></div>
+          <div class="ac-field"><label for="login-password">HASŁO</label><input id="login-password" type="password" autocomplete="current-password" required></div>
+        </div>
+        <div class="ac-error mono" id="ac-login-error" hidden></div>
+        <div class="ac-actions">
+          <button type="button" class="ac-back-link" data-cancel-account>← WSTECZ</button>
+          <button type="submit" class="btn btn-dark mono">ZALOGUJ SIĘ →</button>
+        </div>
+      </form>
+
+      <form id="ac-register-form" class="ac-form" hidden novalidate>
+        <div class="ac-fields" style="grid-template-columns:1fr;">
+          <div class="ac-field"><label for="reg-name">IMIĘ I NAZWISKO</label><input id="reg-name" type="text" autocomplete="name" required></div>
+          <div class="ac-field"><label for="reg-email">E-MAIL</label><input id="reg-email" type="email" autocomplete="email" required></div>
+          <div class="ac-field"><label for="reg-password">HASŁO (MIN. 6 ZNAKÓW)</label><input id="reg-password" type="password" autocomplete="new-password" minlength="6" required></div>
+        </div>
+        <div class="ac-error mono" id="ac-register-error" hidden></div>
+        <div class="ac-actions">
+          <button type="button" class="ac-back-link" data-cancel-account>← WSTECZ</button>
+          <button type="submit" class="btn btn-dark mono">ZAŁÓŻ KONTO →</button>
+        </div>
+      </form>
+
+      <!-- logged-in: profile -->
+      <div id="ac-profile" hidden>
+        <div class="ac-status">
+          <div>
+            <div class="name" id="ac-profile-name"></div>
+            <div class="meta" id="ac-profile-email"></div>
+          </div>
+          <button type="button" class="ac-logout mono" id="ac-logout">WYLOGUJ SIĘ</button>
+        </div>
+
+        <form id="ac-details-form" novalidate>
+          <div class="ac-section-label" style="margin-top:0; padding-top:0; border-top:0;">DANE KONTA</div>
+          <div class="ac-fields">
+            <div class="ac-field full"><label for="d-name">IMIĘ I NAZWISKO</label><input id="d-name" type="text" autocomplete="name" required></div>
+            <div class="ac-field full"><label for="d-email">E-MAIL</label><input id="d-email" type="email" autocomplete="email" required></div>
+            <div class="ac-field"><label for="d-phone">TELEFON</label><input id="d-phone" type="tel" autocomplete="tel"></div>
+          </div>
+
+          <div class="ac-section-label">DOMYŚLNY ADRES DOSTAWY</div>
+          <div class="ac-fields">
+            <div class="ac-field full"><label for="d-address">ADRES (ULICA I NUMER)</label><input id="d-address" type="text" autocomplete="street-address"></div>
+            <div class="ac-field"><label for="d-zip">KOD POCZTOWY</label><input id="d-zip" type="text" autocomplete="postal-code" pattern="\d{2}-\d{3}" placeholder="00-000"></div>
+            <div class="ac-field"><label for="d-city">MIASTO</label><input id="d-city" type="text" autocomplete="address-level2"></div>
+          </div>
+
+          <div class="ac-note mono" id="ac-saved-note" hidden>ZAPISANO ZMIANY</div>
+          <div class="ac-actions">
+            <span></span>
+            <button type="submit" class="btn btn-green mono">ZAPISZ ZMIANY</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="margin-top:0;">
+  <div class="wrap footer-bottom mono" style="border-top:1px solid var(--border); padding-top:16px;">
+    <span>© 2026 VAIREM</span>
+    <a href="index.html">STRONA GŁÓWNA →</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var ACCOUNT_KEY = 'vairem-account';
+  var SESSION_KEY = 'vairem-session';
+
+  function getAccount() {
+    try { return JSON.parse(localStorage.getItem(ACCOUNT_KEY) || 'null'); } catch (e) { return null; }
+  }
+  function saveAccount(account) {
+    try { localStorage.setItem(ACCOUNT_KEY, JSON.stringify(account)); } catch (e) {}
+  }
+  function isLoggedIn() {
+    try { return localStorage.getItem(SESSION_KEY) === '1' && !!getAccount(); } catch (e) { return false; }
+  }
+
+  var heading = document.getElementById('ac-heading');
+  var sub = document.getElementById('ac-sub');
+  var grid = document.getElementById('ac-grid');
+  var loginForm = document.getElementById('ac-login-form');
+  var registerForm = document.getElementById('ac-register-form');
+  var profile = document.getElementById('ac-profile');
+
+  function render() {
+    var account = getAccount();
+    loginForm.hidden = true;
+    registerForm.hidden = true;
+
+    if (isLoggedIn() && account) {
+      heading.textContent = 'Twoje konto';
+      sub.hidden = true;
+      grid.hidden = true;
+      profile.hidden = false;
+      document.getElementById('ac-profile-name').textContent = account.name;
+      document.getElementById('ac-profile-email').textContent = account.email;
+      document.getElementById('d-name').value = account.name || '';
+      document.getElementById('d-email').value = account.email || '';
+      document.getElementById('d-phone').value = account.phone || '';
+      document.getElementById('d-address').value = account.address || '';
+      document.getElementById('d-zip').value = account.zip || '';
+      document.getElementById('d-city').value = account.city || '';
+    } else {
+      heading.textContent = 'Ustawienia konta';
+      sub.hidden = false;
+      grid.hidden = false;
+      profile.hidden = true;
+    }
+  }
+
+  grid.querySelectorAll('[data-account]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var mode = btn.dataset.account;
+      grid.hidden = true;
+      loginForm.hidden = mode !== 'login';
+      registerForm.hidden = mode !== 'register';
+    });
+  });
+
+  document.querySelectorAll('[data-cancel-account]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      loginForm.hidden = true;
+      registerForm.hidden = true;
+      grid.hidden = false;
+    });
+  });
+
+  loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('login-email').value.trim();
+    var password = document.getElementById('login-password').value;
+    var account = getAccount();
+    var errEl = document.getElementById('ac-login-error');
+    if (!account || account.email.toLowerCase() !== email.toLowerCase() || account.password !== password) {
+      errEl.textContent = 'Nieprawidłowy e-mail lub hasło. Nie masz jeszcze konta? Załóż je poniżej.';
+      errEl.hidden = false;
+      return;
+    }
+    errEl.hidden = true;
+    try { localStorage.setItem(SESSION_KEY, '1'); } catch (e2) {}
+    render();
+  });
+
+  registerForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('reg-name').value.trim();
+    var email = document.getElementById('reg-email').value.trim();
+    var password = document.getElementById('reg-password').value;
+    var errEl = document.getElementById('ac-register-error');
+    if (!name || !email || password.length < 6) {
+      errEl.textContent = 'Uzupełnij wszystkie pola — hasło musi mieć min. 6 znaków.';
+      errEl.hidden = false;
+      return;
+    }
+    errEl.hidden = true;
+    saveAccount({ name: name, email: email, password: password, phone: '', address: '', zip: '', city: '' });
+    try { localStorage.setItem(SESSION_KEY, '1'); } catch (e2) {}
+    render();
+  });
+
+  document.getElementById('ac-logout').addEventListener('click', function () {
+    try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
+    render();
+  });
+
+  document.getElementById('ac-details-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var account = getAccount() || {};
+    account.name = document.getElementById('d-name').value.trim();
+    account.email = document.getElementById('d-email').value.trim();
+    account.phone = document.getElementById('d-phone').value.trim();
+    account.address = document.getElementById('d-address').value.trim();
+    account.zip = document.getElementById('d-zip').value.trim();
+    account.city = document.getElementById('d-city').value.trim();
+    saveAccount(account);
+    var note = document.getElementById('ac-saved-note');
+    note.hidden = false;
+    document.getElementById('ac-profile-name').textContent = account.name;
+    document.getElementById('ac-profile-email').textContent = account.email;
+    setTimeout(function () { note.hidden = true; }, 2500);
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

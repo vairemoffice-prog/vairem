@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="css/styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
 <style>
+  [hidden]{ display:none !important; }
   .legal-header{ border-bottom:1px solid var(--border); padding-block:22px; }
   .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
   .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
@@ -31,12 +32,36 @@
   .co-step + .co-step{ border-left:1px solid var(--border); }
   .co-step .nr{ font-family:'Martian Mono',monospace; font-size:11px; flex-shrink:0; }
   .co-step .lbl{ font-size:12px; letter-spacing:0.06em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  @media (max-width:480px){
-    .co-step{ padding:12px 8px; gap:5px; }
-    .co-step .lbl{ font-size:10px; letter-spacing:0.02em; }
+  @media (max-width:560px){
+    .co-step{ padding:10px 6px; gap:4px; }
+    .co-step .lbl{ font-size:9px; letter-spacing:0.01em; }
+    .co-step .nr{ font-size:10px; }
   }
   .co-step.is-active{ color:var(--text); background:var(--row-bg); }
   .co-step.is-done{ color:var(--green-deep); }
+
+  /* account step */
+  .acct-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); }
+  .acct-tile{
+    background:var(--bg); border:0; margin:0; padding:24px 18px; display:flex; flex-direction:column; gap:10px;
+    align-items:flex-start; text-align:left; font-family:inherit; color:inherit; cursor:pointer;
+  }
+  .acct-tile:hover{ background:var(--row-bg); }
+  .acct-tile:focus-visible{ outline:2px solid var(--green-deep); outline-offset:-2px; }
+  .acct-icon{ width:26px; height:26px; color:var(--text); }
+  .acct-tile .name{ font-size:14px; }
+  .acct-tile .note{ font-size:11px; color:var(--muted); line-height:1.4; }
+  @media (max-width:560px){ .acct-grid{ grid-template-columns:1fr; } }
+
+  .co-account-form{ margin-top:28px; max-width:400px; }
+  .co-account-status{
+    border:1px solid var(--border); padding:22px; display:flex; justify-content:space-between;
+    align-items:center; gap:16px; flex-wrap:wrap;
+  }
+  .co-account-status .name{ font-size:15px; }
+  .co-account-status .meta{ font-size:11px; color:var(--muted); font-family:'Martian Mono',monospace; margin-top:4px; }
+  .co-account-logout{ font-size:11px; letter-spacing:0.1em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Martian Mono',monospace; }
+  .co-account-logout:hover{ color:var(--text-hover); }
 
   .co-panel[hidden]{ display:none; }
   .co-title{ font-size:clamp(24px,3vw,32px); letter-spacing:-0.02em; font-weight:500; margin:0 0 8px; }
@@ -96,6 +121,18 @@
   .co-summary-total .lbl{ font-size:11px; letter-spacing:0.14em; color:var(--muted); font-family:'Martian Mono',monospace; }
   .co-summary-total .val{ font-size:26px; letter-spacing:-0.02em; }
 
+  .co-promo-row{ display:flex; gap:8px; margin:0 0 20px; }
+  .co-promo-row input{
+    flex:1; border:1px solid var(--border-strong); background:var(--bg); color:var(--text);
+    padding:12px 14px; font-size:13px; letter-spacing:0.08em; outline:none;
+  }
+  .co-promo-row input:focus{ border-color:var(--green-deep); }
+  .co-promo-row button{ border:0; background:var(--dark); color:var(--bg); padding:0 18px; font-size:11px; letter-spacing:0.1em; cursor:pointer; }
+  .co-promo-row button:hover{ background:var(--dark-hover); }
+  .co-promo-msg{ font-size:12px; margin:-12px 0 20px; }
+  .co-promo-msg.is-ok{ color:var(--green-deep); }
+  .co-promo-msg.is-error{ color:#B0463F; }
+
   .co-recap{ border:1px solid var(--border); padding:16px 18px; margin-bottom:24px; font-size:13px; line-height:1.7; }
   .co-recap .lbl{ font-size:10px; letter-spacing:0.14em; color:var(--muted); font-family:'Martian Mono',monospace; display:block; margin-bottom:4px; }
   .co-recap .edit{ float:right; font-size:11px; letter-spacing:0.1em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Martian Mono',monospace; }
@@ -141,13 +178,84 @@
 
       <div id="co-flow">
         <div class="co-steps" id="co-steps">
-          <div class="co-step" data-step="1"><span class="nr mono">01</span><span class="lbl">DOSTAWA</span></div>
-          <div class="co-step" data-step="2"><span class="nr mono">02</span><span class="lbl">PŁATNOŚĆ</span></div>
-          <div class="co-step" data-step="3"><span class="nr mono">03</span><span class="lbl">PODSUMOWANIE</span></div>
+          <div class="co-step" data-step="1"><span class="nr mono">01</span><span class="lbl">KONTO</span></div>
+          <div class="co-step" data-step="2"><span class="nr mono">02</span><span class="lbl">DOSTAWA</span></div>
+          <div class="co-step" data-step="3"><span class="nr mono">03</span><span class="lbl">PŁATNOŚĆ</span></div>
+          <div class="co-step" data-step="4"><span class="nr mono">04</span><span class="lbl">PODSUMOWANIE</span></div>
         </div>
 
-        <!-- STEP 1: shipping -->
+        <!-- STEP 1: account -->
         <section class="co-panel" data-panel="1">
+          <h1 class="co-title">Twoje konto</h1>
+          <p class="co-sub">Zaloguj się, załóż konto, żeby zapamiętać dane na kolejne zamówienia, albo zamów jako gość.</p>
+
+          <div class="co-account-status" id="co-account-status" hidden>
+            <div>
+              <div class="name" id="co-account-status-name"></div>
+              <div class="meta" id="co-account-status-email"></div>
+            </div>
+            <button type="button" class="co-account-logout mono" id="co-account-logout">WYLOGUJ SIĘ</button>
+          </div>
+
+          <div class="acct-grid" id="co-account-grid">
+            <button type="button" class="acct-tile" data-account="login">
+              <svg class="acct-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <circle cx="20" cy="14" r="7"/><path d="M6 34c1.5-8 7-12 14-12s12.5 4 14 12" stroke-linecap="round"/>
+                <path d="M25 21l5 5-5 5" stroke-linecap="round" stroke-linejoin="round" transform="translate(2,-4)"/>
+              </svg>
+              <span class="name">Zaloguj się</span>
+              <span class="note">Masz już konto VAIREM</span>
+            </button>
+            <button type="button" class="acct-tile" data-account="register">
+              <svg class="acct-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <circle cx="17" cy="14" r="7"/><path d="M3 34c1.5-8 7-12 14-12 2.3 0 4.4.4 6.2 1.2" stroke-linecap="round"/>
+                <path d="M31 17v10M26 22h10" stroke-linecap="round"/>
+              </svg>
+              <span class="name">Załóż konto</span>
+              <span class="note">Zapisz dane na kolejne zakupy</span>
+            </button>
+            <button type="button" class="acct-tile" data-account="guest">
+              <svg class="acct-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <circle cx="20" cy="14" r="7" stroke-dasharray="2.5 3.2"/><path d="M6 34c1.5-8 7-12 14-12s12.5 4 14 12" stroke-linecap="round" stroke-dasharray="2.5 3.2"/>
+              </svg>
+              <span class="name">Kontynuuj jako gość</span>
+              <span class="note">Bez zakładania konta</span>
+            </button>
+          </div>
+
+          <form id="co-login-form" class="co-account-form" hidden novalidate>
+            <div class="co-form" style="grid-template-columns:1fr;">
+              <div class="co-field"><label for="login-email">E-MAIL</label><input id="login-email" type="email" autocomplete="email" required></div>
+              <div class="co-field"><label for="login-password">HASŁO</label><input id="login-password" type="password" autocomplete="current-password" required></div>
+            </div>
+            <div class="co-error mono" id="co-login-error" hidden></div>
+            <div class="co-actions">
+              <button type="button" class="co-back-step" data-cancel-account>← WSTECZ</button>
+              <button type="submit" class="btn btn-dark mono">ZALOGUJ SIĘ →</button>
+            </div>
+          </form>
+
+          <form id="co-register-form" class="co-account-form" hidden novalidate>
+            <div class="co-form" style="grid-template-columns:1fr;">
+              <div class="co-field"><label for="reg-name">IMIĘ I NAZWISKO</label><input id="reg-name" type="text" autocomplete="name" required></div>
+              <div class="co-field"><label for="reg-email">E-MAIL</label><input id="reg-email" type="email" autocomplete="email" required></div>
+              <div class="co-field"><label for="reg-password">HASŁO (MIN. 6 ZNAKÓW)</label><input id="reg-password" type="password" autocomplete="new-password" minlength="6" required></div>
+            </div>
+            <div class="co-error mono" id="co-register-error" hidden></div>
+            <div class="co-actions">
+              <button type="button" class="co-back-step" data-cancel-account>← WSTECZ</button>
+              <button type="submit" class="btn btn-dark mono">ZAŁÓŻ KONTO →</button>
+            </div>
+          </form>
+
+          <div class="co-actions" id="co-account-continue" hidden>
+            <span></span>
+            <button type="button" class="btn btn-dark mono" id="co-account-next">DALEJ: DOSTAWA →</button>
+          </div>
+        </section>
+
+        <!-- STEP 2: shipping -->
+        <section class="co-panel" data-panel="2" hidden>
           <h1 class="co-title">Dane dostawy</h1>
           <p class="co-sub">Wysyłka 3–5 dni roboczych · zwrot do 30 dni.</p>
           <form id="co-shipping-form" novalidate>
@@ -183,14 +291,14 @@
             </div>
             <div class="co-error mono" id="co-shipping-error" hidden>Uzupełnij wymagane pola, żeby przejść dalej.</div>
             <div class="co-actions">
-              <span></span>
+              <button type="button" class="co-back-step" data-back="1">← WSTECZ</button>
               <button type="submit" class="btn btn-dark mono">DALEJ: PŁATNOŚĆ →</button>
             </div>
           </form>
         </section>
 
-        <!-- STEP 2: payment -->
-        <section class="co-panel" data-panel="2" hidden>
+        <!-- STEP 3: payment -->
+        <section class="co-panel" data-panel="3" hidden>
           <h1 class="co-title">Forma płatności</h1>
           <p class="co-sub">Wybierz jeden ze sposobów płatności.</p>
 
@@ -236,37 +344,47 @@
           </div>
           <div class="co-error mono" id="co-payment-error" hidden>Wybierz formę płatności, żeby przejść dalej.</div>
           <div class="co-actions">
-            <button type="button" class="co-back-step" data-back="1">← WSTECZ</button>
+            <button type="button" class="co-back-step" data-back="2">← WSTECZ</button>
             <button type="button" class="btn btn-dark mono" id="co-to-summary">DALEJ: PODSUMOWANIE →</button>
           </div>
         </section>
 
-        <!-- STEP 3: summary -->
-        <section class="co-panel" data-panel="3" hidden>
+        <!-- STEP 4: summary -->
+        <section class="co-panel" data-panel="4" hidden>
           <h1 class="co-title">Podsumowanie zamówienia</h1>
           <p class="co-sub">Sprawdź dane przed złożeniem zamówienia.</p>
 
           <div class="co-summary-table" id="co-items"></div>
 
+          <div class="co-promo-row">
+            <input type="text" id="co-promo-input" placeholder="KOD RABATOWY" class="mono" autocomplete="off">
+            <button type="button" id="co-promo-apply" class="mono">ZASTOSUJ</button>
+          </div>
+          <div class="co-promo-msg mono" id="co-promo-msg" hidden></div>
+
           <div class="co-recap">
-            <button type="button" class="edit mono" data-back="1">EDYTUJ</button>
+            <span class="lbl">KONTO</span>
+            <div id="co-recap-account"></div>
+          </div>
+          <div class="co-recap">
+            <button type="button" class="edit mono" data-back="2">EDYTUJ</button>
             <span class="lbl">DOSTAWA</span>
             <div id="co-recap-shipping"></div>
           </div>
           <div class="co-recap">
-            <button type="button" class="edit mono" data-back="2">EDYTUJ</button>
+            <button type="button" class="edit mono" data-back="3">EDYTUJ</button>
             <span class="lbl">PŁATNOŚĆ</span>
             <div id="co-recap-payment"></div>
           </div>
 
           <div class="co-actions">
-            <button type="button" class="co-back-step" data-back="2">← WSTECZ</button>
+            <button type="button" class="co-back-step" data-back="3">← WSTECZ</button>
             <button type="button" class="btn btn-green mono" id="co-place-order">ZŁÓŻ ZAMÓWIENIE</button>
           </div>
         </section>
 
-        <!-- STEP 4: confirmation -->
-        <section class="co-panel" data-panel="4" hidden>
+        <!-- STEP 5: confirmation -->
+        <section class="co-panel" data-panel="5" hidden>
           <div class="co-confirm">
             <svg class="co-confirm-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
               <circle cx="28" cy="28" r="24"/>
@@ -327,6 +445,10 @@
     return sum + (p ? p.price * item.qty : 0);
   }, 0);
 
+  var DISCOUNT_CODE = 'WITAJ10';
+  var DISCOUNT_RATE = 0.10;
+  var discountApplied = false;
+
   // ---------- step navigation ----------
   var panels = Array.prototype.slice.call(document.querySelectorAll('.co-panel'));
   var stepEls = Array.prototype.slice.call(document.querySelectorAll('.co-step'));
@@ -334,6 +456,7 @@
 
   function goToStep(n) {
     currentStep = n;
+    if (n === 1) renderAccountStep();
     panels.forEach(function (p) { p.hidden = Number(p.dataset.panel) !== n; });
     stepEls.forEach(function (s) {
       var num = Number(s.dataset.step);
@@ -347,7 +470,120 @@
     btn.addEventListener('click', function () { goToStep(Number(btn.dataset.back)); });
   });
 
-  // ---------- step 1: shipping ----------
+  // ---------- step 1: account ----------
+  var ACCOUNT_KEY = 'vairem-account';
+  var SESSION_KEY = 'vairem-session';
+  var checkoutMode = 'guest';
+
+  function getAccount() {
+    try { return JSON.parse(localStorage.getItem(ACCOUNT_KEY) || 'null'); } catch (e) { return null; }
+  }
+  function isLoggedIn() {
+    try { return localStorage.getItem(SESSION_KEY) === '1' && !!getAccount(); } catch (e) { return false; }
+  }
+  function prefillFromAccount(account) {
+    document.getElementById('f-name').value = account.name || '';
+    document.getElementById('f-email').value = account.email || '';
+    document.getElementById('f-phone').value = account.phone || '';
+    document.getElementById('f-address').value = account.address || '';
+    document.getElementById('f-zip').value = account.zip || '';
+    document.getElementById('f-city').value = account.city || '';
+  }
+
+  var accountStatus = document.getElementById('co-account-status');
+  var accountGrid = document.getElementById('co-account-grid');
+  var loginForm = document.getElementById('co-login-form');
+  var registerForm = document.getElementById('co-register-form');
+  var accountContinue = document.getElementById('co-account-continue');
+
+  function renderAccountStep() {
+    var account = getAccount();
+    loginForm.hidden = true;
+    registerForm.hidden = true;
+    if (isLoggedIn() && account) {
+      accountStatus.hidden = false;
+      accountGrid.hidden = true;
+      accountContinue.hidden = false;
+      document.getElementById('co-account-status-name').textContent = account.name;
+      document.getElementById('co-account-status-email').textContent = account.email;
+      checkoutMode = 'account';
+      prefillFromAccount(account);
+    } else {
+      accountStatus.hidden = true;
+      accountGrid.hidden = false;
+      accountContinue.hidden = true;
+      checkoutMode = 'guest';
+    }
+  }
+
+  accountGrid.querySelectorAll('[data-account]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var mode = btn.dataset.account;
+      if (mode === 'guest') { checkoutMode = 'guest'; goToStep(2); return; }
+      accountGrid.hidden = true;
+      loginForm.hidden = mode !== 'login';
+      registerForm.hidden = mode !== 'register';
+    });
+  });
+
+  document.querySelectorAll('[data-cancel-account]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      loginForm.hidden = true;
+      registerForm.hidden = true;
+      accountGrid.hidden = false;
+    });
+  });
+
+  loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('login-email').value.trim();
+    var password = document.getElementById('login-password').value;
+    var account = getAccount();
+    var errEl = document.getElementById('co-login-error');
+    if (!account || account.email.toLowerCase() !== email.toLowerCase() || account.password !== password) {
+      errEl.textContent = 'Nieprawidłowy e-mail lub hasło. Nie masz jeszcze konta? Załóż je poniżej.';
+      errEl.hidden = false;
+      return;
+    }
+    errEl.hidden = true;
+    try { localStorage.setItem(SESSION_KEY, '1'); } catch (e2) {}
+    checkoutMode = 'account';
+    prefillFromAccount(account);
+    goToStep(2);
+  });
+
+  registerForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('reg-name').value.trim();
+    var email = document.getElementById('reg-email').value.trim();
+    var password = document.getElementById('reg-password').value;
+    var errEl = document.getElementById('co-register-error');
+    if (!name || !email || password.length < 6) {
+      errEl.textContent = 'Uzupełnij wszystkie pola — hasło musi mieć min. 6 znaków.';
+      errEl.hidden = false;
+      return;
+    }
+    errEl.hidden = true;
+    var account = { name: name, email: email, password: password, phone: '', address: '', zip: '', city: '' };
+    try {
+      localStorage.setItem(ACCOUNT_KEY, JSON.stringify(account));
+      localStorage.setItem(SESSION_KEY, '1');
+    } catch (e2) {}
+    checkoutMode = 'account';
+    prefillFromAccount(account);
+    goToStep(2);
+  });
+
+  document.getElementById('co-account-logout').addEventListener('click', function () {
+    try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
+    renderAccountStep();
+  });
+
+  document.getElementById('co-account-next').addEventListener('click', function () { goToStep(2); });
+
+  renderAccountStep();
+
+  // ---------- step 2: shipping ----------
   var shippingForm = document.getElementById('co-shipping-form');
   var shippingError = document.getElementById('co-shipping-error');
   var shipping = {};
@@ -370,10 +606,10 @@
       city: fd.get('city').trim(),
       note: fd.get('note').trim()
     };
-    goToStep(2);
+    goToStep(3);
   });
 
-  // ---------- step 2: payment ----------
+  // ---------- step 3: payment ----------
   var payGrid = document.getElementById('pay-grid');
   var payTiles = Array.prototype.slice.call(payGrid.querySelectorAll('.pay-tile'));
   var paymentError = document.getElementById('co-payment-error');
@@ -396,11 +632,14 @@
   document.getElementById('co-to-summary').addEventListener('click', function () {
     if (!selectedPayment) { paymentError.hidden = false; return; }
     renderSummary();
-    goToStep(3);
+    goToStep(4);
   });
 
-  // ---------- step 3: summary ----------
+  // ---------- step 4: summary ----------
   function renderSummary() {
+    var discount = discountApplied ? Math.round(orderTotal * DISCOUNT_RATE) : 0;
+    var finalTotal = orderTotal - discount;
+
     var itemsEl = document.getElementById('co-items');
     itemsEl.innerHTML = cart.map(function (item) {
       var p = productByNr(item.nr);
@@ -416,18 +655,40 @@
       );
     }).join('') +
       '<div class="co-summary-row"><div class="name">Wysyłka</div><div class="price">0 zł</div></div>' +
-      '<div class="co-summary-total"><span class="lbl">DO ZAPŁATY</span><span class="val">' + orderTotal + ' zł</span></div>';
+      (discountApplied
+        ? '<div class="co-summary-row"><div class="name">Rabat (' + DISCOUNT_CODE + ')</div><div class="price">&minus;' + discount + ' zł</div></div>'
+        : '') +
+      '<div class="co-summary-total"><span class="lbl">DO ZAPŁATY</span><span class="val">' + finalTotal + ' zł</span></div>';
 
+    document.getElementById('co-recap-account').textContent = checkoutMode === 'account'
+      ? 'Zalogowano jako ' + (getAccount() || {}).name
+      : 'Zamówienie jako gość (bez konta)';
     document.getElementById('co-recap-shipping').textContent =
       shipping.name + ', ' + shipping.address + ', ' + shipping.zip + ' ' + shipping.city + ' — ' + shipping.email + ', ' + shipping.phone;
     document.getElementById('co-recap-payment').textContent = selectedPayment;
   }
 
+  document.getElementById('co-promo-apply').addEventListener('click', function () {
+    var val = document.getElementById('co-promo-input').value.trim().toUpperCase();
+    var msg = document.getElementById('co-promo-msg');
+    msg.hidden = false;
+    if (val === DISCOUNT_CODE) {
+      discountApplied = true;
+      msg.textContent = 'Kod zastosowany — rabat −10% naliczony poniżej.';
+      msg.className = 'co-promo-msg mono is-ok';
+    } else {
+      discountApplied = false;
+      msg.textContent = 'Nieprawidłowy kod rabatowy.';
+      msg.className = 'co-promo-msg mono is-error';
+    }
+    renderSummary();
+  });
+
   document.getElementById('co-place-order').addEventListener('click', function () {
     var orderNr = 'VR-' + Date.now().toString(36).toUpperCase();
     document.getElementById('co-order-nr').textContent = 'NUMER ZAMÓWIENIA: ' + orderNr;
     try { localStorage.setItem(CART_KEY, '[]'); } catch (e) {}
-    goToStep(4);
+    goToStep(5);
   });
 
   goToStep(1);
