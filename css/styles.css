@@ -98,16 +98,17 @@ body {
 }
 
 /* ---------- "printed on paper" text ---------- */
-/* Ink-like text blended into the paper grain beneath it, plus a worn-stamp
-   mask so the ink itself reads as unevenly applied (patches of missing ink,
-   like a dry letterpress run) rather than a flat digital fill. Excludes
-   buttons, badges and other elements with a solid fill, where either effect
-   would wash out or shred light-on-color labels. */
+/* A worn-stamp mask so the ink reads as unevenly applied (patches of missing
+   ink, like a dry letterpress run) rather than a flat digital fill. This only
+   varies the *opacity* of the text's own color, so it never shifts a brand
+   token's hue — unlike mix-blend-mode, which multiplied text against
+   whatever sat behind it and washed out light text on dark panels (see
+   Księga Marki, rozdział 02). Excludes buttons, badges and other elements
+   with a solid fill, where the mask would shred light-on-color labels. */
 p, h1, h2, h3, h4, h5, h6, li, dt, dd, blockquote, label, th, td,
 .eyebrow, .mono:not(button):not(.btn), a:not(.btn), .brand-mark,
 .cell-nr, .cell-name, .cell-formula, .cell-mw, .cell-character, .cell-weeks, .cell-price,
 .index-row--head > div, .index-table span {
-  mix-blend-mode: multiply;
   -webkit-mask-image: var(--ink-mask);
   -webkit-mask-repeat: repeat;
   -webkit-mask-size: 60px 60px;
