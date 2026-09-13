@@ -47,8 +47,6 @@
   --placeholder-label: #4A555D;
   --bar-lighter: #E0E6EA;
   --bar-lightest: #EEF2F5;
-
-  --ink-mask: url("../assets/ink-mask.png");
 }
 
 [data-theme="night"] {
@@ -88,30 +86,6 @@ body {
   font-family: 'Cabinet Grotesk', 'Space Grotesk', Helvetica, Arial, sans-serif;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
-}
-
-/* ---------- "printed" text ---------- */
-/* A worn-stamp mask so the ink reads as unevenly applied (patches of missing
-   ink, like a dry letterpress run) rather than a flat digital fill. Only
-   varies the text's own opacity, never its hue, so brand colors stay exact.
-   Excludes buttons, badges and other elements with a solid fill, where the
-   mask would shred light-on-color labels. */
-p, h1, h2, h3, h4, h5, h6, li, dt, dd, blockquote, label, th, td,
-.eyebrow, .mono:not(button):not(.btn), a:not(.btn), .brand-mark,
-.cell-nr, .cell-name, .cell-formula, .cell-mw, .cell-character, .cell-weeks, .cell-price,
-.index-row--head > div, .index-table span {
-  -webkit-mask-image: var(--ink-mask);
-  -webkit-mask-repeat: repeat;
-  -webkit-mask-size: 60px 60px;
-  mask-image: var(--ink-mask);
-  mask-repeat: repeat;
-  mask-size: 60px 60px;
-}
-
-h1, h2, h3, h4, .legal-title, .brand-name, .brand-mark {
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 -1px 0 rgba(38, 45, 51, 0.06);
-  -webkit-mask-size: 170px 170px;
-  mask-size: 170px 170px;
 }
 
 a { color: var(--text); text-decoration: none; }
