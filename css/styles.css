@@ -47,10 +47,6 @@
   --placeholder-label: #4A555D;
   --bar-lighter: #E0E6EA;
   --bar-lightest: #EEF2F5;
-
-  --paper-noise: url("../assets/paper-texture.png");
-  --paper-size: 180px 180px;
-  --ink-mask: url("../assets/ink-mask.png");
 }
 
 [data-theme="night"] {
@@ -76,8 +72,6 @@
   --newsletter-border: #C3CBD1;
   --newsletter-copy: #4A525C;
   --newsletter-panel-bg: #DDE3E7;
-
-  --paper-noise: url("../assets/paper-texture-dark.png");
 }
 
 * { box-sizing: border-box; }
@@ -85,42 +79,13 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: var(--bg);
-  background-image: var(--paper-noise);
-  background-repeat: repeat;
-  background-size: var(--paper-size);
+  background: var(--bg);
 }
 
 body {
   font-family: 'Cabinet Grotesk', 'Space Grotesk', Helvetica, Arial, sans-serif;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
-}
-
-/* ---------- "printed on paper" text ---------- */
-/* A worn-stamp mask so the ink reads as unevenly applied (patches of missing
-   ink, like a dry letterpress run) rather than a flat digital fill. This only
-   varies the *opacity* of the text's own color, so it never shifts a brand
-   token's hue — unlike mix-blend-mode, which multiplied text against
-   whatever sat behind it and washed out light text on dark panels (see
-   Księga Marki, rozdział 02). Excludes buttons, badges and other elements
-   with a solid fill, where the mask would shred light-on-color labels. */
-p, h1, h2, h3, h4, h5, h6, li, dt, dd, blockquote, label, th, td,
-.eyebrow, .mono:not(button):not(.btn), a:not(.btn), .brand-mark,
-.cell-nr, .cell-name, .cell-formula, .cell-mw, .cell-character, .cell-weeks, .cell-price,
-.index-row--head > div, .index-table span {
-  -webkit-mask-image: var(--ink-mask);
-  -webkit-mask-repeat: repeat;
-  -webkit-mask-size: 60px 60px;
-  mask-image: var(--ink-mask);
-  mask-repeat: repeat;
-  mask-size: 60px 60px;
-}
-
-h1, h2, h3, h4, .legal-title, .brand-name, .brand-mark {
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 -1px 0 rgba(38, 45, 51, 0.06);
-  -webkit-mask-size: 170px 170px;
-  mask-size: 170px 170px;
 }
 
 a { color: var(--text); text-decoration: none; }
