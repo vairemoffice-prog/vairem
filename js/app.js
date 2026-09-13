@@ -133,7 +133,11 @@
       'tile.weeks_suffix': 'TYG.', 'add_btn': 'DODAJ',
       'cookie.title': 'PLIKI COOKIE',
       'cookie.text': 'Używamy plików cookie, żeby zapamiętać Twój język, motyw i zawartość koszyka oraz zrozumieć, jak korzystasz ze strony. Bez zgody podstawowe funkcje nadal działają.',
-      'cookie.accept': 'AKCEPTUJ', 'cookie.reject': 'ODRZUĆ'
+      'cookie.accept': 'AKCEPTUJ', 'cookie.reject': 'ODRZUĆ',
+      'promo.eyebrow': 'OFERTA NA START',
+      'promo.title': '&minus;10% na<br>pierwsze zamówienie',
+      'promo.text': 'Nowi w VAIREM dostają jednorazowy kod rabatowy. Wpisz go w podsumowaniu zamówienia — zniżka naliczy się automatycznie.',
+      'promo.copy': 'KOPIUJ', 'promo.copied': 'SKOPIOWANO', 'promo.dismiss': 'Nie, dziękuję'
     },
     en: {
       'nav.indeks': 'INDEX', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER',
@@ -200,7 +204,11 @@
       'tile.weeks_suffix': 'WKS', 'add_btn': 'ADD',
       'cookie.title': 'COOKIES',
       'cookie.text': 'We use cookies to remember your language, theme and cart contents, and to understand how you use the site. Basic functions still work without consent.',
-      'cookie.accept': 'ACCEPT', 'cookie.reject': 'DECLINE'
+      'cookie.accept': 'ACCEPT', 'cookie.reject': 'DECLINE',
+      'promo.eyebrow': 'WELCOME OFFER',
+      'promo.title': '10% off<br>your first order',
+      'promo.text': 'New to VAIREM? Take a one-time discount code with you. Enter it at checkout summary — the discount applies automatically.',
+      'promo.copy': 'COPY', 'promo.copied': 'COPIED', 'promo.dismiss': 'No, thanks'
     },
     es: {
       'nav.indeks': 'ÍNDICE', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA',
@@ -267,7 +275,11 @@
       'tile.weeks_suffix': 'SEM.', 'add_btn': 'AÑADIR',
       'cookie.title': 'COOKIES',
       'cookie.text': 'Usamos cookies para recordar tu idioma, tema y el contenido del carrito, y para entender cómo usas el sitio. Las funciones básicas siguen funcionando sin tu consentimiento.',
-      'cookie.accept': 'ACEPTAR', 'cookie.reject': 'RECHAZAR'
+      'cookie.accept': 'ACEPTAR', 'cookie.reject': 'RECHAZAR',
+      'promo.eyebrow': 'OFERTA DE BIENVENIDA',
+      'promo.title': '10% de descuento<br>en tu primer pedido',
+      'promo.text': '¿Nuevo en VAIREM? Llévate un código de descuento de un solo uso. Introdúcelo en el resumen del pedido — el descuento se aplica automáticamente.',
+      'promo.copy': 'COPIAR', 'promo.copied': 'COPIADO', 'promo.dismiss': 'No, gracias'
     },
     uk: {
       'nav.indeks': 'ІНДЕКС', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ',
@@ -334,7 +346,11 @@
       'tile.weeks_suffix': 'ТИЖ.', 'add_btn': 'ДОДАТИ',
       'cookie.title': 'ФАЙЛИ COOKIE',
       'cookie.text': "Ми використовуємо файли cookie, щоб запам'ятати вашу мову, тему й вміст кошика, а також зрозуміти, як ви користуєтесь сайтом. Основні функції працюють і без згоди.",
-      'cookie.accept': 'ПРИЙНЯТИ', 'cookie.reject': 'ВІДХИЛИТИ'
+      'cookie.accept': 'ПРИЙНЯТИ', 'cookie.reject': 'ВІДХИЛИТИ',
+      'promo.eyebrow': 'ПРИВІТАЛЬНА ПРОПОЗИЦІЯ',
+      'promo.title': 'Знижка 10%<br>на перше замовлення',
+      'promo.text': 'Новачок у VAIREM? Отримай одноразовий промокод. Введи його в підсумку замовлення — знижка застосується автоматично.',
+      'promo.copy': 'КОПІЮВАТИ', 'promo.copied': 'СКОПІЙОВАНО', 'promo.dismiss': 'Ні, дякую'
     },
     fr: {
       'nav.indeks': 'INDEX', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE',
@@ -401,7 +417,11 @@
       'tile.weeks_suffix': 'SEM.', 'add_btn': 'AJOUTER',
       'cookie.title': 'COOKIES',
       'cookie.text': 'Nous utilisons des cookies pour mémoriser votre langue, votre thème et le contenu de votre panier, et pour comprendre comment vous utilisez le site. Les fonctions de base restent disponibles sans consentement.',
-      'cookie.accept': 'ACCEPTER', 'cookie.reject': 'REFUSER'
+      'cookie.accept': 'ACCEPTER', 'cookie.reject': 'REFUSER',
+      'promo.eyebrow': "OFFRE DE BIENVENUE",
+      'promo.title': '10% de réduction<br>sur votre première commande',
+      'promo.text': "Nouveau chez VAIREM ? Profitez d'un code de réduction à usage unique. Saisissez-le dans le récapitulatif de commande — la réduction s'applique automatiquement.",
+      'promo.copy': 'COPIER', 'promo.copied': 'COPIÉ', 'promo.dismiss': 'Non merci'
     }
   };
 
@@ -944,6 +964,55 @@
     }
   }
 
+  // ---------- first-order discount popup ----------
+
+  function initPromoPopup() {
+    const overlay = document.getElementById('promo-overlay');
+    if (!overlay) return;
+
+    let alreadyShown = false;
+    try { alreadyShown = localStorage.getItem('vairem-promo-shown') === '1'; } catch (e) {}
+    if (alreadyShown) return;
+
+    function hide() {
+      overlay.classList.remove('is-visible');
+      window.setTimeout(() => { overlay.hidden = true; }, 320);
+    }
+
+    function show() {
+      try { localStorage.setItem('vairem-promo-shown', '1'); } catch (e) {}
+      overlay.hidden = false;
+      window.setTimeout(() => overlay.classList.add('is-visible'), 20);
+    }
+
+    document.getElementById('promo-close').addEventListener('click', hide);
+    document.getElementById('promo-dismiss').addEventListener('click', hide);
+    document.getElementById('promo-scrim').addEventListener('click', hide);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && overlay.classList.contains('is-visible')) hide();
+    });
+
+    document.getElementById('promo-copy').addEventListener('click', () => {
+      const code = document.getElementById('promo-code').textContent.trim();
+      const btn = document.getElementById('promo-copy');
+      const done = () => {
+        btn.textContent = t('promo.copied');
+        btn.classList.add('is-copied');
+        window.setTimeout(() => {
+          btn.textContent = t('promo.copy');
+          btn.classList.remove('is-copied');
+        }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(done, done);
+      } else {
+        done();
+      }
+    });
+
+    window.setTimeout(show, 6000);
+  }
+
   // ---------- wire up ----------
 
   function init() {
@@ -956,6 +1025,7 @@
     initThemeToggle();
     initLangSwitcher();
     initCookieBanner();
+    initPromoPopup();
 
     document.getElementById('index-rows').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');

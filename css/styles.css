@@ -770,6 +770,78 @@ button { font-family: inherit; }
   .cookie-banner { transition: none; }
 }
 
+/* ---------- first-order discount popup ---------- */
+
+.promo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.promo-overlay[hidden] { display: none; }
+.promo-scrim { position: absolute; inset: 0; background: var(--scrim-bg); cursor: pointer; }
+.promo-modal {
+  position: relative;
+  width: min(420px, 100%);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 36px 32px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.promo-overlay.is-visible .promo-modal { opacity: 1; transform: none; }
+.promo-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--muted);
+}
+.promo-close:hover { color: var(--text-hover); }
+.promo-eyebrow { font-size: 11px; letter-spacing: 0.2em; color: var(--green-deep); }
+.promo-title { margin: 14px 0 0; font-size: 32px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 500; }
+.promo-text { margin: 16px 0 0; font-size: 13px; line-height: 1.6; color: var(--muted); max-width: 36ch; }
+.promo-code-row { display: flex; margin-top: 24px; border: 1px solid var(--border-strong); }
+.promo-code { flex: 1; padding: 14px 16px; font-size: 15px; letter-spacing: 0.16em; }
+.promo-copy {
+  border: 0;
+  border-left: 1px solid var(--border-strong);
+  background: var(--green-deep);
+  color: var(--green-btn-text);
+  padding: 0 18px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+.promo-copy:hover { background: var(--green-deep-hover); }
+.promo-copy.is-copied { background: var(--dark); }
+.promo-dismiss {
+  display: block;
+  margin: 18px auto 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.promo-dismiss:hover { color: var(--text-hover); }
+@media (max-width: 480px) {
+  .promo-modal { padding: 28px 22px; }
+  .promo-title { font-size: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .promo-modal { transition: none; }
+}
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 860px) {

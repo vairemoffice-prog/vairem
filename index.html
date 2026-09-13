@@ -304,7 +304,7 @@
         <div class="footer-col-label mono" data-i18n="footer.moje_konto">MOJE KONTO</div>
         <div class="footer-links">
           <a href="#" data-i18n="footer.zamowienia">Twoje zamówienia</a>
-          <a href="#" data-i18n="footer.ustawienia_konta">Ustawienia konta</a>
+          <a href="ustawienia-konta.html" data-i18n="footer.ustawienia_konta">Ustawienia konta</a>
         </div>
       </div>
       <div class="footer-col">
@@ -377,6 +377,22 @@
   <div class="cookie-banner-actions">
     <button type="button" id="cookie-accept" class="btn btn-dark mono" data-i18n="cookie.accept">AKCEPTUJ</button>
     <button type="button" id="cookie-reject" class="btn btn-outline mono" data-i18n="cookie.reject">ODRZUĆ</button>
+  </div>
+</div>
+
+<!-- FIRST-ORDER DISCOUNT -->
+<div id="promo-overlay" class="promo-overlay" hidden>
+  <div class="promo-scrim" id="promo-scrim"></div>
+  <div class="promo-modal" role="dialog" aria-modal="true" aria-label="Rabat na pierwsze zamówienie">
+    <button type="button" id="promo-close" class="promo-close mono" aria-label="Zamknij">✕</button>
+    <div class="promo-eyebrow mono" data-i18n="promo.eyebrow">OFERTA NA START</div>
+    <div class="promo-title" data-i18n-html="promo.title">&minus;10% na<br>pierwsze zamówienie</div>
+    <p class="promo-text" data-i18n="promo.text">Nowi w VAIREM dostają jednorazowy kod rabatowy. Wpisz go w podsumowaniu zamówienia — zniżka naliczy się automatycznie.</p>
+    <div class="promo-code-row">
+      <span class="promo-code mono" id="promo-code">WITAJ10</span>
+      <button type="button" class="promo-copy mono" id="promo-copy" data-i18n="promo.copy">KOPIUJ</button>
+    </div>
+    <button type="button" class="promo-dismiss mono" id="promo-dismiss" data-i18n="promo.dismiss">Nie, dziękuję</button>
   </div>
 </div>
 
