@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regulamin — VAIREM</title>
+<meta name="description" content="Regulamin sklepu internetowego VAIREM — zasady zamówień, płatności, dostawy, zwrotów i reklamacji.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
+<style>
+  .legal-header{ border-bottom:1px solid var(--border); padding-block:22px; }
+  .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
+  .legal-back:hover{ color:var(--text-hover); }
+
+  .legal-main{ padding-block:64px 96px; }
+  .legal-col{ max-width:720px; margin:0 auto; }
+  .legal-eyebrow{ font-size:11px; letter-spacing:0.2em; color:var(--muted); }
+  .legal-title{ margin:14px 0 0; font-size:clamp(30px,4vw,44px); letter-spacing:-0.03em; font-weight:500; line-height:1.05; }
+  .legal-updated{ margin-top:16px; font-size:11px; letter-spacing:0.14em; color:var(--muted); }
+  .legal-updated b{ color:var(--text); font-weight:500; }
+
+  .legal-fill-note{
+    margin-top:28px; border:1px solid var(--border-strong); background:var(--row-bg);
+    padding:16px 18px; font-size:13px; line-height:1.6; color:var(--text);
+  }
+  .legal-fill-note b{ font-weight:700; }
+
+  .legal-toc{ margin-top:40px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:18px 0; }
+  .legal-toc ol{ margin:0; padding:0 0 0 0; columns:2; gap:24px; list-style:none; }
+  .legal-toc li{ font-size:13px; padding:5px 0; break-inside:avoid; }
+  .legal-toc a{ color:var(--text); }
+  .legal-toc a:hover{ color:var(--text-hover); }
+  .legal-toc .toc-nr{ font-family:'Martian Mono',monospace; font-size:11px; color:var(--muted); padding-right:8px; }
+
+  .legal-section{ padding-top:48px; scroll-margin-top:24px; }
+  .legal-section h2{
+    font-size:20px; letter-spacing:-0.01em; font-weight:500; margin:0 0 18px;
+    display:flex; align-items:baseline; gap:12px;
+  }
+  .legal-section h2 .sec-nr{ font-family:'Martian Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted); font-weight:400; }
+  .legal-section h3{ font-size:15px; font-weight:500; margin:26px 0 10px; letter-spacing:-0.005em; }
+  .legal-section p{ font-size:15px; line-height:1.7; color:var(--text); margin:0 0 14px; }
+  .legal-section ul, .legal-section ol{ margin:0 0 14px; padding-left:20px; }
+  .legal-section li{ font-size:15px; line-height:1.7; color:var(--text); padding:2px 0; }
+  .legal-section + .legal-section{ border-top:1px solid var(--border-light); }
+
+  .legal-contact{
+    margin-top:8px; border:1px solid var(--border); padding:20px 22px; font-size:14px; line-height:1.9;
+  }
+  .legal-contact .mono{ font-size:11px; letter-spacing:0.1em; color:var(--muted); }
+
+  .legal-notice{
+    margin:8px 0 20px; border:1px solid var(--border); border-left:3px solid var(--green-deep);
+    padding:16px 18px; font-size:14px; line-height:1.7; background:var(--row-bg);
+  }
+  .legal-notice .tag{ font-size:10px; letter-spacing:0.14em; color:var(--green-deep); font-family:'Martian Mono',monospace; display:block; margin-bottom:8px; }
+  .legal-notice p{ margin:0 0 10px; }
+  .legal-notice p:last-child{ margin-bottom:0; }
+
+  .legal-steps{ counter-reset:step; list-style:none; margin:0 0 20px; padding:0; border:1px solid var(--border); }
+  .legal-steps li{
+    counter-increment:step; position:relative; padding:16px 18px 16px 54px;
+    font-size:15px; line-height:1.65; color:var(--text);
+  }
+  .legal-steps li + li{ border-top:1px solid var(--border-light); }
+  .legal-steps li::before{
+    content:counter(step, decimal-leading-zero); position:absolute; left:18px; top:16px;
+    font-family:'Martian Mono',monospace; font-size:12px; color:var(--muted);
+  }
+
+  .legal-form-box{
+    border:1px solid var(--border); padding:22px; font-size:14px; line-height:1.9; background:var(--row-bg);
+  }
+  .legal-form-box p{ margin:0 0 12px; }
+  .legal-form-box .fill{ border-bottom:1px dotted var(--border-strong); padding:0 2px; }
+
+  @media (max-width:640px){
+    .legal-toc ol{ columns:1; }
+  }
+</style>
+</head>
+<body>
+
+<header class="legal-header">
+  <div class="wrap">
+    <a href="index.html" class="brand" style="text-decoration:none;">
+      <svg class="brand-mark" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
+        <text x="8" y="126" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">v</text>
+        <text x="58" y="134" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">ai</text>
+        <text x="62" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">r</text>
+        <text x="96" y="78" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">e</text>
+        <text x="120" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">m</text>
+      </svg>
+      <span class="brand-name">Vairem</span>
+    </a>
+    <a href="index.html" class="legal-back mono">← STRONA GŁÓWNA</a>
+  </div>
+</header>
+
+<main class="legal-main">
+  <div class="wrap">
+    <div class="legal-col">
+
+      <div class="legal-eyebrow mono">DOKUMENT PRAWNY</div>
+      <h1 class="legal-title">Regulamin sklepu internetowego</h1>
+      <div class="legal-updated mono">DATA OSTATNIEJ AKTUALIZACJI: <b>13 WRZEŚNIA 2026</b></div>
+
+      <div class="legal-fill-note">
+        <b>Do uzupełnienia przed publikacją:</b> ten dokument zawiera pola w nawiasach kwadratowych ([PEŁNA NAZWA FIRMY], [ADRES], [NIP], [REGON], [DOMENA], [ADRES ZWROTÓW]), które muszą zostać wypełnione realnymi danymi rejestrowymi VAIREM — nie zostały tu zgadywane ani wymyślone. Adres e-mail kontaktowy został wstępnie uzupełniony wartością już używaną na stronie (<span class="mono">vairem.office@gmail.com</span>). Treść jest szablonem opartym na obowiązujących przepisach prawa polskiego — przed publikacją zalecana jest weryfikacja przez prawnika, zwłaszcza w zakresie specyfiki asortymentu (produkty w opakowaniach szklanych, ograniczenie prawa zwrotu).
+      </div>
+
+      <nav class="legal-toc" aria-label="Spis treści">
+        <ol>
+          <li><span class="toc-nr mono">01</span><a href="#s1">Postanowienia ogólne</a></li>
+          <li><span class="toc-nr mono">02</span><a href="#s2">Definicje</a></li>
+          <li><span class="toc-nr mono">03</span><a href="#s3">Sprzedawca</a></li>
+          <li><span class="toc-nr mono">04</span><a href="#s4">Wymagania techniczne</a></li>
+          <li><span class="toc-nr mono">05</span><a href="#s5">Konto Klienta</a></li>
+          <li><span class="toc-nr mono">06</span><a href="#s6">Składanie zamówień</a></li>
+          <li><span class="toc-nr mono">07</span><a href="#s7">Ceny i płatności</a></li>
+          <li><span class="toc-nr mono">08</span><a href="#s8">Realizacja i dostawa</a></li>
+          <li><span class="toc-nr mono">09</span><a href="#s9">Prawo odstąpienia (zwroty)</a></li>
+          <li><span class="toc-nr mono">10</span><a href="#s10">Procedura zwrotu</a></li>
+          <li><span class="toc-nr mono">11</span><a href="#s11">Wzór formularza odstąpienia</a></li>
+          <li><span class="toc-nr mono">12</span><a href="#s12">Reklamacje i rękojmia</a></li>
+          <li><span class="toc-nr mono">13</span><a href="#s13">Rozstrzyganie sporów</a></li>
+          <li><span class="toc-nr mono">14</span><a href="#s14">Postanowienia końcowe</a></li>
+        </ol>
+      </nav>
+
+      <section class="legal-section" id="s1">
+        <h2><span class="sec-nr">01</span> Postanowienia ogólne</h2>
+        <p>Niniejszy Regulamin określa zasady korzystania ze sklepu internetowego prowadzonego pod marką VAIREM, dostępnego pod adresem [DOMENA] („Sklep”), w tym zasady zawierania umów sprzedaży, składania zamówień, płatności, dostawy, a także tryb postępowania reklamacyjnego i zasady odstąpienia od umowy.</p>
+        <p>Regulamin skierowany jest zarówno do Konsumentów, jak i do przedsiębiorców korzystających ze Sklepu, chyba że dane postanowienie wprost zastrzeżono wyłącznie dla Konsumentów.</p>
+        <p>Warunkiem złożenia zamówienia w Sklepie jest zapoznanie się z treścią Regulaminu i jego akceptacja. Regulamin jest udostępniony nieodpłatnie za pośrednictwem Sklepu w formie umożliwiającej jego pozyskanie, odtwarzanie i utrwalanie.</p>
+      </section>
+
+      <section class="legal-section" id="s2">
+        <h2><span class="sec-nr">02</span> Definicje</h2>
+        <ul>
+          <li><b>Sprzedawca</b> — podmiot prowadzący Sklep, wskazany szczegółowo w punkcie 3.</li>
+          <li><b>Sklep</b> — serwis internetowy prowadzony przez Sprzedawcę pod adresem [DOMENA], za pośrednictwem którego Klient może składać zamówienia.</li>
+          <li><b>Klient</b> — osoba fizyczna, osoba prawna albo jednostka organizacyjna nieposiadająca osobowości prawnej, składająca zamówienie w Sklepie.</li>
+          <li><b>Konsument</b> — Klient będący osobą fizyczną, dokonujący zakupu niezwiązanego bezpośrednio z jej działalnością gospodarczą lub zawodową (art. 22¹ Kodeksu cywilnego).</li>
+          <li><b>Produkt</b> — towar dostępny w Sklepie, w tym naczynia z kompozycją zapachową VAIREM w opakowaniu szklanym.</li>
+          <li><b>Umowa</b> — umowa sprzedaży Produktu zawierana na odległość między Klientem a Sprzedawcą za pośrednictwem Sklepu.</li>
+          <li><b>Konto</b> — indywidualne konto Klienta w Sklepie, zakładane i zarządzane zgodnie z zasadami opisanymi w punkcie 5.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="s3">
+        <h2><span class="sec-nr">03</span> Sprzedawca</h2>
+        <p>Sprzedawcą i podmiotem prowadzącym Sklep jest:</p>
+        <div class="legal-contact">
+          [PEŁNA NAZWA FIRMY / IMIĘ I NAZWISKO]<br>
+          prowadzący/a działalność gospodarczą pod firmą [NAZWA FIRMY]<br>
+          adres: [ADRES]<br>
+          NIP: [NIP]<br>
+          REGON: [REGON]<br>
+          e-mail: vairem.office@gmail.com
+        </div>
+        <p style="margin-top:18px;">Zasady przetwarzania danych osobowych Klientów opisane są odrębnie w <a href="polityka-prywatnosci.html">Polityce prywatności</a>.</p>
+      </section>
+
+      <section class="legal-section" id="s4">
+        <h2><span class="sec-nr">04</span> Wymagania techniczne</h2>
+        <p>Do korzystania ze Sklepu, w tym do przeglądania asortymentu i składania zamówień, niezbędne są:</p>
+        <ul>
+          <li>urządzenie z dostępem do sieci Internet,</li>
+          <li>aktualna przeglądarka internetowa z włączoną obsługą JavaScript i plików cookies,</li>
+          <li>aktywny adres e-mail.</li>
+        </ul>
+        <p>Sprzedawca dokłada starań, aby korzystanie ze Sklepu było możliwe na wszystkich popularnych przeglądarkach, systemach operacyjnych i urządzeniach, w tym mobilnych.</p>
+      </section>
+
+      <section class="legal-section" id="s5">
+        <h2><span class="sec-nr">05</span> Konto Klienta</h2>
+        <p>Klient może złożyć zamówienie po założeniu Konta, po zalogowaniu się na uprzednio założone Konto, albo bez zakładania Konta — jako gość.</p>
+        <p>Założenie Konta jest dobrowolne i bezpłatne. Dane podane przy zakładaniu Konta powinny być zgodne z prawdą i aktualne; Klient może je w każdej chwili zmienić w Ustawieniach konta.</p>
+        <p>Klient jest zobowiązany do zachowania w poufności danych umożliwiających dostęp do Konta (adres e-mail, hasło) i ponosi odpowiedzialność za działania podejmowane przy jego użyciu.</p>
+      </section>
+
+      <section class="legal-section" id="s6">
+        <h2><span class="sec-nr">06</span> Składanie i realizacja zamówień</h2>
+        <p>Zamówienia w Sklepie można składać 24 godziny na dobę, siedem dni w tygodniu.</p>
+        <p>Proces składania zamówienia obejmuje kolejno: wybór Produktu i dodanie go do koszyka, wybór sposobu złożenia zamówienia (Konto, logowanie albo zakup jako gość), podanie danych dostawy, wybór formy płatności, weryfikację podsumowania zamówienia oraz jego potwierdzenie przyciskiem „Złóż zamówienie”.</p>
+        <p>Złożenie zamówienia stanowi ofertę zawarcia Umowy. Umowę uważa się za zawartą z chwilą potwierdzenia przyjęcia zamówienia przez Sprzedawcę, przesyłanego na adres e-mail podany przez Klienta.</p>
+        <p>Sprzedawca zastrzega sobie prawo odmowy realizacji zamówienia w przypadku podania przez Klienta nieprawdziwych lub niekompletnych danych, uniemożliwiających realizację dostawy lub kontakt z Klientem.</p>
+      </section>
+
+      <section class="legal-section" id="s7">
+        <h2><span class="sec-nr">07</span> Ceny i formy płatności</h2>
+        <p>Ceny Produktów podane w Sklepie są cenami brutto wyrażonymi w złotych polskich (PLN) i zawierają podatek od towarów i usług (VAT). Cena podana przy Produkcie jest wiążąca w chwili złożenia przez Klienta zamówienia.</p>
+        <p>Sklep akceptuje następujące formy płatności: BLIK, karta płatnicza (Visa, Mastercard), Apple Pay, Google Pay oraz szybki przelew internetowy (Przelewy24) — szczegółowy opis dostępny na stronie <a href="formy-platnosci.html">Formy płatności</a>.</p>
+        <p>Płatność za zamówienie następuje z góry, w momencie jego składania. Zamówienie kierowane jest do realizacji po zaksięgowaniu płatności przez operatora płatności.</p>
+      </section>
+
+      <section class="legal-section" id="s8">
+        <h2><span class="sec-nr">08</span> Realizacja i dostawa</h2>
+        <p>Przewidywany czas dostawy wynosi 1–3 dni robocze od momentu zaksięgowania płatności, na terenie Polski i Unii Europejskiej.</p>
+        <p>Koszt dostawy wskazywany jest Klientowi w podsumowaniu zamówienia, przed jego ostatecznym złożeniem.</p>
+        <p>Sprzedawca nie ponosi odpowiedzialności za opóźnienia w dostawie wynikające z działania przewoźników (firm kurierskich, operatorów pocztowych) niezależnego od Sprzedawcy, o ile zamówienie zostało nadane w terminie.</p>
+      </section>
+
+      <section class="legal-section" id="s9">
+        <h2><span class="sec-nr">09</span> Prawo odstąpienia od umowy (zwroty)</h2>
+        <p>Zgodnie z ustawą z dnia 30 maja 2014 r. o prawach konsumenta, Konsumentowi przysługuje prawo odstąpienia od Umowy zawartej na odległość, bez podawania przyczyny, w terminie 14 dni od dnia, w którym Konsument (lub wskazana przez niego osoba trzecia) objął Produkt w posiadanie.</p>
+        <p>Niezależnie od ustawowego terminu 14 dni, Sprzedawca wydłuża go dobrowolnie do <b>30 dni</b> od dnia otrzymania przesyłki — jako standardową politykę zwrotów Sklepu, obowiązującą wszystkich Klientów będących Konsumentami.</p>
+        <p>Do zachowania terminu wystarczy wysłanie oświadczenia o odstąpieniu od Umowy przed jego upływem, np. w formie opisanej w punkcie 10 lub z wykorzystaniem wzoru z punktu 11.</p>
+        <p>W przypadku skutecznego odstąpienia od Umowy jest ona uważana za niezawartą. Sprzedawca zwraca Konsumentowi wszystkie otrzymane płatności, w tym koszty najtańszego oferowanego przez Sklep sposobu dostawy, niezwłocznie, nie później niż w terminie 14 dni od dnia otrzymania oświadczenia o odstąpieniu.</p>
+
+        <div class="legal-notice">
+          <span class="tag">WAŻNE — OGRANICZENIE PRAWA ZWROTU</span>
+          <p>Zgodnie z art. 38 pkt 5 ustawy o prawach konsumenta, prawo odstąpienia od umowy nie przysługuje w odniesieniu do umów, w których przedmiotem świadczenia jest rzecz dostarczana w zapieczętowanym opakowaniu, której po otwarciu opakowania nie można zwrócić ze względu na ochronę zdrowia lub ze względów higienicznych, jeżeli opakowanie zostało otwarte po dostarczeniu.</p>
+          <p>Produkty VAIREM sprzedawane są w fabrycznie zapieczętowanych, szklanych naczyniach z kompozycją zapachową. <b>Jeżeli oryginalne zabezpieczenie opakowania (plomba, folia ochronna) zostało naruszone, a wkład zapachowy otwarty lub użyty, Sprzedawca zastrzega sobie prawo do odmowy przyjęcia zwrotu takiego Produktu</b> — niezależnie od terminu, w jakim zwrot jest zgłaszany, o ile Produkt nie jest wadliwy.</p>
+          <p>Ograniczenie to nie dotyczy zwrotów zgłaszanych z tytułu rękojmi za wady — jeżeli Produkt jest wadliwy, prawo do reklamacji przysługuje Konsumentowi niezależnie od stanu opakowania (patrz punkt 12).</p>
+        </div>
+
+        <p>Sprzedawca może wstrzymać się ze zwrotem płatności do chwili otrzymania Produktu z powrotem lub dostarczenia przez Konsumenta dowodu jego odesłania, w zależności od tego, które zdarzenie nastąpi wcześniej.</p>
+      </section>
+
+      <section class="legal-section" id="s10">
+        <h2><span class="sec-nr">10</span> Procedura zwrotu — krok po kroku</h2>
+        <p>Aby dokonać zwrotu Produktu, należy postępować zgodnie z poniższymi krokami:</p>
+        <ol class="legal-steps">
+          <li>Zgłoś chęć zwrotu w ciągu 30 dni od otrzymania przesyłki, wysyłając wiadomość na adres <span class="mono">vairem.office@gmail.com</span> lub wypełniając formularz odstąpienia z punktu 11. W zgłoszeniu podaj numer zamówienia oraz numer konta bankowego do zwrotu środków.</li>
+          <li>Sprzedawca potwierdza przyjęcie zgłoszenia drogą mailową i przesyła adres do odesłania przesyłki: [ADRES ZWROTÓW].</li>
+          <li>Zapakuj Produkt w sposób zabezpieczający go przed uszkodzeniem w transporcie. Opakowanie szklane wraz z zabezpieczeniem fabrycznym (plombą) musi pozostać nienaruszone — patrz zastrzeżenie w punkcie 9.</li>
+          <li>Odeślij Produkt na wskazany adres w terminie 14 dni od dnia zgłoszenia odstąpienia od Umowy. Koszt odesłania Produktu ponosi Konsument, chyba że zwrot następuje z powodu wady Produktu — wówczas koszty ponosi Sprzedawca.</li>
+          <li>Po otrzymaniu i sprawdzeniu przesyłki Sprzedawca zwraca płatność tym samym sposobem, jakiego użył Konsument przy pierwotnej transakcji, chyba że Konsument wyraźnie zgodził się na inny sposób zwrotu — w terminie do 14 dni od otrzymania Produktu lub dowodu jego odesłania.</li>
+        </ol>
+      </section>
+
+      <section class="legal-section" id="s11">
+        <h2><span class="sec-nr">11</span> Wzór formularza odstąpienia od umowy</h2>
+        <p>Poniższy wzór jest fakultatywny — z odstąpienia od Umowy można skorzystać, przesyłając oświadczenie w dowolnej formie jednoznacznie wyrażającej taką wolę.</p>
+        <div class="legal-form-box mono">
+          <p>Adresat: [PEŁNA NAZWA FIRMY], [ADRES], vairem.office@gmail.com</p>
+          <p>Ja/My* niniejszym informuję/informujemy* o moim/naszym* odstąpieniu od umowy sprzedaży następującej/ych rzeczy*: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+          <p>Data zawarcia umowy / odbioru: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+          <p>Imię i nazwisko Konsumenta: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+          <p>Adres Konsumenta: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+          <p>Numer zamówienia: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+          <p>Numer konta do zwrotu środków: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+          <p style="margin-bottom:0;">Podpis Konsumenta (tylko jeżeli formularz jest przesyłany w wersji papierowej): <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> · Data: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+        </div>
+        <p style="margin-top:16px; font-size:12px; color:var(--muted);">* niepotrzebne skreślić</p>
+      </section>
+
+      <section class="legal-section" id="s12">
+        <h2><span class="sec-nr">12</span> Reklamacje i rękojmia</h2>
+        <p>Sprzedawca jest zobowiązany dostarczyć Produkt wolny od wad i odpowiada wobec Klienta z tytułu rękojmi na zasadach określonych w art. 556 i następnych Kodeksu cywilnego.</p>
+        <p>Reklamację można zgłosić drogą mailową na adres <span class="mono">vairem.office@gmail.com</span>, opisując na czym polega niezgodność Produktu z Umową oraz podając żądanie związane z reklamacją (np. wymiana, naprawa, obniżenie ceny, odstąpienie od Umowy).</p>
+        <p>Sprzedawca ustosunkuje się do reklamacji Konsumenta w terminie 14 dni od dnia jej otrzymania. Nieudzielenie odpowiedzi w tym terminie oznacza uznanie reklamacji za uzasadnioną.</p>
+        <p>Ograniczenie zwrotu Produktu z otwartym opakowaniem opisane w punkcie 9 nie dotyczy reklamacji z tytułu rękojmi — wadliwy Produkt podlega reklamacji niezależnie od stanu opakowania.</p>
+      </section>
+
+      <section class="legal-section" id="s13">
+        <h2><span class="sec-nr">13</span> Pozasądowe sposoby rozpatrywania reklamacji i dochodzenia roszczeń</h2>
+        <p>Konsument ma możliwość skorzystania z pozasądowych sposobów rozpatrywania reklamacji i dochodzenia roszczeń, w tym zwrócenia się o pomoc do powiatowego (miejskiego) rzecznika konsumentów lub Wojewódzkiego Inspektoratu Inspekcji Handlowej.</p>
+        <p>Konsument może również skorzystać z platformy internetowego systemu rozstrzygania sporów (ODR), dostępnej pod adresem <span class="mono">ec.europa.eu/consumers/odr</span>, umożliwiającej pozasądowe rozstrzyganie sporów wynikających z umów zawieranych online między konsumentami a przedsiębiorcami.</p>
+      </section>
+
+      <section class="legal-section" id="s14">
+        <h2><span class="sec-nr">14</span> Postanowienia końcowe</h2>
+        <p>Sprzedawca zastrzega sobie prawo do wprowadzania zmian w Regulaminie z ważnych przyczyn, w szczególności zmiany przepisów prawa, sposobu funkcjonowania Sklepu, form płatności i dostawy lub wdrożenia nowych usług. Zamówienia złożone przed wejściem w życie zmian realizowane są na zasadach dotychczasowych.</p>
+        <p>W sprawach nieuregulowanych niniejszym Regulaminem zastosowanie mają przepisy prawa polskiego, w tym w szczególności Kodeksu cywilnego oraz ustawy o prawach konsumenta.</p>
+        <p>Jeżeli którekolwiek z postanowień Regulaminu okaże się nieważne lub bezskuteczne, pozostałe postanowienia pozostają w mocy.</p>
+        <p>Aktualna wersja Regulaminu jest zawsze dostępna pod niniejszym adresem. Data ostatniej aktualizacji: <b>13 września 2026</b>.</p>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="margin-top:0;">
+  <div class="wrap footer-bottom mono" style="border-top:1px solid var(--border); padding-top:16px;">
+    <span>© 2026 VAIREM</span>
+    <a href="index.html">STRONA GŁÓWNA →</a>
+  </div>
+</footer>
+
+</body>
+</html>
