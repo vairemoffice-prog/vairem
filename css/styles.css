@@ -104,7 +104,9 @@ body {
    buttons, badges and other elements with a solid fill, where either effect
    would wash out or shred light-on-color labels. */
 p, h1, h2, h3, h4, h5, h6, li, dt, dd, blockquote, label, th, td,
-.eyebrow, .mono:not(button):not(.btn), a:not(.btn), .brand-mark {
+.eyebrow, .mono:not(button):not(.btn), a:not(.btn), .brand-mark,
+.cell-nr, .cell-name, .cell-formula, .cell-mw, .cell-character, .cell-weeks, .cell-price,
+.index-row--head > div, .index-table span {
   mix-blend-mode: multiply;
   -webkit-mask-image: var(--ink-mask);
   -webkit-mask-repeat: repeat;
