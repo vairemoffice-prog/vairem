@@ -21,6 +21,9 @@
 <header class="site-header">
   <div class="wrap header-inner">
     <div class="brand">
+      <button type="button" id="menu-toggle" class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
+        <span class="menu-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
       <svg class="brand-mark" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
         <text x="8" y="126" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">v</text>
         <text x="58" y="134" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">ai</text>
@@ -359,6 +362,28 @@
   </footer>
 
 </main>
+
+<!-- SIDE MENU: nawigacja + lista produktów -->
+<div id="menu-overlay" class="menu-overlay" hidden>
+  <div class="menu-scrim" id="menu-scrim"></div>
+  <aside class="menu-drawer">
+    <div class="menu-drawer-head">
+      <div class="mono" data-i18n="nav.menu">MENU</div>
+      <button type="button" id="menu-close" class="cart-close mono" data-i18n="cart.close">ZAMKNIJ ✕</button>
+    </div>
+    <div class="menu-drawer-section">
+      <div class="menu-section-label mono" data-i18n="menu.produkty">PRODUKTY</div>
+      <div id="menu-products" class="menu-products"></div>
+    </div>
+    <nav class="menu-nav mono">
+      <a href="#indeks" data-i18n="nav.indeks">INDEKS</a>
+      <a href="#katalog" data-i18n="nav.katalog">TOWARY</a>
+      <a href="#metoda" data-i18n="nav.metoda">METODA</a>
+      <a href="#karta">01 ISO E SUPER</a>
+      <a href="#list" data-i18n="nav.list">LIST</a>
+    </nav>
+  </aside>
+</div>
 
 <!-- CART DRAWER -->
 <div id="cart-overlay" class="cart-overlay" hidden>

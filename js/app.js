@@ -65,7 +65,7 @@
 
   const I18N = {
     pl: {
-      'nav.indeks': 'INDEKS', 'nav.katalog': 'TOWARY', 'nav.metoda': 'METODA', 'nav.list': 'LIST',
+      'nav.indeks': 'INDEKS', 'nav.katalog': 'TOWARY', 'nav.metoda': 'METODA', 'nav.list': 'LIST', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUKTY',
       'theme.day': 'DZIEŃ', 'theme.night': 'NOC', 'cart.label': 'KOSZYK',
       'tabbar.label': 'WARIANT HERO', 'tab.tablica': '02 · TABLICA', 'tab.wykres': '03 · WYKRES',
       'hero1.eyebrow': 'MOLEKULARNY ZAPACH DO WNĘTRZ · SIEDEM ZWIĄZKÓW',
@@ -141,7 +141,7 @@
       'promo.copy': 'KOPIUJ', 'promo.copied': 'SKOPIOWANO', 'promo.dismiss': 'Nie, dziękuję'
     },
     en: {
-      'nav.indeks': 'INDEX', 'nav.katalog': 'CATALOG', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER',
+      'nav.indeks': 'INDEX', 'nav.katalog': 'CATALOG', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUCTS',
       'theme.day': 'DAY', 'theme.night': 'NIGHT', 'cart.label': 'CART',
       'tabbar.label': 'HERO VARIANT', 'tab.tablica': '02 · BOARD', 'tab.wykres': '03 · CHART',
       'hero1.eyebrow': 'MOLECULAR HOME FRAGRANCE · SEVEN COMPOUNDS',
@@ -213,7 +213,7 @@
       'promo.copy': 'COPY', 'promo.copied': 'COPIED', 'promo.dismiss': 'No, thanks'
     },
     es: {
-      'nav.indeks': 'ÍNDICE', 'nav.katalog': 'CATÁLOGO', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA',
+      'nav.indeks': 'ÍNDICE', 'nav.katalog': 'CATÁLOGO', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA', 'nav.menu': 'MENÚ', 'menu.produkty': 'PRODUCTOS',
       'theme.day': 'DÍA', 'theme.night': 'NOCHE', 'cart.label': 'CARRITO',
       'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLERO', 'tab.wykres': '03 · GRÁFICO',
       'hero1.eyebrow': 'FRAGANCIA MOLECULAR PARA EL HOGAR · SIETE COMPUESTOS',
@@ -285,7 +285,7 @@
       'promo.copy': 'COPIAR', 'promo.copied': 'COPIADO', 'promo.dismiss': 'No, gracias'
     },
     uk: {
-      'nav.indeks': 'ІНДЕКС', 'nav.katalog': 'ТОВАРИ', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ',
+      'nav.indeks': 'ІНДЕКС', 'nav.katalog': 'ТОВАРИ', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ', 'nav.menu': 'МЕНЮ', 'menu.produkty': 'ТОВАРИ',
       'theme.day': 'ДЕНЬ', 'theme.night': 'НІЧ', 'cart.label': 'КОШИК',
       'tabbar.label': 'ВАРІАНТ HERO', 'tab.tablica': '02 · ТАБЛИЦЯ', 'tab.wykres': '03 · ГРАФІК',
       'hero1.eyebrow': 'МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ · СІМ СПОЛУК',
@@ -357,7 +357,7 @@
       'promo.copy': 'КОПІЮВАТИ', 'promo.copied': 'СКОПІЙОВАНО', 'promo.dismiss': 'Ні, дякую'
     },
     fr: {
-      'nav.indeks': 'INDEX', 'nav.katalog': 'CATALOGUE', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE',
+      'nav.indeks': 'INDEX', 'nav.katalog': 'CATALOGUE', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUITS',
       'theme.day': 'JOUR', 'theme.night': 'NUIT', 'cart.label': 'PANIER',
       'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLEAU', 'tab.wykres': '03 · GRAPHIQUE',
       'hero1.eyebrow': "PARFUM MOLÉCULAIRE D'INTÉRIEUR · SEPT COMPOSÉS",
@@ -694,9 +694,16 @@
   const state = {
     cart: loadCart(),
     cartOpen: false,
+    menuOpen: false,
     heroQty: 1,
     subscribed: false
   };
+
+  function toggleMenu(open) {
+    state.menuOpen = typeof open === 'boolean' ? open : !state.menuOpen;
+    document.getElementById('menu-overlay').hidden = !state.menuOpen;
+    document.getElementById('menu-toggle').setAttribute('aria-expanded', String(state.menuOpen));
+  }
 
   // ---------- one-time render of static-per-load lists ----------
 
@@ -708,6 +715,21 @@
         <div class="cell-formula mono">${p.formula}</div>
         <div class="cell-name">${p.name}</div>
       </a>
+    `).join('');
+  }
+
+  function renderMenuProducts() {
+    const el = document.getElementById('menu-products');
+    if (!el) return;
+    el.innerHTML = PRODUCTS.map(p => `
+      <div class="menu-product" data-nr="${p.nr}">
+        <a href="#katalog" class="menu-product-link">
+          <span class="menu-product-name">${p.nr} · ${p.name}</span>
+          <span class="menu-product-meta mono">${p.formula}</span>
+        </a>
+        <span class="menu-product-price mono">${p.price} zł</span>
+        <button type="button" class="menu-product-add mono" data-add="${p.nr}">${t('add_btn')}</button>
+      </div>
     `).join('');
   }
 
@@ -904,6 +926,7 @@
   function refreshDynamicContent() {
     renderIndexRows();
     renderKatalogGrid();
+    renderMenuProducts();
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -1048,6 +1071,7 @@
     renderHeroDatasheetRows();
     renderIndexRows();
     renderKatalogGrid();
+    renderMenuProducts();
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -1077,6 +1101,24 @@
     document.getElementById('cart-close').addEventListener('click', () => toggleCart(false));
     document.getElementById('cart-scrim').addEventListener('click', () => toggleCart(false));
 
+    document.getElementById('menu-toggle').addEventListener('click', () => toggleMenu());
+    document.getElementById('menu-close').addEventListener('click', () => toggleMenu(false));
+    document.getElementById('menu-scrim').addEventListener('click', () => toggleMenu(false));
+
+    document.querySelectorAll('.menu-nav a').forEach(a => {
+      a.addEventListener('click', () => toggleMenu(false));
+    });
+
+    document.getElementById('menu-products').addEventListener('click', e => {
+      const addBtn = e.target.closest('[data-add]');
+      if (addBtn) {
+        e.preventDefault();
+        addToCart(addBtn.dataset.add, 1);
+        return;
+      }
+      if (e.target.closest('.menu-product-link')) toggleMenu(false);
+    });
+
     document.getElementById('cart-items').addEventListener('click', e => {
       const btn = e.target.closest('[data-remove]');
       if (!btn) return;
@@ -1096,6 +1138,7 @@
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && state.cartOpen) toggleCart(false);
+      if (e.key === 'Escape' && state.menuOpen) toggleMenu(false);
     });
   }
 
