@@ -197,6 +197,7 @@
     updateOverlayTop();
     if (toggle.style.top) toggle.style.top = clampToggleTop(parseFloat(toggle.style.top)) + 'px';
     scrollToHash(url.hash);
+    document.dispatchEvent(new CustomEvent('vairem:content-swapped'));
   }
 
   window.addEventListener('popstate', () => {
