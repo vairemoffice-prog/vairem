@@ -352,6 +352,15 @@
     toggle.addEventListener('mouseleave', closeSoon);
     drawer.addEventListener('mouseenter', openNow);
     drawer.addEventListener('mouseleave', closeSoon);
+
+    document.querySelectorAll('.menu-nav a, .menu-section-label--link').forEach(function (link) {
+      var navTimer = null;
+      link.addEventListener('mouseenter', function () {
+        window.clearTimeout(navTimer);
+        navTimer = window.setTimeout(function () { window.location.href = link.href; }, 500);
+      });
+      link.addEventListener('mouseleave', function () { window.clearTimeout(navTimer); });
+    });
   }
 })();
 </script>
