@@ -65,7 +65,7 @@
 
   const I18N = {
     pl: {
-      'nav.indeks': 'INDEKS', 'nav.katalog': 'TOWARY', 'nav.metoda': 'METODA', 'nav.list': 'LIST', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUKTY',
+      'nav.indeks': 'INDEKS', 'nav.metoda': 'METODA', 'nav.list': 'LIST', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUKTY',
       'theme.day': 'DZIEŃ', 'theme.night': 'NOC', 'cart.label': 'KOSZYK',
       'tabbar.label': 'WARIANT HERO', 'tab.tablica': '02 · TABLICA', 'tab.wykres': '03 · WYKRES',
       'hero1.eyebrow': 'MOLEKULARNY ZAPACH DO WNĘTRZ · SIEDEM ZWIĄZKÓW',
@@ -88,7 +88,6 @@
       'th.charakter': 'CHARAKTER', 'th.intensywnosc': 'INTENSYWNOŚĆ', 'th.tyg': 'TYG.', 'th.cena': 'CENA',
       'index.foot1': 'INTENSYWNOŚĆ MIERZONA PRZY 0,8% W NEUTRALNYM NOŚNIKU, 22 °C',
       'index.foot2': 'DOSTAWA 1–3 DNI ROBOCZE · PL / EU',
-      'katalog.title': 'Wszystkie towary', 'katalog.note': 'SIEDEM ZWIĄZKÓW · OPIS I ZDJĘCIE KAŻDEGO TOWARU', 'katalog.image_tag': 'ZDJĘCIE LUB WIDEO PRODUKTU',
       'karta.image_tag': 'ZDJĘCIE PRODUKTU — NACZYNIE, 4:5',
       'karta.thumb.etykieta': 'ETYKIETA', 'karta.thumb.nosnik': 'NOŚNIK', 'karta.thumb.wnetrze': 'WNĘTRZE', 'karta.thumb.detal': 'DETAL',
       'karta.eyebrow': '01 · TEN CICHY', 'karta.title': 'Nie pachnie niczym.',
@@ -118,7 +117,7 @@
       'archive.last': 'OSTATNI', 'archive.last_value': '07 · Timbersilk — dlaczego zimno',
       'archive.archive': 'ARCHIWUM', 'archive.archive_value': '01—07 · pełne noty',
       'footer.address': 'MOLEKULARNY ZAPACH DO WNĘTRZ<br>WARSZAWA · PL<br>NIP 000 000 00 00',
-      'footer.pelny_indeks': 'Pełny indeks →', 'footer.katalog': 'Wszystkie towary →', 'footer.marka': 'MARKA',
+      'footer.pelny_indeks': 'Pełny indeks →', 'footer.marka': 'MARKA',
       'footer.metoda': 'Metoda', 'footer.list': 'List', 'footer.refill': 'Naczynia i refill',
       'footer.obsluga': 'POMOC', 'footer.kontakt': 'Kontakt', 'footer.wysylka': 'Wysyłka i zwroty', 'footer.regulamin': 'Regulamin',
       'footer.moje_konto': 'MOJE KONTO', 'footer.zamowienia': 'Twoje zamówienia', 'footer.ustawienia_konta': 'Ustawienia konta',
@@ -141,7 +140,7 @@
       'promo.copy': 'KOPIUJ', 'promo.copied': 'SKOPIOWANO', 'promo.dismiss': 'Nie, dziękuję'
     },
     en: {
-      'nav.indeks': 'INDEX', 'nav.katalog': 'CATALOG', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUCTS',
+      'nav.indeks': 'INDEX', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUCTS',
       'theme.day': 'DAY', 'theme.night': 'NIGHT', 'cart.label': 'CART',
       'tabbar.label': 'HERO VARIANT', 'tab.tablica': '02 · BOARD', 'tab.wykres': '03 · CHART',
       'hero1.eyebrow': 'MOLECULAR HOME FRAGRANCE · SEVEN COMPOUNDS',
@@ -164,7 +163,6 @@
       'th.charakter': 'CHARACTER', 'th.intensywnosc': 'INTENSITY', 'th.tyg': 'WKS', 'th.cena': 'PRICE',
       'index.foot1': 'INTENSITY MEASURED AT 0.8% IN NEUTRAL CARRIER, 22 °C',
       'index.foot2': 'DELIVERY 1–3 BUSINESS DAYS · PL / EU',
-      'katalog.title': 'All products', 'katalog.note': 'SEVEN COMPOUNDS · PHOTO AND DESCRIPTION OF EACH PRODUCT', 'katalog.image_tag': 'PRODUCT PHOTO OR VIDEO',
       'karta.image_tag': 'PRODUCT PHOTO — VESSEL, 4:5',
       'karta.thumb.etykieta': 'LABEL', 'karta.thumb.nosnik': 'CARRIER', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETAIL',
       'karta.eyebrow': '01 · THE QUIET ONE', 'karta.title': 'Smells like nothing.',
@@ -194,7 +192,7 @@
       'archive.last': 'LAST', 'archive.last_value': '07 · Timbersilk — why cold',
       'archive.archive': 'ARCHIVE', 'archive.archive_value': '01—07 · full notes',
       'footer.address': 'MOLECULAR HOME FRAGRANCE<br>WARSAW · PL<br>VAT 000 000 00 00',
-      'footer.pelny_indeks': 'Full index →', 'footer.katalog': 'All products →', 'footer.marka': 'BRAND',
+      'footer.pelny_indeks': 'Full index →', 'footer.marka': 'BRAND',
       'footer.metoda': 'Method', 'footer.list': 'Letter', 'footer.refill': 'Vessels & refills',
       'footer.obsluga': 'SUPPORT', 'footer.kontakt': 'Contact', 'footer.wysylka': 'Shipping & returns', 'footer.regulamin': 'Terms',
       'footer.vat': 'PRICES IN PLN, VAT INCLUDED',
@@ -213,7 +211,7 @@
       'promo.copy': 'COPY', 'promo.copied': 'COPIED', 'promo.dismiss': 'No, thanks'
     },
     es: {
-      'nav.indeks': 'ÍNDICE', 'nav.katalog': 'CATÁLOGO', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA', 'nav.menu': 'MENÚ', 'menu.produkty': 'PRODUCTOS',
+      'nav.indeks': 'ÍNDICE', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA', 'nav.menu': 'MENÚ', 'menu.produkty': 'PRODUCTOS',
       'theme.day': 'DÍA', 'theme.night': 'NOCHE', 'cart.label': 'CARRITO',
       'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLERO', 'tab.wykres': '03 · GRÁFICO',
       'hero1.eyebrow': 'FRAGANCIA MOLECULAR PARA EL HOGAR · SIETE COMPUESTOS',
@@ -236,7 +234,6 @@
       'th.charakter': 'CARÁCTER', 'th.intensywnosc': 'INTENSIDAD', 'th.tyg': 'SEM.', 'th.cena': 'PRECIO',
       'index.foot1': 'INTENSIDAD MEDIDA AL 0,8% EN SOPORTE NEUTRO, 22 °C',
       'index.foot2': 'ENTREGA EN 1–3 DÍAS LABORABLES · PL / UE',
-      'katalog.title': 'Todos los productos', 'katalog.note': 'SIETE COMPUESTOS · FOTO Y DESCRIPCIÓN DE CADA PRODUCTO', 'katalog.image_tag': 'FOTO O VÍDEO DEL PRODUCTO',
       'karta.image_tag': 'FOTO DEL PRODUCTO — FRASCO, 4:5',
       'karta.thumb.etykieta': 'ETIQUETA', 'karta.thumb.nosnik': 'SOPORTE', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETALLE',
       'karta.eyebrow': '01 · EL SILENCIOSO', 'karta.title': 'No huele a nada.',
@@ -266,7 +263,7 @@
       'archive.last': 'ÚLTIMA', 'archive.last_value': '07 · Timbersilk — por qué frío',
       'archive.archive': 'ARCHIVO', 'archive.archive_value': '01—07 · notas completas',
       'footer.address': 'FRAGANCIA MOLECULAR PARA EL HOGAR<br>VARSOVIA · PL<br>NIF 000 000 00 00',
-      'footer.pelny_indeks': 'Índice completo →', 'footer.katalog': 'Todos los productos →', 'footer.marka': 'MARCA',
+      'footer.pelny_indeks': 'Índice completo →', 'footer.marka': 'MARCA',
       'footer.metoda': 'Método', 'footer.list': 'Carta', 'footer.refill': 'Frascos y recambios',
       'footer.obsluga': 'ATENCIÓN AL CLIENTE', 'footer.kontakt': 'Contacto', 'footer.wysylka': 'Envíos y devoluciones', 'footer.regulamin': 'Términos',
       'footer.vat': 'PRECIOS EN PLN, IVA INCLUIDO',
@@ -285,7 +282,7 @@
       'promo.copy': 'COPIAR', 'promo.copied': 'COPIADO', 'promo.dismiss': 'No, gracias'
     },
     uk: {
-      'nav.indeks': 'ІНДЕКС', 'nav.katalog': 'ТОВАРИ', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ', 'nav.menu': 'МЕНЮ', 'menu.produkty': 'ТОВАРИ',
+      'nav.indeks': 'ІНДЕКС', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ', 'nav.menu': 'МЕНЮ', 'menu.produkty': 'ТОВАРИ',
       'theme.day': 'ДЕНЬ', 'theme.night': 'НІЧ', 'cart.label': 'КОШИК',
       'tabbar.label': 'ВАРІАНТ HERO', 'tab.tablica': '02 · ТАБЛИЦЯ', 'tab.wykres': '03 · ГРАФІК',
       'hero1.eyebrow': 'МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ · СІМ СПОЛУК',
@@ -308,7 +305,6 @@
       'th.charakter': 'ХАРАКТЕР', 'th.intensywnosc': 'ІНТЕНСИВНІСТЬ', 'th.tyg': 'ТИЖ.', 'th.cena': 'ЦІНА',
       'index.foot1': 'ІНТЕНСИВНІСТЬ ВИМІРЯНА ПРИ 0,8% У НЕЙТРАЛЬНОМУ НОСІЇ, 22 °C',
       'index.foot2': 'ДОСТАВКА 1–3 РОБОЧІ ДНІ · PL / ЄС',
-      'katalog.title': 'Усі товари', 'katalog.note': 'СІМ СПОЛУК · ФОТО ТА ОПИС КОЖНОГО ТОВАРУ', 'katalog.image_tag': 'ФОТО АБО ВІДЕО ТОВАРУ',
       'karta.image_tag': "ФОТО ПРОДУКТУ — ПОСУДИНА, 4:5",
       'karta.thumb.etykieta': 'ЕТИКЕТКА', 'karta.thumb.nosnik': 'НОСІЙ', 'karta.thumb.wnetrze': "ІНТЕР'ЄР", 'karta.thumb.detal': 'ДЕТАЛЬ',
       'karta.eyebrow': '01 · ТОЙ ТИХИЙ', 'karta.title': 'Не пахне нічим.',
@@ -338,7 +334,7 @@
       'archive.last': 'ОСТАННІЙ', 'archive.last_value': '07 · Timbersilk — чому холод',
       'archive.archive': 'АРХІВ', 'archive.archive_value': '01—07 · повні нотатки',
       'footer.address': "МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ<br>ВАРШАВА · PL<br>НІП 000 000 00 00",
-      'footer.pelny_indeks': 'Повний індекс →', 'footer.katalog': 'Усі товари →', 'footer.marka': 'БРЕНД',
+      'footer.pelny_indeks': 'Повний індекс →', 'footer.marka': 'БРЕНД',
       'footer.metoda': 'Метод', 'footer.list': 'Лист', 'footer.refill': 'Посудини й дозаправка',
       'footer.obsluga': 'ПІДТРИМКА', 'footer.kontakt': 'Контакти', 'footer.wysylka': 'Доставка і повернення', 'footer.regulamin': 'Умови',
       'footer.vat': 'ЦІНИ В PLN, З ПДВ',
@@ -357,7 +353,7 @@
       'promo.copy': 'КОПІЮВАТИ', 'promo.copied': 'СКОПІЙОВАНО', 'promo.dismiss': 'Ні, дякую'
     },
     fr: {
-      'nav.indeks': 'INDEX', 'nav.katalog': 'CATALOGUE', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUITS',
+      'nav.indeks': 'INDEX', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUITS',
       'theme.day': 'JOUR', 'theme.night': 'NUIT', 'cart.label': 'PANIER',
       'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLEAU', 'tab.wykres': '03 · GRAPHIQUE',
       'hero1.eyebrow': "PARFUM MOLÉCULAIRE D'INTÉRIEUR · SEPT COMPOSÉS",
@@ -380,7 +376,6 @@
       'th.charakter': 'CARACTÈRE', 'th.intensywnosc': 'INTENSITÉ', 'th.tyg': 'SEM.', 'th.cena': 'PRIX',
       'index.foot1': 'INTENSITÉ MESURÉE À 0,8 % DANS UN SUPPORT NEUTRE, 22 °C',
       'index.foot2': 'LIVRAISON 1–3 JOURS OUVRÉS · PL / UE',
-      'katalog.title': 'Tous les produits', 'katalog.note': 'SEPT COMPOSÉS · PHOTO ET DESCRIPTION DE CHAQUE PRODUIT', 'katalog.image_tag': 'PHOTO OU VIDÉO DU PRODUIT',
       'karta.image_tag': 'PHOTO PRODUIT — FLACON, 4:5',
       'karta.thumb.etykieta': 'ÉTIQUETTE', 'karta.thumb.nosnik': 'SUPPORT', 'karta.thumb.wnetrze': 'INTÉRIEUR', 'karta.thumb.detal': 'DÉTAIL',
       'karta.eyebrow': '01 · LE DISCRET', 'karta.title': 'Ne sent rien.',
@@ -410,7 +405,7 @@
       'archive.last': 'DERNIÈRE', 'archive.last_value': '07 · Timbersilk — pourquoi le froid',
       'archive.archive': 'ARCHIVES', 'archive.archive_value': '01—07 · notes complètes',
       'footer.address': "PARFUM MOLÉCULAIRE D'INTÉRIEUR<br>VARSOVIE · PL<br>TVA 000 000 00 00",
-      'footer.pelny_indeks': 'Index complet →', 'footer.katalog': 'Tous les produits →', 'footer.marka': 'MARQUE',
+      'footer.pelny_indeks': 'Index complet →', 'footer.marka': 'MARQUE',
       'footer.metoda': 'Méthode', 'footer.list': 'Lettre', 'footer.refill': 'Flacons et recharges',
       'footer.obsluga': 'SERVICE CLIENT', 'footer.kontakt': 'Contact', 'footer.wysylka': 'Livraison et retours', 'footer.regulamin': 'Conditions',
       'footer.vat': 'PRIX EN PLN, TVA INCLUSE',
@@ -587,7 +582,6 @@
     '.section-title', '.karta-title', '.list-title',
     '.stat', '.hero-strip-cell',
     '.section-note', '.index-row--body', '.index-foot > span',
-    '.katalog-card',
     '.karta-image-tag', '.karta-brand', '.karta-name', '.karta-thumb',
     '.karta-lede', '.spec', '.buy-box', '.karta-badges',
     '.metoda-card',
@@ -723,35 +717,13 @@
     if (!el) return;
     el.innerHTML = PRODUCTS.map(p => `
       <div class="menu-product" data-nr="${p.nr}">
-        <a href="#katalog" class="menu-product-link">
+        <a href="#indeks" class="menu-product-link">
           <span class="menu-product-name">${p.nr} · ${p.name}</span>
           <span class="menu-product-meta mono">${p.formula}</span>
         </a>
         <span class="menu-product-price mono">${p.price} zł</span>
         <button type="button" class="menu-product-add mono" data-add="${p.nr}">${t('add_btn')}</button>
       </div>
-    `).join('');
-  }
-
-  function renderKatalogGrid() {
-    const el = document.getElementById('katalog-grid');
-    if (!el) return;
-    el.innerHTML = PRODUCTS.map(p => `
-      <article class="katalog-card" data-nr="${p.nr}">
-        <div class="katalog-image">
-          <div class="katalog-image-top mono"><span>${p.formula} · ${p.nr}</span><span>200 ML</span></div>
-          <div class="katalog-image-tag mono">${t('katalog.image_tag')}</div>
-        </div>
-        <div class="katalog-body">
-          <div class="katalog-eyebrow mono">${p.nr} · ${p.formula}</div>
-          <div class="katalog-name">${p.name}</div>
-          <p class="katalog-desc">${characterFor(p.nr)}</p>
-          <div class="katalog-price-row">
-            <span class="katalog-price mono">${p.price} zł</span>
-            <button type="button" class="katalog-add-btn mono" data-add="${p.nr}">${t('add_btn')}</button>
-          </div>
-        </div>
-      </article>
     `).join('');
   }
 
@@ -925,7 +897,6 @@
 
   function refreshDynamicContent() {
     renderIndexRows();
-    renderKatalogGrid();
     renderMenuProducts();
     renderCart();
     applyReveal();
@@ -1070,7 +1041,6 @@
   function init() {
     renderHeroDatasheetRows();
     renderIndexRows();
-    renderKatalogGrid();
     renderMenuProducts();
     renderCart();
     applyReveal();
@@ -1082,12 +1052,6 @@
     initPromoPopup();
 
     document.getElementById('index-rows').addEventListener('click', e => {
-      const btn = e.target.closest('[data-add]');
-      if (!btn) return;
-      addToCart(btn.dataset.add, 1);
-    });
-
-    document.getElementById('katalog-grid').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');
       if (!btn) return;
       addToCart(btn.dataset.add, 1);
