@@ -699,6 +699,28 @@
     document.getElementById('menu-toggle').setAttribute('aria-expanded', String(state.menuOpen));
   }
 
+  function initMenuHover() {
+    if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const toggleEl = document.getElementById('menu-toggle');
+    const drawerEl = document.querySelector('.menu-drawer');
+    let closeTimer = null;
+
+    function openNow() {
+      window.clearTimeout(closeTimer);
+      toggleMenu(true);
+    }
+    function closeSoon() {
+      window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => toggleMenu(false), 200);
+    }
+
+    toggleEl.addEventListener('mouseenter', openNow);
+    toggleEl.addEventListener('mouseleave', closeSoon);
+    drawerEl.addEventListener('mouseenter', openNow);
+    drawerEl.addEventListener('mouseleave', closeSoon);
+  }
+
   // ---------- one-time render of static-per-load lists ----------
 
   function renderHeroDatasheetRows() {
@@ -1048,13 +1070,15 @@
     document.getElementById('cart-close').addEventListener('click', () => toggleCart(false));
     document.getElementById('cart-scrim').addEventListener('click', () => toggleCart(false));
 
-    document.getElementById('menu-toggle').addEventListener('click', () => toggleMenu());
+    document.getElementById('menu-toggle').addEventListener('click', () => toggleMenu(true));
     document.getElementById('menu-close').addEventListener('click', () => toggleMenu(false));
     document.getElementById('menu-scrim').addEventListener('click', () => toggleMenu(false));
 
     document.querySelectorAll('.menu-nav a, .menu-section-label--link').forEach(a => {
       a.addEventListener('click', () => toggleMenu(false));
     });
+
+    initMenuHover();
 
     document.getElementById('cart-items').addEventListener('click', e => {
       const btn = e.target.closest('[data-remove]');
