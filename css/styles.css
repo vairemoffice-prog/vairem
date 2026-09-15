@@ -155,8 +155,8 @@ button { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 132px;
   border: 1px solid var(--green-accent);
   border-left: 0;
   background: var(--green-accent);
@@ -166,8 +166,13 @@ button { font-family: inherit; }
   user-select: none;
 }
 .menu-toggle:hover { background: var(--green-accent-hover); border-color: var(--green-accent-hover); }
-.menu-toggle-icon { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 16px; }
-.menu-toggle-icon span { display: block; height: 2px; background: currentColor; }
+.menu-toggle-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+}
 
 .side-index {
   position: fixed;
