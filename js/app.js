@@ -725,7 +725,7 @@
       let navTimer = null;
       katalogLink.addEventListener('mouseenter', () => {
         window.clearTimeout(navTimer);
-        navTimer = window.setTimeout(() => { window.location.href = katalogLink.href; }, 300);
+        navTimer = window.setTimeout(() => { window.location.href = katalogLink.href; }, 100);
       });
       katalogLink.addEventListener('mouseleave', () => window.clearTimeout(navTimer));
     }
