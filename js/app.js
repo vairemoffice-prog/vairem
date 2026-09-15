@@ -715,22 +715,10 @@
     drawerEl.addEventListener('mouseleave', closeSoon);
   }
 
-  function initHoverNavigate(links) {
-    links.forEach(link => {
-      let navTimer = null;
-      link.addEventListener('mouseenter', () => {
-        window.clearTimeout(navTimer);
-        navTimer = window.setTimeout(() => { window.location.href = link.href; }, 500);
-      });
-      link.addEventListener('mouseleave', () => window.clearTimeout(navTimer));
-    });
-  }
-
   function initMenuHover() {
     if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
     initHoverOpen(document.getElementById('menu-toggle'), document.querySelector('.menu-drawer'), toggleMenu);
-    initHoverNavigate(document.querySelectorAll('.menu-nav a, .menu-section-label--link'));
   }
 
   function initCartHover() {
