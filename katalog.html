@@ -51,6 +51,9 @@
     border:1px dashed var(--border-strong); padding:20px 22px; font-size:14px; line-height:1.7; color:var(--muted); font-style:italic;
   }
 
+  .cat-add-row{ margin-top:24px; }
+  .cat-add-row .btn[disabled]{ opacity:1; }
+
   @media (max-width:520px){
     .cat-product{ margin-top:56px; padding-top:40px; }
   }
@@ -137,6 +140,9 @@
           <h3>SZCZEGÓŁOWY OPIS</h3>
           <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
         </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="01">DO KOSZYKA</button>
+        </div>
       </article>
 
       <article class="cat-product" id="p02">
@@ -155,6 +161,9 @@
         <div class="cat-detail">
           <h3>SZCZEGÓŁOWY OPIS</h3>
           <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="02">DO KOSZYKA</button>
         </div>
       </article>
 
@@ -175,6 +184,9 @@
           <h3>SZCZEGÓŁOWY OPIS</h3>
           <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
         </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="03">DO KOSZYKA</button>
+        </div>
       </article>
 
       <article class="cat-product" id="p04">
@@ -193,6 +205,9 @@
         <div class="cat-detail">
           <h3>SZCZEGÓŁOWY OPIS</h3>
           <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="04">DO KOSZYKA</button>
         </div>
       </article>
 
@@ -213,6 +228,9 @@
           <h3>SZCZEGÓŁOWY OPIS</h3>
           <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
         </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="05">DO KOSZYKA</button>
+        </div>
       </article>
 
       <article class="cat-product" id="p06">
@@ -231,6 +249,9 @@
         <div class="cat-detail">
           <h3>SZCZEGÓŁOWY OPIS</h3>
           <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="06">DO KOSZYKA</button>
         </div>
       </article>
 
@@ -251,6 +272,9 @@
           <h3>SZCZEGÓŁOWY OPIS</h3>
           <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
         </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="07">DO KOSZYKA</button>
+        </div>
       </article>
 
     </div>
@@ -263,6 +287,42 @@
     <a href="index.html">STRONA GŁÓWNA →</a>
   </div>
 </footer>
+
+<script>
+(function () {
+  var CART_KEY = 'vairem-cart';
+
+  function loadCart() {
+    try {
+      var raw = localStorage.getItem(CART_KEY);
+      if (raw === null) return [{ nr: '01', qty: 1 }];
+      var parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return [{ nr: '01', qty: 1 }]; }
+  }
+
+  function addToCart(nr) {
+    var cart = loadCart();
+    var existing = cart.filter(function (i) { return i.nr === nr; })[0];
+    if (existing) existing.qty += 1;
+    else cart.push({ nr: nr, qty: 1 });
+    try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {}
+  }
+
+  document.querySelectorAll('.cat-add-row [data-add]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      addToCart(btn.dataset.add);
+      var original = btn.textContent;
+      btn.textContent = 'DODANO ✓';
+      btn.disabled = true;
+      window.setTimeout(function () {
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 1400);
+    });
+  });
+})();
+</script>
 
 </div><!-- /page-content -->
 
