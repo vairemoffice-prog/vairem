@@ -18,7 +18,7 @@
     }
 
     function step() {
-      current += (target - current) * 0.12;
+      current += (target - current) * 0.09;
       if (Math.abs(target - current) < 0.5) {
         current = target;
         window.scrollTo(0, current);
@@ -87,33 +87,46 @@
   }
 
   // ---------- magnetic buttons ----------
+  // A true proximity field: buttons start pulling toward the cursor before
+  // it even touches them, with a stronger pull than a simple on-hover version.
 
   function initMagnetic() {
     if (reducedMotion || !fineHover) return;
 
     const SELECTOR = '.btn';
+    const RADIUS = 90;
+    const STRENGTH = 0.45;
 
-    function attach(el) {
-      if (el.dataset.fxMagnet) return;
-      el.dataset.fxMagnet = '1';
-      el.addEventListener('mousemove', e => {
-        const r = el.getBoundingClientRect();
-        const dx = e.clientX - (r.left + r.width / 2);
-        const dy = e.clientY - (r.top + r.height / 2);
-        el.style.transition = 'transform 0.06s linear';
-        el.style.transform = `translate(${dx * 0.25}px, ${dy * 0.25}px)`;
-      });
-      el.addEventListener('mouseleave', () => {
-        el.style.transition = 'transform 0.35s cubic-bezier(0.2, 1, 0.3, 1)';
-        el.style.transform = 'translate(0, 0)';
-      });
-    }
-
+    let elements = [];
     function scan() {
-      document.querySelectorAll(SELECTOR).forEach(attach);
+      elements = Array.from(document.querySelectorAll(SELECTOR));
     }
     scan();
     document.addEventListener('vairem:content-swapped', scan);
+
+    let mouseX = -9999;
+    let mouseY = -9999;
+    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+    function raf() {
+      elements.forEach(el => {
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = mouseX - cx;
+        const dy = mouseY - cy;
+        const dist = Math.hypot(dx, dy);
+        const reach = RADIUS + Math.max(r.width, r.height) / 2;
+        if (dist < reach) {
+          const pull = (1 - dist / reach) * STRENGTH;
+          el.style.transform = `translate(${(dx * pull).toFixed(2)}px, ${(dy * pull).toFixed(2)}px)`;
+        } else if (el.style.transform) {
+          el.style.transform = '';
+        }
+      });
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
   }
 
   // ---------- generic scroll-reveal ----------
