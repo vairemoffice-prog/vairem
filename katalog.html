@@ -16,8 +16,9 @@
 <link rel="stylesheet" href="css/styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
 <style>
-  .legal-header{ border-bottom:1px solid var(--border); padding-block:22px; }
+  .legal-header{ position:sticky; top:0; z-index:40; background:var(--header-bg); backdrop-filter:blur(6px); border-bottom:1px solid var(--border); padding-block:22px; }
   .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .menu-overlay{ top:81px; }
   .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
   .legal-back:hover{ color:var(--text-hover); }
 
