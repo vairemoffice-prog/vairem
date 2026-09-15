@@ -157,15 +157,15 @@ button { font-family: inherit; }
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid var(--green-deep);
+  border: 1px solid var(--green-accent);
   border-left: 0;
   background: var(--bg);
-  color: var(--green-deep);
+  color: var(--green-accent);
   cursor: pointer;
 }
-.menu-toggle:hover { background: var(--row-bg); color: var(--green-deep-hover); border-color: var(--green-deep-hover); }
+.menu-toggle:hover { background: var(--row-bg); color: var(--green-accent-hover); border-color: var(--green-accent-hover); }
 .menu-toggle-icon { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 16px; }
-.menu-toggle-icon span { display: block; height: 1px; background: currentColor; }
+.menu-toggle-icon span { display: block; height: 2px; background: currentColor; }
 .brand-name { font-size: 15px; font-weight: 500; letter-spacing: 0.633em; }
 .brand-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--muted); }
 .brand-mark { width: 40px; height: 30px; color: var(--text); flex-shrink: 0; }
