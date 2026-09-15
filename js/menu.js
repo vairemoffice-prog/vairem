@@ -26,7 +26,12 @@
     toggle.setAttribute('aria-expanded', String(open));
   }
 
-  toggle.addEventListener('click', () => setMenu(true));
+  let suppressToggleClick = false;
+
+  toggle.addEventListener('click', () => {
+    if (suppressToggleClick) { suppressToggleClick = false; return; }
+    setMenu(true);
+  });
   closeBtn.addEventListener('click', () => setMenu(false));
   scrim.addEventListener('click', () => setMenu(false));
 
@@ -52,6 +57,76 @@
   }
   updateOverlayTop();
   window.addEventListener('resize', updateOverlayTop);
+
+  // ---------- let each user drag the menu toggle to any vertical position ----------
+
+  const TOGGLE_POS_KEY = 'vairem-menu-toggle-top';
+
+  function currentHeaderHeight() {
+    const header = document.querySelector('#page-content header');
+    return header ? header.getBoundingClientRect().height : 76;
+  }
+
+  function clampToggleTop(px) {
+    const min = currentHeaderHeight() + 8;
+    const max = window.innerHeight - toggle.offsetHeight - 8;
+    return Math.min(Math.max(px, min), max);
+  }
+
+  function applyStoredTogglePos() {
+    let stored = null;
+    try { stored = localStorage.getItem(TOGGLE_POS_KEY); } catch (e) {}
+    if (stored === null) return;
+    const frac = parseFloat(stored);
+    if (isNaN(frac)) return;
+    toggle.style.top = clampToggleTop(frac * window.innerHeight) + 'px';
+    toggle.style.transform = 'none';
+  }
+  applyStoredTogglePos();
+
+  window.addEventListener('resize', () => {
+    if (toggle.style.top) toggle.style.top = clampToggleTop(parseFloat(toggle.style.top)) + 'px';
+  });
+
+  (function initToggleDrag() {
+    let dragging = false;
+    let moved = false;
+    let startClientY = 0;
+    let startTop = 0;
+
+    toggle.addEventListener('pointerdown', e => {
+      if (e.button !== undefined && e.button !== 0) return;
+      dragging = true;
+      moved = false;
+      startClientY = e.clientY;
+      startTop = toggle.getBoundingClientRect().top;
+      toggle.setPointerCapture(e.pointerId);
+    });
+
+    toggle.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const dy = e.clientY - startClientY;
+      if (!moved && Math.abs(dy) < 4) return;
+      moved = true;
+      toggle.style.top = clampToggleTop(startTop + dy) + 'px';
+      toggle.style.transform = 'none';
+      toggle.style.cursor = 'grabbing';
+    });
+
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      toggle.style.cursor = '';
+      if (moved) {
+        suppressToggleClick = true;
+        const frac = parseFloat(toggle.style.top) / window.innerHeight;
+        try { localStorage.setItem(TOGGLE_POS_KEY, String(frac)); } catch (e) {}
+      }
+    }
+
+    toggle.addEventListener('pointerup', endDrag);
+    toggle.addEventListener('pointercancel', endDrag);
+  })();
 
   // ---------- scroll helper ----------
 
@@ -120,6 +195,7 @@
     });
 
     updateOverlayTop();
+    if (toggle.style.top) toggle.style.top = clampToggleTop(parseFloat(toggle.style.top)) + 'px';
     scrollToHash(url.hash);
   }
 
