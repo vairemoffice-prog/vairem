@@ -837,6 +837,52 @@
     document.getElementById('qty-value').textContent = String(state.heroQty);
   }
 
+  // ---------- optional media slots (video/photos), no-op until the files exist ----------
+
+  function initHeroVideo() {
+    const video = document.querySelector('.hero-video');
+    if (!video || !video.dataset.src) return;
+    video.addEventListener('loadeddata', () => {
+      video.classList.add('is-loaded');
+      video.play().catch(() => {});
+    });
+    video.src = video.dataset.src;
+    video.load();
+  }
+
+  function initProductPhotos(root = document) {
+    root.querySelectorAll('.karta-photo[data-src]').forEach(img => {
+      const probe = new Image();
+      probe.onload = () => {
+        img.src = img.dataset.src;
+        img.classList.add('is-loaded');
+      };
+      probe.src = img.dataset.src;
+    });
+  }
+
+  // ---------- vertical section nav (scrollspy) ----------
+
+  function initSideIndex() {
+    const nav = document.querySelector('.side-index');
+    if (!nav || !('IntersectionObserver' in window)) return;
+
+    const links = Array.from(nav.querySelectorAll('a[data-target]'));
+    const sections = links
+      .map(a => document.getElementById(a.dataset.target))
+      .filter(Boolean);
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const link = nav.querySelector(`a[data-target="${entry.target.id}"]`);
+        if (link) link.classList.toggle('is-active', entry.isIntersecting);
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+  }
+
   // ---------- day / night theme ----------
 
   function refreshThemeLabel() {
@@ -1047,6 +1093,9 @@
     initLangSwitcher();
     initCookieBanner();
     initPromoPopup();
+    initSideIndex();
+    initHeroVideo();
+    initProductPhotos();
 
     document.getElementById('index-rows').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');
