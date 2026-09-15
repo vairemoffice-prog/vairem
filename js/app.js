@@ -712,21 +712,6 @@
     `).join('');
   }
 
-  function renderMenuProducts() {
-    const el = document.getElementById('menu-products');
-    if (!el) return;
-    el.innerHTML = PRODUCTS.map(p => `
-      <div class="menu-product" data-nr="${p.nr}">
-        <a href="katalog.html#p${p.nr}" class="menu-product-link">
-          <span class="menu-product-name">${p.nr} · ${p.name}</span>
-          <span class="menu-product-meta mono">${p.formula}</span>
-        </a>
-        <span class="menu-product-price mono">${p.price} zł</span>
-        <button type="button" class="menu-product-add mono" data-add="${p.nr}">${t('add_btn')}</button>
-      </div>
-    `).join('');
-  }
-
   function renderIndexRows() {
     const el = document.getElementById('index-rows');
     el.innerHTML = PRODUCTS.map(p => `
@@ -897,7 +882,6 @@
 
   function refreshDynamicContent() {
     renderIndexRows();
-    renderMenuProducts();
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -1041,7 +1025,6 @@
   function init() {
     renderHeroDatasheetRows();
     renderIndexRows();
-    renderMenuProducts();
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -1069,18 +1052,8 @@
     document.getElementById('menu-close').addEventListener('click', () => toggleMenu(false));
     document.getElementById('menu-scrim').addEventListener('click', () => toggleMenu(false));
 
-    document.querySelectorAll('.menu-nav a').forEach(a => {
+    document.querySelectorAll('.menu-nav a, .menu-section-label--link').forEach(a => {
       a.addEventListener('click', () => toggleMenu(false));
-    });
-
-    document.getElementById('menu-products').addEventListener('click', e => {
-      const addBtn = e.target.closest('[data-add]');
-      if (addBtn) {
-        e.preventDefault();
-        addToCart(addBtn.dataset.add, 1);
-        return;
-      }
-      if (e.target.closest('.menu-product-link')) toggleMenu(false);
     });
 
     document.getElementById('cart-items').addEventListener('click', e => {
