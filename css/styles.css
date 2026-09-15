@@ -155,7 +155,7 @@ button { font-family: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
+  width: 48px;
   height: 132px;
   border: 1px solid var(--green-accent);
   border-left: 0;
@@ -169,8 +169,8 @@ button { font-family: inherit; }
 .menu-toggle-label {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 12px;
-  letter-spacing: 0.22em;
+  font-size: 13px;
+  letter-spacing: 0.24em;
   font-weight: 500;
 }
 
