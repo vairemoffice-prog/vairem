@@ -735,9 +735,15 @@ button { font-family: inherit; }
 .menu-nav a:last-child { border-bottom: 0; }
 .menu-nav a:hover { background: var(--row-bg); }
 
-.menu-drawer-section { padding: 18px 22px; }
-.menu-section-label { display: block; font-size: 10px; letter-spacing: 0.16em; color: var(--muted); }
-.menu-section-label--link:hover { color: var(--text-hover); }
+.menu-section-label {
+  display: block;
+  padding: 15px 22px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text);
+}
+.menu-section-label--link:hover { background: var(--row-bg); color: var(--text-hover); }
 
 /* ---------- cart drawer ---------- */
 
