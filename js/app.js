@@ -719,6 +719,16 @@
     toggleEl.addEventListener('mouseleave', closeSoon);
     drawerEl.addEventListener('mouseenter', openNow);
     drawerEl.addEventListener('mouseleave', closeSoon);
+
+    const katalogLink = document.querySelector('.menu-section-label--link');
+    if (katalogLink) {
+      let navTimer = null;
+      katalogLink.addEventListener('mouseenter', () => {
+        window.clearTimeout(navTimer);
+        navTimer = window.setTimeout(() => { window.location.href = katalogLink.href; }, 300);
+      });
+      katalogLink.addEventListener('mouseleave', () => window.clearTimeout(navTimer));
+    }
   }
 
   // ---------- one-time render of static-per-load lists ----------
