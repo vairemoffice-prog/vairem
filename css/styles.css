@@ -799,7 +799,8 @@ button { font-family: inherit; }
 .menu-nav {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
 }
 .menu-nav a {
   padding: 15px 22px;
