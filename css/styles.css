@@ -147,14 +147,19 @@ button { font-family: inherit; }
 .brand { display: flex; align-items: center; gap: 10px; }
 
 .menu-toggle {
-  flex-shrink: 0;
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 70;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--border-strong);
-  background: transparent;
+  border-left: 0;
+  background: var(--bg);
   color: var(--text);
   cursor: pointer;
 }
