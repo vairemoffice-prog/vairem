@@ -168,6 +168,35 @@ button { font-family: inherit; }
 .menu-toggle:hover { background: var(--green-accent-hover); border-color: var(--green-accent-hover); }
 .menu-toggle-icon { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 16px; }
 .menu-toggle-icon span { display: block; height: 2px; background: currentColor; }
+
+.side-index {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+.side-index a {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 2px;
+  transition: color 0.25s ease;
+}
+.side-index a:hover { color: var(--text-hover); }
+.side-index a.is-active { color: var(--green-deep); }
+[data-theme="night"] .side-index a.is-active { color: var(--green-accent); }
+@media (max-width: 900px) {
+  .side-index { display: none; }
+}
 .brand-name { font-size: 15px; font-weight: 500; letter-spacing: 0.633em; }
 .brand-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--muted); }
 .brand-mark { width: 40px; height: 30px; color: var(--text); flex-shrink: 0; }
@@ -314,6 +343,18 @@ button { font-family: inherit; }
   height: 100%;
   display: block;
 }
+
+/* Optional hero background video — stays hidden until assets/video/hero.mp4 actually exists. */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.hero-video.is-loaded { opacity: 0.45; }
 
 .hero-top {
   position: relative;
@@ -474,6 +515,18 @@ button { font-family: inherit; }
 }
 .karta-brand { font-size: 15px; font-weight: 700; letter-spacing: 0.26em; padding-top: 18px; color: var(--text); }
 .karta-name { font-size: 22px; letter-spacing: -0.02em; padding-top: 2px; color: var(--text); }
+
+/* Optional product photo/render — stays hidden until assets/products/{nr}.jpg actually exists. */
+.karta-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.karta-photo.is-loaded { display: block; }
+.karta-photo.is-loaded ~ .karta-image-bottom .karta-image-tag { display: none; }
 
 .karta-thumbs {
   display: grid;
