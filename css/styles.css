@@ -733,7 +733,8 @@ button { font-family: inherit; }
 .menu-nav a:hover { background: var(--row-bg); }
 
 .menu-drawer-section { flex: 1; overflow: auto; padding: 18px 22px 22px; }
-.menu-section-label { font-size: 10px; letter-spacing: 0.16em; color: var(--muted); padding-bottom: 10px; }
+.menu-section-label { display: block; font-size: 10px; letter-spacing: 0.16em; color: var(--muted); padding-bottom: 10px; }
+.menu-section-label--link:hover { color: var(--text-hover); }
 
 .menu-products { display: flex; flex-direction: column; }
 .menu-product {

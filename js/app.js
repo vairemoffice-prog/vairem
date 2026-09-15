@@ -65,7 +65,7 @@
 
   const I18N = {
     pl: {
-      'nav.indeks': 'INDEKS', 'nav.metoda': 'METODA', 'nav.list': 'LIST', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUKTY',
+      'nav.indeks': 'INDEKS', 'nav.metoda': 'METODA', 'nav.list': 'LIST', 'nav.menu': 'MENU', 'menu.produkty': 'KATALOG',
       'theme.day': 'DZIEŃ', 'theme.night': 'NOC', 'cart.label': 'KOSZYK',
       'tabbar.label': 'WARIANT HERO', 'tab.tablica': '02 · TABLICA', 'tab.wykres': '03 · WYKRES',
       'hero1.eyebrow': 'MOLEKULARNY ZAPACH DO WNĘTRZ · SIEDEM ZWIĄZKÓW',
@@ -140,7 +140,7 @@
       'promo.copy': 'KOPIUJ', 'promo.copied': 'SKOPIOWANO', 'promo.dismiss': 'Nie, dziękuję'
     },
     en: {
-      'nav.indeks': 'INDEX', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUCTS',
+      'nav.indeks': 'INDEX', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER', 'nav.menu': 'MENU', 'menu.produkty': 'CATALOG',
       'theme.day': 'DAY', 'theme.night': 'NIGHT', 'cart.label': 'CART',
       'tabbar.label': 'HERO VARIANT', 'tab.tablica': '02 · BOARD', 'tab.wykres': '03 · CHART',
       'hero1.eyebrow': 'MOLECULAR HOME FRAGRANCE · SEVEN COMPOUNDS',
@@ -211,7 +211,7 @@
       'promo.copy': 'COPY', 'promo.copied': 'COPIED', 'promo.dismiss': 'No, thanks'
     },
     es: {
-      'nav.indeks': 'ÍNDICE', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA', 'nav.menu': 'MENÚ', 'menu.produkty': 'PRODUCTOS',
+      'nav.indeks': 'ÍNDICE', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA', 'nav.menu': 'MENÚ', 'menu.produkty': 'CATÁLOGO',
       'theme.day': 'DÍA', 'theme.night': 'NOCHE', 'cart.label': 'CARRITO',
       'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLERO', 'tab.wykres': '03 · GRÁFICO',
       'hero1.eyebrow': 'FRAGANCIA MOLECULAR PARA EL HOGAR · SIETE COMPUESTOS',
@@ -282,7 +282,7 @@
       'promo.copy': 'COPIAR', 'promo.copied': 'COPIADO', 'promo.dismiss': 'No, gracias'
     },
     uk: {
-      'nav.indeks': 'ІНДЕКС', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ', 'nav.menu': 'МЕНЮ', 'menu.produkty': 'ТОВАРИ',
+      'nav.indeks': 'ІНДЕКС', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ', 'nav.menu': 'МЕНЮ', 'menu.produkty': 'КАТАЛОГ',
       'theme.day': 'ДЕНЬ', 'theme.night': 'НІЧ', 'cart.label': 'КОШИК',
       'tabbar.label': 'ВАРІАНТ HERO', 'tab.tablica': '02 · ТАБЛИЦЯ', 'tab.wykres': '03 · ГРАФІК',
       'hero1.eyebrow': 'МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ · СІМ СПОЛУК',
@@ -353,7 +353,7 @@
       'promo.copy': 'КОПІЮВАТИ', 'promo.copied': 'СКОПІЙОВАНО', 'promo.dismiss': 'Ні, дякую'
     },
     fr: {
-      'nav.indeks': 'INDEX', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE', 'nav.menu': 'MENU', 'menu.produkty': 'PRODUITS',
+      'nav.indeks': 'INDEX', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE', 'nav.menu': 'MENU', 'menu.produkty': 'CATALOGUE',
       'theme.day': 'JOUR', 'theme.night': 'NUIT', 'cart.label': 'PANIER',
       'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLEAU', 'tab.wykres': '03 · GRAPHIQUE',
       'hero1.eyebrow': "PARFUM MOLÉCULAIRE D'INTÉRIEUR · SEPT COMPOSÉS",
@@ -717,7 +717,7 @@
     if (!el) return;
     el.innerHTML = PRODUCTS.map(p => `
       <div class="menu-product" data-nr="${p.nr}">
-        <a href="#indeks" class="menu-product-link">
+        <a href="katalog.html#p${p.nr}" class="menu-product-link">
           <span class="menu-product-name">${p.nr} · ${p.name}</span>
           <span class="menu-product-meta mono">${p.formula}</span>
         </a>
