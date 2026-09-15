@@ -161,7 +161,9 @@ button { font-family: inherit; }
   border-left: 0;
   background: var(--green-accent);
   color: var(--green-accent-text);
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
 }
 .menu-toggle:hover { background: var(--green-accent-hover); border-color: var(--green-accent-hover); }
 .menu-toggle-icon { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 16px; }
