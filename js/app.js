@@ -688,16 +688,9 @@
   const state = {
     cart: loadCart(),
     cartOpen: false,
-    menuOpen: false,
     heroQty: 1,
     subscribed: false
   };
-
-  function toggleMenu(open) {
-    state.menuOpen = typeof open === 'boolean' ? open : !state.menuOpen;
-    document.getElementById('menu-overlay').hidden = !state.menuOpen;
-    document.getElementById('menu-toggle').setAttribute('aria-expanded', String(state.menuOpen));
-  }
 
   function initHoverOpen(toggleEl, drawerEl, setOpen) {
     let closeTimer = null;
@@ -713,24 +706,6 @@
     toggleEl.addEventListener('mouseleave', closeSoon);
     drawerEl.addEventListener('mouseenter', openNow);
     drawerEl.addEventListener('mouseleave', closeSoon);
-  }
-
-  function initHoverNavigate(links) {
-    links.forEach(link => {
-      let navTimer = null;
-      link.addEventListener('mouseenter', () => {
-        window.clearTimeout(navTimer);
-        navTimer = window.setTimeout(() => { window.location.href = link.href; }, 500);
-      });
-      link.addEventListener('mouseleave', () => window.clearTimeout(navTimer));
-    });
-  }
-
-  function initMenuHover() {
-    if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
-    initHoverOpen(document.getElementById('menu-toggle'), document.querySelector('.menu-drawer'), toggleMenu);
-    initHoverNavigate(document.querySelectorAll('.menu-nav a, .menu-section-label--link'));
   }
 
   function initCartHover() {
@@ -1087,15 +1062,6 @@
     document.getElementById('cart-close').addEventListener('click', () => toggleCart(false));
     document.getElementById('cart-scrim').addEventListener('click', () => toggleCart(false));
 
-    document.getElementById('menu-toggle').addEventListener('click', () => toggleMenu(true));
-    document.getElementById('menu-close').addEventListener('click', () => toggleMenu(false));
-    document.getElementById('menu-scrim').addEventListener('click', () => toggleMenu(false));
-
-    document.querySelectorAll('.menu-nav a, .menu-section-label--link').forEach(a => {
-      a.addEventListener('click', () => toggleMenu(false));
-    });
-
-    initMenuHover();
     initCartHover();
 
     document.getElementById('cart-items').addEventListener('click', e => {
@@ -1117,7 +1083,6 @@
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && state.cartOpen) toggleCart(false);
-      if (e.key === 'Escape' && state.menuOpen) toggleMenu(false);
     });
   }
 

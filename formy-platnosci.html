@@ -15,10 +15,9 @@
 <noscript><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="css/styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
-<style>
+<style id="page-style">
   .legal-header{ position:sticky; top:0; z-index:40; background:var(--header-bg); backdrop-filter:blur(6px); border-bottom:1px solid var(--border); padding-block:22px; }
   .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-  .menu-overlay{ top:81px; }
   .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
   .legal-back:hover{ color:var(--text-hover); }
 
@@ -73,24 +72,6 @@
   <span class="menu-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
 </button>
 
-<header class="legal-header">
-  <div class="wrap">
-    <div style="display:flex; align-items:center; gap:14px;">
-      <a href="index.html" class="brand" style="text-decoration:none;">
-        <svg class="brand-mark" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
-          <text x="8" y="126" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">v</text>
-          <text x="58" y="134" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">ai</text>
-          <text x="62" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">r</text>
-          <text x="96" y="78" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">e</text>
-          <text x="120" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">m</text>
-        </svg>
-        <span class="brand-name">Vairem</span>
-      </a>
-    </div>
-    <a href="index.html" class="legal-back mono">← STRONA GŁÓWNA</a>
-  </div>
-</header>
-
 <!-- SIDE MENU -->
 <div id="menu-overlay" class="menu-overlay" hidden>
   <div class="menu-scrim" id="menu-scrim"></div>
@@ -110,6 +91,26 @@
     </nav>
   </aside>
 </div>
+
+<div id="page-content">
+
+<header class="legal-header">
+  <div class="wrap">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="index.html" class="brand" style="text-decoration:none;">
+        <svg class="brand-mark" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
+          <text x="8" y="126" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">v</text>
+          <text x="58" y="134" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">ai</text>
+          <text x="62" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">r</text>
+          <text x="96" y="78" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">e</text>
+          <text x="120" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">m</text>
+        </svg>
+        <span class="brand-name">Vairem</span>
+      </a>
+    </div>
+    <a href="index.html" class="legal-back mono">← STRONA GŁÓWNA</a>
+  </div>
+</header>
 
 <main class="pay-main">
   <div class="wrap">
@@ -245,53 +246,9 @@
 })();
 </script>
 
-<script>
-(function () {
-  var overlay = document.getElementById('menu-overlay');
-  var toggle = document.getElementById('menu-toggle');
-  var closeBtn = document.getElementById('menu-close');
-  var scrim = document.getElementById('menu-scrim');
-  var menuOpen = false;
+</div><!-- /page-content -->
 
-  function setMenu(open) {
-    menuOpen = open;
-    overlay.hidden = !open;
-    toggle.setAttribute('aria-expanded', String(open));
-  }
-
-  toggle.addEventListener('click', function () { setMenu(true); });
-  closeBtn.addEventListener('click', function () { setMenu(false); });
-  scrim.addEventListener('click', function () { setMenu(false); });
-
-  document.querySelectorAll('.menu-nav a, .menu-section-label--link').forEach(function (a) {
-    a.addEventListener('click', function () { setMenu(false); });
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && menuOpen) setMenu(false);
-  });
-
-  if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    var drawer = document.querySelector('.menu-drawer');
-    var closeTimer = null;
-    function openNow() { window.clearTimeout(closeTimer); setMenu(true); }
-    function closeSoon() { window.clearTimeout(closeTimer); closeTimer = window.setTimeout(function () { setMenu(false); }, 200); }
-    toggle.addEventListener('mouseenter', openNow);
-    toggle.addEventListener('mouseleave', closeSoon);
-    drawer.addEventListener('mouseenter', openNow);
-    drawer.addEventListener('mouseleave', closeSoon);
-
-    document.querySelectorAll('.menu-nav a, .menu-section-label--link').forEach(function (link) {
-      var navTimer = null;
-      link.addEventListener('mouseenter', function () {
-        window.clearTimeout(navTimer);
-        navTimer = window.setTimeout(function () { window.location.href = link.href; }, 500);
-      });
-      link.addEventListener('mouseleave', function () { window.clearTimeout(navTimer); });
-    });
-  }
-})();
-</script>
+<script src="js/menu.js" defer></script>
 
 </body>
 </html>
