@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Katalog produktów — VAIREM</title>
+<meta name="description" content="Katalog produktów VAIREM: siedem związków zapachowych, zdjęcie i szczegółowy opis każdego.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
+<style>
+  .legal-header{ border-bottom:1px solid var(--border); padding-block:22px; }
+  .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
+  .legal-back:hover{ color:var(--text-hover); }
+
+  .cat-main{ padding-block:64px 96px; }
+  .cat-col{ max-width:760px; margin:0 auto; }
+  .cat-eyebrow{ font-size:11px; letter-spacing:0.2em; color:var(--muted); }
+  .cat-title{ margin:14px 0 0; font-size:clamp(30px,4vw,44px); letter-spacing:-0.03em; font-weight:500; line-height:1.05; }
+  .cat-lede{ margin-top:18px; max-width:56ch; font-size:16px; line-height:1.62; color:var(--text); }
+
+  .cat-toc{ display:flex; flex-wrap:wrap; gap:8px; margin-top:32px; }
+  .cat-toc a{
+    border:1px solid var(--border-strong); padding:8px 12px; font-size:11px; letter-spacing:0.1em;
+    font-family:'Martian Mono', monospace; color:var(--text);
+  }
+  .cat-toc a:hover{ background:var(--row-bg); color:var(--text-hover); }
+
+  .cat-product{ margin-top:72px; padding-top:56px; border-top:1px solid var(--border); scroll-margin-top:24px; }
+  .cat-product:first-of-type{ margin-top:56px; }
+  .cat-product-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .cat-product-eyebrow{ font-size:11px; letter-spacing:0.16em; color:var(--muted); font-family:'Martian Mono', monospace; }
+  .cat-product-price{ font-size:15px; color:var(--text); font-family:'Martian Mono', monospace; }
+  .cat-product-name{ margin:8px 0 0; font-size:clamp(24px,3vw,32px); letter-spacing:-0.02em; font-weight:500; }
+  .cat-product-character{ margin-top:8px; font-size:14px; color:var(--muted); }
+
+  .cat-photo-wrap{ max-width:340px; margin-top:26px; }
+  .cat-photo-wrap .karta-image{ padding:16px; }
+
+  .cat-detail{ margin-top:28px; }
+  .cat-detail h3{ margin:0 0 12px; font-size:11px; letter-spacing:0.16em; color:var(--muted); font-weight:500; font-family:'Martian Mono', monospace; }
+  .cat-detail-placeholder{
+    border:1px dashed var(--border-strong); padding:20px 22px; font-size:14px; line-height:1.7; color:var(--muted); font-style:italic;
+  }
+
+  @media (max-width:520px){
+    .cat-product{ margin-top:56px; padding-top:40px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="legal-header">
+  <div class="wrap">
+    <a href="index.html" class="brand" style="text-decoration:none;">
+      <svg class="brand-mark" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
+        <text x="8" y="126" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">v</text>
+        <text x="58" y="134" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">ai</text>
+        <text x="62" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">r</text>
+        <text x="96" y="78" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">e</text>
+        <text x="120" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">m</text>
+      </svg>
+      <span class="brand-name">Vairem</span>
+    </a>
+    <a href="index.html" class="legal-back mono">← STRONA GŁÓWNA</a>
+  </div>
+</header>
+
+<main class="cat-main">
+  <div class="wrap">
+    <div class="cat-col">
+
+      <div class="cat-eyebrow mono">KATALOG · SIEDEM ZWIĄZKÓW</div>
+      <h1 class="cat-title">Katalog produktów</h1>
+      <p class="cat-lede">Zdjęcie i szczegółowy opis każdego związku z indeksu VAIREM. Ceny za naczynie 200 ml.</p>
+
+      <nav class="cat-toc mono" aria-label="Spis produktów">
+        <a href="#p01">01 · ISO E SUPER</a>
+        <a href="#p02">02 · AMBROXAN</a>
+        <a href="#p03">03 · CASHMERAN</a>
+        <a href="#p04">04 · CEDRAMBER</a>
+        <a href="#p05">05 · JAVANOL</a>
+        <a href="#p06">06 · AMBROCENIDE</a>
+        <a href="#p07">07 · TIMBERSILK</a>
+      </nav>
+
+      <article class="cat-product" id="p01">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">01 · C16H26O</div>
+          <div class="cat-product-price">275 zł · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Iso E Super</h2>
+        <p class="cat-product-character">Suchy cedr na granicy percepcji</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <div class="karta-image-top mono"><span>C16H26O · 01</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+      </article>
+
+      <article class="cat-product" id="p02">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">02 · C16H28O</div>
+          <div class="cat-product-price">295 zł · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Ambroxan</h2>
+        <p class="cat-product-character">Mineralny, lekko słony, twarde powierzchnie</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <div class="karta-image-top mono"><span>C16H28O · 02</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+      </article>
+
+      <article class="cat-product" id="p03">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">03 · C14H22O</div>
+          <div class="cat-product-price">269 zł · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Cashmeran</h2>
+        <p class="cat-product-character">Ciepła wełna, wióry z ołówka, blisko</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <div class="karta-image-top mono"><span>C14H22O · 03</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+      </article>
+
+      <article class="cat-product" id="p04">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">04 · C17H28O</div>
+          <div class="cat-product-price">285 zł · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Cedramber</h2>
+        <p class="cat-product-character">Ciepły papier, zaplecze księgarni</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <div class="karta-image-top mono"><span>C17H28O · 04</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+      </article>
+
+      <article class="cat-product" id="p05">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">05 · C16H28O</div>
+          <div class="cat-product-price">335 zł · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Javanol</h2>
+        <p class="cat-product-character">Kremowe drzewo sandałowe, mleko, skóra</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <div class="karta-image-top mono"><span>C16H28O · 05</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+      </article>
+
+      <article class="cat-product" id="p06">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">06 · C15H24O</div>
+          <div class="cat-product-price">309 zł · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Ambrocenide</h2>
+        <p class="cat-product-character">Glina, suszona figa, słońce na tynku</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <div class="karta-image-top mono"><span>C15H24O · 06</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+      </article>
+
+      <article class="cat-product" id="p07">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">07 · C16H26O</div>
+          <div class="cat-product-price">249 zł · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Timbersilk</h2>
+        <p class="cat-product-character">Cięta sosna, zimny warsztat, czysto</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <div class="karta-image-top mono"><span>C16H26O · 07</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="margin-top:0;">
+  <div class="wrap footer-bottom mono" style="border-top:1px solid var(--border); padding-top:16px;">
+    <span>© 2026 VAIREM</span>
+    <a href="index.html">STRONA GŁÓWNA →</a>
+  </div>
+</footer>
+
+</body>
+</html>
