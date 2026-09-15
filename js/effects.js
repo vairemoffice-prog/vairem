@@ -116,35 +116,94 @@
     document.addEventListener('vairem:content-swapped', scan);
   }
 
-  // ---------- generic scroll-reveal (index.html has its own richer version already) ----------
+  // ---------- generic scroll-reveal ----------
+  // Same per-character dissolve-in mechanic (and .reveal/.reveal-chars/.char
+  // CSS) as index.html's own reveal system in app.js, so text on every other
+  // page appears identically. Elements with nested markup (buttons, images)
+  // fall back to a whole-block fade, exactly like app.js does.
 
   function initGenericReveal() {
+    if (reducedMotion) return;
+
     const SELECTOR = [
       '#page-content h1', '#page-content h2', '#page-content h3',
       '#page-content p', '#page-content article',
-      '#page-content .cat-product', '#page-content .cat-add-row',
+      '#page-content .cat-add-row',
       '#page-content .co-step-panel', '#page-content .co-summary',
       '#page-content .legal-main > *'
     ].join(', ');
 
-    const observer = (!reducedMotion && 'IntersectionObserver' in window)
+    const observer = ('IntersectionObserver' in window)
       ? new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('fx-visible');
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
         });
       }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
       : null;
 
+    function wrapChars(el) {
+      const nodes = Array.from(el.childNodes);
+      const isLeaf = nodes.length > 0 && nodes.every(n =>
+        n.nodeType === Node.TEXT_NODE || (n.nodeType === Node.ELEMENT_NODE && n.tagName === 'BR')
+      );
+      if (!isLeaf) return false;
+
+      let i = 0;
+      const frag = document.createDocumentFragment();
+      nodes.forEach(node => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          frag.appendChild(document.createElement('br'));
+          return;
+        }
+        node.textContent.split(/(\s+)/).forEach(chunk => {
+          if (chunk === '') return;
+          if (/^\s+$/.test(chunk)) {
+            frag.appendChild(document.createTextNode(chunk));
+            return;
+          }
+          const wordSpan = document.createElement('span');
+          wordSpan.className = 'word';
+          Array.from(chunk).forEach(ch => {
+            const charSpan = document.createElement('span');
+            charSpan.className = 'char';
+            charSpan.style.setProperty('--i', i++);
+            charSpan.textContent = ch;
+            wordSpan.appendChild(charSpan);
+          });
+          frag.appendChild(wordSpan);
+        });
+      });
+      el.innerHTML = '';
+      el.appendChild(frag);
+      return true;
+    }
+
     function scan() {
       if (document.getElementById('hero-datasheet-rows')) return; // index.html: already handled by app.js
 
+      const groupIndex = new Map();
       document.querySelectorAll(SELECTOR).forEach(el => {
-        if (el.dataset.fxRevealBound) return;
-        el.dataset.fxRevealBound = '1';
-        if (reducedMotion) return;
-        el.classList.add('fx-reveal');
-        if (observer) observer.observe(el);
-        else el.classList.add('fx-visible');
+        if (!el.dataset.revealMode) {
+          const isChars = wrapChars(el);
+          el.dataset.revealMode = isChars ? 'chars' : 'block';
+          el.classList.add(isChars ? 'reveal-chars' : 'reveal');
+        }
+
+        const parent = el.parentElement;
+        const n = groupIndex.get(parent) || 0;
+        groupIndex.set(parent, n + 1);
+        const delay = Math.min(n * 50, 300);
+        if (el.dataset.revealMode === 'chars') {
+          el.style.setProperty('--group-delay', delay + 'ms');
+        } else {
+          el.style.transitionDelay = delay + 'ms';
+        }
+
+        if (!el.dataset.revealObserved) {
+          el.dataset.revealObserved = '1';
+          if (observer) observer.observe(el);
+          else el.classList.add('is-visible');
+        }
       });
     }
     scan();

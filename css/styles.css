@@ -1072,18 +1072,6 @@ button { font-family: inherit; }
   }
 }
 
-/* ---------- generic scroll-reveal (js/effects.js, non-index pages) ---------- */
-
-.fx-reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.fx-reveal.fx-visible {
-  opacity: 1;
-  transform: none;
-}
-
 /* ---------- custom cursor (js/effects.js) ---------- */
 
 .fx-cursor-active,
