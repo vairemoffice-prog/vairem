@@ -152,14 +152,17 @@
     <div class="karta-grid">
       <div>
         <div class="karta-image">
-          <img class="karta-photo" data-src="assets/products/017.jpg" alt="Before It Dries">
-          <div class="karta-image-top mono"><span>[FORMULA] · 017</span><span>200 ML</span></div>
+          <img class="karta-photo" id="karta-photo" data-src="assets/products/017.jpg" alt="Before It Dries">
+          <div class="karta-image-top mono"><span id="karta-formula">[FORMULA] · 017</span><span>200 ML</span></div>
           <div class="karta-image-bottom">
             <div class="karta-image-tag mono" data-i18n="karta.image_tag">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
             <div class="karta-brand">VAIREM</div>
-            <div class="karta-name">Before It Dries</div>
+            <div class="karta-name" id="karta-name">Before It Dries</div>
           </div>
+          <button type="button" id="karta-prev" class="karta-arrow karta-arrow--prev mono" aria-label="Poprzedni produkt">←</button>
+          <button type="button" id="karta-next" class="karta-arrow karta-arrow--next mono" aria-label="Następny produkt">→</button>
         </div>
+        <div class="karta-dots" id="karta-dots" role="tablist" aria-label="Wybór produktu"></div>
         <div class="karta-thumbs">
           <div class="karta-thumb mono" data-i18n="karta.thumb.etykieta">ETYKIETA</div>
           <div class="karta-thumb mono" data-i18n="karta.thumb.nosnik">NOŚNIK</div>
@@ -169,7 +172,7 @@
       </div>
 
       <div>
-        <div class="eyebrow mono" data-i18n="karta.eyebrow">017 · [TAGLINE]</div>
+        <div class="eyebrow mono" id="karta-eyebrow">017 · [TAGLINE]</div>
         <h2 class="karta-title" data-i18n="karta.title">[TYTUŁ]</h2>
         <p class="karta-lede" data-i18n="karta.lede">[OPIS]</p>
 
@@ -313,9 +316,9 @@
       <div class="footer-col">
         <div class="footer-col-label mono" data-i18n="nav.indeks">INDEKS</div>
         <div class="footer-links">
-          <a href="#karta">017 Before It Dries</a>
-          <a href="#karta">042 Within</a>
-          <a href="#karta">086 Afterlight</a>
+          <a href="#karta" data-karta-index="0">017 Before It Dries</a>
+          <a href="#karta" data-karta-index="1">042 Within</a>
+          <a href="#karta" data-karta-index="2">086 Afterlight</a>
           <a href="#indeks" data-i18n="footer.pelny_indeks">Pełny indeks →</a>
         </div>
       </div>
