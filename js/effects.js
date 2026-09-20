@@ -79,8 +79,8 @@
     });
 
     function raf() {
-      cx += (x - cx) * 0.18;
-      cy += (y - cy) * 0.18;
+      cx += (x - cx) * 0.55;
+      cy += (y - cy) * 0.55;
       dot.style.transform = `translate(${cx}px, ${cy}px)`;
       requestAnimationFrame(raf);
     }
