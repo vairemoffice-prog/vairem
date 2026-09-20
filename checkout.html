@@ -168,7 +168,7 @@
     <nav class="menu-nav mono">
       <a href="index.html#indeks">INDEKS</a>
       <a href="index.html#metoda">METODA</a>
-      <a href="index.html#karta">01 ISO E SUPER</a>
+      <a href="index.html#karta">017 BEFORE IT DRIES</a>
       <a href="index.html#list">LIST</a>
     </nav>
   </aside>
@@ -440,15 +440,12 @@
 <script>
 (function () {
   var PRODUCTS = [
-    { nr: '01', name: 'Iso E Super', formula: 'C16H26O', price: 275 },
-    { nr: '02', name: 'Ambroxan', formula: 'C16H28O', price: 295 },
-    { nr: '03', name: 'Cashmeran', formula: 'C14H22O', price: 269 },
-    { nr: '04', name: 'Cedramber', formula: 'C17H28O', price: 285 },
-    { nr: '05', name: 'Javanol', formula: 'C16H28O', price: 335 },
-    { nr: '06', name: 'Ambrocenide', formula: 'C15H24O', price: 309 },
-    { nr: '07', name: 'Timbersilk', formula: 'C16H26O', price: 249 }
+    { nr: '017', name: 'Before It Dries', formula: '[FORMULA]', price: 0 },
+    { nr: '042', name: 'Within', formula: '[FORMULA]', price: 0 },
+    { nr: '086', name: 'Afterlight', formula: '[FORMULA]', price: 0 }
   ];
   function productByNr(nr) { return PRODUCTS.filter(function (p) { return p.nr === nr; })[0]; }
+  function formatPrice(price) { return price === 0 ? '[CENA]' : price + ' zł'; }
 
   var CART_KEY = 'vairem-cart';
   var cart = [];
@@ -678,7 +675,7 @@
             '<div class="name">' + p.name + '</div>' +
             '<div class="meta">' + p.nr + ' · ' + p.formula + ' · 200 ml × ' + item.qty + '</div>' +
           '</div>' +
-          '<div class="price">' + (p.price * item.qty) + ' zł</div>' +
+          '<div class="price">' + formatPrice(p.price * item.qty) + '</div>' +
         '</div>'
       );
     }).join('') +
@@ -686,7 +683,7 @@
       (discountApplied
         ? '<div class="co-summary-row"><div class="name">Rabat (' + DISCOUNT_CODE + ')</div><div class="price">&minus;' + discount + ' zł</div></div>'
         : '') +
-      '<div class="co-summary-total"><span class="lbl">DO ZAPŁATY</span><span class="val">' + finalTotal + ' zł</span></div>';
+      '<div class="co-summary-total"><span class="lbl">DO ZAPŁATY</span><span class="val">' + formatPrice(finalTotal) + '</span></div>';
 
     document.getElementById('co-recap-account').textContent = checkoutMode === 'account'
       ? 'Zalogowano jako ' + (getAccount() || {}).name
