@@ -534,6 +534,37 @@ button { font-family: inherit; }
 .karta-photo.is-loaded { display: block; }
 .karta-photo.is-loaded ~ .karta-image-bottom .karta-image-tag { display: none; }
 
+.karta-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-strong);
+  background: rgba(252, 252, 251, 0.8);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+}
+.karta-arrow:hover { background: var(--row-bg); color: var(--text-hover); }
+.karta-arrow--prev { left: 14px; }
+.karta-arrow--next { right: 14px; }
+
+.karta-dots { display: flex; gap: 8px; padding-top: 14px; }
+.karta-dot {
+  width: 24px;
+  height: 3px;
+  border: 0;
+  padding: 0;
+  background: var(--border-strong);
+  cursor: pointer;
+}
+.karta-dot:hover { background: var(--muted); }
+.karta-dot.is-active { background: var(--text); }
+
 .karta-thumbs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

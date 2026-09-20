@@ -48,8 +48,8 @@
       'index.foot2': 'DOSTAWA 1–3 DNI ROBOCZE · PL / EU',
       'karta.image_tag': 'ZDJĘCIE PRODUKTU — NACZYNIE, 4:5',
       'karta.thumb.etykieta': 'ETYKIETA', 'karta.thumb.nosnik': 'NOŚNIK', 'karta.thumb.wnetrze': 'WNĘTRZE', 'karta.thumb.detal': 'DETAL',
-      'karta.eyebrow': '017 · [TAGLINE]', 'karta.title': '[TYTUŁ]',
-      'karta.lede': '[OPIS]',
+      'karta.eyebrow_tpl': nr => `${nr} · [TAGLINE]`, 'karta.title': '[TYTUŁ]',
+      'karta.lede': '[OPIS]', 'karta.prev': 'Poprzedni produkt', 'karta.next': 'Następny produkt',
       'spec.stezenie': 'STĘŻENIE', 'spec.stezenie_value': '0,8 % w neutralnym nośniku',
       'spec.dyfuzja': 'DYFUZJA', 'spec.dyfuzja_value': 'pasywna, bez ciepła',
       'spec.wielkosc': 'WIELKOŚĆ WNĘTRZA', 'spec.wielkosc_value': 'do 40 m²',
@@ -123,8 +123,8 @@
       'index.foot2': 'DELIVERY 1–3 BUSINESS DAYS · PL / EU',
       'karta.image_tag': 'PRODUCT PHOTO — VESSEL, 4:5',
       'karta.thumb.etykieta': 'LABEL', 'karta.thumb.nosnik': 'CARRIER', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETAIL',
-      'karta.eyebrow': '017 · [TAGLINE]', 'karta.title': '[TITLE]',
-      'karta.lede': '[DESCRIPTION]',
+      'karta.eyebrow_tpl': nr => `${nr} · [TAGLINE]`, 'karta.title': '[TITLE]',
+      'karta.lede': '[DESCRIPTION]', 'karta.prev': 'Previous product', 'karta.next': 'Next product',
       'spec.stezenie': 'CONCENTRATION', 'spec.stezenie_value': '0.8% in neutral carrier',
       'spec.dyfuzja': 'DIFFUSION', 'spec.dyfuzja_value': 'passive, no heat',
       'spec.wielkosc': 'ROOM SIZE', 'spec.wielkosc_value': 'up to 40 m²',
@@ -194,8 +194,8 @@
       'index.foot2': 'ENTREGA EN 1–3 DÍAS LABORABLES · PL / UE',
       'karta.image_tag': 'FOTO DEL PRODUCTO — FRASCO, 4:5',
       'karta.thumb.etykieta': 'ETIQUETA', 'karta.thumb.nosnik': 'SOPORTE', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETALLE',
-      'karta.eyebrow': '017 · [ESLOGAN]', 'karta.title': '[TÍTULO]',
-      'karta.lede': '[DESCRIPCIÓN]',
+      'karta.eyebrow_tpl': nr => `${nr} · [ESLOGAN]`, 'karta.title': '[TÍTULO]',
+      'karta.lede': '[DESCRIPCIÓN]', 'karta.prev': 'Producto anterior', 'karta.next': 'Producto siguiente',
       'spec.stezenie': 'CONCENTRACIÓN', 'spec.stezenie_value': '0,8 % en soporte neutro',
       'spec.dyfuzja': 'DIFUSIÓN', 'spec.dyfuzja_value': 'pasiva, sin calor',
       'spec.wielkosc': 'TAMAÑO DE LA HABITACIÓN', 'spec.wielkosc_value': 'hasta 40 m²',
@@ -265,8 +265,8 @@
       'index.foot2': 'ДОСТАВКА 1–3 РОБОЧІ ДНІ · PL / ЄС',
       'karta.image_tag': "ФОТО ПРОДУКТУ — ПОСУДИНА, 4:5",
       'karta.thumb.etykieta': 'ЕТИКЕТКА', 'karta.thumb.nosnik': 'НОСІЙ', 'karta.thumb.wnetrze': "ІНТЕР'ЄР", 'karta.thumb.detal': 'ДЕТАЛЬ',
-      'karta.eyebrow': '017 · [СЛОГАН]', 'karta.title': '[НАЗВА]',
-      'karta.lede': '[ОПИС]',
+      'karta.eyebrow_tpl': nr => `${nr} · [СЛОГАН]`, 'karta.title': '[НАЗВА]',
+      'karta.lede': '[ОПИС]', 'karta.prev': 'Попередній продукт', 'karta.next': 'Наступний продукт',
       'spec.stezenie': 'КОНЦЕНТРАЦІЯ', 'spec.stezenie_value': 'у нейтральному носії 0,8 %',
       'spec.dyfuzja': 'ДИФУЗІЯ', 'spec.dyfuzja_value': 'пасивна, без тепла',
       'spec.wielkosc': 'РОЗМІР ПРИМІЩЕННЯ', 'spec.wielkosc_value': 'до 40 м²',
@@ -336,8 +336,8 @@
       'index.foot2': 'LIVRAISON 1–3 JOURS OUVRÉS · PL / UE',
       'karta.image_tag': 'PHOTO PRODUIT — FLACON, 4:5',
       'karta.thumb.etykieta': 'ÉTIQUETTE', 'karta.thumb.nosnik': 'SUPPORT', 'karta.thumb.wnetrze': 'INTÉRIEUR', 'karta.thumb.detal': 'DÉTAIL',
-      'karta.eyebrow': '017 · [SLOGAN]', 'karta.title': '[TITRE]',
-      'karta.lede': '[DESCRIPTION]',
+      'karta.eyebrow_tpl': nr => `${nr} · [SLOGAN]`, 'karta.title': '[TITRE]',
+      'karta.lede': '[DESCRIPTION]', 'karta.prev': 'Produit précédent', 'karta.next': 'Produit suivant',
       'spec.stezenie': 'CONCENTRATION', 'spec.stezenie_value': 'dans un support neutre 0,8 %',
       'spec.dyfuzja': 'DIFFUSION', 'spec.dyfuzja_value': 'passive, sans chaleur',
       'spec.wielkosc': 'TAILLE DE LA PIÈCE', 'spec.wielkosc_value': "jusqu'à 40 m²",
@@ -648,7 +648,8 @@
     cart: loadCart(),
     cartOpen: false,
     heroQty: 1,
-    subscribed: false
+    subscribed: false,
+    kartaIndex: 0
   };
 
   function initHoverOpen(toggleEl, drawerEl, setOpen) {
@@ -722,6 +723,42 @@
       if (intensityObserver) intensityObserver.observe(el);
       else el.style.width = el.dataset.width;
     });
+  }
+
+  // ---------- karta carousel ----------
+
+  function renderKartaDots() {
+    const el = document.getElementById('karta-dots');
+    el.innerHTML = PRODUCTS.map((p, i) => `
+      <button type="button" class="karta-dot" data-index="${i}" role="tab" aria-label="${p.nr} ${p.name}"></button>
+    `).join('');
+  }
+
+  function renderKarta() {
+    const p = PRODUCTS[state.kartaIndex];
+    const photo = document.getElementById('karta-photo');
+    const nextSrc = `assets/products/${p.nr}.jpg`;
+    if (photo.dataset.src !== nextSrc) {
+      photo.classList.remove('is-loaded');
+      photo.dataset.src = nextSrc;
+      photo.alt = p.name;
+      initProductPhotos(document.getElementById('karta'));
+    }
+    document.getElementById('karta-formula').textContent = `${p.formula} · ${p.nr}`;
+    document.getElementById('karta-name').textContent = p.name;
+    document.getElementById('karta-eyebrow').textContent = t('karta.eyebrow_tpl')(p.nr);
+    document.getElementById('karta-prev').setAttribute('aria-label', t('karta.prev'));
+    document.getElementById('karta-next').setAttribute('aria-label', t('karta.next'));
+    document.querySelectorAll('#karta-dots .karta-dot').forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === state.kartaIndex);
+      dot.setAttribute('aria-selected', i === state.kartaIndex ? 'true' : 'false');
+    });
+  }
+
+  function setKartaIndex(i) {
+    const n = PRODUCTS.length;
+    state.kartaIndex = ((i % n) + n) % n;
+    renderKarta();
   }
 
   // ---------- cart ----------
@@ -905,6 +942,7 @@
 
   function refreshDynamicContent() {
     renderIndexRows();
+    renderKarta();
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -1049,6 +1087,8 @@
     saveCart();
     renderHeroDatasheetRows();
     renderIndexRows();
+    renderKartaDots();
+    renderKarta();
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -1069,7 +1109,19 @@
 
     document.getElementById('qty-dec').addEventListener('click', () => setHeroQty(state.heroQty - 1));
     document.getElementById('qty-inc').addEventListener('click', () => setHeroQty(state.heroQty + 1));
-    document.getElementById('add-hero').addEventListener('click', () => addToCart('017', state.heroQty));
+    document.getElementById('add-hero').addEventListener('click', () => addToCart(PRODUCTS[state.kartaIndex].nr, state.heroQty));
+
+    document.getElementById('karta-prev').addEventListener('click', () => setKartaIndex(state.kartaIndex - 1));
+    document.getElementById('karta-next').addEventListener('click', () => setKartaIndex(state.kartaIndex + 1));
+    document.getElementById('karta-dots').addEventListener('click', e => {
+      const btn = e.target.closest('[data-index]');
+      if (!btn) return;
+      setKartaIndex(Number(btn.dataset.index));
+    });
+
+    document.querySelectorAll('[data-karta-index]').forEach(a => {
+      a.addEventListener('click', () => setKartaIndex(Number(a.dataset.kartaIndex)));
+    });
 
     document.getElementById('cart-toggle').addEventListener('click', () => toggleCart(true));
     document.getElementById('cart-close').addEventListener('click', () => toggleCart(false));
