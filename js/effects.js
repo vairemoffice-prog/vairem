@@ -57,6 +57,7 @@
 
     const dot = document.createElement('div');
     dot.className = 'fx-cursor';
+    dot.innerHTML = '<span class="fx-cursor-arrow"></span>';
     document.body.appendChild(dot);
     document.documentElement.classList.add('fx-cursor-active');
 
