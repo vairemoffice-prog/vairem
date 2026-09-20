@@ -216,10 +216,10 @@
   function loadCart() {
     try {
       var raw = localStorage.getItem(CART_KEY);
-      if (raw === null) return [{ nr: '017', qty: 1 }];
+      if (raw === null) return [];
       var parsed = JSON.parse(raw);
       return Array.isArray(parsed) ? parsed : [];
-    } catch (e) { return [{ nr: '017', qty: 1 }]; }
+    } catch (e) { return []; }
   }
 
   function addToCart(nr) {

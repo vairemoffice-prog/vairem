@@ -453,6 +453,8 @@
     var raw = localStorage.getItem(CART_KEY);
     cart = raw ? JSON.parse(raw) : [];
     if (!Array.isArray(cart)) cart = [];
+    cart = cart.filter(function (item) { return productByNr(item.nr); });
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
   } catch (e) { cart = []; }
 
   var flowEl = document.getElementById('co-flow');
