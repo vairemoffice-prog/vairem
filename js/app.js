@@ -386,6 +386,8 @@
   const LANGS = ['pl', 'en', 'es', 'uk', 'fr'];
   let currentLang = 'pl';
 
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function t(key) {
     const dict = I18N[currentLang] || I18N.pl;
     const v = dict[key] !== undefined ? dict[key] : I18N.pl[key];
@@ -536,7 +538,7 @@
 
   const REVEAL_SELECTOR = [
     '.brand', '.main-nav a', '.cart-btn',
-    '.eyebrow', '.hero-title', '.hero-lede', '.hero-ctas',
+    '.eyebrow', '.hero-lede', '.hero-ctas',
     '.section-title', '.karta-title', '.list-title',
     '.stat', '.hero-strip-cell',
     '.section-note', '.index-row--body', '.index-foot > span',
@@ -595,6 +597,62 @@
     el.innerHTML = '';
     el.appendChild(frag);
     return true;
+  }
+
+  // Same per-letter split as wrapChars(), but also wraps each <br>-delimited
+  // line in its own block so flexbox (not text-align) centers it — the only
+  // way a line wider than the viewport still overflows evenly on both sides
+  // instead of hanging off just the right edge.
+  function buildHeroTitleLines(el) {
+    const nodes = Array.from(el.childNodes);
+    let i = 0;
+    const linesFrag = document.createDocumentFragment();
+    let line = document.createElement('span');
+    line.className = 'hero-title-line';
+    function flushLine() {
+      linesFrag.appendChild(line);
+      line = document.createElement('span');
+      line.className = 'hero-title-line';
+    }
+    nodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'BR') {
+        flushLine();
+        return;
+      }
+      if (node.nodeType !== Node.TEXT_NODE) return;
+      node.textContent.split(/(\s+)/).forEach(chunk => {
+        if (chunk === '') return;
+        if (/^\s+$/.test(chunk)) {
+          line.appendChild(document.createTextNode(chunk));
+          return;
+        }
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'word';
+        Array.from(chunk).forEach(ch => {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'char';
+          charSpan.style.setProperty('--i', i++);
+          charSpan.textContent = ch;
+          wordSpan.appendChild(charSpan);
+        });
+        line.appendChild(wordSpan);
+      });
+    });
+    flushLine();
+    el.innerHTML = '';
+    el.appendChild(linesFrag);
+  }
+
+  function renderHeroTitleKinetic() {
+    document.querySelectorAll('.hero-type .hero-title').forEach(el => {
+      buildHeroTitleLines(el);
+      el.classList.add('reveal-chars');
+      if (!el.dataset.revealObserved) {
+        el.dataset.revealObserved = '1';
+        if (revealObserver) revealObserver.observe(el);
+        else el.classList.add('is-visible');
+      }
+    });
   }
 
   function applyReveal(root = document) {
@@ -733,7 +791,6 @@
   // ends, the track is silently reset onto the matching real slide.
 
   const KARTA_AUTOPLAY_MS = 5500;
-  const kartaReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let kartaTimer = null;
   let kartaPos = 1; // 0 = clone of last, 1..n = real slides, n+1 = clone of first
 
@@ -798,7 +855,7 @@
 
   function stepKarta(dir) {
     moveKartaTo(kartaPos + dir);
-    if (kartaReducedMotion) snapKartaPos();
+    if (prefersReducedMotion) snapKartaPos();
   }
 
   function jumpKartaTo(index) {
@@ -811,7 +868,7 @@
 
   function startKartaAutoplay() {
     stopKartaAutoplay();
-    if (kartaReducedMotion || document.hidden) return;
+    if (prefersReducedMotion || document.hidden) return;
     kartaTimer = window.setInterval(() => stepKarta(1), KARTA_AUTOPLAY_MS);
   }
 
@@ -920,6 +977,62 @@
     });
   }
 
+  // ---------- hero kinetic type (oversized title, scroll-driven deform/parallax) ----------
+  // The title's ghost echoes (.hero-title--echo-1/2) start from a static
+  // offset baked into CSS. With motion allowed, this drives that offset
+  // further from the same baseline as scroll progress through the hero
+  // grows, so there's no jump when the loop takes over; the real title and
+  // the hero background layer get their own, different parallax rates.
+
+  function initHeroKineticType() {
+    const heroRegion = document.getElementById('hero-region');
+    const heroType = document.getElementById('hero-type');
+    if (!heroRegion || !heroType || prefersReducedMotion) return;
+
+    const echo1 = heroType.querySelector('.hero-title--echo-1');
+    const echo2 = heroType.querySelector('.hero-title--echo-2');
+    const realTitle = heroType.querySelector('.hero-title:not(.hero-title--echo)');
+    const heroBgLayer = heroRegion.querySelector('.hero-bg');
+
+    let rafId = null;
+
+    function update() {
+      const rect = heroRegion.getBoundingClientRect();
+      const total = rect.height || 1;
+      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+      const progress = scrolled / total;
+      const shift = progress * 34;
+
+      if (echo1) {
+        echo1.style.transform =
+          `translate(${(-6 - shift * 0.6).toFixed(1)}px, ${(4 + shift * 0.3).toFixed(1)}px) scaleY(${(1.04 + progress * 0.9).toFixed(3)})`;
+      }
+      if (echo2) {
+        echo2.style.transform =
+          `translate(${(10 + shift).toFixed(1)}px, ${(-6 - shift * 0.4).toFixed(1)}px) scaleY(${(1.12 + progress * 1.6).toFixed(3)})`;
+      }
+      if (realTitle) {
+        realTitle.style.transform = `translateY(${(progress * -46).toFixed(1)}px) scale(${(1 - progress * 0.12).toFixed(3)})`;
+      }
+      heroType.style.opacity = (1 - progress * 0.85).toFixed(3);
+      if (heroBgLayer) {
+        heroBgLayer.style.transform = `translateX(-50%) translateY(${(progress * 60).toFixed(1)}px)`;
+      }
+
+      rafId = requestAnimationFrame(update);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      } else if (!document.hidden && !rafId) {
+        rafId = requestAnimationFrame(update);
+      }
+    });
+    rafId = requestAnimationFrame(update);
+  }
+
   // ---------- vertical section nav (scrollspy) ----------
 
   function initSideIndex() {
@@ -1003,6 +1116,7 @@
     renderIndexRows();
     updateKartaChrome();
     renderCart();
+    renderHeroTitleKinetic();
     applyReveal();
     applyIntensityBars();
     refreshThemeLabel();
@@ -1150,6 +1264,7 @@
     renderKartaDots();
     updateKartaChrome();
     renderCart();
+    renderHeroTitleKinetic();
     applyReveal();
     applyIntensityBars();
     initMoleculeField(document.getElementById('molecule-canvas'));
@@ -1160,6 +1275,7 @@
     initSideIndex();
     initHeroVideo();
     initProductPhotos();
+    initHeroKineticType();
 
     document.getElementById('index-rows').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');
