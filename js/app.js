@@ -633,7 +633,8 @@
       const raw = localStorage.getItem(CART_STORAGE_KEY);
       if (raw === null) return [{ nr: '017', qty: 1 }];
       const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
+      const cart = Array.isArray(parsed) ? parsed : [];
+      return cart.filter(item => productByNr(item.nr));
     } catch (e) {
       return [{ nr: '017', qty: 1 }];
     }
@@ -1045,6 +1046,7 @@
   // ---------- wire up ----------
 
   function init() {
+    saveCart();
     renderHeroDatasheetRows();
     renderIndexRows();
     renderCart();
