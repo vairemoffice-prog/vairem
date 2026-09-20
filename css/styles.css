@@ -316,7 +316,7 @@ button { font-family: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: clamp(64px, 27vw, 480px);
+  font-size: clamp(56px, 25.7vw, 400px);
   line-height: 0.86;
   letter-spacing: -0.04em;
   font-weight: 500;
