@@ -631,12 +631,12 @@
   function loadCart() {
     try {
       const raw = localStorage.getItem(CART_STORAGE_KEY);
-      if (raw === null) return [{ nr: '017', qty: 1 }];
+      if (raw === null) return [];
       const parsed = JSON.parse(raw);
       const cart = Array.isArray(parsed) ? parsed : [];
       return cart.filter(item => productByNr(item.nr));
     } catch (e) {
-      return [{ nr: '017', qty: 1 }];
+      return [];
     }
   }
 
