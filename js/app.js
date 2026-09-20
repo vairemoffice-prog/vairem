@@ -726,6 +726,38 @@
   }
 
   // ---------- karta carousel ----------
+  // A looping slider: the photo card physically slides sideways between
+  // products, with a duplicated first/last slide at each end so stepping
+  // past the last (or before the first) product keeps sliding the same
+  // direction instead of snapping backwards; once that step's transition
+  // ends, the track is silently reset onto the matching real slide.
+
+  const KARTA_AUTOPLAY_MS = 5500;
+  const kartaReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let kartaTimer = null;
+  let kartaPos = 1; // 0 = clone of last, 1..n = real slides, n+1 = clone of first
+
+  function renderKartaSlides() {
+    const el = document.getElementById('karta-slides');
+    const slide = p => `
+      <div class="karta-slide" data-nr="${p.nr}">
+        <img class="karta-photo" data-src="assets/products/${p.nr}.jpg" alt="${p.name}">
+        <div class="karta-image-top mono"><span>${p.formula} · ${p.nr}</span><span>200 ML</span></div>
+        <div class="karta-image-bottom">
+          <div class="karta-image-tag mono" data-i18n="karta.image_tag">${t('karta.image_tag')}</div>
+          <div class="karta-brand">VAIREM</div>
+          <div class="karta-name">${p.name}</div>
+        </div>
+      </div>
+    `;
+    el.innerHTML = slide(PRODUCTS[PRODUCTS.length - 1]) + PRODUCTS.map(slide).join('') + slide(PRODUCTS[0]);
+    initProductPhotos(el);
+    kartaPos = state.kartaIndex + 1;
+    el.style.transition = 'none';
+    el.style.transform = `translateX(-${kartaPos * 100}%)`;
+    void el.offsetWidth;
+    el.style.transition = '';
+  }
 
   function renderKartaDots() {
     const el = document.getElementById('karta-dots');
@@ -734,18 +766,8 @@
     `).join('');
   }
 
-  function renderKarta() {
+  function updateKartaChrome() {
     const p = PRODUCTS[state.kartaIndex];
-    const photo = document.getElementById('karta-photo');
-    const nextSrc = `assets/products/${p.nr}.jpg`;
-    if (photo.dataset.src !== nextSrc) {
-      photo.classList.remove('is-loaded');
-      photo.dataset.src = nextSrc;
-      photo.alt = p.name;
-      initProductPhotos(document.getElementById('karta'));
-    }
-    document.getElementById('karta-formula').textContent = `${p.formula} · ${p.nr}`;
-    document.getElementById('karta-name').textContent = p.name;
     document.getElementById('karta-eyebrow').textContent = t('karta.eyebrow_tpl')(p.nr);
     document.getElementById('karta-prev').setAttribute('aria-label', t('karta.prev'));
     document.getElementById('karta-next').setAttribute('aria-label', t('karta.next'));
@@ -755,10 +777,47 @@
     });
   }
 
-  function setKartaIndex(i) {
+  function moveKartaTo(pos) {
     const n = PRODUCTS.length;
-    state.kartaIndex = ((i % n) + n) % n;
-    renderKarta();
+    kartaPos = pos;
+    state.kartaIndex = ((pos - 1) % n + n) % n;
+    document.getElementById('karta-slides').style.transform = `translateX(-${kartaPos * 100}%)`;
+    updateKartaChrome();
+  }
+
+  function snapKartaPos() {
+    const n = PRODUCTS.length;
+    if (kartaPos !== 0 && kartaPos !== n + 1) return;
+    kartaPos = kartaPos === 0 ? n : 1;
+    const track = document.getElementById('karta-slides');
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-${kartaPos * 100}%)`;
+    void track.offsetWidth;
+    track.style.transition = '';
+  }
+
+  function stepKarta(dir) {
+    moveKartaTo(kartaPos + dir);
+    if (kartaReducedMotion) snapKartaPos();
+  }
+
+  function jumpKartaTo(index) {
+    moveKartaTo(index + 1);
+  }
+
+  function stopKartaAutoplay() {
+    if (kartaTimer) { window.clearInterval(kartaTimer); kartaTimer = null; }
+  }
+
+  function startKartaAutoplay() {
+    stopKartaAutoplay();
+    if (kartaReducedMotion || document.hidden) return;
+    kartaTimer = window.setInterval(() => stepKarta(1), KARTA_AUTOPLAY_MS);
+  }
+
+  function userKartaNav(fn) {
+    fn();
+    startKartaAutoplay();
   }
 
   // ---------- cart ----------
@@ -942,7 +1001,7 @@
 
   function refreshDynamicContent() {
     renderIndexRows();
-    renderKarta();
+    updateKartaChrome();
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -1087,8 +1146,9 @@
     saveCart();
     renderHeroDatasheetRows();
     renderIndexRows();
+    renderKartaSlides();
     renderKartaDots();
-    renderKarta();
+    updateKartaChrome();
     renderCart();
     applyReveal();
     applyIntensityBars();
@@ -1111,17 +1171,29 @@
     document.getElementById('qty-inc').addEventListener('click', () => setHeroQty(state.heroQty + 1));
     document.getElementById('add-hero').addEventListener('click', () => addToCart(PRODUCTS[state.kartaIndex].nr, state.heroQty));
 
-    document.getElementById('karta-prev').addEventListener('click', () => setKartaIndex(state.kartaIndex - 1));
-    document.getElementById('karta-next').addEventListener('click', () => setKartaIndex(state.kartaIndex + 1));
+    document.getElementById('karta-slides').addEventListener('transitionend', e => {
+      if (e.target === e.currentTarget && e.propertyName === 'transform') snapKartaPos();
+    });
+
+    document.getElementById('karta-prev').addEventListener('click', () => userKartaNav(() => stepKarta(-1)));
+    document.getElementById('karta-next').addEventListener('click', () => userKartaNav(() => stepKarta(1)));
     document.getElementById('karta-dots').addEventListener('click', e => {
       const btn = e.target.closest('[data-index]');
       if (!btn) return;
-      setKartaIndex(Number(btn.dataset.index));
+      userKartaNav(() => jumpKartaTo(Number(btn.dataset.index)));
     });
 
     document.querySelectorAll('[data-karta-index]').forEach(a => {
-      a.addEventListener('click', () => setKartaIndex(Number(a.dataset.kartaIndex)));
+      a.addEventListener('click', () => userKartaNav(() => jumpKartaTo(Number(a.dataset.kartaIndex))));
     });
+
+    const kartaImage = document.getElementById('karta-image');
+    kartaImage.addEventListener('mouseenter', stopKartaAutoplay);
+    kartaImage.addEventListener('mouseleave', startKartaAutoplay);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopKartaAutoplay(); else startKartaAutoplay();
+    });
+    startKartaAutoplay();
 
     document.getElementById('cart-toggle').addEventListener('click', () => toggleCart(true));
     document.getElementById('cart-close').addEventListener('click', () => toggleCart(false));
