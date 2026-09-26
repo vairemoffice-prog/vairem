@@ -1303,8 +1303,10 @@
     renderHeroTitleKinetic();
     applyReveal();
     applyIntensityBars();
-    initMoleculeField(document.getElementById('molecule-canvas'));
-    initMoleculeField(document.getElementById('molecule-canvas-top'));
+    // Floating dots disabled for now (kept for a possible future return) —
+    // uncomment to bring them back.
+    // initMoleculeField(document.getElementById('molecule-canvas'));
+    // initMoleculeField(document.getElementById('molecule-canvas-top'));
     initThemeToggle();
     initLangSwitcher();
     initCookieBanner();
