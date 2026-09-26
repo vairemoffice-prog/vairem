@@ -79,7 +79,6 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
   overflow-x: hidden;
 }
 
@@ -87,6 +86,17 @@ body {
   font-family: 'Cabinet Grotesk', 'Space Grotesk', Helvetica, Arial, sans-serif;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Background stays pinned to the viewport (its own fixed layer, behind
+   everything) while the page's text and panels scroll over it normally. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+  pointer-events: none;
 }
 
 a { color: var(--text); text-decoration: none; }
