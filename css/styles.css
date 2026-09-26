@@ -204,6 +204,18 @@ button { font-family: inherit; }
   background: rgba(43, 49, 58, 0.16);
 }
 
+.legal-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(168, 186, 203, 0.16);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+[data-theme="night"] .legal-header {
+  background: rgba(43, 49, 58, 0.16);
+}
+
 .header-inner {
   display: grid;
   grid-template-columns: auto 1fr auto;
