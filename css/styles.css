@@ -326,6 +326,24 @@ button { font-family: inherit; }
 .hero-title:not(.hero-title--echo) { position: relative; z-index: 1; color: #000; }
 [data-theme="night"] .hero-title:not(.hero-title--echo) { color: #fff; }
 
+/* One letter in the hero title periodically tips over onto its side and
+   rights itself again — a small, ambient wink, not a permanent state. */
+.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4) {
+  transform-origin: 100% 100%;
+  animation: hero-letter-tip 7s ease-in-out 3s infinite;
+}
+@keyframes hero-letter-tip {
+  0%, 55% { transform: rotate(0deg); }
+  62% { transform: rotate(80deg); }
+  74% { transform: rotate(80deg); }
+  84%, 100% { transform: rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4) {
+    animation: none;
+  }
+}
+
 /* Ghost duplicates of the title: stretched/offset copies that read as an
    echo/trail behind the real text, and as a scroll-driven deformation once
    initHeroKineticType() takes over their transform in js/app.js. */
