@@ -1033,6 +1033,33 @@
     rafId = requestAnimationFrame(update);
   }
 
+  // ---------- background photo: fades/zooms with scroll depth ----------
+  // Flowers read as "closing" and birds as "flying off" the further down
+  // the page you are (scroll progress 0 at top, 1 at bottom), and it
+  // eases back as you scroll back up — driven by a CSS custom property
+  // so body::before (a fixed pseudo-element) can react to plain scroll.
+  function initBackgroundScrollFade() {
+    if (prefersReducedMotion) return;
+    const root = document.documentElement;
+    let ticking = false;
+
+    function update() {
+      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+      root.style.setProperty('--bg-scroll-progress', progress.toFixed(4));
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();
+  }
+
   // ---------- vertical section nav (scrollspy) ----------
 
   function initSideIndex() {
@@ -1277,6 +1304,7 @@
     initHeroVideo();
     initProductPhotos();
     initHeroKineticType();
+    initBackgroundScrollFade();
 
     document.getElementById('index-rows').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');
