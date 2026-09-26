@@ -418,6 +418,17 @@ button { font-family: inherit; }
 .hero-copy { max-width: 760px; width: 100%; text-align: center; }
 .hero-copy .eyebrow { padding-bottom: 10cm; }
 
+/* Solid backdrop behind the eyebrow/title/lede only, masking the fixed
+   watermark texture there — it reappears starting at the CTA buttons and
+   stays visible through the rest of the page. */
+.hero-copy-top {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: var(--bg);
+}
+
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
