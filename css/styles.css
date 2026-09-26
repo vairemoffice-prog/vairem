@@ -90,13 +90,15 @@ body {
 }
 
 /* Background stays pinned to the viewport (its own fixed layer, behind
-   everything) while the page's text and panels scroll over it normally.
-   Day theme uses the supplied floral bas-relief photo; night theme keeps
-   the generated dark relief SVG so the backdrop still reads correctly
-   against the dark palette. Fades out, zooms in slightly, and drifts
-   down as the page scrolls down (flowers "closing", birds "flying
-   off"), driven by --bg-scroll-progress (0 at the top, 1 at the bottom)
-   set from js/app.js, and eases back up as the page scrolls back up. */
+   everything) while the page's text and panels scroll over it normally
+   — but it also visibly drifts downward as the page scrolls down (and
+   back up as it scrolls back up), so it reads as moving along with the
+   content, just independently/slower. Fades out and zooms in slightly
+   at the same time (flowers "closing", birds "flying off"). Driven by
+   --bg-scroll-progress (0 at the top, 1 at the bottom) set from
+   js/app.js. The drift is in vh so it scales with viewport height, and
+   the zoom (16vh of bleed) is kept comfortably larger than the drift
+   (6vh) so the scaled-up photo never reveals its edges. */
 body::before {
   content: '';
   position: fixed;
@@ -104,7 +106,7 @@ body::before {
   z-index: -1;
   background: var(--bg) url('../assets/img/bg-floral-relief.jpg') no-repeat center center / cover;
   opacity: calc(1 - var(--bg-scroll-progress) * 0.78);
-  transform: scale(calc(1 + var(--bg-scroll-progress) * 0.07)) translateY(calc(var(--bg-scroll-progress) * 28px));
+  transform: scale(calc(1 + var(--bg-scroll-progress) * 0.16)) translateY(calc(var(--bg-scroll-progress) * 6vh));
   transition: opacity 0.18s linear, transform 0.18s linear;
   pointer-events: none;
 }
