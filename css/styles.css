@@ -269,6 +269,14 @@ button { font-family: inherit; }
 .brand-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--muted); }
 .brand-mark { width: 40px; height: 30px; color: var(--text); flex-shrink: 0; }
 .brand-mark--lg { width: 52px; height: 39px; }
+
+.brand-signature {
+  display: block;
+  height: 34px;
+  width: auto;
+  flex-shrink: 0;
+}
+[data-theme="night"] .brand-signature { filter: invert(1); }
 .footer-brand-lockup { display: flex; align-items: center; gap: 10px; }
 
 .main-nav {
