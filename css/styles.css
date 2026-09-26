@@ -5,73 +5,73 @@
    ========================================================================== */
 
 :root {
-  --bg: #F2E8D8;
-  --text: #55483D;
-  --text-hover: #6E5D4E;
-  --muted: #A69787;
-  --muted-strong: #8C7A68;
+  --bg: #DCEBFA;
+  --text: #525A65;
+  --text-hover: #6C7C88;
+  --muted: #93A0A9;
+  --muted-strong: #6C7C88;
 
-  --border: #8C7A68;
-  --border-light: #A69787;
-  --border-strong: #C9BBA8;
+  --border: #6C7C88;
+  --border-light: #8A93A0;
+  --border-strong: #B9C4CC;
 
-  --row-bg: #F7F1E6;
-  --row-hover: #E9DFCF;
+  --row-bg: #F4F7F8;
+  --row-hover: #D8DBDE;
 
-  --dark: #55483D;
-  --dark-hover: #6E5D4E;
+  --dark: #525A65;
+  --dark-hover: #5E6773;
 
-  --header-bg: rgba(242, 232, 216, 0.2);
-  --scrim-bg: rgba(51, 43, 36, 0.32);
+  --header-bg: rgba(220, 235, 250, 0.15);
+  --scrim-bg: rgba(38, 45, 51, 0.32);
 
-  --green-accent: #C98A5D;
-  --green-accent-hover: #D9A276;
-  --green-accent-text: #2A1D14;
-  --green-deep: #8B4226;
-  --green-deep-hover: #A34F2E;
-  --green-mid: #9C4A2A;
-  --green-soft: #D6A67C;
-  --green-btn-text: #FBF3E8;
+  --green-accent: #7C9B84;
+  --green-accent-hover: #9DBAA4;
+  --green-accent-text: #1E2A22;
+  --green-deep: #3F5A47;
+  --green-deep-hover: #4F6B57;
+  --green-mid: #4F6B57;
+  --green-soft: #8FA98D;
+  --green-btn-text: #F1F4EF;
 
-  --blue-panel: #D9C7AE;
-  --blue-panel-light: #F0E5D3;
+  --blue-panel: #A8BACB;
+  --blue-panel-light: #E4EAEE;
 
-  --tile-green-bg: #F1E8D9;
-  --tile-green-text: #7A5A3E;
-  --tile-green-link: #8B4226;
+  --tile-green-bg: #E9EFE9;
+  --tile-green-text: #5E7A66;
+  --tile-green-link: #3F5A47;
 
-  --newsletter-border: #6E5D4E;
-  --newsletter-copy: #D9CBB8;
-  --newsletter-panel-bg: #5C4E40;
+  --newsletter-border: #5E6773;
+  --newsletter-copy: #C0CAD1;
+  --newsletter-panel-bg: #6E7883;
 
-  --placeholder-label: #4A3F35;
-  --bar-lighter: #EBDFC9;
-  --bar-lightest: #F5EEE0;
+  --placeholder-label: #4A555D;
+  --bar-lighter: #E0E6EA;
+  --bar-lightest: #EEF2F5;
 }
 
 [data-theme="night"] {
-  --bg: #292019;
-  --text: #EDE3D3;
-  --text-hover: #FFF8EE;
-  --muted: #A89A87;
-  --muted-strong: #C4B7A2;
+  --bg: #2B313A;
+  --text: #E5E9EC;
+  --text-hover: #FFFFFF;
+  --muted: #8A93A0;
+  --muted-strong: #A6AEB9;
 
-  --border: #3D332A;
-  --border-light: #362E26;
-  --border-strong: #5C4E3F;
+  --border: #3A414B;
+  --border-light: #333941;
+  --border-strong: #545C67;
 
-  --row-bg: #362E26;
-  --row-hover: #40362C;
+  --row-bg: #323942;
+  --row-hover: #3B4149;
 
-  --dark: #E8DCC8;
-  --dark-hover: #D4C4A8;
+  --dark: #DDE3E7;
+  --dark-hover: #C7D0D6;
 
-  --header-bg: rgba(41, 32, 25, 0.9);
-  --scrim-bg: rgba(15, 10, 6, 0.55);
+  --header-bg: rgba(43, 49, 58, 0.9);
+  --scrim-bg: rgba(8, 10, 13, 0.55);
 
-  --newsletter-border: #C9BBA5;
-  --newsletter-copy: #4A3F33;
-  --newsletter-panel-bg: #E8DCC8;
+  --newsletter-border: #C3CBD1;
+  --newsletter-copy: #4A525C;
+  --newsletter-panel-bg: #DDE3E7;
 }
 
 * { box-sizing: border-box; }
@@ -433,7 +433,7 @@ button { font-family: inherit; }
   padding: 16px 14px;
   display: block;
 }
-.hero-strip-cell:hover { background: #D9CBB4; }
+.hero-strip-cell:hover { background: #C2C7CC; }
 .hero-strip-cell .cell-nr { font-size: 10px; letter-spacing: 0.16em; color: var(--muted); }
 .hero-strip-cell .cell-formula { font-size: 12px; color: var(--muted-strong); padding-top: 10px; }
 .hero-strip-cell .cell-name { font-size: 14px; padding-top: 4px; letter-spacing: -0.01em; color: var(--text); }
@@ -460,7 +460,7 @@ button { font-family: inherit; }
   grid-template-columns: 52px minmax(120px, 1.1fr) 96px 64px minmax(160px, 1.6fr) 110px 52px 86px 96px;
 }
 .index-row--head {
-  background: var(--row-bg);
+  background: #E6F2FB;
   border-bottom: 1px solid var(--border);
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -473,7 +473,7 @@ button { font-family: inherit; }
   border-bottom: 1px solid var(--border-light);
   background: var(--bg);
 }
-.index-row--body:hover { background: #C9B79C; }
+.index-row--body:hover { background: #9FB3C4; }
 .index-row--body > div { padding: 14px; }
 .cell-nr { font-size: 11px; color: var(--muted); }
 .cell-name { font-size: 16px; letter-spacing: -0.01em; }
@@ -512,7 +512,7 @@ button { font-family: inherit; }
   gap: 20px;
   flex-wrap: wrap;
   padding: 14px;
-  background: var(--row-bg);
+  background: #E6F2FB;
   font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--muted);
