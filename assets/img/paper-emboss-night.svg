@@ -1,17 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="1000" viewBox="0 0 1600 1000">
   <defs>
     <style>
-      .mo-fill, .mo-fill-soft, .mo-dot { fill: #DCEBFA; }
-      .mo-stem { fill: none; stroke: #DCEBFA; stroke-width: 5; stroke-linecap: round; }
+      .mo-fill, .mo-fill-soft, .mo-dot { fill: #2B313A; }
+      .mo-stem { fill: none; stroke: #2B313A; stroke-width: 5; stroke-linecap: round; }
     </style>
 
-    <!-- Cast plaster/gypsum bas-relief: a matte clay-grey base shaded by a
-         diffuse-lighting pass (multiplied over the flat fill so the whole
-         surface reads as sculpted, not just its edges), a soft specular
-         sheen on the raised side, and a dropped shadow on the recessed
-         side — closer to real cast plaster than a flat silhouette. -->
+    <!-- Same material as the page background: only the light/shadow from
+         this relief filter reveals the shapes — no separate fill color. -->
     <filter id="relief" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="5" dy="7" stdDeviation="6" flood-color="#241f16" flood-opacity="0.3" result="shadow"/>
+      <feDropShadow dx="5" dy="7" stdDeviation="6" flood-color="#050708" flood-opacity="0.45" result="shadow"/>
 
       <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
 
