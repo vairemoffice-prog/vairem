@@ -5,7 +5,6 @@
    ========================================================================== */
 
 :root {
-  --bg-scroll-progress: 0;
   --bg-parallax-y: 0px;
   --bg: #DCEBFA;
   --text: #525A65;
@@ -111,13 +110,11 @@ body {
       the bottom than at the top.
    2) body::after: the photo/relief texture. Gets a real parallax drift
       (--bg-parallax-y tracks raw scroll pixels at a fraction of scroll
-      speed, capped, so it visibly lags behind the foreground content)
-      and fades out / zooms in as the page scrolls down (flowers
-      "closing", birds "flying off"), driven by --bg-scroll-progress
-      (0 at the top, 1 at the bottom). Both custom properties are set
-      from js/app.js. The base 18% scale (plus up to 5% more by page
-      bottom) keeps the photo's bleed comfortably larger than the
-      parallax cap so its edges never show. */
+      speed, capped, so it visibly lags behind the foreground content),
+      set from js/app.js — but stays just as visible (no fade, no zoom)
+      at the bottom of the page as at the top. The constant 18% scale
+      keeps the photo's bleed comfortably larger than the parallax cap
+      so its edges never show. */
 body::before {
   content: '';
   position: fixed;
@@ -132,9 +129,8 @@ body::after {
   inset: 0;
   z-index: -1;
   background: url('../assets/img/bg-floral-relief.jpg') no-repeat center center / cover;
-  opacity: calc(1 - var(--bg-scroll-progress) * 0.78);
-  transform: scale(calc(1.18 + var(--bg-scroll-progress) * 0.05)) translateY(var(--bg-parallax-y));
-  transition: opacity 0.18s linear, transform 0.1s linear;
+  transform: scale(1.18) translateY(var(--bg-parallax-y));
+  transition: transform 0.1s linear;
   pointer-events: none;
 }
 [data-theme="night"] body::after {
