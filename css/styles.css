@@ -361,8 +361,7 @@ button { font-family: inherit; }
   font-weight: 500;
 }
 .hero-title-line { display: block; white-space: nowrap; }
-.hero-title:not(.hero-title--echo) { position: relative; z-index: 1; color: #000; }
-[data-theme="night"] .hero-title:not(.hero-title--echo) { color: #fff; }
+.hero-title:not(.hero-title--echo) { position: relative; z-index: 1; }
 
 /* Ghost duplicates of the title: stretched/offset copies that read as an
    echo/trail behind the real text, and as a scroll-driven deformation once
