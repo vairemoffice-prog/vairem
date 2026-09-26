@@ -420,13 +420,19 @@ button { font-family: inherit; }
 
 /* Solid backdrop behind the eyebrow/title/lede only, masking the fixed
    watermark texture there — it reappears starting at the CTA buttons and
-   stays visible through the rest of the page. */
+   stays visible through the rest of the page. Establishes its own
+   stacking context (z-index) so its own molecule-field canvas (added
+   below) can sit above this background but still under the text. */
 .hero-copy-top {
   position: relative;
+  z-index: 0;
   left: 50%;
   width: 100vw;
   transform: translateX(-50%);
   background: var(--bg);
+}
+.hero-copy-top .molecule-canvas {
+  z-index: -1;
 }
 
 .hero-stats {
