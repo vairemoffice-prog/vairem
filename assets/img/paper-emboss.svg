@@ -1,30 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="1000" viewBox="0 0 1600 1000">
   <defs>
     <style>
-      .mo-fill { fill: rgba(255,255,255,0.4); }
-      .mo-fill-soft { fill: rgba(255,255,255,0.28); }
-      .mo-dot { fill: rgba(255,255,255,0.6); }
-      .mo-stem { fill: none; stroke: rgba(255,255,255,0.32); stroke-width: 5; stroke-linecap: round; }
+      .mo-fill { fill: #D9D3C6; }
+      .mo-fill-soft { fill: #C9C2B1; }
+      .mo-dot { fill: #B3A990; }
+      .mo-stem { fill: none; stroke: #C9C2B1; stroke-width: 5; stroke-linecap: round; }
     </style>
 
-    <!-- Soft directional bas-relief: blurred alpha as a bump map, lit from
-         one distant light, a specular sheen on the raised side and a
-         dropped shadow on the recessed side — a genuine carved-relief
-         look rather than a flat two-tone silhouette trick. -->
+    <!-- Cast plaster/gypsum bas-relief: a matte clay-grey base shaded by a
+         diffuse-lighting pass (multiplied over the flat fill so the whole
+         surface reads as sculpted, not just its edges), a soft specular
+         sheen on the raised side, and a dropped shadow on the recessed
+         side — closer to real cast plaster than a flat silhouette. -->
     <filter id="relief" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="4" dy="6" stdDeviation="5" flood-color="#141a22" flood-opacity="0.22" result="shadow"/>
-      <feMerge result="base">
-        <feMergeNode in="shadow"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
-      <feSpecularLighting in="blur" surfaceScale="7" specularConstant="0.85" specularExponent="16" lighting-color="#ffffff" result="spec">
+      <feDropShadow dx="5" dy="7" stdDeviation="6" flood-color="#241f16" flood-opacity="0.3" result="shadow"/>
+
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+
+      <feDiffuseLighting in="blur" surfaceScale="8" diffuseConstant="1.15" lighting-color="#fff8ec" result="diffuse">
+        <feDistantLight azimuth="235" elevation="55"/>
+      </feDiffuseLighting>
+      <feComposite in="diffuse" in2="SourceAlpha" operator="in" result="diffuseClipped"/>
+      <feBlend in="SourceGraphic" in2="diffuseClipped" mode="multiply" result="shaded"/>
+
+      <feSpecularLighting in="blur" surfaceScale="8" specularConstant="0.5" specularExponent="18" lighting-color="#ffffff" result="spec">
         <feDistantLight azimuth="235" elevation="55"/>
       </feSpecularLighting>
       <feComposite in="spec" in2="SourceAlpha" operator="in" result="specClipped"/>
-      <feMerge>
-        <feMergeNode in="base"/>
+
+      <feMerge result="litShape">
+        <feMergeNode in="shaded"/>
         <feMergeNode in="specClipped"/>
+      </feMerge>
+
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="litShape"/>
       </feMerge>
     </filter>
 
@@ -73,11 +84,11 @@
 
   <rect width="1600" height="1000" fill="none"/>
 
-  <use xlink:href="#mo-flower" href="#mo-flower" filter="url(#relief)" transform="translate(240,190) scale(0.62) rotate(12)" opacity="0.75"/>
-  <use xlink:href="#mo-bird" href="#mo-bird" filter="url(#relief)" transform="translate(1180,150) scale(0.55) rotate(6)" opacity="0.7"/>
+  <use xlink:href="#mo-flower" href="#mo-flower" filter="url(#relief)" transform="translate(240,190) scale(0.62) rotate(12)"/>
+  <use xlink:href="#mo-bird" href="#mo-bird" filter="url(#relief)" transform="translate(1180,150) scale(0.55) rotate(6)"/>
 
   <use xlink:href="#mo-bird" href="#mo-bird" filter="url(#relief)" transform="translate(980,300) scale(1.05) rotate(-12)"/>
   <use xlink:href="#mo-flower" href="#mo-flower" filter="url(#relief)" transform="translate(1220,760) scale(1.4) rotate(-10)"/>
-  <use xlink:href="#mo-flower" href="#mo-flower" filter="url(#relief)" transform="translate(120,780) scale(0.8) rotate(20)" opacity="0.85"/>
-  <use xlink:href="#mo-bird" href="#mo-bird" filter="url(#relief)" transform="translate(430,560) scale(0.7) rotate(18)" opacity="0.8"/>
+  <use xlink:href="#mo-flower" href="#mo-flower" filter="url(#relief)" transform="translate(120,780) scale(0.8) rotate(20)"/>
+  <use xlink:href="#mo-bird" href="#mo-bird" filter="url(#relief)" transform="translate(430,560) scale(0.7) rotate(18)"/>
 </svg>
