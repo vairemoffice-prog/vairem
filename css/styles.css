@@ -89,13 +89,15 @@ body {
 }
 
 /* Background stays pinned to the viewport (its own fixed layer, behind
-   everything) while the page's text and panels scroll over it normally. */
+   everything) while the page's text and panels scroll over it normally.
+   The tiled SVG adds a faint embossed/debossed flower-and-bird texture,
+   like a watermark stamped into paper. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: var(--bg);
+  background: var(--bg) url('../assets/img/paper-emboss.svg') repeat;
   pointer-events: none;
 }
 
