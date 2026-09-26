@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Katalog produktów — VAIREM</title>
+<meta name="description" content="Katalog produktów VAIREM: trzy związki zapachowe, zdjęcie i szczegółowy opis każdego.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
+<style id="page-style">
+  .legal-header{ position:sticky; top:0; z-index:40; background:var(--header-bg); backdrop-filter:blur(6px); border-bottom:1px solid var(--border); padding-block:22px; }
+  .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
+  .legal-back:hover{ color:var(--text-hover); }
+
+  .cat-main{ padding-block:64px 96px; }
+  .cat-col{ max-width:760px; margin:0 auto; }
+  .cat-eyebrow{ font-size:11px; letter-spacing:0.2em; color:var(--muted); }
+  .cat-title{ margin:14px 0 0; font-size:clamp(30px,4vw,44px); letter-spacing:-0.03em; font-weight:500; line-height:1.05; }
+  .cat-lede{ margin-top:18px; max-width:56ch; font-size:16px; line-height:1.62; color:var(--text); }
+
+  .cat-toc{ overflow:hidden; margin-top:32px; -webkit-mask-image:linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); mask-image:linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); }
+  .cat-toc-track{ display:flex; gap:8px; width:max-content; }
+  .cat-toc-track a{
+    flex:0 0 auto; border:1px solid var(--border-strong); padding:8px 12px; font-size:11px; letter-spacing:0.1em;
+    font-family:'Martian Mono', monospace; color:var(--text); text-decoration:none;
+  }
+  .cat-toc-track a:hover{ background:var(--row-bg); color:var(--text-hover); }
+  @media (prefers-reduced-motion: reduce){
+    .cat-toc{ overflow-x:auto; -webkit-mask-image:none; mask-image:none; }
+    .cat-toc-track{ flex-wrap:wrap; width:auto; transform:none !important; }
+  }
+
+  .cat-product{ margin-top:72px; padding-top:56px; border-top:1px solid var(--border); scroll-margin-top:24px; }
+  .cat-product:first-of-type{ margin-top:56px; }
+  .cat-product-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .cat-product-eyebrow{ font-size:11px; letter-spacing:0.16em; color:var(--muted); font-family:'Martian Mono', monospace; }
+  .cat-product-price{ font-size:15px; color:var(--text); font-family:'Martian Mono', monospace; }
+  .cat-product-name{ margin:8px 0 0; font-size:clamp(24px,3vw,32px); letter-spacing:-0.02em; font-weight:500; }
+  .cat-product-character{ margin-top:8px; font-size:14px; color:var(--muted); }
+
+  .cat-photo-wrap{ max-width:340px; margin-top:26px; }
+  .cat-photo-wrap .karta-image{ padding:16px; }
+
+  .cat-detail{ margin-top:28px; }
+  .cat-detail h3{ margin:0 0 12px; font-size:11px; letter-spacing:0.16em; color:var(--muted); font-weight:500; font-family:'Martian Mono', monospace; }
+  .cat-detail-placeholder{
+    border:1px dashed var(--border-strong); padding:20px 22px; font-size:14px; line-height:1.7; color:var(--muted); font-style:italic;
+  }
+
+  .cat-add-row{ margin-top:24px; }
+  .cat-add-row .btn[disabled]{ opacity:1; }
+
+  @media (max-width:520px){
+    .cat-product{ margin-top:56px; padding-top:40px; }
+  }
+</style>
+</head>
+<body>
+
+<button type="button" id="menu-toggle" class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
+  <span class="menu-toggle-label mono" aria-hidden="true">MENU</span>
+</button>
+
+<!-- SIDE MENU -->
+<div id="menu-overlay" class="menu-overlay" hidden>
+  <div class="menu-scrim" id="menu-scrim"></div>
+  <aside class="menu-drawer">
+    <div class="menu-drawer-head">
+      <div class="mono">MENU</div>
+      <button type="button" id="menu-close" class="cart-close mono">ZAMKNIJ ✕</button>
+    </div>
+    <div class="menu-drawer-section">
+      <a href="katalog.html" class="menu-section-label menu-section-label--link mono">KATALOG</a>
+    </div>
+    <nav class="menu-nav mono">
+      <a href="index.html#indeks">INDEKS</a>
+      <a href="index.html#metoda">METODA</a>
+      <a href="index.html#karta">017 BEFORE IT DRIES</a>
+      <a href="index.html#list">LIST</a>
+    </nav>
+  </aside>
+</div>
+
+<div id="page-content">
+
+<header class="legal-header">
+  <div class="wrap">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="index.html" class="brand" style="text-decoration:none;">
+        <svg class="brand-mark" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
+          <text x="8" y="126" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">v</text>
+          <text x="58" y="134" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">ai</text>
+          <text x="62" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">r</text>
+          <text x="96" y="78" font-family="'Space Grotesk', sans-serif" font-size="26" fill="currentColor">e</text>
+          <text x="120" y="68" font-family="'Space Grotesk', sans-serif" font-size="48" fill="currentColor">m</text>
+        </svg>
+        <span class="brand-name">Vairem</span>
+      </a>
+    </div>
+    <a href="index.html" class="legal-back mono">← STRONA GŁÓWNA</a>
+  </div>
+</header>
+
+<main class="cat-main">
+  <div class="wrap">
+    <div class="cat-col">
+
+      <div class="cat-eyebrow mono">KATALOG · TRZY ZWIĄZKI</div>
+      <h1 class="cat-title">Katalog produktów</h1>
+      <p class="cat-lede">Zdjęcie i szczegółowy opis każdego związku z indeksu VAIREM. Ceny za naczynie 200 ml.</p>
+
+      <nav class="cat-toc mono" aria-label="Spis produktów">
+        <div class="cat-toc-track" id="cat-toc-track">
+          <a href="#p017">017 · BEFORE IT DRIES</a>
+          <a href="#p042">042 · WITHIN</a>
+          <a href="#p086">086 · AFTERLIGHT</a>
+          <a href="#p017" aria-hidden="true" tabindex="-1">017 · BEFORE IT DRIES</a>
+          <a href="#p042" aria-hidden="true" tabindex="-1">042 · WITHIN</a>
+          <a href="#p086" aria-hidden="true" tabindex="-1">086 · AFTERLIGHT</a>
+        </div>
+      </nav>
+
+      <article class="cat-product" id="p017">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">017 · [FORMULA]</div>
+          <div class="cat-product-price">[CENA] · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Before It Dries</h2>
+        <p class="cat-product-character">[CHARAKTER]</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <img class="karta-photo" data-src="assets/products/017.jpg" alt="Before It Dries">
+            <div class="karta-image-top mono"><span>[FORMULA] · 017</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="017">DO KOSZYKA</button>
+        </div>
+      </article>
+
+      <article class="cat-product" id="p042">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">042 · [FORMULA]</div>
+          <div class="cat-product-price">[CENA] · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Within</h2>
+        <p class="cat-product-character">[CHARAKTER]</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <img class="karta-photo" data-src="assets/products/042.jpg" alt="Within">
+            <div class="karta-image-top mono"><span>[FORMULA] · 042</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="042">DO KOSZYKA</button>
+        </div>
+      </article>
+
+      <article class="cat-product" id="p086">
+        <div class="cat-product-head">
+          <div class="cat-product-eyebrow">086 · [FORMULA]</div>
+          <div class="cat-product-price">[CENA] · 200 ml</div>
+        </div>
+        <h2 class="cat-product-name">Afterlight</h2>
+        <p class="cat-product-character">[CHARAKTER]</p>
+        <div class="cat-photo-wrap">
+          <div class="karta-image">
+            <img class="karta-photo" data-src="assets/products/086.jpg" alt="Afterlight">
+            <div class="karta-image-top mono"><span>[FORMULA] · 086</span><span>200 ML</span></div>
+            <div class="karta-image-tag mono">ZDJĘCIE PRODUKTU — NACZYNIE, 4:5</div>
+          </div>
+        </div>
+        <div class="cat-detail">
+          <h3>SZCZEGÓŁOWY OPIS</h3>
+          <p class="cat-detail-placeholder">Miejsce na pełny opis związku — zostanie uzupełnione.</p>
+        </div>
+        <div class="cat-add-row">
+          <button type="button" class="btn btn-green mono" data-add="086">DO KOSZYKA</button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="margin-top:0;">
+  <div class="wrap footer-bottom mono" style="border-top:1px solid var(--border); padding-top:16px;">
+    <span>© 2026 VAIREM</span>
+    <a href="index.html">STRONA GŁÓWNA →</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var CART_KEY = 'vairem-cart';
+
+  function loadCart() {
+    try {
+      var raw = localStorage.getItem(CART_KEY);
+      if (raw === null) return [];
+      var parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+
+  function addToCart(nr) {
+    var cart = loadCart();
+    var existing = cart.filter(function (i) { return i.nr === nr; })[0];
+    if (existing) existing.qty += 1;
+    else cart.push({ nr: nr, qty: 1 });
+    try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {}
+  }
+
+  document.querySelectorAll('.cat-add-row [data-add]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      addToCart(btn.dataset.add);
+      var original = btn.textContent;
+      btn.textContent = 'DODANO ✓';
+      btn.disabled = true;
+      window.setTimeout(function () {
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 1400);
+    });
+  });
+
+  // ---------- infinite-loop ticker for the product index ----------
+  var track = document.getElementById('cat-toc-track');
+  if (track && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    var half = 0;
+    function measure() { half = track.scrollWidth / 2; }
+    measure();
+    window.addEventListener('resize', measure);
+
+    var x = 0;
+    var paused = false;
+    track.addEventListener('mouseenter', function () { paused = true; });
+    track.addEventListener('mouseleave', function () { paused = false; });
+
+    (function raf() {
+      if (!paused && half > 0) {
+        x -= 0.4;
+        if (x <= -half) x += half;
+        track.style.transform = 'translateX(' + x + 'px)';
+      }
+      requestAnimationFrame(raf);
+    })();
+  }
+
+  // ---------- optional product photos, no-op until the files exist ----------
+  document.querySelectorAll('.karta-photo[data-src]').forEach(function (img) {
+    var probe = new Image();
+    probe.onload = function () {
+      img.src = img.dataset.src;
+      img.classList.add('is-loaded');
+    };
+    probe.src = img.dataset.src;
+  });
+})();
+</script>
+
+</div><!-- /page-content -->
+
+<script src="js/menu.js" defer></script>
+<script src="js/effects.js" defer></script>
+</body>
+</html>

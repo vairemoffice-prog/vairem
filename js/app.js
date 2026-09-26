@@ -2,80 +2,38 @@
   'use strict';
 
   const PRODUCTS = [
-    { nr: '01', name: 'Iso E Super', formula: 'C16H26O', mw: '234,4', weeks: 12, price: 275, intensity: 34 },
-    { nr: '02', name: 'Ambroxan', formula: 'C16H28O', mw: '236,4', weeks: 12, price: 295, intensity: 56 },
-    { nr: '03', name: 'Cashmeran', formula: 'C14H22O', mw: '206,3', weeks: 10, price: 269, intensity: 72 },
-    { nr: '04', name: 'Cedramber', formula: 'C17H28O', mw: '248,4', weeks: 12, price: 285, intensity: 48 },
-    { nr: '05', name: 'Javanol', formula: 'C16H28O', mw: '236,4', weeks: 10, price: 335, intensity: 88 },
-    { nr: '06', name: 'Ambrocenide', formula: 'C15H24O', mw: '220,4', weeks: 14, price: 309, intensity: 64 },
-    { nr: '07', name: 'Timbersilk', formula: 'C16H26O', mw: '234,4', weeks: 12, price: 249, intensity: 42 }
+    { nr: '017', name: 'Before It Dries', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 0, intensity: 0 },
+    { nr: '042', name: 'Within', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 0, intensity: 0 },
+    { nr: '086', name: 'Afterlight', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 0, intensity: 0 }
   ];
 
   const productByNr = nr => PRODUCTS.find(p => p.nr === nr);
 
+  const formatPrice = price => (price === 0 ? '[PRICE]' : `${price} zł`);
+
   // ---------- i18n ----------
 
   const CHARACTER_I18N = {
-    pl: {
-      '01': 'Suchy cedr na granicy percepcji',
-      '02': 'Mineralny, lekko słony, twarde powierzchnie',
-      '03': 'Ciepła wełna, wióry z ołówka, blisko',
-      '04': 'Ciepły papier, zaplecze księgarni',
-      '05': 'Kremowe drzewo sandałowe, mleko, skóra',
-      '06': 'Glina, suszona figa, słońce na tynku',
-      '07': 'Cięta sosna, zimny warsztat, czysto'
-    },
-    en: {
-      '01': 'Dry cedar at the edge of perception',
-      '02': 'Mineral, faintly salty, hard surfaces',
-      '03': 'Warm wool, pencil shavings, close',
-      '04': 'Warm paper, back of a bookshop',
-      '05': 'Creamy sandalwood, milk, skin',
-      '06': 'Clay, dried fig, sun on plaster',
-      '07': 'Cut pine, cold workshop, clean'
-    },
-    es: {
-      '01': 'Cedro seco en el límite de la percepción',
-      '02': 'Mineral, ligeramente salado, superficies duras',
-      '03': 'Lana cálida, virutas de lápiz, cercano',
-      '04': 'Papel cálido, trastienda de librería',
-      '05': 'Sándalo cremoso, leche, piel',
-      '06': 'Arcilla, higo seco, sol sobre el yeso',
-      '07': 'Pino cortado, taller frío, limpio'
-    },
-    uk: {
-      '01': 'Сухий кедр на межі сприйняття',
-      '02': 'Мінеральний, злегка солоний, тверді поверхні',
-      '03': 'Тепла вовна, стружка від олівця, близько',
-      '04': 'Теплий папір, підсобка книгарні',
-      '05': 'Кремове сандалове дерево, молоко, шкіра',
-      '06': 'Глина, сушений інжир, сонце на тиньку',
-      '07': 'Зрізана сосна, холодна майстерня, чисто'
-    },
-    fr: {
-      '01': 'Cèdre sec à la limite de la perception',
-      '02': 'Minéral, légèrement salé, surfaces dures',
-      '03': 'Laine chaude, copeaux de crayon, proche',
-      '04': 'Papier chaud, arrière-boutique de librairie',
-      '05': 'Bois de santal crémeux, lait, peau',
-      '06': 'Argile, figue séchée, soleil sur le plâtre',
-      '07': 'Pin coupé, atelier froid, propre'
-    }
+    pl: { '017': '[CHARAKTER]', '042': '[CHARAKTER]', '086': '[CHARAKTER]' },
+    en: { '017': '[CHARACTER]', '042': '[CHARACTER]', '086': '[CHARACTER]' },
+    es: { '017': '[CARÁCTER]', '042': '[CARÁCTER]', '086': '[CARÁCTER]' },
+    uk: { '017': '[ХАРАКТЕР]', '042': '[ХАРАКТЕР]', '086': '[ХАРАКТЕР]' },
+    fr: { '017': '[CARACTÈRE]', '042': '[CARACTÈRE]', '086': '[CARACTÈRE]' }
   };
 
   const I18N = {
     pl: {
-      'nav.indeks': 'INDEKS', 'nav.metoda': 'METODA', 'nav.list': 'LIST',
+      'nav.indeks': 'INDEKS', 'nav.metoda': 'METODA', 'nav.list': 'LIST', 'nav.menu': 'MENU', 'menu.produkty': 'KATALOG',
       'theme.day': 'DZIEŃ', 'theme.night': 'NOC', 'cart.label': 'KOSZYK',
       'tabbar.label': 'WARIANT HERO', 'tab.tablica': '02 · TABLICA', 'tab.wykres': '03 · WYKRES',
-      'hero1.eyebrow': 'MOLEKULARNY ZAPACH DO WNĘTRZ · SIEDEM ZWIĄZKÓW',
+      'hero1.eyebrow': 'MOLEKULARNY ZAPACH DO WNĘTRZ · TRZY ZWIĄZKI',
       'hero1.title': 'Powietrze<br>nie jest<br>puste',
       'hero1.lede': 'Jedna molekuła zapachowa naraz, nierozcieńczona opowieścią. Bez nuty głowy, bez wytrącania, bez klasycznej piramidy — czysta forma zapachu, uwalniana powoli do powietrza.<br><br>To, czego nie widać, zmienia to, co czujesz. Nie możesz zobaczyć.<br>Możesz tylko sprawdzić, czy do Ciebie pasuje.<br>Przymierzysz?',
       'cta.wybierz': 'WYBIERZ ZWIĄZEK →', 'cta.metoda_dyfuzji': 'METODA DYFUZJI',
       'stat.zwiazkow': 'ZWIĄZKÓW W INDEKSIE', 'stat.stezenie': 'STĘŻENIE', 'stat.pojemnosc': 'POJEMNOŚĆ',
       'stat.czas': 'CZAS TRWANIA', 'stat.czas_value': '10–14 tyg.',
-      'hero2.eyebrow': 'TABLICA ZWIĄZKÓW · 01—07',
-      'hero2.title': 'Siedem cząsteczek. Żadnych kompozycji.',
+      'hero2.eyebrow': 'TABLICA ZWIĄZKÓW · 017—086',
+      'hero2.title': 'Trzy cząsteczki. Żadnych kompozycji.',
       'hero2.lede': 'Wybierasz związek, nie perfumę. Każde naczynie zawiera jedną molekułę, nazwaną na etykiecie wraz ze wzorem.',
       'cta.pelny_indeks': 'PEŁNY INDEKS →', 'upcoming.copy': 'W badaniu.<br>Cztery razy w roku.', 'cta.zapisz': 'ZAPISZ SIĘ →',
       'hero3.eyebrow': 'KRZYWA UWALNIANIA · POMIAR WŁASNY · 40 M²',
@@ -83,15 +41,15 @@
       'hero3.lede': 'Dyfuzja pasywna w temperaturze pomieszczenia. Molekuła opuszcza nośnik w tempie, jakiego żąda wnętrze — cieplejsze pomieszczenia czytają po prostu głośniej.',
       'cta.metoda': 'METODA', 'wykres.intensywnosc': 'INTENSYWNOŚĆ / TYDZIEŃ',
       'metric.prog': 'PRÓG', 'metric.zasieg': 'ZASIĘG', 'metric.cena': 'CENA',
-      'indeks.title': 'Indeks', 'indeks.note': 'SIEDEM ZWIĄZKÓW · PO 200 ML · CENA ZA NACZYNIE',
+      'indeks.title': 'Indeks', 'indeks.note': 'TRZY ZWIĄZKI · PO 200 ML · CENA ZA NACZYNIE',
       'th.nr': 'NR', 'th.zwiazek': 'ZWIĄZEK', 'th.wzor': 'WZÓR', 'th.mw': 'M [G/MOL]',
       'th.charakter': 'CHARAKTER', 'th.intensywnosc': 'INTENSYWNOŚĆ', 'th.tyg': 'TYG.', 'th.cena': 'CENA',
       'index.foot1': 'INTENSYWNOŚĆ MIERZONA PRZY 0,8% W NEUTRALNYM NOŚNIKU, 22 °C',
       'index.foot2': 'DOSTAWA 1–3 DNI ROBOCZE · PL / EU',
       'karta.image_tag': 'ZDJĘCIE PRODUKTU — NACZYNIE, 4:5',
       'karta.thumb.etykieta': 'ETYKIETA', 'karta.thumb.nosnik': 'NOŚNIK', 'karta.thumb.wnetrze': 'WNĘTRZE', 'karta.thumb.detal': 'DETAL',
-      'karta.eyebrow': '01 · TEN CICHY', 'karta.title': 'Nie pachnie niczym.',
-      'karta.lede': 'Sprawia, że wnętrze pachnie sobą, tylko cieplej — suchy cedr na granicy percepcji, bliżej temperatury niż zapachu. Molekuła, którą większość ludzi nosiła, nie wiedząc o tym; tutaj sama i nieuperfumowana.',
+      'karta.eyebrow_tpl': nr => `${nr} · [TAGLINE]`, 'karta.title': '[TYTUŁ]',
+      'karta.lede': '[OPIS]', 'karta.prev': 'Poprzedni produkt', 'karta.next': 'Następny produkt',
       'spec.stezenie': 'STĘŻENIE', 'spec.stezenie_value': '0,8 % w neutralnym nośniku',
       'spec.dyfuzja': 'DYFUZJA', 'spec.dyfuzja_value': 'pasywna, bez ciepła',
       'spec.wielkosc': 'WIELKOŚĆ WNĘTRZA', 'spec.wielkosc_value': 'do 40 m²',
@@ -113,9 +71,9 @@
       'list.lede': 'Jeden związek wyjaśniony wprost, z powodem, dla którego zajęło to chwilę. Bez ofert, bez odliczania.',
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'ZAPISZ SIĘ',
       'list.note': 'BEZ OFERT. WYPISUJESZ SIĘ JEDNYM KLIKNIĘCIEM.',
-      'archive.next': 'NAJBLIŻSZY LIST', 'archive.next_value': '08 · Ambrettolide — w badaniu',
-      'archive.last': 'OSTATNI', 'archive.last_value': '07 · Timbersilk — dlaczego zimno',
-      'archive.archive': 'ARCHIWUM', 'archive.archive_value': '01—07 · pełne noty',
+      'archive.next': 'NAJBLIŻSZY LIST', 'archive.next_value': '[NASTĘPNY]',
+      'archive.last': 'OSTATNI', 'archive.last_value': '086 · Afterlight — [OPIS]',
+      'archive.archive': 'ARCHIWUM', 'archive.archive_value': '017—086 · pełne noty',
       'footer.address': 'MOLEKULARNY ZAPACH DO WNĘTRZ<br>WARSZAWA · PL<br>NIP 000 000 00 00',
       'footer.pelny_indeks': 'Pełny indeks →', 'footer.marka': 'MARKA',
       'footer.metoda': 'Metoda', 'footer.list': 'List', 'footer.refill': 'Naczynia i refill',
@@ -140,17 +98,17 @@
       'promo.copy': 'KOPIUJ', 'promo.copied': 'SKOPIOWANO', 'promo.dismiss': 'Nie, dziękuję'
     },
     en: {
-      'nav.indeks': 'INDEX', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER',
+      'nav.indeks': 'INDEX', 'nav.metoda': 'METHOD', 'nav.list': 'LETTER', 'nav.menu': 'MENU', 'menu.produkty': 'CATALOG',
       'theme.day': 'DAY', 'theme.night': 'NIGHT', 'cart.label': 'CART',
       'tabbar.label': 'HERO VARIANT', 'tab.tablica': '02 · BOARD', 'tab.wykres': '03 · CHART',
-      'hero1.eyebrow': 'MOLECULAR HOME FRAGRANCE · SEVEN COMPOUNDS',
+      'hero1.eyebrow': 'MOLECULAR HOME FRAGRANCE · THREE COMPOUNDS',
       'hero1.title': 'Air<br>is not<br>empty',
       'hero1.lede': 'One fragrance molecule at a time, undiluted by a story. No top note, no drydown, no garden in Grasse — one compound released passively for twelve weeks.',
       'cta.wybierz': 'CHOOSE A COMPOUND →', 'cta.metoda_dyfuzji': 'DIFFUSION METHOD',
       'stat.zwiazkow': 'COMPOUNDS IN THE INDEX', 'stat.stezenie': 'CONCENTRATION', 'stat.pojemnosc': 'VOLUME',
       'stat.czas': 'DURATION', 'stat.czas_value': '10–14 wks',
-      'hero2.eyebrow': 'COMPOUND BOARD · 01—07',
-      'hero2.title': 'Seven molecules. No compositions.',
+      'hero2.eyebrow': 'COMPOUND BOARD · 017—086',
+      'hero2.title': 'Three molecules. No compositions.',
       'hero2.lede': 'You choose a compound, not a perfume. Each vessel holds a single molecule, named on the label along with its formula.',
       'cta.pelny_indeks': 'FULL INDEX →', 'upcoming.copy': 'In research.<br>Four times a year.', 'cta.zapisz': 'SUBSCRIBE →',
       'hero3.eyebrow': 'RELEASE CURVE · OWN MEASUREMENT · 40 M²',
@@ -158,15 +116,15 @@
       'hero3.lede': 'Passive diffusion at room temperature. The molecule leaves the carrier at the rate the room demands — warmer rooms simply read louder.',
       'cta.metoda': 'METHOD', 'wykres.intensywnosc': 'INTENSITY / WEEK',
       'metric.prog': 'THRESHOLD', 'metric.zasieg': 'RANGE', 'metric.cena': 'PRICE',
-      'indeks.title': 'Index', 'indeks.note': 'SEVEN COMPOUNDS · 200 ML EACH · PRICE PER VESSEL',
+      'indeks.title': 'Index', 'indeks.note': 'THREE COMPOUNDS · 200 ML EACH · PRICE PER VESSEL',
       'th.nr': 'NO.', 'th.zwiazek': 'COMPOUND', 'th.wzor': 'FORMULA', 'th.mw': 'M [G/MOL]',
       'th.charakter': 'CHARACTER', 'th.intensywnosc': 'INTENSITY', 'th.tyg': 'WKS', 'th.cena': 'PRICE',
       'index.foot1': 'INTENSITY MEASURED AT 0.8% IN NEUTRAL CARRIER, 22 °C',
       'index.foot2': 'DELIVERY 1–3 BUSINESS DAYS · PL / EU',
       'karta.image_tag': 'PRODUCT PHOTO — VESSEL, 4:5',
       'karta.thumb.etykieta': 'LABEL', 'karta.thumb.nosnik': 'CARRIER', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETAIL',
-      'karta.eyebrow': '01 · THE QUIET ONE', 'karta.title': 'Smells like nothing.',
-      'karta.lede': 'Makes a room smell like itself, only warmer — dry cedar at the edge of perception, closer to temperature than scent. The molecule most people have worn without knowing it; here alone and unperfumed.',
+      'karta.eyebrow_tpl': nr => `${nr} · [TAGLINE]`, 'karta.title': '[TITLE]',
+      'karta.lede': '[DESCRIPTION]', 'karta.prev': 'Previous product', 'karta.next': 'Next product',
       'spec.stezenie': 'CONCENTRATION', 'spec.stezenie_value': '0.8% in neutral carrier',
       'spec.dyfuzja': 'DIFFUSION', 'spec.dyfuzja_value': 'passive, no heat',
       'spec.wielkosc': 'ROOM SIZE', 'spec.wielkosc_value': 'up to 40 m²',
@@ -188,9 +146,9 @@
       'list.lede': 'One compound explained plainly, with the reason it took a while. No offers, no countdowns.',
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'SUBSCRIBE',
       'list.note': 'NO OFFERS. UNSUBSCRIBE WITH ONE CLICK.',
-      'archive.next': 'NEXT LETTER', 'archive.next_value': '08 · Ambrettolide — in research',
-      'archive.last': 'LAST', 'archive.last_value': '07 · Timbersilk — why cold',
-      'archive.archive': 'ARCHIVE', 'archive.archive_value': '01—07 · full notes',
+      'archive.next': 'NEXT LETTER', 'archive.next_value': '[NEXT]',
+      'archive.last': 'LAST', 'archive.last_value': '086 · Afterlight — [DESCRIPTION]',
+      'archive.archive': 'ARCHIVE', 'archive.archive_value': '017—086 · full notes',
       'footer.address': 'MOLECULAR HOME FRAGRANCE<br>WARSAW · PL<br>VAT 000 000 00 00',
       'footer.pelny_indeks': 'Full index →', 'footer.marka': 'BRAND',
       'footer.metoda': 'Method', 'footer.list': 'Letter', 'footer.refill': 'Vessels & refills',
@@ -211,17 +169,17 @@
       'promo.copy': 'COPY', 'promo.copied': 'COPIED', 'promo.dismiss': 'No, thanks'
     },
     es: {
-      'nav.indeks': 'ÍNDICE', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA',
+      'nav.indeks': 'ÍNDICE', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA', 'nav.menu': 'MENÚ', 'menu.produkty': 'CATÁLOGO',
       'theme.day': 'DÍA', 'theme.night': 'NOCHE', 'cart.label': 'CARRITO',
       'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLERO', 'tab.wykres': '03 · GRÁFICO',
-      'hero1.eyebrow': 'FRAGANCIA MOLECULAR PARA EL HOGAR · SIETE COMPUESTOS',
+      'hero1.eyebrow': 'FRAGANCIA MOLECULAR PARA EL HOGAR · TRES COMPUESTOS',
       'hero1.title': 'El aire<br>no está<br>vacío',
       'hero1.lede': 'Una molécula olfativa a la vez, sin diluir en una historia. Sin salida de cabeza, sin decantación, sin jardín en Grasse — un compuesto liberado pasivamente durante doce semanas.',
       'cta.wybierz': 'ELIGE UN COMPUESTO →', 'cta.metoda_dyfuzji': 'MÉTODO DE DIFUSIÓN',
       'stat.zwiazkow': 'COMPUESTOS EN EL ÍNDICE', 'stat.stezenie': 'CONCENTRACIÓN', 'stat.pojemnosc': 'VOLUMEN',
       'stat.czas': 'DURACIÓN', 'stat.czas_value': '10–14 sem.',
-      'hero2.eyebrow': 'TABLERO DE COMPUESTOS · 01—07',
-      'hero2.title': 'Siete moléculas. Ninguna composición.',
+      'hero2.eyebrow': 'TABLERO DE COMPUESTOS · 017—086',
+      'hero2.title': 'Tres moléculas. Ninguna composición.',
       'hero2.lede': 'Eliges un compuesto, no un perfume. Cada frasco contiene una sola molécula, indicada en la etiqueta junto con su fórmula.',
       'cta.pelny_indeks': 'ÍNDICE COMPLETO →', 'upcoming.copy': 'En estudio.<br>Cuatro veces al año.', 'cta.zapisz': 'SUSCRIBIRSE →',
       'hero3.eyebrow': 'CURVA DE LIBERACIÓN · MEDICIÓN PROPIA · 40 M²',
@@ -229,15 +187,15 @@
       'hero3.lede': 'Difusión pasiva a temperatura ambiente. La molécula abandona el soporte al ritmo que exige la habitación — las habitaciones más cálidas simplemente suenan más fuerte.',
       'cta.metoda': 'MÉTODO', 'wykres.intensywnosc': 'INTENSIDAD / SEMANA',
       'metric.prog': 'UMBRAL', 'metric.zasieg': 'ALCANCE', 'metric.cena': 'PRECIO',
-      'indeks.title': 'Índice', 'indeks.note': 'SIETE COMPUESTOS · 200 ML CADA UNO · PRECIO POR FRASCO',
+      'indeks.title': 'Índice', 'indeks.note': 'TRES COMPUESTOS · 200 ML CADA UNO · PRECIO POR FRASCO',
       'th.nr': 'N.º', 'th.zwiazek': 'COMPUESTO', 'th.wzor': 'FÓRMULA', 'th.mw': 'M [G/MOL]',
       'th.charakter': 'CARÁCTER', 'th.intensywnosc': 'INTENSIDAD', 'th.tyg': 'SEM.', 'th.cena': 'PRECIO',
       'index.foot1': 'INTENSIDAD MEDIDA AL 0,8% EN SOPORTE NEUTRO, 22 °C',
       'index.foot2': 'ENTREGA EN 1–3 DÍAS LABORABLES · PL / UE',
       'karta.image_tag': 'FOTO DEL PRODUCTO — FRASCO, 4:5',
       'karta.thumb.etykieta': 'ETIQUETA', 'karta.thumb.nosnik': 'SOPORTE', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETALLE',
-      'karta.eyebrow': '01 · EL SILENCIOSO', 'karta.title': 'No huele a nada.',
-      'karta.lede': 'Hace que la habitación huela a sí misma, solo que más cálida — cedro seco en el límite de la percepción, más cerca de la temperatura que del aroma. La molécula que la mayoría ha llevado sin saberlo; aquí sola y sin perfumar.',
+      'karta.eyebrow_tpl': nr => `${nr} · [ESLOGAN]`, 'karta.title': '[TÍTULO]',
+      'karta.lede': '[DESCRIPCIÓN]', 'karta.prev': 'Producto anterior', 'karta.next': 'Producto siguiente',
       'spec.stezenie': 'CONCENTRACIÓN', 'spec.stezenie_value': '0,8 % en soporte neutro',
       'spec.dyfuzja': 'DIFUSIÓN', 'spec.dyfuzja_value': 'pasiva, sin calor',
       'spec.wielkosc': 'TAMAÑO DE LA HABITACIÓN', 'spec.wielkosc_value': 'hasta 40 m²',
@@ -259,9 +217,9 @@
       'list.lede': 'Un compuesto explicado con claridad, con el motivo por el que llevó su tiempo. Sin ofertas, sin cuentas atrás.',
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'SUSCRIBIRSE',
       'list.note': 'SIN OFERTAS. TE DAS DE BAJA CON UN CLIC.',
-      'archive.next': 'PRÓXIMA CARTA', 'archive.next_value': '08 · Ambrettolide — en estudio',
-      'archive.last': 'ÚLTIMA', 'archive.last_value': '07 · Timbersilk — por qué frío',
-      'archive.archive': 'ARCHIVO', 'archive.archive_value': '01—07 · notas completas',
+      'archive.next': 'PRÓXIMA CARTA', 'archive.next_value': '[SIGUIENTE]',
+      'archive.last': 'ÚLTIMA', 'archive.last_value': '086 · Afterlight — [DESCRIPCIÓN]',
+      'archive.archive': 'ARCHIVO', 'archive.archive_value': '017—086 · notas completas',
       'footer.address': 'FRAGANCIA MOLECULAR PARA EL HOGAR<br>VARSOVIA · PL<br>NIF 000 000 00 00',
       'footer.pelny_indeks': 'Índice completo →', 'footer.marka': 'MARCA',
       'footer.metoda': 'Método', 'footer.list': 'Carta', 'footer.refill': 'Frascos y recambios',
@@ -282,17 +240,17 @@
       'promo.copy': 'COPIAR', 'promo.copied': 'COPIADO', 'promo.dismiss': 'No, gracias'
     },
     uk: {
-      'nav.indeks': 'ІНДЕКС', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ',
+      'nav.indeks': 'ІНДЕКС', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ', 'nav.menu': 'МЕНЮ', 'menu.produkty': 'КАТАЛОГ',
       'theme.day': 'ДЕНЬ', 'theme.night': 'НІЧ', 'cart.label': 'КОШИК',
       'tabbar.label': 'ВАРІАНТ HERO', 'tab.tablica': '02 · ТАБЛИЦЯ', 'tab.wykres': '03 · ГРАФІК',
-      'hero1.eyebrow': 'МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ · СІМ СПОЛУК',
+      'hero1.eyebrow': 'МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ · ТРИ СПОЛУКИ',
       'hero1.title': 'Повітря<br>не<br>порожнє',
       'hero1.lede': 'Одна ароматична молекула за раз, не розбавлена історією. Без нот верху, без осаду, без саду в Грасі — одна сполука пасивно вивільняється протягом дванадцяти тижнів.',
       'cta.wybierz': 'ОБЕРИ СПОЛУКУ →', 'cta.metoda_dyfuzji': 'МЕТОД ДИФУЗІЇ',
       'stat.zwiazkow': "СПОЛУК В ІНДЕКСІ", 'stat.stezenie': 'КОНЦЕНТРАЦІЯ', 'stat.pojemnosc': "ОБ'ЄМ",
       'stat.czas': 'ТРИВАЛІСТЬ', 'stat.czas_value': '10–14 тиж.',
-      'hero2.eyebrow': 'ТАБЛИЦЯ СПОЛУК · 01—07',
-      'hero2.title': 'Сім молекул. Жодних композицій.',
+      'hero2.eyebrow': 'ТАБЛИЦЯ СПОЛУК · 017—086',
+      'hero2.title': 'Три молекули. Жодних композицій.',
       'hero2.lede': "Ти обираєш сполуку, а не парфум. Кожна посудина містить одну молекулу, названу на етикетці разом із формулою.",
       'cta.pelny_indeks': 'ПОВНИЙ ІНДЕКС →', 'upcoming.copy': 'У дослідженні.<br>Чотири рази на рік.', 'cta.zapisz': 'ПІДПИСАТИСЯ →',
       'hero3.eyebrow': 'КРИВА ВИВІЛЬНЕННЯ · ВЛАСНИЙ ВИМІР · 40 М²',
@@ -300,15 +258,15 @@
       'hero3.lede': 'Пасивна дифузія за кімнатної температури. Молекула залишає носій у темпі, якого вимагає приміщення — тепліші кімнати просто звучать голосніше.',
       'cta.metoda': 'МЕТОД', 'wykres.intensywnosc': 'ІНТЕНСИВНІСТЬ / ТИЖДЕНЬ',
       'metric.prog': 'ПОРІГ', 'metric.zasieg': 'ОХОПЛЕННЯ', 'metric.cena': 'ЦІНА',
-      'indeks.title': 'Індекс', 'indeks.note': 'СІМ СПОЛУК · ПО 200 МЛ · ЦІНА ЗА ПОСУДИНУ',
+      'indeks.title': 'Індекс', 'indeks.note': 'ТРИ СПОЛУКИ · ПО 200 МЛ · ЦІНА ЗА ПОСУДИНУ',
       'th.nr': '№', 'th.zwiazek': 'СПОЛУКА', 'th.wzor': 'ФОРМУЛА', 'th.mw': 'M [Г/МОЛЬ]',
       'th.charakter': 'ХАРАКТЕР', 'th.intensywnosc': 'ІНТЕНСИВНІСТЬ', 'th.tyg': 'ТИЖ.', 'th.cena': 'ЦІНА',
       'index.foot1': 'ІНТЕНСИВНІСТЬ ВИМІРЯНА ПРИ 0,8% У НЕЙТРАЛЬНОМУ НОСІЇ, 22 °C',
       'index.foot2': 'ДОСТАВКА 1–3 РОБОЧІ ДНІ · PL / ЄС',
       'karta.image_tag': "ФОТО ПРОДУКТУ — ПОСУДИНА, 4:5",
       'karta.thumb.etykieta': 'ЕТИКЕТКА', 'karta.thumb.nosnik': 'НОСІЙ', 'karta.thumb.wnetrze': "ІНТЕР'ЄР", 'karta.thumb.detal': 'ДЕТАЛЬ',
-      'karta.eyebrow': '01 · ТОЙ ТИХИЙ', 'karta.title': 'Не пахне нічим.',
-      'karta.lede': "Робить так, що приміщення пахне собою, лише тепліше — сухий кедр на межі сприйняття, ближче до температури, ніж до запаху. Молекула, яку більшість людей носила, не знаючи про це; тут — сама і без парфумування.",
+      'karta.eyebrow_tpl': nr => `${nr} · [СЛОГАН]`, 'karta.title': '[НАЗВА]',
+      'karta.lede': '[ОПИС]', 'karta.prev': 'Попередній продукт', 'karta.next': 'Наступний продукт',
       'spec.stezenie': 'КОНЦЕНТРАЦІЯ', 'spec.stezenie_value': 'у нейтральному носії 0,8 %',
       'spec.dyfuzja': 'ДИФУЗІЯ', 'spec.dyfuzja_value': 'пасивна, без тепла',
       'spec.wielkosc': 'РОЗМІР ПРИМІЩЕННЯ', 'spec.wielkosc_value': 'до 40 м²',
@@ -330,9 +288,9 @@
       'list.lede': 'Одна сполука, пояснена прямо, з причиною, чому це зайняло час. Без пропозицій, без відліку.',
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'ПІДПИСАТИСЯ',
       'list.note': 'БЕЗ ПРОПОЗИЦІЙ. ВІДПИСКА ОДНИМ КЛІКОМ.',
-      'archive.next': 'НАЙБЛИЖЧИЙ ЛИСТ', 'archive.next_value': '08 · Ambrettolide — у дослідженні',
-      'archive.last': 'ОСТАННІЙ', 'archive.last_value': '07 · Timbersilk — чому холод',
-      'archive.archive': 'АРХІВ', 'archive.archive_value': '01—07 · повні нотатки',
+      'archive.next': 'НАЙБЛИЖЧИЙ ЛИСТ', 'archive.next_value': '[НАСТУПНИЙ]',
+      'archive.last': 'ОСТАННІЙ', 'archive.last_value': '086 · Afterlight — [ОПИС]',
+      'archive.archive': 'АРХІВ', 'archive.archive_value': '017—086 · повні нотатки',
       'footer.address': "МОЛЕКУЛЯРНИЙ АРОМАТ ДЛЯ ДОМУ<br>ВАРШАВА · PL<br>НІП 000 000 00 00",
       'footer.pelny_indeks': 'Повний індекс →', 'footer.marka': 'БРЕНД',
       'footer.metoda': 'Метод', 'footer.list': 'Лист', 'footer.refill': 'Посудини й дозаправка',
@@ -353,17 +311,17 @@
       'promo.copy': 'КОПІЮВАТИ', 'promo.copied': 'СКОПІЙОВАНО', 'promo.dismiss': 'Ні, дякую'
     },
     fr: {
-      'nav.indeks': 'INDEX', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE',
+      'nav.indeks': 'INDEX', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE', 'nav.menu': 'MENU', 'menu.produkty': 'CATALOGUE',
       'theme.day': 'JOUR', 'theme.night': 'NUIT', 'cart.label': 'PANIER',
       'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLEAU', 'tab.wykres': '03 · GRAPHIQUE',
-      'hero1.eyebrow': "PARFUM MOLÉCULAIRE D'INTÉRIEUR · SEPT COMPOSÉS",
+      'hero1.eyebrow': "PARFUM MOLÉCULAIRE D'INTÉRIEUR · TROIS COMPOSÉS",
       'hero1.title': "L'air<br>n'est pas<br>vide",
       'hero1.lede': "Une molécule olfactive à la fois, non diluée par une histoire. Pas de note de tête, pas de décantation, pas de jardin à Grasse — un composé diffusé passivement pendant douze semaines.",
       'cta.wybierz': 'CHOISIR UN COMPOSÉ →', 'cta.metoda_dyfuzji': 'MÉTHODE DE DIFFUSION',
       'stat.zwiazkow': "COMPOSÉS DANS L'INDEX", 'stat.stezenie': 'CONCENTRATION', 'stat.pojemnosc': 'VOLUME',
       'stat.czas': 'DURÉE', 'stat.czas_value': '10–14 sem.',
-      'hero2.eyebrow': 'TABLEAU DES COMPOSÉS · 01—07',
-      'hero2.title': 'Sept molécules. Aucune composition.',
+      'hero2.eyebrow': 'TABLEAU DES COMPOSÉS · 017—086',
+      'hero2.title': 'Trois molécules. Aucune composition.',
       'hero2.lede': "Vous choisissez un composé, pas un parfum. Chaque flacon contient une seule molécule, nommée sur l'étiquette avec sa formule.",
       'cta.pelny_indeks': 'INDEX COMPLET →', 'upcoming.copy': "À l'étude.<br>Quatre fois par an.", 'cta.zapisz': "S'ABONNER →",
       'hero3.eyebrow': 'COURBE DE DIFFUSION · MESURE MAISON · 40 M²',
@@ -371,15 +329,15 @@
       'hero3.lede': "Diffusion passive à température ambiante. La molécule quitte le support au rythme que demande la pièce — les pièces plus chaudes se font simplement entendre plus fort.",
       'cta.metoda': 'MÉTHODE', 'wykres.intensywnosc': 'INTENSITÉ / SEMAINE',
       'metric.prog': 'SEUIL', 'metric.zasieg': 'PORTÉE', 'metric.cena': 'PRIX',
-      'indeks.title': 'Index', 'indeks.note': 'SEPT COMPOSÉS · 200 ML CHACUN · PRIX PAR FLACON',
+      'indeks.title': 'Index', 'indeks.note': 'TROIS COMPOSÉS · 200 ML CHACUN · PRIX PAR FLACON',
       'th.nr': 'N°', 'th.zwiazek': 'COMPOSÉ', 'th.wzor': 'FORMULE', 'th.mw': 'M [G/MOL]',
       'th.charakter': 'CARACTÈRE', 'th.intensywnosc': 'INTENSITÉ', 'th.tyg': 'SEM.', 'th.cena': 'PRIX',
       'index.foot1': 'INTENSITÉ MESURÉE À 0,8 % DANS UN SUPPORT NEUTRE, 22 °C',
       'index.foot2': 'LIVRAISON 1–3 JOURS OUVRÉS · PL / UE',
       'karta.image_tag': 'PHOTO PRODUIT — FLACON, 4:5',
       'karta.thumb.etykieta': 'ÉTIQUETTE', 'karta.thumb.nosnik': 'SUPPORT', 'karta.thumb.wnetrze': 'INTÉRIEUR', 'karta.thumb.detal': 'DÉTAIL',
-      'karta.eyebrow': '01 · LE DISCRET', 'karta.title': 'Ne sent rien.',
-      'karta.lede': "Fait sentir la pièce elle-même, en plus chaud — cèdre sec à la limite de la perception, plus proche de la température que de l'odeur. La molécule que la plupart des gens ont portée sans le savoir ; ici, seule et sans parfum.",
+      'karta.eyebrow_tpl': nr => `${nr} · [SLOGAN]`, 'karta.title': '[TITRE]',
+      'karta.lede': '[DESCRIPTION]', 'karta.prev': 'Produit précédent', 'karta.next': 'Produit suivant',
       'spec.stezenie': 'CONCENTRATION', 'spec.stezenie_value': 'dans un support neutre 0,8 %',
       'spec.dyfuzja': 'DIFFUSION', 'spec.dyfuzja_value': 'passive, sans chaleur',
       'spec.wielkosc': 'TAILLE DE LA PIÈCE', 'spec.wielkosc_value': "jusqu'à 40 m²",
@@ -401,9 +359,9 @@
       'list.lede': "Un composé expliqué simplement, avec la raison pour laquelle cela a pris du temps. Pas d'offres, pas de compte à rebours.",
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': "S'ABONNER",
       'list.note': "PAS D'OFFRES. DÉSABONNEMENT EN UN CLIC.",
-      'archive.next': 'PROCHAINE LETTRE', 'archive.next_value': "08 · Ambrettolide — à l'étude",
-      'archive.last': 'DERNIÈRE', 'archive.last_value': '07 · Timbersilk — pourquoi le froid',
-      'archive.archive': 'ARCHIVES', 'archive.archive_value': '01—07 · notes complètes',
+      'archive.next': 'PROCHAINE LETTRE', 'archive.next_value': '[SUIVANT]',
+      'archive.last': 'DERNIÈRE', 'archive.last_value': '086 · Afterlight — [DESCRIPTION]',
+      'archive.archive': 'ARCHIVES', 'archive.archive_value': '017—086 · notes complètes',
       'footer.address': "PARFUM MOLÉCULAIRE D'INTÉRIEUR<br>VARSOVIE · PL<br>TVA 000 000 00 00",
       'footer.pelny_indeks': 'Index complet →', 'footer.marka': 'MARQUE',
       'footer.metoda': 'Méthode', 'footer.list': 'Lettre', 'footer.refill': 'Flacons et recharges',
@@ -427,6 +385,8 @@
 
   const LANGS = ['pl', 'en', 'es', 'uk', 'fr'];
   let currentLang = 'pl';
+
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function t(key) {
     const dict = I18N[currentLang] || I18N.pl;
@@ -578,7 +538,7 @@
 
   const REVEAL_SELECTOR = [
     '.brand', '.main-nav a', '.cart-btn',
-    '.eyebrow', '.hero-title', '.hero-lede', '.hero-ctas',
+    '.eyebrow', '.hero-lede', '.hero-ctas',
     '.section-title', '.karta-title', '.list-title',
     '.stat', '.hero-strip-cell',
     '.section-note', '.index-row--body', '.index-foot > span',
@@ -639,6 +599,62 @@
     return true;
   }
 
+  // Same per-letter split as wrapChars(), but also wraps each <br>-delimited
+  // line in its own block so flexbox (not text-align) centers it — the only
+  // way a line wider than the viewport still overflows evenly on both sides
+  // instead of hanging off just the right edge.
+  function buildHeroTitleLines(el) {
+    const nodes = Array.from(el.childNodes);
+    let i = 0;
+    const linesFrag = document.createDocumentFragment();
+    let line = document.createElement('span');
+    line.className = 'hero-title-line';
+    function flushLine() {
+      linesFrag.appendChild(line);
+      line = document.createElement('span');
+      line.className = 'hero-title-line';
+    }
+    nodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'BR') {
+        flushLine();
+        return;
+      }
+      if (node.nodeType !== Node.TEXT_NODE) return;
+      node.textContent.split(/(\s+)/).forEach(chunk => {
+        if (chunk === '') return;
+        if (/^\s+$/.test(chunk)) {
+          line.appendChild(document.createTextNode(chunk));
+          return;
+        }
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'word';
+        Array.from(chunk).forEach(ch => {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'char';
+          charSpan.style.setProperty('--i', i++);
+          charSpan.textContent = ch;
+          wordSpan.appendChild(charSpan);
+        });
+        line.appendChild(wordSpan);
+      });
+    });
+    flushLine();
+    el.innerHTML = '';
+    el.appendChild(linesFrag);
+  }
+
+  function renderHeroTitleKinetic() {
+    document.querySelectorAll('.hero-type .hero-title').forEach(el => {
+      buildHeroTitleLines(el);
+      el.classList.add('reveal-chars');
+      if (!el.dataset.revealObserved) {
+        el.dataset.revealObserved = '1';
+        if (revealObserver) revealObserver.observe(el);
+        else el.classList.add('is-visible');
+      }
+    });
+  }
+
   function applyReveal(root = document) {
     const groupIndex = new Map();
     root.querySelectorAll(REVEAL_SELECTOR).forEach(el => {
@@ -673,11 +689,12 @@
   function loadCart() {
     try {
       const raw = localStorage.getItem(CART_STORAGE_KEY);
-      if (raw === null) return [{ nr: '01', qty: 1 }];
+      if (raw === null) return [];
       const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
+      const cart = Array.isArray(parsed) ? parsed : [];
+      return cart.filter(item => productByNr(item.nr));
     } catch (e) {
-      return [{ nr: '01', qty: 1 }];
+      return [];
     }
   }
 
@@ -689,8 +706,30 @@
     cart: loadCart(),
     cartOpen: false,
     heroQty: 1,
-    subscribed: false
+    subscribed: false,
+    kartaIndex: 0
   };
+
+  function initHoverOpen(toggleEl, drawerEl, setOpen) {
+    let closeTimer = null;
+    function openNow() {
+      window.clearTimeout(closeTimer);
+      setOpen(true);
+    }
+    function closeSoon() {
+      window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => setOpen(false), 200);
+    }
+    toggleEl.addEventListener('mouseenter', openNow);
+    toggleEl.addEventListener('mouseleave', closeSoon);
+    drawerEl.addEventListener('mouseenter', openNow);
+    drawerEl.addEventListener('mouseleave', closeSoon);
+  }
+
+  function initCartHover() {
+    if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    initHoverOpen(document.getElementById('cart-toggle'), document.querySelector('.cart-drawer'), toggleCart);
+  }
 
   // ---------- one-time render of static-per-load lists ----------
 
@@ -718,7 +757,7 @@
           <div class="intensity-track"><div class="intensity-fill" data-width="${p.intensity}%"></div></div>
         </div>
         <div class="cell-weeks mono ta-r">${p.weeks}</div>
-        <div class="cell-price mono ta-r">${p.price} zł</div>
+        <div class="cell-price mono ta-r">${formatPrice(p.price)}</div>
         <div class="index-add-cell">
           <button type="button" class="index-add-btn mono" data-add="${p.nr}">${t('add_btn')}</button>
         </div>
@@ -744,6 +783,100 @@
     });
   }
 
+  // ---------- karta carousel ----------
+  // A looping slider: the photo card physically slides sideways between
+  // products, with a duplicated first/last slide at each end so stepping
+  // past the last (or before the first) product keeps sliding the same
+  // direction instead of snapping backwards; once that step's transition
+  // ends, the track is silently reset onto the matching real slide.
+
+  const KARTA_AUTOPLAY_MS = 5500;
+  let kartaTimer = null;
+  let kartaPos = 1; // 0 = clone of last, 1..n = real slides, n+1 = clone of first
+
+  function renderKartaSlides() {
+    const el = document.getElementById('karta-slides');
+    const slide = p => `
+      <div class="karta-slide" data-nr="${p.nr}">
+        <img class="karta-photo" data-src="assets/products/${p.nr}.jpg" alt="${p.name}">
+        <div class="karta-image-top mono"><span>${p.formula} · ${p.nr}</span><span>200 ML</span></div>
+        <div class="karta-image-bottom">
+          <div class="karta-image-tag mono" data-i18n="karta.image_tag">${t('karta.image_tag')}</div>
+          <div class="karta-brand">VAIREM</div>
+          <div class="karta-name">${p.name}</div>
+        </div>
+      </div>
+    `;
+    el.innerHTML = slide(PRODUCTS[PRODUCTS.length - 1]) + PRODUCTS.map(slide).join('') + slide(PRODUCTS[0]);
+    initProductPhotos(el);
+    kartaPos = state.kartaIndex + 1;
+    el.style.transition = 'none';
+    el.style.transform = `translateX(-${kartaPos * 100}%)`;
+    void el.offsetWidth;
+    el.style.transition = '';
+  }
+
+  function renderKartaDots() {
+    const el = document.getElementById('karta-dots');
+    el.innerHTML = PRODUCTS.map((p, i) => `
+      <button type="button" class="karta-dot" data-index="${i}" role="tab" aria-label="${p.nr} ${p.name}"></button>
+    `).join('');
+  }
+
+  function updateKartaChrome() {
+    const p = PRODUCTS[state.kartaIndex];
+    document.getElementById('karta-eyebrow').textContent = t('karta.eyebrow_tpl')(p.nr);
+    document.getElementById('karta-prev').setAttribute('aria-label', t('karta.prev'));
+    document.getElementById('karta-next').setAttribute('aria-label', t('karta.next'));
+    document.querySelectorAll('#karta-dots .karta-dot').forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === state.kartaIndex);
+      dot.setAttribute('aria-selected', i === state.kartaIndex ? 'true' : 'false');
+    });
+  }
+
+  function moveKartaTo(pos) {
+    const n = PRODUCTS.length;
+    kartaPos = pos;
+    state.kartaIndex = ((pos - 1) % n + n) % n;
+    document.getElementById('karta-slides').style.transform = `translateX(-${kartaPos * 100}%)`;
+    updateKartaChrome();
+  }
+
+  function snapKartaPos() {
+    const n = PRODUCTS.length;
+    if (kartaPos !== 0 && kartaPos !== n + 1) return;
+    kartaPos = kartaPos === 0 ? n : 1;
+    const track = document.getElementById('karta-slides');
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-${kartaPos * 100}%)`;
+    void track.offsetWidth;
+    track.style.transition = '';
+  }
+
+  function stepKarta(dir) {
+    moveKartaTo(kartaPos + dir);
+    if (prefersReducedMotion) snapKartaPos();
+  }
+
+  function jumpKartaTo(index) {
+    moveKartaTo(index + 1);
+  }
+
+  function stopKartaAutoplay() {
+    if (kartaTimer) { window.clearInterval(kartaTimer); kartaTimer = null; }
+  }
+
+  function startKartaAutoplay() {
+    stopKartaAutoplay();
+    if (prefersReducedMotion || document.hidden) return;
+    kartaTimer = window.setInterval(() => stepKarta(1), KARTA_AUTOPLAY_MS);
+  }
+
+  function userKartaNav(fn) {
+    fn();
+    startKartaAutoplay();
+  }
+
   // ---------- cart ----------
 
   function addToCart(nr, qty) {
@@ -766,7 +899,10 @@
   }
 
   function cartTotal() {
-    return state.cart.reduce((sum, i) => sum + productByNr(i.nr).price * i.qty, 0);
+    return state.cart.reduce((sum, i) => {
+      const p = productByNr(i.nr);
+      return p ? sum + p.price * i.qty : sum;
+    }, 0);
   }
 
   function toggleCart(open) {
@@ -778,13 +914,14 @@
     const count = cartCount();
     document.getElementById('cart-badge').textContent = String(count);
     document.getElementById('cart-drawer-title').textContent = t('cart.title_tpl')(count);
-    document.getElementById('cart-total').textContent = `${cartTotal()} zł`;
+    document.getElementById('cart-total').textContent = formatPrice(cartTotal());
 
     const itemsEl = document.getElementById('cart-items');
-    if (state.cart.length === 0) {
+    const knownItems = state.cart.filter(item => productByNr(item.nr));
+    if (knownItems.length === 0) {
       itemsEl.innerHTML = `<div class="cart-empty mono">${t('cart.empty')}</div>`;
     } else {
-      itemsEl.innerHTML = state.cart.map(item => {
+      itemsEl.innerHTML = knownItems.map(item => {
         const p = productByNr(item.nr);
         return `
           <div class="cart-item" data-nr="${p.nr}">
@@ -795,7 +932,7 @@
               <div class="cart-item-qty mono">200 ml · ${item.qty} ×</div>
               <button type="button" class="cart-item-remove mono" data-remove="${p.nr}">${t('cart.remove')}</button>
             </div>
-            <div class="cart-item-price mono">${p.price * item.qty} zł</div>
+            <div class="cart-item-price mono">${formatPrice(p.price * item.qty)}</div>
           </div>
         `;
       }).join('');
@@ -814,6 +951,108 @@
   function setHeroQty(qty) {
     state.heroQty = Math.max(1, qty);
     document.getElementById('qty-value').textContent = String(state.heroQty);
+  }
+
+  // ---------- optional media slots (video/photos), no-op until the files exist ----------
+
+  function initHeroVideo() {
+    const video = document.querySelector('.hero-video');
+    if (!video || !video.dataset.src) return;
+    video.addEventListener('loadeddata', () => {
+      video.classList.add('is-loaded');
+      video.play().catch(() => {});
+    });
+    video.src = video.dataset.src;
+    video.load();
+  }
+
+  function initProductPhotos(root = document) {
+    root.querySelectorAll('.karta-photo[data-src]').forEach(img => {
+      const probe = new Image();
+      probe.onload = () => {
+        img.src = img.dataset.src;
+        img.classList.add('is-loaded');
+      };
+      probe.src = img.dataset.src;
+    });
+  }
+
+  // ---------- hero kinetic type (oversized title, scroll-driven deform/parallax) ----------
+  // The title's ghost echoes (.hero-title--echo-1/2) start from a static
+  // offset baked into CSS. With motion allowed, this drives that offset
+  // further from the same baseline as scroll progress through the hero
+  // grows, so there's no jump when the loop takes over; the real title and
+  // the hero background layer get their own, different parallax rates.
+
+  function initHeroKineticType() {
+    const heroRegion = document.getElementById('hero-region');
+    const heroType = document.getElementById('hero-type');
+    if (!heroRegion || !heroType || prefersReducedMotion) return;
+
+    const echo1 = heroType.querySelector('.hero-title--echo-1');
+    const echo2 = heroType.querySelector('.hero-title--echo-2');
+    const realTitle = heroType.querySelector('.hero-title:not(.hero-title--echo)');
+    const heroBgLayer = heroRegion.querySelector('.hero-bg');
+
+    let rafId = null;
+
+    function update() {
+      const rect = heroRegion.getBoundingClientRect();
+      const total = rect.height || 1;
+      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+      const progress = scrolled / total;
+      const shift = progress * 34;
+
+      if (echo1) {
+        echo1.style.transform =
+          `translate(${(-6 - shift * 0.6).toFixed(1)}px, ${(4 + shift * 0.3).toFixed(1)}px) scaleY(${(1.04 + progress * 0.9).toFixed(3)})`;
+      }
+      if (echo2) {
+        echo2.style.transform =
+          `translate(${(10 + shift).toFixed(1)}px, ${(-6 - shift * 0.4).toFixed(1)}px) scaleY(${(1.12 + progress * 1.6).toFixed(3)})`;
+      }
+      if (realTitle) {
+        realTitle.style.transform = `translateY(${(progress * -46).toFixed(1)}px) scale(${(1 - progress * 0.12).toFixed(3)})`;
+      }
+      heroType.style.opacity = (1 - progress * 0.85).toFixed(3);
+      if (heroBgLayer) {
+        heroBgLayer.style.transform = `translateX(-50%) translateY(${(progress * 60).toFixed(1)}px)`;
+      }
+
+      rafId = requestAnimationFrame(update);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      } else if (!document.hidden && !rafId) {
+        rafId = requestAnimationFrame(update);
+      }
+    });
+    rafId = requestAnimationFrame(update);
+  }
+
+  // ---------- vertical section nav (scrollspy) ----------
+
+  function initSideIndex() {
+    const nav = document.querySelector('.side-index');
+    if (!nav || !('IntersectionObserver' in window)) return;
+
+    const links = Array.from(nav.querySelectorAll('a[data-target]'));
+    const sections = links
+      .map(a => document.getElementById(a.dataset.target))
+      .filter(Boolean);
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const link = nav.querySelector(`a[data-target="${entry.target.id}"]`);
+        if (link) link.classList.toggle('is-active', entry.isIntersecting);
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+
+    sections.forEach(section => observer.observe(section));
   }
 
   // ---------- day / night theme ----------
@@ -875,7 +1114,9 @@
 
   function refreshDynamicContent() {
     renderIndexRows();
+    updateKartaChrome();
     renderCart();
+    renderHeroTitleKinetic();
     applyReveal();
     applyIntensityBars();
     refreshThemeLabel();
@@ -1016,9 +1257,14 @@
   // ---------- wire up ----------
 
   function init() {
+    saveCart();
     renderHeroDatasheetRows();
     renderIndexRows();
+    renderKartaSlides();
+    renderKartaDots();
+    updateKartaChrome();
     renderCart();
+    renderHeroTitleKinetic();
     applyReveal();
     applyIntensityBars();
     initMoleculeField(document.getElementById('molecule-canvas'));
@@ -1026,6 +1272,10 @@
     initLangSwitcher();
     initCookieBanner();
     initPromoPopup();
+    initSideIndex();
+    initHeroVideo();
+    initProductPhotos();
+    initHeroKineticType();
 
     document.getElementById('index-rows').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');
@@ -1035,11 +1285,37 @@
 
     document.getElementById('qty-dec').addEventListener('click', () => setHeroQty(state.heroQty - 1));
     document.getElementById('qty-inc').addEventListener('click', () => setHeroQty(state.heroQty + 1));
-    document.getElementById('add-hero').addEventListener('click', () => addToCart('01', state.heroQty));
+    document.getElementById('add-hero').addEventListener('click', () => addToCart(PRODUCTS[state.kartaIndex].nr, state.heroQty));
 
-    document.getElementById('cart-toggle').addEventListener('click', () => toggleCart());
+    document.getElementById('karta-slides').addEventListener('transitionend', e => {
+      if (e.target === e.currentTarget && e.propertyName === 'transform') snapKartaPos();
+    });
+
+    document.getElementById('karta-prev').addEventListener('click', () => userKartaNav(() => stepKarta(-1)));
+    document.getElementById('karta-next').addEventListener('click', () => userKartaNav(() => stepKarta(1)));
+    document.getElementById('karta-dots').addEventListener('click', e => {
+      const btn = e.target.closest('[data-index]');
+      if (!btn) return;
+      userKartaNav(() => jumpKartaTo(Number(btn.dataset.index)));
+    });
+
+    document.querySelectorAll('[data-karta-index]').forEach(a => {
+      a.addEventListener('click', () => userKartaNav(() => jumpKartaTo(Number(a.dataset.kartaIndex))));
+    });
+
+    const kartaImage = document.getElementById('karta-image');
+    kartaImage.addEventListener('mouseenter', stopKartaAutoplay);
+    kartaImage.addEventListener('mouseleave', startKartaAutoplay);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopKartaAutoplay(); else startKartaAutoplay();
+    });
+    startKartaAutoplay();
+
+    document.getElementById('cart-toggle').addEventListener('click', () => toggleCart(true));
     document.getElementById('cart-close').addEventListener('click', () => toggleCart(false));
     document.getElementById('cart-scrim').addEventListener('click', () => toggleCart(false));
+
+    initCartHover();
 
     document.getElementById('cart-items').addEventListener('click', e => {
       const btn = e.target.closest('[data-remove]');
