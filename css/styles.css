@@ -90,17 +90,15 @@ body {
 
 /* Background stays pinned to the viewport (its own fixed layer, behind
    everything) while the page's text and panels scroll over it normally.
-   The SVG is one bold bas-relief scene of flowers and birds, filled the
-   same color as the page background — only its light/shadow shading
-   reveals the shapes, like a relief cast from the wall itself. Day and
-   night each need their own copy since an externally-referenced SVG
-   can't read the host page's CSS variables. */
+   Day theme uses the supplied floral bas-relief photo; night theme keeps
+   the generated dark relief SVG so the backdrop still reads correctly
+   against the dark palette. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: var(--bg) url('../assets/img/paper-emboss.svg') no-repeat center center / cover;
+  background: var(--bg) url('../assets/img/bg-floral-relief.jpg') no-repeat center center / cover;
   pointer-events: none;
 }
 [data-theme="night"] body::before {
