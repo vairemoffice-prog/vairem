@@ -405,8 +405,8 @@
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const DOT_COLOR_NIGHT = '#5B6572';
-    const DOT_COLOR_DAY = '#525A65';
+    const DOT_COLOR_NIGHT = '#6B5A47';
+    const DOT_COLOR_DAY = '#55483D';
     const currentDotColor = () => (
       document.documentElement.getAttribute('data-theme') === 'night' ? DOT_COLOR_NIGHT : DOT_COLOR_DAY
     );
