@@ -9,9 +9,13 @@
          diffuse-lighting pass (multiplied over the flat fill so the whole
          surface reads as sculpted, not just its edges), a soft specular
          sheen on the raised side, and a dropped shadow on the recessed
-         side — closer to real cast plaster than a flat silhouette. -->
+         side — closer to real cast plaster than a flat silhouette. The
+         full-strength relief is computed first, then crossfaded down to a
+         faint trace over the flat, exact-background-color source (the
+         last feComposite) so flat/interior areas stay exactly on the
+         page's background color and only a whisper of shading survives. -->
     <filter id="relief" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="5" dy="7" stdDeviation="6" flood-color="#241f16" flood-opacity="0.3" result="shadow"/>
+      <feDropShadow dx="4" dy="6" stdDeviation="5" flood-color="#241f16" flood-opacity="0.32" result="shadow"/>
 
       <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
 
@@ -31,10 +35,12 @@
         <feMergeNode in="specClipped"/>
       </feMerge>
 
-      <feMerge>
+      <feMerge result="fullRelief">
         <feMergeNode in="shadow"/>
         <feMergeNode in="litShape"/>
       </feMerge>
+
+      <feComposite in="fullRelief" in2="SourceGraphic" operator="arithmetic" k1="0" k2="0.18" k3="0.82" k4="0"/>
     </filter>
 
     <g id="mo-flower">
