@@ -6,6 +6,7 @@
 
 :root {
   --bg-scroll-progress: 0;
+  --bg-parallax-y: 0px;
   --bg: #DCEBFA;
   --text: #525A65;
   --text-hover: #6C7C88;
@@ -90,15 +91,16 @@ body {
 }
 
 /* Background stays pinned to the viewport (its own fixed layer, behind
-   everything) while the page's text and panels scroll over it normally
-   — but it also visibly drifts downward as the page scrolls down (and
-   back up as it scrolls back up), so it reads as moving along with the
-   content, just independently/slower. Fades out and zooms in slightly
-   at the same time (flowers "closing", birds "flying off"). Driven by
-   --bg-scroll-progress (0 at the top, 1 at the bottom) set from
-   js/app.js. The drift is in vh so it scales with viewport height, and
-   the zoom (16vh of bleed) is kept comfortably larger than the drift
-   (6vh) so the scaled-up photo never reveals its edges. */
+   everything) but gets a real parallax drift: --bg-parallax-y tracks
+   raw scroll pixels at a fraction of scroll speed (capped), so the
+   background visibly lags behind the foreground content instead of
+   scrolling 1:1 with it — independent motion, not locked together.
+   Separately, it fades out and zooms in as the page scrolls down
+   (flowers "closing", birds "flying off"), driven by
+   --bg-scroll-progress (0 at the top, 1 at the bottom). Both custom
+   properties are set from js/app.js. The base 18% scale (plus up to 5%
+   more by page bottom) keeps the photo's bleed comfortably larger than
+   the parallax cap so its edges never show. */
 body::before {
   content: '';
   position: fixed;
@@ -106,8 +108,8 @@ body::before {
   z-index: -1;
   background: var(--bg) url('../assets/img/bg-floral-relief.jpg') no-repeat center center / cover;
   opacity: calc(1 - var(--bg-scroll-progress) * 0.78);
-  transform: scale(calc(1 + var(--bg-scroll-progress) * 0.16)) translateY(calc(var(--bg-scroll-progress) * 6vh));
-  transition: opacity 0.18s linear, transform 0.18s linear;
+  transform: scale(calc(1.18 + var(--bg-scroll-progress) * 0.05)) translateY(var(--bg-parallax-y));
+  transition: opacity 0.18s linear, transform 0.1s linear;
   pointer-events: none;
 }
 [data-theme="night"] body::before {
