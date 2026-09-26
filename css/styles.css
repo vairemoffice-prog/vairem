@@ -80,6 +80,7 @@ html, body {
   margin: 0;
   padding: 0;
   background: var(--bg);
+  overflow-x: hidden;
 }
 
 body {
