@@ -433,6 +433,9 @@ button { font-family: inherit; }
   left: 50%;
   width: 100vw;
   transform: translateX(-50%);
+  background: #B8CBDA; /* sampled from bg-floral-relief.jpg so the mask blends with the photo instead of the flatter --bg hex */
+}
+[data-theme="night"] .hero-copy-top {
   background: var(--bg);
 }
 .hero-copy-top .molecule-canvas {
