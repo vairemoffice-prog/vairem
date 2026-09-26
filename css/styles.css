@@ -101,29 +101,43 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Background stays pinned to the viewport (its own fixed layer, behind
-   everything) but gets a real parallax drift: --bg-parallax-y tracks
-   raw scroll pixels at a fraction of scroll speed (capped), so the
-   background visibly lags behind the foreground content instead of
-   scrolling 1:1 with it — independent motion, not locked together.
-   Separately, it fades out and zooms in as the page scrolls down
-   (flowers "closing", birds "flying off"), driven by
-   --bg-scroll-progress (0 at the top, 1 at the bottom). Both custom
-   properties are set from js/app.js. The base 18% scale (plus up to 5%
-   more by page bottom) keeps the photo's bleed comfortably larger than
-   the parallax cap so its edges never show. */
+/* Background is split into two fixed, viewport-pinned layers so the
+   page's base color stays one solid, unchanging fill everywhere —
+   including at the bottom of the page — while the photo/relief texture
+   on top does its own scroll-driven animation independently.
+
+   1) body::before: the solid --bg fill. Always fully opaque, at every
+      scroll position, so the page never reads as a different color at
+      the bottom than at the top.
+   2) body::after: the photo/relief texture. Gets a real parallax drift
+      (--bg-parallax-y tracks raw scroll pixels at a fraction of scroll
+      speed, capped, so it visibly lags behind the foreground content)
+      and fades out / zooms in as the page scrolls down (flowers
+      "closing", birds "flying off"), driven by --bg-scroll-progress
+      (0 at the top, 1 at the bottom). Both custom properties are set
+      from js/app.js. The base 18% scale (plus up to 5% more by page
+      bottom) keeps the photo's bleed comfortably larger than the
+      parallax cap so its edges never show. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
+  z-index: -2;
+  background: var(--bg);
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
   z-index: -1;
-  background: var(--bg) url('../assets/img/bg-floral-relief.jpg') no-repeat center center / cover;
+  background: url('../assets/img/bg-floral-relief.jpg') no-repeat center center / cover;
   opacity: calc(1 - var(--bg-scroll-progress) * 0.78);
   transform: scale(calc(1.18 + var(--bg-scroll-progress) * 0.05)) translateY(var(--bg-parallax-y));
   transition: opacity 0.18s linear, transform 0.1s linear;
   pointer-events: none;
 }
-[data-theme="night"] body::before {
+[data-theme="night"] body::after {
   background-image: url('../assets/img/paper-emboss-night.svg');
 }
 
