@@ -326,37 +326,24 @@ button { font-family: inherit; }
 .hero-title:not(.hero-title--echo) { position: relative; z-index: 1; color: #000; }
 [data-theme="night"] .hero-title:not(.hero-title--echo) { color: #fff; }
 
-/* One letter in the hero title periodically does a 3D flip-clock style
-   rotation: "i" turns into "e" for a moment, then flips back to "i". The
-   real letter is the front face; a pre-rotated ::after pseudo-element
-   carrying the alternate letter is the back face, both hidden on their
-   reverse side so only one is ever legible at a time. */
+/* One letter in the hero title periodically runs through a mechanical
+   "flip counter" / split-flap cascade (like an airport board settling on
+   a value): a handful of quick flap-flips through other letters, landing
+   back on the real one. Driven by initHeroFlipCounter() in js/app.js,
+   which toggles these classes and swaps the letter's text between flaps —
+   CSS alone can't hold more than two legible faces per element, so a real
+   multi-step cascade needs the JS to drive each step. */
 .hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word {
   perspective: 400px;
 }
-.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4) {
-  position: relative;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  animation: hero-letter-flip 7s ease-in-out 3s infinite;
+.hero-flip-letter {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  transition: transform 0.16s ease-in;
 }
-.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4)::after {
-  content: "e";
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  transform: rotateX(180deg);
-}
-@keyframes hero-letter-flip {
-  0%, 55% { transform: rotateX(0deg); }
-  65%, 74% { transform: rotateX(180deg); }
-  84%, 100% { transform: rotateX(360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4) {
-    animation: none;
-  }
-}
+.hero-flip-letter.is-flap-out { transform: rotateX(-90deg); }
+.hero-flip-letter.is-flap-in-start { transition: none; transform: rotateX(90deg); }
+.hero-flip-letter.is-flap-in { transition: transform 0.18s ease-out; transform: rotateX(0deg); }
 
 /* Ghost duplicates of the title: stretched/offset copies that read as an
    echo/trail behind the real text, and as a scroll-driven deformation once

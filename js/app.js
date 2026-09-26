@@ -977,6 +977,59 @@
     });
   }
 
+  // ---------- hero flip counter (one letter cycles like a split-flap board) ----------
+  // Runs a short mechanical "flap" cascade through a few stand-in letters,
+  // landing back on the real one, then pauses before repeating. Each flap
+  // is a two-phase rotateX: fold away to 90deg (letter hidden edge-on),
+  // swap the text instantly while still hidden, snap to the opposite
+  // 90deg with no transition, then unfold back to 0deg revealing the new
+  // letter — the standard flip-clock technique. CSS alone can only hold
+  // two legible faces per element, so a real multi-step cascade needs JS
+  // driving each step's text swap.
+  function initHeroFlipCounter() {
+    if (prefersReducedMotion) return;
+    const el = document.querySelector(
+      '.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(5)'
+    );
+    if (!el || el.textContent !== 'e') return;
+    el.classList.add('hero-flip-letter');
+
+    const sequence = ['o', 'a', 'u', 'e'];
+    const flapOutMs = 160;
+    const flapInMs = 180;
+    const pauseBetweenFlaps = 90;
+    const restMs = 6000;
+    let timer = null;
+
+    function flapTo(letter, done) {
+      el.classList.add('is-flap-out');
+      timer = setTimeout(() => {
+        el.textContent = letter;
+        el.classList.remove('is-flap-out');
+        el.classList.add('is-flap-in-start');
+        void el.offsetWidth; // force reflow so the 90deg start is committed before transitioning
+        el.classList.remove('is-flap-in-start');
+        el.classList.add('is-flap-in');
+        timer = setTimeout(() => {
+          el.classList.remove('is-flap-in');
+          done();
+        }, flapInMs);
+      }, flapOutMs);
+    }
+
+    function runCycle(i) {
+      if (i >= sequence.length) {
+        timer = setTimeout(() => runCycle(0), restMs);
+        return;
+      }
+      flapTo(sequence[i], () => {
+        timer = setTimeout(() => runCycle(i + 1), pauseBetweenFlaps);
+      });
+    }
+
+    timer = setTimeout(() => runCycle(0), 3000);
+  }
+
   // ---------- hero kinetic type (oversized title, scroll-driven deform/parallax) ----------
   // The title's ghost echoes (.hero-title--echo-1/2) start from a static
   // offset baked into CSS. With motion allowed, this drives that offset
@@ -1276,6 +1329,7 @@
     initHeroVideo();
     initProductPhotos();
     initHeroKineticType();
+    initHeroFlipCounter();
 
     document.getElementById('index-rows').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');
