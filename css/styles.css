@@ -1243,7 +1243,7 @@ button { font-family: inherit; }
   display: block;
   width: 22px;
   height: 22px;
-  background: var(--green-deep);
+  background: var(--pink-deep);
   clip-path: polygon(0 0, 0 70%, 27% 55%, 43% 88%, 58% 80%, 42% 48%, 74% 48%);
   transform: scaleX(-1);
   transform-origin: 0 0;
@@ -1251,6 +1251,6 @@ button { font-family: inherit; }
 }
 .fx-cursor--hover .fx-cursor-arrow {
   transform: scaleX(-1) scale(1.7);
-  background: var(--green-deep-hover);
+  background: var(--pink-deep-hover);
 }
 
