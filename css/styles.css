@@ -326,17 +326,31 @@ button { font-family: inherit; }
 .hero-title:not(.hero-title--echo) { position: relative; z-index: 1; color: #000; }
 [data-theme="night"] .hero-title:not(.hero-title--echo) { color: #fff; }
 
-/* One letter in the hero title periodically tips over onto its side and
-   rights itself again — a small, ambient wink, not a permanent state. */
-.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4) {
-  transform-origin: 100% 100%;
-  animation: hero-letter-tip 7s ease-in-out 3s infinite;
+/* One letter in the hero title periodically does a 3D flip-clock style
+   rotation: "i" turns into "e" for a moment, then flips back to "i". The
+   real letter is the front face; a pre-rotated ::after pseudo-element
+   carrying the alternate letter is the back face, both hidden on their
+   reverse side so only one is ever legible at a time. */
+.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word {
+  perspective: 400px;
 }
-@keyframes hero-letter-tip {
-  0%, 55% { transform: rotate(0deg); }
-  62% { transform: rotate(80deg); }
-  74% { transform: rotate(80deg); }
-  84%, 100% { transform: rotate(0deg); }
+.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4) {
+  position: relative;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation: hero-letter-flip 7s ease-in-out 3s infinite;
+}
+.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4)::after {
+  content: "e";
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  transform: rotateX(180deg);
+}
+@keyframes hero-letter-flip {
+  0%, 55% { transform: rotateX(0deg); }
+  65%, 74% { transform: rotateX(180deg); }
+  84%, 100% { transform: rotateX(360deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word .char:nth-child(4) {
