@@ -326,25 +326,6 @@ button { font-family: inherit; }
 .hero-title:not(.hero-title--echo) { position: relative; z-index: 1; color: #000; }
 [data-theme="night"] .hero-title:not(.hero-title--echo) { color: #fff; }
 
-/* One letter in the hero title periodically runs through a mechanical
-   "flip counter" / split-flap cascade (like an airport board settling on
-   a value): a handful of quick flap-flips through other letters, landing
-   back on the real one. Driven by initHeroFlipCounter() in js/app.js,
-   which toggles these classes and swaps the letter's text between flaps —
-   CSS alone can't hold more than two legible faces per element, so a real
-   multi-step cascade needs the JS to drive each step. */
-.hero-title:not(.hero-title--echo) .hero-title-line:first-of-type .word {
-  perspective: 400px;
-}
-.hero-flip-letter {
-  display: inline-block;
-  transform-origin: 50% 50%;
-  transition: transform 0.035s ease-in;
-}
-.hero-flip-letter.is-flap-out { transform: rotateX(-90deg); }
-.hero-flip-letter.is-flap-in-start { transition: none; transform: rotateX(90deg); }
-.hero-flip-letter.is-flap-in { transition: transform 0.04s ease-out; transform: rotateX(0deg); }
-
 /* Ghost duplicates of the title: stretched/offset copies that read as an
    echo/trail behind the real text, and as a scroll-driven deformation once
    initHeroKineticType() takes over their transform in js/app.js. */
