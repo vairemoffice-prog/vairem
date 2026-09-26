@@ -276,7 +276,7 @@ button { font-family: inherit; }
   width: auto;
   flex-shrink: 0;
 }
-[data-theme="night"] .brand-signature { filter: invert(1); }
+[data-theme="night"] .brand-signature { content: url('../assets/img/logo-vairem-signature-night.png'); }
 .footer-brand-lockup { display: flex; align-items: center; gap: 10px; }
 
 .main-nav {
