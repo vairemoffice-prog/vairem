@@ -5,6 +5,7 @@
    ========================================================================== */
 
 :root {
+  --bg-scroll-progress: 0;
   --bg: #DCEBFA;
   --text: #525A65;
   --text-hover: #6C7C88;
@@ -92,13 +93,19 @@ body {
    everything) while the page's text and panels scroll over it normally.
    Day theme uses the supplied floral bas-relief photo; night theme keeps
    the generated dark relief SVG so the backdrop still reads correctly
-   against the dark palette. */
+   against the dark palette. Fades out and zooms in slightly as the page
+   scrolls down (flowers "closing", birds "flying off"), driven by
+   --bg-scroll-progress (0 at the top, 1 at the bottom) set from
+   js/app.js, and eases back as the page scrolls back up. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   background: var(--bg) url('../assets/img/bg-floral-relief.jpg') no-repeat center center / cover;
+  opacity: calc(1 - var(--bg-scroll-progress) * 0.78);
+  transform: scale(calc(1 + var(--bg-scroll-progress) * 0.07));
+  transition: opacity 0.18s linear, transform 0.18s linear;
   pointer-events: none;
 }
 [data-theme="night"] body::before {
