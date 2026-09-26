@@ -90,9 +90,11 @@ body {
 
 /* Background stays pinned to the viewport (its own fixed layer, behind
    everything) while the page's text and panels scroll over it normally.
-   The SVG is one bold bas-relief scene of flowers and birds (soft
-   directional shading via an SVG lighting filter, not a flat tiled
-   icon), scaled to cover the viewport like a sculpted backdrop. */
+   The SVG is one bold bas-relief scene of flowers and birds, filled the
+   same color as the page background — only its light/shadow shading
+   reveals the shapes, like a relief cast from the wall itself. Day and
+   night each need their own copy since an externally-referenced SVG
+   can't read the host page's CSS variables. */
 body::before {
   content: '';
   position: fixed;
@@ -100,6 +102,9 @@ body::before {
   z-index: -1;
   background: var(--bg) url('../assets/img/paper-emboss.svg') no-repeat center center / cover;
   pointer-events: none;
+}
+[data-theme="night"] body::before {
+  background-image: url('../assets/img/paper-emboss-night.svg');
 }
 
 a { color: var(--text); text-decoration: none; }
