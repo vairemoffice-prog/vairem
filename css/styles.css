@@ -339,11 +339,11 @@ button { font-family: inherit; }
 .hero-flip-letter {
   display: inline-block;
   transform-origin: 50% 50%;
-  transition: transform 0.16s ease-in;
+  transition: transform 0.035s ease-in;
 }
 .hero-flip-letter.is-flap-out { transform: rotateX(-90deg); }
 .hero-flip-letter.is-flap-in-start { transition: none; transform: rotateX(90deg); }
-.hero-flip-letter.is-flap-in { transition: transform 0.18s ease-out; transform: rotateX(0deg); }
+.hero-flip-letter.is-flap-in { transition: transform 0.04s ease-out; transform: rotateX(0deg); }
 
 /* Ghost duplicates of the title: stretched/offset copies that read as an
    echo/trail behind the real text, and as a scroll-driven deformation once

@@ -978,7 +978,7 @@
   }
 
   // ---------- hero flip counter (one letter cycles like a split-flap board) ----------
-  // Runs a short mechanical "flap" cascade through a few stand-in letters,
+  // Runs a fast mechanical "flap" cascade through the alphabet before
   // landing back on the real one, then pauses before repeating. Each flap
   // is a two-phase rotateX: fold away to 90deg (letter hidden edge-on),
   // swap the text instantly while still hidden, snap to the opposite
@@ -994,10 +994,13 @@
     if (!el || el.textContent !== 'e') return;
     el.classList.add('hero-flip-letter');
 
-    const sequence = ['o', 'a', 'u', 'e'];
-    const flapOutMs = 160;
-    const flapInMs = 180;
-    const pauseBetweenFlaps = 90;
+    const sequence = [
+      'a', 'b', 'c', 'd', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+      'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'e',
+    ];
+    const flapOutMs = 35;
+    const flapInMs = 40;
+    const pauseBetweenFlaps = 15;
     const restMs = 6000;
     let timer = null;
 
