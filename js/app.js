@@ -1091,6 +1091,35 @@
     sections.forEach(section => observer.observe(section));
   }
 
+  // ---------- scroll-to-top button ----------
+
+  function initScrollTopButton() {
+    const btn = document.getElementById('scroll-top-btn');
+    if (!btn) return;
+
+    const DURATION = 420;
+
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+    btn.addEventListener('click', () => {
+      const start = window.scrollY;
+      if (start === 0) return;
+
+      if (prefersReducedMotion) {
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      const startTime = performance.now();
+      function step(now) {
+        const progress = Math.min((now - startTime) / DURATION, 1);
+        window.scrollTo(0, start * (1 - easeOutCubic(progress)));
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
   // ---------- day / night theme ----------
 
   function refreshThemeLabel() {
@@ -1312,6 +1341,7 @@
     initCookieBanner();
     initPromoPopup();
     initSideIndex();
+    initScrollTopButton();
     initHeroVideo();
     initProductPhotos();
     initHeroKineticType();
