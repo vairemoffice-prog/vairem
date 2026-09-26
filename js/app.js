@@ -1033,14 +1033,15 @@
     rafId = requestAnimationFrame(update);
   }
 
-  // ---------- background photo: parallax drift with scroll ----------
-  // A real parallax drift — --bg-parallax-y tracks raw scroll pixels at
-  // a fraction of scroll speed (capped), so the background visibly lags
-  // behind the foreground content rather than moving 1:1 with it. The
-  // flowers/birds stay just as visible at the bottom as at the top (no
-  // fade) — only their position drifts. A plain CSS custom property
-  // since body::after (a fixed pseudo-element) can't read scroll
-  // directly.
+  // ---------- background photo: pan through the two scenes + parallax drift ----------
+  // bg-floral-relief.jpg holds two garden scenes stacked vertically.
+  // --bg-scroll-progress (0 at the top of the page, 1 at the bottom)
+  // drives background-position-y in CSS so the first scene shows at the
+  // top of the page and the second at the bottom. Separately,
+  // --bg-parallax-y tracks raw scroll pixels at a fraction of scroll
+  // speed (capped), so the background also visibly lags behind the
+  // foreground content. Both are plain CSS custom properties since
+  // body::after (a fixed pseudo-element) can't read scroll directly.
   function initBackgroundScrollFade() {
     if (prefersReducedMotion) return;
     const root = document.documentElement;
@@ -1050,7 +1051,10 @@
 
     function update() {
       const scrollY = window.scrollY;
+      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
       const parallaxY = Math.min(scrollY * PARALLAX_FACTOR, PARALLAX_MAX_PX);
+      root.style.setProperty('--bg-scroll-progress', progress.toFixed(4));
       root.style.setProperty('--bg-parallax-y', parallaxY.toFixed(1) + 'px');
       ticking = false;
     }
