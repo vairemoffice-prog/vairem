@@ -887,6 +887,40 @@ button { font-family: inherit; }
 .list-form button:hover { background: var(--pink-deep-hover); }
 .list-note { font-size: 10px; letter-spacing: 0.14em; color: var(--newsletter-copy); padding-top: 12px; }
 
+.contact-form {
+  display: grid;
+  gap: 8px;
+  padding-top: 28px;
+  max-width: 460px;
+}
+.contact-form input,
+.contact-form textarea {
+  background: transparent;
+  border: 1px solid var(--dark);
+  color: var(--bg);
+  padding: 14px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+}
+.contact-form input:focus,
+.contact-form textarea:focus { border-color: var(--green-accent); }
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: var(--newsletter-copy); }
+.contact-form button {
+  border: 0;
+  background: var(--pink-deep);
+  color: var(--pink-btn-text);
+  padding: 14px 24px;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  justify-self: start;
+}
+.contact-form button:hover { background: var(--pink-deep-hover); }
+
 .list-archive {
   border-left: 1px solid var(--newsletter-border);
   padding: 40px;
