@@ -1,0 +1,7 @@
+name = "vairem-hubspot-sync"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# The HubSpot Private App token is a secret — never put it here.
+# After creating the Worker, set it with:
+#   wrangler secret put HUBSPOT_PRIVATE_APP_TOKEN
