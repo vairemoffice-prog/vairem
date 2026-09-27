@@ -20,9 +20,6 @@
   // Form GUID: the form's own Share/Embed panel.
   const HUBSPOT_PORTAL_ID = '149428806';
   const HUBSPOT_NEWSLETTER_FORM_ID = '8157ade5-4341-4c66-bbf5-c7e1f7c312ad';
-  // Same idea for the "Kontakt" form — create that form in HubSpot too,
-  // then fill in its GUID here (contactForm() skips the call until then).
-  const HUBSPOT_CONTACT_FORM_ID = '';
 
   // ---------- i18n ----------
 
@@ -101,11 +98,6 @@
       'cart.title_tpl': n => `KOSZYK · ${n} POZ.`,
       'cart.empty': 'KOSZYK PUSTY — WYBIERZ ZWIĄZEK Z INDEKSU.', 'cart.remove': 'USUŃ',
       'newsletter.subscribed': 'ZAPISANO ✓', 'newsletter.thanks': 'DZIĘKUJEMY — POTWIERDŹ LINK W POCZCIE.',
-      'kontakt.eyebrow': 'KONTAKT', 'kontakt.title': 'Napisz do nas.',
-      'kontakt.lede': 'Pytania o związki, zamówienie albo współpracę — odpowiadamy zwykle w 1–2 dni robocze.',
-      'kontakt.name_placeholder': 'Imię i nazwisko', 'kontakt.email_placeholder': 'twoj@email.pl',
-      'kontakt.message_placeholder': 'Wiadomość', 'cta.wyslij': 'WYŚLIJ →',
-      'kontakt.note': 'ODPOWIADAMY ZWYKLE W 1–2 DNI ROBOCZE.', 'kontakt.sent': 'DZIĘKUJEMY — ODEZWIEMY SIĘ WKRÓTCE.',
       'tile.weeks_suffix': 'TYG.', 'add_btn': 'DODAJ',
       'cookie.title': 'PLIKI COOKIE',
       'cookie.text': 'Używamy plików cookie, żeby zapamiętać Twój język, motyw i zawartość koszyka oraz zrozumieć, jak korzystasz ze strony. Bez zgody podstawowe funkcje nadal działają.',
@@ -177,11 +169,6 @@
       'cart.title_tpl': n => `CART · ${n} ITEMS`,
       'cart.empty': 'CART EMPTY — CHOOSE A COMPOUND FROM THE INDEX.', 'cart.remove': 'REMOVE',
       'newsletter.subscribed': 'SUBSCRIBED ✓', 'newsletter.thanks': 'THANK YOU — CONFIRM THE LINK IN YOUR INBOX.',
-      'kontakt.eyebrow': 'CONTACT', 'kontakt.title': 'Write to us.',
-      'kontakt.lede': 'Questions about the compounds, an order, or a collaboration — we usually reply within 1–2 business days.',
-      'kontakt.name_placeholder': 'Full name', 'kontakt.email_placeholder': 'you@email.com',
-      'kontakt.message_placeholder': 'Message', 'cta.wyslij': 'SEND →',
-      'kontakt.note': 'WE USUALLY REPLY WITHIN 1–2 BUSINESS DAYS.', 'kontakt.sent': "THANK YOU — WE'LL BE IN TOUCH SOON.",
       'tile.weeks_suffix': 'WKS', 'add_btn': 'ADD',
       'cookie.title': 'COOKIES',
       'cookie.text': 'We use cookies to remember your language, theme and cart contents, and to understand how you use the site. Basic functions still work without consent.',
@@ -253,11 +240,6 @@
       'cart.title_tpl': n => `CARRITO · ${n} UDS.`,
       'cart.empty': 'CARRITO VACÍO — ELIGE UN COMPUESTO DEL ÍNDICE.', 'cart.remove': 'QUITAR',
       'newsletter.subscribed': 'SUSCRITO ✓', 'newsletter.thanks': 'GRACIAS — CONFIRMA EL ENLACE EN TU CORREO.',
-      'kontakt.eyebrow': 'CONTACTO', 'kontakt.title': 'Escríbenos.',
-      'kontakt.lede': 'Preguntas sobre los compuestos, un pedido o una colaboración — normalmente respondemos en 1–2 días laborables.',
-      'kontakt.name_placeholder': 'Nombre completo', 'kontakt.email_placeholder': 'tu@email.com',
-      'kontakt.message_placeholder': 'Mensaje', 'cta.wyslij': 'ENVIAR →',
-      'kontakt.note': 'NORMALMENTE RESPONDEMOS EN 1–2 DÍAS LABORABLES.', 'kontakt.sent': 'GRACIAS — TE CONTACTAREMOS PRONTO.',
       'tile.weeks_suffix': 'SEM.', 'add_btn': 'AÑADIR',
       'cookie.title': 'COOKIES',
       'cookie.text': 'Usamos cookies para recordar tu idioma, tema y el contenido del carrito, y para entender cómo usas el sitio. Las funciones básicas siguen funcionando sin tu consentimiento.',
@@ -329,11 +311,6 @@
       'cart.title_tpl': n => `КОШИК · ${n} ПОЗ.`,
       'cart.empty': 'КОШИК ПОРОЖНІЙ — ОБЕРИ СПОЛУКУ З ІНДЕКСУ.', 'cart.remove': 'ВИДАЛИТИ',
       'newsletter.subscribed': 'ПІДПИСАНО ✓', 'newsletter.thanks': 'ДЯКУЄМО — ПІДТВЕРДЬ ПОСИЛАННЯ В ПОШТІ.',
-      'kontakt.eyebrow': 'КОНТАКТИ', 'kontakt.title': 'Напишіть нам.',
-      'kontakt.lede': 'Питання про сполуки, замовлення чи співпрацю — зазвичай відповідаємо протягом 1–2 робочих днів.',
-      'kontakt.name_placeholder': "Ім'я та прізвище", 'kontakt.email_placeholder': 'you@email.com',
-      'kontakt.message_placeholder': 'Повідомлення', 'cta.wyslij': 'НАДІСЛАТИ →',
-      'kontakt.note': 'ЗАЗВИЧАЙ ВІДПОВІДАЄМО ПРОТЯГОМ 1–2 РОБОЧИХ ДНІВ.', 'kontakt.sent': "ДЯКУЄМО — ЗВ'ЯЖЕМОСЯ НЕЗАБАРОМ.",
       'tile.weeks_suffix': 'ТИЖ.', 'add_btn': 'ДОДАТИ',
       'cookie.title': 'ФАЙЛИ COOKIE',
       'cookie.text': "Ми використовуємо файли cookie, щоб запам'ятати вашу мову, тему й вміст кошика, а також зрозуміти, як ви користуєтесь сайтом. Основні функції працюють і без згоди.",
@@ -405,11 +382,6 @@
       'cart.title_tpl': n => `PANIER · ${n} ART.`,
       'cart.empty': "PANIER VIDE — CHOISISSEZ UN COMPOSÉ DANS L'INDEX.", 'cart.remove': 'RETIRER',
       'newsletter.subscribed': 'ABONNÉ ✓', 'newsletter.thanks': 'MERCI — CONFIRMEZ LE LIEN DANS VOTRE BOÎTE MAIL.',
-      'kontakt.eyebrow': 'CONTACT', 'kontakt.title': 'Écrivez-nous.',
-      'kontakt.lede': 'Questions sur les molécules, une commande ou une collaboration — nous répondons généralement sous 1 à 2 jours ouvrés.',
-      'kontakt.name_placeholder': 'Nom complet', 'kontakt.email_placeholder': 'vous@email.com',
-      'kontakt.message_placeholder': 'Message', 'cta.wyslij': 'ENVOYER →',
-      'kontakt.note': 'NOUS RÉPONDONS GÉNÉRALEMENT SOUS 1 À 2 JOURS OUVRÉS.', 'kontakt.sent': 'MERCI — NOUS VOUS RECONTACTERONS BIENTÔT.',
       'tile.weeks_suffix': 'SEM.', 'add_btn': 'AJOUTER',
       'cookie.title': 'COOKIES',
       'cookie.text': 'Nous utilisons des cookies pour mémoriser votre langue, votre thème et le contenu de votre panier, et pour comprendre comment vous utilisez le site. Les fonctions de base restent disponibles sans consentement.',
@@ -1212,31 +1184,6 @@
     }
   }
 
-  // ---------- kontakt ----------
-
-  function submitContactForm(name, email, message) {
-    if (!email || !message) return;
-    const btn = document.getElementById('contact-submit');
-    const note = document.getElementById('contact-note');
-    btn.textContent = t('kontakt.sent');
-    note.textContent = t('kontakt.sent');
-
-    if (HUBSPOT_PORTAL_ID && HUBSPOT_CONTACT_FORM_ID) {
-      fetch(`https://api-eu1.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_CONTACT_FORM_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fields: [
-            { name: 'firstname', value: name },
-            { name: 'email', value: email },
-            { name: 'message', value: message }
-          ],
-          context: { pageUri: window.location.href, pageName: document.title }
-        })
-      }).catch(() => {}); // UI above already confirms the send either way
-    }
-  }
-
   // ---------- language switcher ----------
 
   function applyI18n(root = document) {
@@ -1476,14 +1423,6 @@
       e.preventDefault();
       const input = document.getElementById('newsletter-email');
       subscribe(input.value.trim());
-    });
-
-    document.getElementById('contact-form').addEventListener('submit', e => {
-      e.preventDefault();
-      const name = document.getElementById('contact-name').value.trim();
-      const email = document.getElementById('contact-email').value.trim();
-      const message = document.getElementById('contact-message').value.trim();
-      submitContactForm(name, email, message);
     });
 
     document.addEventListener('keydown', e => {

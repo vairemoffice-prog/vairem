@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontakt — VAIREM</title>
+<meta name="description" content="Napisz do VAIREM: pytania o związki, zamówienie albo współpracę.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
+<style id="page-style">
+  .legal-header{ padding-block:22px; }
+  .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
+  .legal-back:hover{ color:var(--text-hover); }
+
+  .kontakt-main{ padding-block:64px 96px; }
+  .kontakt-col{ max-width:760px; margin:0 auto; }
+  .kontakt-eyebrow{ font-size:11px; letter-spacing:0.2em; color:var(--muted); }
+  .kontakt-page-title{ margin:14px 0 0; font-size:clamp(30px,4vw,44px); letter-spacing:-0.03em; font-weight:500; line-height:1.05; }
+  .kontakt-page-lede{ margin-top:18px; max-width:56ch; font-size:16px; line-height:1.62; color:var(--text); }
+
+  .kontakt-panel-wrap{ margin-top:40px; }
+</style>
+</head>
+<body>
+
+<button type="button" id="menu-toggle" class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
+  <span class="menu-toggle-label mono" aria-hidden="true">MENU</span>
+</button>
+
+<!-- SIDE MENU -->
+<div id="menu-overlay" class="menu-overlay" hidden>
+  <div class="menu-scrim" id="menu-scrim"></div>
+  <aside class="menu-drawer">
+    <div class="menu-drawer-head">
+      <div class="mono">MENU</div>
+      <button type="button" id="menu-close" class="cart-close mono">ZAMKNIJ ✕</button>
+    </div>
+    <div class="menu-drawer-section">
+      <a href="katalog.html" class="menu-section-label menu-section-label--link mono">KATALOG</a>
+    </div>
+    <nav class="menu-nav mono">
+      <a href="index.html#indeks">INDEKS</a>
+      <a href="index.html#metoda">METODA</a>
+      <a href="index.html#karta">017 BEFORE IT DRIES</a>
+      <a href="index.html#list">LIST</a>
+    </nav>
+  </aside>
+</div>
+
+<div id="page-content">
+
+<header class="legal-header">
+  <div class="wrap">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="index.html" class="brand" style="text-decoration:none;">
+        <img class="brand-signature" src="assets/img/logo-vairem-signature.png" alt="Vairem">
+      </a>
+    </div>
+    <a href="index.html" class="legal-back mono">← STRONA GŁÓWNA</a>
+  </div>
+</header>
+
+<main class="kontakt-main">
+  <div class="wrap">
+    <div class="kontakt-col">
+
+      <div class="kontakt-eyebrow mono">KONTAKT</div>
+      <h1 class="kontakt-page-title">Napisz do nas.</h1>
+      <p class="kontakt-page-lede">Pytania o związki, zamówienie albo współpracę — odpowiadamy zwykle w 1–2 dni robocze.</p>
+
+      <div class="kontakt-panel-wrap">
+        <div class="list-panel">
+          <div class="list-copy">
+            <form class="contact-form" id="contact-form">
+              <input type="text" id="contact-name" placeholder="Imię i nazwisko" required>
+              <input type="email" id="contact-email" placeholder="twoj@email.pl" required>
+              <textarea id="contact-message" placeholder="Wiadomość" rows="5" required></textarea>
+              <button type="submit" id="contact-submit" class="mono">WYŚLIJ →</button>
+            </form>
+            <div id="contact-note" class="list-note mono">ODPOWIADAMY ZWYKLE W 1–2 DNI ROBOCZE.</div>
+          </div>
+          <div class="list-archive">
+            <div class="archive-item"><div class="archive-label mono">E-MAIL</div><div class="archive-value">vairem.office@gmail.com</div></div>
+            <div class="archive-item"><div class="archive-label mono">SIEDZIBA</div><div class="archive-value">Warszawa · PL</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="margin-top:0;">
+  <div class="wrap footer-bottom mono" style="border-top:1px solid var(--border); padding-top:16px;">
+    <span>© 2026 VAIREM</span>
+    <a href="index.html">STRONA GŁÓWNA →</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Same HubSpot form-submission pattern as the newsletter signup on
+  // index.html — public Portal ID + Form GUID only (no secret). Create a
+  // "Kontakt" form in HubSpot and fill in its GUID to start receiving
+  // these; until then the fetch is skipped and the on-page confirmation
+  // still shows.
+  var HUBSPOT_PORTAL_ID = '149428806';
+  var HUBSPOT_CONTACT_FORM_ID = '';
+
+  document.getElementById('contact-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('contact-name').value.trim();
+    var email = document.getElementById('contact-email').value.trim();
+    var message = document.getElementById('contact-message').value.trim();
+    if (!email || !message) return;
+
+    var btn = document.getElementById('contact-submit');
+    var note = document.getElementById('contact-note');
+    btn.textContent = 'DZIĘKUJEMY — ODEZWIEMY SIĘ WKRÓTCE.';
+    note.textContent = 'DZIĘKUJEMY — ODEZWIEMY SIĘ WKRÓTCE.';
+
+    if (HUBSPOT_PORTAL_ID && HUBSPOT_CONTACT_FORM_ID) {
+      fetch('https://api-eu1.hsforms.com/submissions/v3/integration/submit/' + HUBSPOT_PORTAL_ID + '/' + HUBSPOT_CONTACT_FORM_ID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fields: [
+            { name: 'firstname', value: name },
+            { name: 'email', value: email },
+            { name: 'message', value: message }
+          ],
+          context: { pageUri: window.location.href, pageName: document.title }
+        })
+      }).catch(function () {}); // confirmation above already shown either way
+    }
+  });
+})();
+</script>
+
+</div><!-- /page-content -->
+
+<script src="js/menu.js" defer></script>
+<script src="js/effects.js" defer></script>
+</body>
+</html>
