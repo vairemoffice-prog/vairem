@@ -1252,6 +1252,11 @@ button { font-family: inherit; }
   .hero-top { padding: 56px 0 40px; }
   .hero-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
+  /* Zeyada's capital "P" has a fine decorative cross-stroke that reads
+     as a broken/unfinished loop at very small render sizes — give the
+     title a bit more room on phones so that stroke stays legible. */
+  .hero-title { font-size: clamp(56px, 26vw, 400px); }
+
   .index-table { overflow-x: auto; }
   .index-row { min-width: 780px; }
 
