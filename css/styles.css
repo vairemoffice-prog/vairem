@@ -54,7 +54,6 @@
 
   --newsletter-border: #5E6773;
   --newsletter-copy: #C0CAD1;
-  --newsletter-panel-bg: #6E7883;
 
   --placeholder-label: #4A555D;
   --bar-lighter: #E0E6EA;
@@ -82,7 +81,6 @@
 
   --newsletter-border: #C3CBD1;
   --newsletter-copy: #4A525C;
-  --newsletter-panel-bg: #DDE3E7;
 }
 
 * { box-sizing: border-box; }
@@ -927,7 +925,7 @@ button { font-family: inherit; }
   display: grid;
   align-content: start;
 }
-.archive-item { background: var(--newsletter-panel-bg); padding: 14px 0; }
+.archive-item { background: transparent; padding: 14px 0; }
 .archive-item:first-child { padding: 0 0 14px; }
 .archive-item + .archive-item { border-top: 1px solid var(--newsletter-border); }
 .archive-label { font-size: 10px; letter-spacing: 0.14em; color: var(--newsletter-copy); }
