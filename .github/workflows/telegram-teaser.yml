@@ -1,0 +1,45 @@
+name: Telegram teaser post
+
+# Posts a short teaser about VAIREM to a Telegram chat/channel every time
+# main changes. Requires two repository secrets (Settings → Secrets and
+# variables → Actions):
+#   TELEGRAM_BOT_TOKEN — token from @BotFather
+#   TELEGRAM_CHAT_ID   — id of the channel/group/chat to post to
+# If either secret is missing, the job skips instead of failing, so this
+# workflow is safe to merge before the secrets are configured.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  post-teaser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram teaser
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set — skipping post."
+            exit 0
+          fi
+
+          MESSAGE=$(cat <<'EOF'
+          VAIREM — molekularny zapach do wnętrz
+
+          Trzy związki, jedna molekuła naraz:
+          017 · Before It Dries
+          042 · Within
+          086 · Afterlight
+
+          vairemoffice-prog.github.io
+          EOF
+          )
+
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MESSAGE}" \
+            --fail
