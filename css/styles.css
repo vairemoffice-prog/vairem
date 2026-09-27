@@ -437,7 +437,6 @@ button { font-family: inherit; }
   z-index: 0;
   pointer-events: none;
   color: transparent;
-  -webkit-text-stroke: 1px var(--border-strong);
 }
 .hero-title--echo-1 { transform: translate(-6px, 4px) scaleY(1.04); }
 .hero-title--echo-2 {
