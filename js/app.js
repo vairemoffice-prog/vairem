@@ -11,6 +11,16 @@
 
   const formatPrice = price => (price === 0 ? '[PRICE]' : `${price} zł`);
 
+  // ---------- HubSpot CRM ----------
+  // Public form-submission ids only (no secret involved — this is the
+  // normal way HubSpot forms are embedded client-side). Fill these in
+  // from the HubSpot portal once the newsletter form exists there;
+  // until then subscribe() just skips the network call.
+  // Portal ID: Settings -> Account setup -> Account defaults.
+  // Form GUID: the form's own Share/Embed panel.
+  const HUBSPOT_PORTAL_ID = '149428806';
+  const HUBSPOT_NEWSLETTER_FORM_ID = '8157ade5-4341-4c66-bbf5-c7e1f7c312ad';
+
   // ---------- i18n ----------
 
   const CHARACTER_I18N = {
@@ -1161,6 +1171,17 @@
     const note = document.getElementById('newsletter-note');
     btn.textContent = t('newsletter.subscribed');
     note.textContent = t('newsletter.thanks');
+
+    if (HUBSPOT_PORTAL_ID && HUBSPOT_NEWSLETTER_FORM_ID) {
+      fetch(`https://api-eu1.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_NEWSLETTER_FORM_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fields: [{ name: 'email', value: email }],
+          context: { pageUri: window.location.href, pageName: document.title }
+        })
+      }).catch(() => {}); // UI above already confirms the signup either way
+    }
   }
 
   // ---------- language switcher ----------

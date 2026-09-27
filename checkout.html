@@ -18,7 +18,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
 <style id="page-style">
   [hidden]{ display:none !important; }
-  .legal-header{ position:sticky; top:0; z-index:40; background:var(--header-bg); backdrop-filter:blur(6px); border-bottom:1px solid var(--border); padding-block:22px; }
+  .legal-header{ padding-block:22px; }
   .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
   .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
   .legal-back:hover{ color:var(--text-hover); }
@@ -440,6 +440,10 @@
   function productByNr(nr) { return PRODUCTS.filter(function (p) { return p.nr === nr; })[0]; }
   function formatPrice(price) { return price === 0 ? '[CENA]' : price + ' zł'; }
 
+  // HubSpot order sync (see cloudflare/hubspot-sync-worker/README.md).
+  // Empty until the Worker is deployed — placeOrder() then just skips it.
+  var ORDER_SYNC_WORKER_URL = '';
+
   var CART_KEY = 'vairem-cart';
   var cart = [];
   try {
@@ -707,6 +711,26 @@
   document.getElementById('co-place-order').addEventListener('click', function () {
     var orderNr = 'VR-' + Date.now().toString(36).toUpperCase();
     document.getElementById('co-order-nr').textContent = 'NUMER ZAMÓWIENIA: ' + orderNr;
+
+    if (ORDER_SYNC_WORKER_URL) {
+      var finalTotal = discountApplied ? orderTotal * (1 - DISCOUNT_RATE) : orderTotal;
+      fetch(ORDER_SYNC_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderNr: orderNr,
+          email: document.getElementById('f-email').value.trim(),
+          name: document.getElementById('f-name').value.trim(),
+          phone: document.getElementById('f-phone').value.trim(),
+          items: cart.map(function (item) {
+            var p = productByNr(item.nr);
+            return { nr: item.nr, name: p ? p.name : item.nr, qty: item.qty, price: p ? p.price : 0 };
+          }),
+          total: finalTotal
+        })
+      }).catch(function () {}); // order confirmation below proceeds regardless
+    }
+
     try { localStorage.setItem(CART_KEY, '[]'); } catch (e) {}
     goToStep(5);
   });
