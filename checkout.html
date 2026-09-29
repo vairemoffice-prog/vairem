@@ -445,6 +445,16 @@
   // Empty until the Worker is deployed — placeOrder() then just skips it.
   var ORDER_SYNC_WORKER_URL = '';
 
+  // E-mail notification for the shop owner on every order, via Formspree
+  // (https://formspree.io) — no backend to deploy. Set this up once:
+  //   1. Create a free account at formspree.io and confirm your e-mail.
+  //   2. "New Form" → copy its endpoint, https://formspree.io/f/XXXXXXXX.
+  //   3. Paste that URL below. Every order then lands as an e-mail in the
+  //      inbox you signed up with — no code changes needed after that.
+  // Empty until then — placeOrder() just skips it, order confirmation and
+  // localStorage history work exactly the same either way.
+  var ORDER_NOTIFY_EMAIL_URL = '';
+
   var CART_KEY = 'vairem-cart';
   var ORDERS_KEY = 'vairem-orders';
   var cart = [];
@@ -732,6 +742,26 @@
           phone: document.getElementById('f-phone').value.trim(),
           items: orderItems,
           total: finalTotal
+        })
+      }).catch(function () {}); // order confirmation below proceeds regardless
+    }
+
+    if (ORDER_NOTIFY_EMAIL_URL) {
+      var itemsSummary = orderItems.map(function (item) {
+        return item.nr + ' ' + item.name + ' ×' + item.qty;
+      }).join('; ');
+      fetch(ORDER_NOTIFY_EMAIL_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Nowe zamówienie VAIREM ' + orderNr,
+          orderNr: orderNr,
+          name: document.getElementById('f-name').value.trim(),
+          email: document.getElementById('f-email').value.trim(),
+          phone: document.getElementById('f-phone').value.trim(),
+          city: shipping.city || '',
+          items: itemsSummary,
+          total: formatPrice(finalTotal)
         })
       }).catch(function () {}); // order confirmation below proceeds regardless
     }
