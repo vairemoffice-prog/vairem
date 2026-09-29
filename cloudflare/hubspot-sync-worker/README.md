@@ -15,13 +15,21 @@ Co robi przy każdym złożonym zamówieniu:
 
 ## 1. Utwórz właściwości w HubSpot (raz)
 
-Settings → Properties → Contact properties → Create property, dla każdej:
+Settings → Properties → Contact properties → Create property, dla każdej —
+etykieta może być dowolna, typ musi być jak w tabeli:
 
-| Nazwa wewnętrzna (internal name) | Typ      | Etykieta                  |
-|-----------------------------------|----------|---------------------------|
-| `vairem_ltv`                      | Number   | VAIREM — LTV (PLN)        |
-| `vairem_order_count`              | Number   | VAIREM — liczba zamówień  |
-| `vairem_last_order_at`            | Date     | VAIREM — ostatnie zamówienie |
+| Etykieta (dowolna)          | Typ      |
+|------------------------------|----------|
+| VAIREM — LTV (PLN)           | Number   |
+| VAIREM — liczba zamówień     | Number   |
+| VAIREM — ostatnie zamówienie | Date picker |
+
+HubSpot sam generuje "Internal name" z etykiety i zwykle wychodzi inaczej,
+niż się oczekuje (np. z podwójnym podkreślnikiem albo dodatkowym słowem).
+**Po utworzeniu każdej właściwości sprawdź jej rzeczywistą nazwę wewnętrzną**
+(w liście właściwości, albo eksportując CSV) i wpisz ją w
+`src/index.js`, w stałych `PROP_LTV`, `PROP_ORDER_COUNT`, `PROP_LAST_ORDER`
+na górze pliku — bieżące wartości odpowiadają portalowi VAIREM.
 
 ## 2. Utwórz Private App w HubSpot (raz)
 

@@ -10,10 +10,13 @@
  *   HUBSPOT_PRIVATE_APP_TOKEN
  *
  * Required custom HubSpot contact properties (create these once in the
- * HubSpot portal — Settings -> Properties -> Contact properties):
- *   vairem_ltv            number   Lifetime value in PLN
- *   vairem_order_count     number   Total number of orders (refill count)
- *   vairem_last_order_at   date     Timestamp of the most recent order
+ * HubSpot portal — Settings -> Properties -> Contact properties). HubSpot
+ * derives the internal name from the label you type, so it rarely comes
+ * out as the name below — after creating each one, check its actual
+ * internal name and update the constants below to match:
+ *   PROP_LTV          number   Lifetime value in PLN
+ *   PROP_ORDER_COUNT  number   Total number of orders (refill count)
+ *   PROP_LAST_ORDER   date     Timestamp of the most recent order
  *
  * Expected POST body (JSON), sent by checkout.html:
  *   {
@@ -28,6 +31,12 @@
 
 const ALLOWED_ORIGIN = 'https://vairemoffice-prog.github.io';
 const HUBSPOT_API = 'https://api.hubapi.com';
+
+// Actual internal names of the custom contact properties in the VAIREM
+// HubSpot portal — see the comment above for how these are assigned.
+const PROP_LTV = 'vairem__ltv_pln';
+const PROP_ORDER_COUNT = 'vairem__liczba_zamowien';
+const PROP_LAST_ORDER = 'vairem__ostatnie_zamowienie';
 
 function corsHeaders(origin) {
   return {
@@ -62,7 +71,7 @@ async function upsertContact(order, token) {
   let current = null;
   try {
     current = await hubspotFetch(
-      `/crm/v3/objects/contacts/${encodeURIComponent(order.email)}?idProperty=email&properties=vairem_ltv,vairem_order_count`,
+      `/crm/v3/objects/contacts/${encodeURIComponent(order.email)}?idProperty=email&properties=${PROP_LTV},${PROP_ORDER_COUNT}`,
       token,
       { method: 'GET' }
     );
@@ -70,8 +79,14 @@ async function upsertContact(order, token) {
     current = null; // contact doesn't exist yet — that's fine, upsert creates it
   }
 
-  const prevLtv = Number((current && current.properties && current.properties.vairem_ltv) || 0);
-  const prevOrders = Number((current && current.properties && current.properties.vairem_order_count) || 0);
+  const prevLtv = Number((current && current.properties && current.properties[PROP_LTV]) || 0);
+  const prevOrders = Number((current && current.properties && current.properties[PROP_ORDER_COUNT]) || 0);
+
+  // HubSpot "date picker" properties require midnight UTC as epoch
+  // milliseconds (a string) — a full ISO timestamp with a time-of-day
+  // component is rejected.
+  const now = new Date();
+  const midnightUtcMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 
   const contact = await hubspotFetch('/crm/v3/objects/contacts/batch/upsert', token, {
     method: 'POST',
@@ -85,9 +100,9 @@ async function upsertContact(order, token) {
             firstname: firstname || undefined,
             lastname: lastname || undefined,
             phone: order.phone || undefined,
-            vairem_ltv: (prevLtv + Number(order.total || 0)).toString(),
-            vairem_order_count: (prevOrders + 1).toString(),
-            vairem_last_order_at: new Date().toISOString(),
+            [PROP_LTV]: (prevLtv + Number(order.total || 0)).toString(),
+            [PROP_ORDER_COUNT]: (prevOrders + 1).toString(),
+            [PROP_LAST_ORDER]: String(midnightUtcMs),
           },
         },
       ],
