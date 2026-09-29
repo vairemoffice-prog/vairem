@@ -313,7 +313,11 @@
         'th,td{ padding:8px 6px; border-bottom:1px solid #ddd; text-align:left; }' +
         'tfoot td{ border-bottom:0; font-weight:bold; }' +
         '.note{ margin-top:32px; font-size:11px; color:#888; }' +
+        '.back-link{ display:inline-flex; align-items:center; gap:6px; font-size:12px; color:#1a1a1a; text-decoration:none; background:none; border:0; cursor:pointer; padding:0; margin-bottom:20px; font-family:Arial,sans-serif; }' +
+        '.back-link:hover{ text-decoration:underline; }' +
+        '@media print{ .back-link{ display:none; } }' +
       '</style></head><body>' +
+      '<button type="button" class="back-link" onclick="window.close();">← Poprzednia strona</button>' +
       '<div class="head"><div><h1>VAIREM</h1><div class="muted">' + (isInvoice ? 'NIP: [NIP]' : 'Sprzedaż detaliczna') + '</div></div>' +
       '<div><h1>' + (isInvoice ? 'Faktura' : 'Paragon') + '</h1><div class="muted">' + docNr + '</div><div class="muted">' + formatDate(order.date) + '</div></div></div>' +
       '<div class="cols"><div><b>SPRZEDAWCA</b><br>VAIREM<br>Warszawa, PL</div>' +
