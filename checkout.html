@@ -446,6 +446,7 @@
   var ORDER_SYNC_WORKER_URL = '';
 
   var CART_KEY = 'vairem-cart';
+  var ORDERS_KEY = 'vairem-orders';
   var cart = [];
   try {
     var raw = localStorage.getItem(CART_KEY);
@@ -713,8 +714,14 @@
     var orderNr = 'VR-' + Date.now().toString(36).toUpperCase();
     document.getElementById('co-order-nr').textContent = 'NUMER ZAMÓWIENIA: ' + orderNr;
 
+    var discount = discountApplied ? Math.round(orderTotal * DISCOUNT_RATE) : 0;
+    var finalTotal = orderTotal - discount;
+    var orderItems = cart.map(function (item) {
+      var p = productByNr(item.nr);
+      return { nr: item.nr, name: p ? p.name : item.nr, qty: item.qty, price: p ? p.price : 0 };
+    });
+
     if (ORDER_SYNC_WORKER_URL) {
-      var finalTotal = discountApplied ? orderTotal * (1 - DISCOUNT_RATE) : orderTotal;
       fetch(ORDER_SYNC_WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -723,14 +730,27 @@
           email: document.getElementById('f-email').value.trim(),
           name: document.getElementById('f-name').value.trim(),
           phone: document.getElementById('f-phone').value.trim(),
-          items: cart.map(function (item) {
-            var p = productByNr(item.nr);
-            return { nr: item.nr, name: p ? p.name : item.nr, qty: item.qty, price: p ? p.price : 0 };
-          }),
+          items: orderItems,
           total: finalTotal
         })
       }).catch(function () {}); // order confirmation below proceeds regardless
     }
+
+    // Save the order so "Twoje zamówienia" (zamowienia.html) can show
+    // real purchase history — items, price and a status derived from
+    // how long ago it was placed.
+    try {
+      var orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
+      if (!Array.isArray(orders)) orders = [];
+      orders.unshift({
+        orderNr: orderNr,
+        date: Date.now(),
+        items: orderItems,
+        total: finalTotal,
+        city: shipping.city || ''
+      });
+      localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+    } catch (e) {}
 
     try { localStorage.setItem(CART_KEY, '[]'); } catch (e) {}
     goToStep(5);

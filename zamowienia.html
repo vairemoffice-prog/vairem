@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twoje zamówienia — VAIREM</title>
+<meta name="description" content="Historia zamówień VAIREM: status, zamówione związki i cena.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
+<style id="page-style">
+  [hidden]{ display:none !important; }
+  .legal-header{ padding-block:22px; }
+  .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
+  .legal-back:hover{ color:var(--text-hover); }
+
+  .ord-main{ padding-block:56px 96px; }
+  .ord-col{ max-width:640px; margin:0 auto; }
+  .ord-eyebrow{ font-size:11px; letter-spacing:0.2em; color:var(--muted); }
+  .ord-title{ margin:14px 0 8px; font-size:clamp(28px,4vw,38px); letter-spacing:-0.03em; font-weight:500; }
+  .ord-sub{ font-size:14px; color:var(--muted); margin:0 0 36px; max-width:56ch; line-height:1.6; }
+
+  .ord-empty{ border:1px dashed var(--border-strong); padding:32px 26px; text-align:center; }
+  .ord-empty p{ margin:0 0 18px; font-size:14px; color:var(--muted); line-height:1.6; }
+
+  .ord-list{ display:flex; flex-direction:column; gap:22px; }
+  .ord-card{ border:1px solid var(--border); }
+  .ord-card-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;
+    padding:18px 22px; border-bottom:1px solid var(--border); background:var(--row-bg);
+  }
+  .ord-nr{ font-family:'Martian Mono', monospace; font-size:12px; letter-spacing:0.06em; }
+  .ord-date{ font-size:11px; color:var(--muted); margin-top:4px; }
+
+  .ord-status{
+    font-family:'Martian Mono', monospace; font-size:10px; letter-spacing:0.14em;
+    padding:6px 10px; border:1px solid currentColor; white-space:nowrap;
+  }
+  .ord-status.is-processing{ color:var(--muted); }
+  .ord-status.is-shipped{ color:#3E6E9E; }
+  .ord-status.is-delivered{ color:var(--green-deep); }
+
+  .ord-items{ padding:6px 22px; }
+  .ord-item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    padding:14px 0; border-bottom:1px solid var(--border-light);
+  }
+  .ord-item:last-child{ border-bottom:0; }
+  .ord-item .name{ font-size:14px; }
+  .ord-item .meta{ font-size:11px; color:var(--muted); margin-top:3px; font-family:'Martian Mono', monospace; }
+  .ord-item .price{ font-family:'Martian Mono', monospace; font-size:13px; white-space:nowrap; }
+
+  .ord-total{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:16px 22px; border-top:1px solid var(--border); background:var(--row-bg);
+  }
+  .ord-total .lbl{ font-size:11px; letter-spacing:0.14em; color:var(--muted); font-family:'Martian Mono', monospace; }
+  .ord-total .val{ font-size:17px; }
+</style>
+</head>
+<body>
+
+<button type="button" id="menu-toggle" class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
+  <span class="menu-toggle-label mono" aria-hidden="true">MENU</span>
+</button>
+
+<!-- SIDE MENU -->
+<div id="menu-overlay" class="menu-overlay" hidden>
+  <div class="menu-scrim" id="menu-scrim"></div>
+  <aside class="menu-drawer">
+    <div class="menu-drawer-head">
+      <div class="mono">MENU</div>
+      <button type="button" id="menu-close" class="cart-close mono">ZAMKNIJ ✕</button>
+    </div>
+    <div class="menu-drawer-section">
+      <a href="katalog.html" class="menu-section-label menu-section-label--link mono">KATALOG</a>
+    </div>
+    <nav class="menu-nav mono">
+      <a href="index.html#indeks">INDEKS</a>
+      <a href="index.html#metoda">METODA</a>
+      <a href="index.html#karta">017 BEFORE IT DRIES</a>
+      <a href="index.html#list">LIST</a>
+    </nav>
+  </aside>
+</div>
+
+<div id="page-content">
+
+<header class="legal-header">
+  <div class="wrap">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="index.html" class="brand" style="text-decoration:none;">
+        <img class="brand-signature" src="assets/img/logo-vairem-signature.png" alt="Vairem">
+      </a>
+    </div>
+    <a href="index.html" class="legal-back mono">← STRONA GŁÓWNA</a>
+  </div>
+</header>
+
+<main class="ord-main">
+  <div class="wrap">
+    <div class="ord-col">
+
+      <div class="ord-eyebrow mono">MOJE KONTO</div>
+      <h1 class="ord-title">Twoje zamówienia</h1>
+      <p class="ord-sub">Historia zamówień z tej przeglądarki: status, zamówione związki i cena.</p>
+
+      <div class="ord-empty" id="ord-empty" hidden>
+        <p>Nie masz jeszcze żadnych zamówień.</p>
+        <a href="katalog.html" class="btn btn-green mono">PRZEJRZYJ KATALOG →</a>
+      </div>
+
+      <div class="ord-list" id="ord-list"></div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="margin-top:0;">
+  <div class="wrap footer-bottom mono" style="border-top:1px solid var(--border); padding-top:16px;">
+    <span>© 2026 VAIREM</span>
+    <a href="kontakt.html">KONTAKT</a>
+    <a href="index.html">STRONA GŁÓWNA →</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var PRODUCTS = [
+    { nr: '017', name: 'Before It Dries', formula: '[FORMULA]' },
+    { nr: '042', name: 'Within', formula: '[FORMULA]' },
+    { nr: '086', name: 'Afterlight', formula: '[FORMULA]' }
+  ];
+  function productByNr(nr) { return PRODUCTS.filter(function (p) { return p.nr === nr; })[0]; }
+  function formatPrice(price) { return (!price ? '[CENA]' : price + ' zł'); }
+
+  var ORDERS_KEY = 'vairem-orders';
+  var orders = [];
+  try {
+    var raw = localStorage.getItem(ORDERS_KEY);
+    orders = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(orders)) orders = [];
+  } catch (e) { orders = []; }
+
+  var listEl = document.getElementById('ord-list');
+  var emptyEl = document.getElementById('ord-empty');
+
+  if (orders.length === 0) {
+    emptyEl.hidden = false;
+    listEl.hidden = true;
+    return;
+  }
+
+  // No real fulfillment backend behind this static site — the status
+  // shown is derived from how long ago the order was placed, matching
+  // the "wysyłka 1–3 dni robocze" timeline used at checkout.
+  function statusFor(order) {
+    var hours = (Date.now() - order.date) / 36e5;
+    if (hours < 24) return { cls: 'is-processing', label: 'W REALIZACJI' };
+    if (hours < 72) return { cls: 'is-shipped', label: 'WYSŁANO' };
+    return { cls: 'is-delivered', label: 'DOSTARCZONO' };
+  }
+
+  function formatDate(ts) {
+    try {
+      return new Date(ts).toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch (e) { return ''; }
+  }
+
+  listEl.innerHTML = orders.map(function (order) {
+    var status = statusFor(order);
+    var itemsHtml = (order.items || []).map(function (item) {
+      var p = productByNr(item.nr);
+      return (
+        '<div class="ord-item">' +
+          '<div>' +
+            '<div class="name">' + (item.name || (p ? p.name : item.nr)) + '</div>' +
+            '<div class="meta">' + item.nr + (p ? ' · ' + p.formula : '') + ' · 200 ml × ' + item.qty + '</div>' +
+          '</div>' +
+          '<div class="price">' + formatPrice(item.price * item.qty) + '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    return (
+      '<div class="ord-card">' +
+        '<div class="ord-card-head">' +
+          '<div>' +
+            '<div class="ord-nr">' + order.orderNr + '</div>' +
+            '<div class="ord-date">' + formatDate(order.date) + (order.city ? ' · ' + order.city : '') + '</div>' +
+          '</div>' +
+          '<div class="ord-status ' + status.cls + '">' + status.label + '</div>' +
+        '</div>' +
+        '<div class="ord-items">' + itemsHtml + '</div>' +
+        '<div class="ord-total"><span class="lbl">DO ZAPŁATY</span><span class="val">' + formatPrice(order.total) + '</span></div>' +
+      '</div>'
+    );
+  }).join('');
+})();
+</script>
+
+</div><!-- /page-content -->
+
+<script src="js/menu.js" defer></script>
+<script src="js/effects.js" defer></script>
+
+</body>
+</html>
