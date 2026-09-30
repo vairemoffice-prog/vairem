@@ -16,7 +16,7 @@
  *   POST /                 legacy: sync an order straight to HubSpot (no payment)
  *   POST /checkout         create a Stripe Checkout Session, returns { url }
  *   GET  /session?id=cs_…  { paid, orderNr } for the return page
- *   POST /stripe-webhook   Stripe -> HubSpot sync once the payment is confirmed
+ *   POST /stripe-webhook   Stripe (payment_intent.succeeded) -> HubSpot sync
  *
  * Required custom HubSpot contact properties (create these once in the
  * HubSpot portal — Settings -> Properties -> Contact properties). HubSpot
@@ -256,6 +256,15 @@ async function createCheckoutSession(order, env) {
     ? order.orderNr
     : `VR-${Date.now().toString(36).toUpperCase()}`;
 
+  const orderMeta = {
+    orderNr,
+    email: order.email,
+    name: String(order.name || '').slice(0, 200),
+    phone: String(order.phone || '').slice(0, 50),
+    city: String(order.city || '').slice(0, 100),
+    items: priced.items.map(i => `${i.nr}x${i.qty}`).join(','),
+  };
+
   const params = {
     mode: 'payment',
     locale: 'pl',
@@ -280,13 +289,10 @@ async function createCheckoutSession(order, env) {
         },
       },
     ],
-    metadata: {
-      orderNr,
-      name: String(order.name || '').slice(0, 200),
-      phone: String(order.phone || '').slice(0, 50),
-      city: String(order.city || '').slice(0, 100),
-      items: priced.items.map(i => `${i.nr}x${i.qty}`).join(','),
-    },
+    metadata: orderMeta,
+    // The webhook listens to payment_intent.succeeded, so the order details
+    // have to be on the PaymentIntent as well (not only on the session).
+    payment_intent_data: { metadata: orderMeta, description: `VAIREM ${orderNr}` },
   };
 
   if (priced.discount > 0) {
@@ -339,12 +345,11 @@ async function verifyStripeSignature(rawBody, header, secret) {
   });
 }
 
-// A paid Checkout Session -> HubSpot contact + deal. Idempotent on orderNr,
-// because Stripe retries webhooks and may send both "completed" and
-// "async_payment_succeeded" for the same session.
-async function syncPaidSession(session, token) {
-  const meta = session.metadata || {};
-  const orderNr = meta.orderNr || session.id;
+// A succeeded PaymentIntent of our checkout -> HubSpot contact + deal.
+// Idempotent on orderNr, because Stripe retries failed webhook deliveries.
+async function syncPaidPayment(pi, token) {
+  const meta = pi.metadata || {};
+  const orderNr = meta.orderNr;
 
   const existing = await hubspotFetch('/crm/v3/objects/deals/search', token, {
     method: 'POST',
@@ -363,13 +368,13 @@ async function syncPaidSession(session, token) {
 
   const order = {
     orderNr,
-    email: (session.customer_details && session.customer_details.email) || session.customer_email,
-    name: meta.name || (session.customer_details && session.customer_details.name) || '',
+    email: meta.email || pi.receipt_email,
+    name: meta.name || '',
     phone: meta.phone || '',
     items,
-    total: (session.amount_total || 0) / 100,
+    total: (pi.amount_received || pi.amount || 0) / 100,
   };
-  if (!order.email) throw new Error(`Session ${session.id} has no e-mail`);
+  if (!order.email) throw new Error(`PaymentIntent ${pi.id} has no e-mail`);
 
   const contactId = await upsertContact(order, token);
   const dealId = await createDeal(order, contactId, token);
@@ -467,17 +472,18 @@ async function handleStripeWebhook(request, env) {
     return new Response('Invalid JSON', { status: 400 });
   }
 
-  const session = event.data && event.data.object;
-  const isPaid =
-    (event.type === 'checkout.session.completed' && session && session.payment_status === 'paid') ||
-    event.type === 'checkout.session.async_payment_succeeded';
-  if (!isPaid) {
+  // Only payments created by our checkout carry an orderNr in their metadata;
+  // thin payloads have no data.object at all.
+  const payment = event.data && event.data.object;
+  const isOurPayment =
+    event.type === 'payment_intent.succeeded' && payment && payment.metadata && payment.metadata.orderNr;
+  if (!isOurPayment) {
     console.log(`stripe-webhook: ignored ${event.type}`);
     return new Response('Ignored', { status: 200 });
   }
 
   try {
-    const result = await syncPaidSession(session, env.HUBSPOT_PRIVATE_APP_TOKEN);
+    const result = await syncPaidPayment(payment, env.HUBSPOT_PRIVATE_APP_TOKEN);
     console.log(`stripe-webhook: synced ${JSON.stringify(result)}`);
     return new Response(JSON.stringify(result), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (e) {

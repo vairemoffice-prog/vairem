@@ -74,7 +74,7 @@ stronę płatności Stripe.
 
 Worker tworzy sesję Stripe Checkout (BLIK, karta, Apple Pay, Google Pay,
 Przelewy24), a **do HubSpot zamówienie trafia dopiero po potwierdzeniu
-płatności** (webhook). Ceny, rabat (`WITAJ10`) i dostawę (9,99 zł, gratis
+płatności** (webhook `payment_intent.succeeded`). Ceny, rabat (`WITAJ10`) i dostawę (9,99 zł, gratis
 powyżej 300 zł po rabacie) liczy Worker — `PRODUCTS`, `DISCOUNT_*`,
 `SHIPPING_COST` i `FREE_SHIPPING_ABOVE` w `src/index.js`. Przy zmianie cen
 popraw je **także** w `js/app.js`, `checkout.html`, `katalog.html` i
@@ -91,7 +91,8 @@ Settings → Variables and Secrets, typ *Secret*):
 
 Webhook w Stripe (Deweloperzy → Webhooki → Dodaj punkt końcowy):
 - adres: `https://vairem-hubspot-sync.<twoja-subdomena>.workers.dev/stripe-webhook`
-- zdarzenia: `checkout.session.completed` i `checkout.session.async_payment_succeeded`
+- zdarzenie: `payment_intent.succeeded` (płatność udana; to jedyne, którego używa Worker, inne ignoruje)
+- styl ładunku: **Snapshot** (nie „Thin”)
 - po utworzeniu skopiuj *Klucz podpisywania* (`whsec_…`) do sekretu `STRIPE_WEBHOOK_SECRET`.
 
 Przejście na produkcję: w trybie „na żywo” utwórz **osobny** webhook i podmień
