@@ -64,17 +64,42 @@ npx wrangler secret put HUBSPOT_PRIVATE_APP_TOKEN
 
 Wklej token z kroku 2, kiedy zapyta (nie trafia do żadnego pliku w repo).
 
-## 5. Podepnij adres Workera w checkout.html
+## 5. Adres Workera w checkout.html
 
-W pliku `checkout.html` znajdź stałą `ORDER_SYNC_WORKER_URL` (obecnie pusty
-string — do tego czasu wysyłka zamówień do HubSpot jest wyłączona, strona
-działa normalnie) i wstaw adres z kroku 3, np.:
+W pliku `checkout.html` stała `PAYMENT_WORKER_URL` wskazuje adres Workera z
+kroku 3. Kasa wysyła tam zamówienie (`POST /checkout`), a klient trafia na
+stronę płatności Stripe.
 
-```js
-var ORDER_SYNC_WORKER_URL = 'https://vairem-hubspot-sync.twoja-subdomena.workers.dev';
-```
+## 6. Płatności Stripe
 
-## 6. CORS
+Worker tworzy sesję Stripe Checkout (BLIK, karta, Apple Pay, Google Pay,
+Przelewy24), a **do HubSpot zamówienie trafia dopiero po potwierdzeniu
+płatności** (webhook). Ceny, rabat (`WITAJ10`) i dostawę (9,99 zł, gratis
+powyżej 300 zł po rabacie) liczy Worker — `PRODUCTS`, `DISCOUNT_*`,
+`SHIPPING_COST` i `FREE_SHIPPING_ABOVE` w `src/index.js`. Przy zmianie cen
+popraw je **także** w `js/app.js`, `checkout.html`, `katalog.html` i
+`index.html` (to tylko wyświetlanie; obowiązuje cena z Workera).
+
+Sekrety Workera (Cloudflare → Workers & Pages → vairem-hubspot-sync →
+Settings → Variables and Secrets, typ *Secret*):
+
+| Nazwa | Wartość |
+|---|---|
+| `HUBSPOT_PRIVATE_APP_TOKEN` | token Private App z HubSpot |
+| `STRIPE_SECRET_KEY` | `sk_test_…` (piaskownica) lub `sk_live_…` (produkcja) |
+| `STRIPE_WEBHOOK_SECRET` | `whsec_…` z kroku poniżej |
+
+Webhook w Stripe (Deweloperzy → Webhooki → Dodaj punkt końcowy):
+- adres: `https://vairem-hubspot-sync.<twoja-subdomena>.workers.dev/stripe-webhook`
+- zdarzenia: `checkout.session.completed` i `checkout.session.async_payment_succeeded`
+- po utworzeniu skopiuj *Klucz podpisywania* (`whsec_…`) do sekretu `STRIPE_WEBHOOK_SECRET`.
+
+Przejście na produkcję: w trybie „na żywo” utwórz **osobny** webhook i podmień
+oba sekrety (`sk_live_…`, nowy `whsec_…`). Potem ustaw w `src/index.js`
+`LEGACY_SYNC_ENABLED = false` i wdróż (`npx wrangler deploy`), żeby nikt nie mógł
+tworzyć transakcji bez płatności.
+
+## 7. CORS
 
 Worker akceptuje zapytania tylko z `https://vairemoffice-prog.github.io`
 (zdefiniowane w `src/index.js` jako `ALLOWED_ORIGIN`). Jeśli strona kiedyś
