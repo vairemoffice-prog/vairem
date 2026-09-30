@@ -441,6 +441,18 @@
   function productByNr(nr) { return PRODUCTS.filter(function (p) { return p.nr === nr; })[0]; }
   function formatPrice(price) { return price === 0 ? '[CENA]' : price + ' zł'; }
 
+  // Shipping: free above the threshold (after discount), flat fee otherwise.
+  var SHIPPING_COST = 9.99;
+  var FREE_SHIPPING_ABOVE = 300;
+  function roundMoney(x) { return Math.round(x * 100) / 100; }
+  function formatMoney(x) {
+    x = roundMoney(x);
+    return (x % 1 === 0 ? String(x) : x.toFixed(2).replace('.', ',')) + ' zł';
+  }
+  function shippingFor(amountAfterDiscount) {
+    return amountAfterDiscount > FREE_SHIPPING_ABOVE ? 0 : SHIPPING_COST;
+  }
+
   // HubSpot order sync (see cloudflare/hubspot-sync-worker/README.md).
   // Worker deployed — each order is synced to HubSpot (contact + deal).
   var ORDER_SYNC_WORKER_URL = 'https://vairem-hubspot-sync.hubspot-sync-worker.workers.dev';
@@ -674,7 +686,8 @@
   // ---------- step 4: summary ----------
   function renderSummary() {
     var discount = discountApplied ? Math.round(orderTotal * DISCOUNT_RATE) : 0;
-    var finalTotal = orderTotal - discount;
+    var shippingCost = shippingFor(orderTotal - discount);
+    var finalTotal = roundMoney(orderTotal - discount + shippingCost);
 
     var itemsEl = document.getElementById('co-items');
     itemsEl.innerHTML = cart.map(function (item) {
@@ -690,11 +703,11 @@
         '</div>'
       );
     }).join('') +
-      '<div class="co-summary-row"><div class="name">Wysyłka</div><div class="price">0 zł</div></div>' +
+      '<div class="co-summary-row"><div class="name">Wysyłka' + (shippingCost === 0 ? ' (gratis powyżej ' + FREE_SHIPPING_ABOVE + ' zł)' : '') + '</div><div class="price">' + (shippingCost === 0 ? 'Gratis' : formatMoney(shippingCost)) + '</div></div>' +
       (discountApplied
         ? '<div class="co-summary-row"><div class="name">Rabat (' + DISCOUNT_CODE + ')</div><div class="price">&minus;' + discount + ' zł</div></div>'
         : '') +
-      '<div class="co-summary-total"><span class="lbl">DO ZAPŁATY</span><span class="val">' + formatPrice(finalTotal) + '</span></div>';
+      '<div class="co-summary-total"><span class="lbl">DO ZAPŁATY</span><span class="val">' + formatMoney(finalTotal) + '</span></div>';
 
     document.getElementById('co-recap-account').textContent = checkoutMode === 'account'
       ? 'Zalogowano jako ' + (getAccount() || {}).name
@@ -725,7 +738,8 @@
     document.getElementById('co-order-nr').textContent = 'NUMER ZAMÓWIENIA: ' + orderNr;
 
     var discount = discountApplied ? Math.round(orderTotal * DISCOUNT_RATE) : 0;
-    var finalTotal = orderTotal - discount;
+    var shippingCost = shippingFor(orderTotal - discount);
+    var finalTotal = roundMoney(orderTotal - discount + shippingCost);
     var orderItems = cart.map(function (item) {
       var p = productByNr(item.nr);
       return { nr: item.nr, name: p ? p.name : item.nr, qty: item.qty, price: p ? p.price : 0 };
@@ -761,7 +775,7 @@
           phone: document.getElementById('f-phone').value.trim(),
           city: shipping.city || '',
           items: itemsSummary,
-          total: formatPrice(finalTotal)
+          total: formatMoney(finalTotal)
         })
       }).catch(function () {}); // order confirmation below proceeds regardless
     }
