@@ -38,6 +38,11 @@ const PROP_LTV = 'vairem__ltv_pln';
 const PROP_ORDER_COUNT = 'vairem__liczba_zamowien';
 const PROP_LAST_ORDER = 'vairem__ostatnie_zamowienie';
 
+// Deal stage ID of "Zamknięcie Wygrane" (closed won) in the portal's default
+// pipeline. Stage IDs are portal-specific; list them via
+// GET /crm/v3/pipelines/deals.
+const DEAL_STAGE_CLOSED_WON = '6161511673';
+
 function corsHeaders(origin) {
   return {
     'Access-Control-Allow-Origin': origin === ALLOWED_ORIGIN ? origin : ALLOWED_ORIGIN,
@@ -123,7 +128,7 @@ async function createDeal(order, contactId, token) {
       properties: {
         dealname: order.orderNr || `VAIREM order ${Date.now()}`,
         amount: String(order.total || 0),
-        dealstage: 'closedwon',
+        dealstage: DEAL_STAGE_CLOSED_WON,
         pipeline: 'default',
         description: itemsSummary,
       },

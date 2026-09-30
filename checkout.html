@@ -442,8 +442,8 @@
   function formatPrice(price) { return price === 0 ? '[CENA]' : price + ' zł'; }
 
   // HubSpot order sync (see cloudflare/hubspot-sync-worker/README.md).
-  // Empty until the Worker is deployed — placeOrder() then just skips it.
-  var ORDER_SYNC_WORKER_URL = '';
+  // Worker deployed — each order is synced to HubSpot (contact + deal).
+  var ORDER_SYNC_WORKER_URL = 'https://vairem-hubspot-sync.hubspot-sync-worker.workers.dev';
 
   // E-mail notification for the shop owner on every order, via Formspree
   // (https://formspree.io) — no backend to deploy. Set this up once:
