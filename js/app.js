@@ -2,9 +2,9 @@
   'use strict';
 
   const PRODUCTS = [
-    { nr: '017', name: 'Before It Dries', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 0, intensity: 0 },
-    { nr: '042', name: 'Within', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 0, intensity: 0 },
-    { nr: '086', name: 'Afterlight', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 0, intensity: 0 }
+    { nr: '017', name: 'Before It Dries', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
+    { nr: '042', name: 'Within', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
+    { nr: '086', name: 'Afterlight', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 }
   ];
 
   const productByNr = nr => PRODUCTS.find(p => p.nr === nr);
@@ -924,7 +924,7 @@
     const count = cartCount();
     document.getElementById('cart-badge').textContent = String(count);
     document.getElementById('cart-drawer-title').textContent = t('cart.title_tpl')(count);
-    document.getElementById('cart-total').textContent = formatPrice(cartTotal());
+    document.getElementById('cart-total').textContent = cartTotal() + ' zł';
 
     const itemsEl = document.getElementById('cart-items');
     const knownItems = state.cart.filter(item => productByNr(item.nr));
