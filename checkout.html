@@ -363,6 +363,7 @@
               <span class="pay-name">Szybki przelew</span>
             </button>
           </div>
+          <p class="co-sub" id="co-stripe-note" hidden>Zapłacisz bezpiecznie na stronie Stripe — kartą, Apple Pay / Google Pay, BLIK-iem lub szybkim przelewem. To tryb testowy: prawdziwe pieniądze nie są pobierane (karta testowa 4242 4242 4242 4242).</p>
           <div class="co-error mono" id="co-payment-error" hidden>Wybierz formę płatności, żeby przejść dalej.</div>
           <div class="co-actions">
             <button type="button" class="co-back-step" data-back="2">← WSTECZ</button>
@@ -455,6 +456,11 @@
   // localStorage history work exactly the same either way.
   var ORDER_NOTIFY_EMAIL_URL = 'https://formspree.io/f/xppwbyyq';
 
+  // Stripe Checkout (TEST MODE) — see cloudflare/stripe-checkout-worker/README.md.
+  // Empty = payments disabled and the order is simply recorded (old behaviour).
+  var STRIPE_WORKER_URL = '';
+  var PENDING_KEY = 'vairem-pending-order';
+
   var CART_KEY = 'vairem-cart';
   var ORDERS_KEY = 'vairem-orders';
   var cart = [];
@@ -468,6 +474,18 @@
 
   var flowEl = document.getElementById('co-flow');
   var emptyEl = document.getElementById('co-empty');
+
+  // Coming back from Stripe: verify the payment with the Worker, then record
+  // the order exactly as a normal one. Runs before the empty-cart check
+  // because the cart is cleared only once payment is confirmed.
+  var qs = new URLSearchParams(location.search);
+  var pending = null;
+  try { pending = JSON.parse(localStorage.getItem(PENDING_KEY) || 'null'); } catch (e) {}
+
+  if (STRIPE_WORKER_URL && qs.get('paid') === '1' && qs.get('session_id') && pending) {
+    verifyStripeReturn(qs.get('session_id'));
+    return;
+  }
 
   if (cart.length === 0) {
     flowEl.hidden = true;
@@ -665,6 +683,13 @@
     tile.addEventListener('click', function () { selectPayment(tile); });
   });
 
+  if (STRIPE_WORKER_URL) {
+    // Stripe Checkout shows its own method picker (card, wallets, BLIK, P24).
+    payGrid.hidden = true;
+    document.getElementById('co-stripe-note').hidden = false;
+    selectedPayment = 'Płatność online (Stripe — tryb testowy)';
+  }
+
   document.getElementById('co-to-summary').addEventListener('click', function () {
     if (!selectedPayment) { paymentError.hidden = false; return; }
     renderSummary();
@@ -720,48 +745,39 @@
     renderSummary();
   });
 
-  document.getElementById('co-place-order').addEventListener('click', function () {
-    var orderNr = 'VR-' + Date.now().toString(36).toUpperCase();
-    document.getElementById('co-order-nr').textContent = 'NUMER ZAMÓWIENIA: ' + orderNr;
-
-    var discount = discountApplied ? Math.round(orderTotal * DISCOUNT_RATE) : 0;
-    var finalTotal = orderTotal - discount;
-    var orderItems = cart.map(function (item) {
-      var p = productByNr(item.nr);
-      return { nr: item.nr, name: p ? p.name : item.nr, qty: item.qty, price: p ? p.price : 0 };
-    });
-
+  // Records a confirmed order: HubSpot + owner e-mail + local history + clear cart.
+  function finalizeOrder(o) {
     if (ORDER_SYNC_WORKER_URL) {
       fetch(ORDER_SYNC_WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          orderNr: orderNr,
-          email: document.getElementById('f-email').value.trim(),
-          name: document.getElementById('f-name').value.trim(),
-          phone: document.getElementById('f-phone').value.trim(),
-          items: orderItems,
-          total: finalTotal
+          orderNr: o.orderNr,
+          email: o.email,
+          name: o.name,
+          phone: o.phone,
+          items: o.items,
+          total: o.total
         })
       }).catch(function () {}); // order confirmation below proceeds regardless
     }
 
     if (ORDER_NOTIFY_EMAIL_URL) {
-      var itemsSummary = orderItems.map(function (item) {
+      var itemsSummary = o.items.map(function (item) {
         return item.nr + ' ' + item.name + ' ×' + item.qty;
       }).join('; ');
       fetch(ORDER_NOTIFY_EMAIL_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject: 'Nowe zamówienie VAIREM ' + orderNr,
-          orderNr: orderNr,
-          name: document.getElementById('f-name').value.trim(),
-          email: document.getElementById('f-email').value.trim(),
-          phone: document.getElementById('f-phone').value.trim(),
-          city: shipping.city || '',
+          _subject: 'Nowe zamówienie VAIREM ' + o.orderNr,
+          orderNr: o.orderNr,
+          name: o.name,
+          email: o.email,
+          phone: o.phone,
+          city: o.city,
           items: itemsSummary,
-          total: formatPrice(finalTotal)
+          total: formatPrice(o.total)
         })
       }).catch(function () {}); // order confirmation below proceeds regardless
     }
@@ -773,17 +789,89 @@
       var orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
       if (!Array.isArray(orders)) orders = [];
       orders.unshift({
-        orderNr: orderNr,
+        orderNr: o.orderNr,
         date: Date.now(),
-        items: orderItems,
-        total: finalTotal,
-        city: shipping.city || ''
+        items: o.items,
+        total: o.total,
+        city: o.city
       });
       localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
     } catch (e) {}
 
     try { localStorage.setItem(CART_KEY, '[]'); } catch (e) {}
-    goToStep(5);
+    try { localStorage.removeItem(PENDING_KEY); } catch (e) {}
+    document.getElementById('co-order-nr').textContent = 'NUMER ZAMÓWIENIA: ' + o.orderNr;
+  }
+
+  function verifyStripeReturn(sessionId) {
+    // Panel 5 is shown straight away with a neutral message until verified.
+    document.querySelectorAll('.co-panel').forEach(function (p) { p.hidden = Number(p.dataset.panel) !== 5; });
+    var title = document.querySelector('[data-panel="5"] .co-title');
+    var sub = document.querySelector('[data-panel="5"] .co-sub');
+    title.textContent = 'Sprawdzamy płatność…';
+    sub.textContent = '';
+    fetch(STRIPE_WORKER_URL + '/session-status?id=' + encodeURIComponent(sessionId))
+      .then(function (r) { return r.json(); })
+      .then(function (st) {
+        if (!st.paid || st.orderNr !== pending.orderNr) throw new Error('unpaid');
+        finalizeOrder(pending);
+        title.textContent = 'Zamówienie przyjęte';
+        sub.textContent = 'Płatność potwierdzona. Potwierdzenie wysłaliśmy na podany adres e-mail.';
+        history.replaceState(null, '', location.pathname);
+      })
+      .catch(function () {
+        title.textContent = 'Nie udało się potwierdzić płatności';
+        sub.textContent = 'Jeśli pieniądze zostały pobrane, napisz do nas — podaj numer zamówienia ' + pending.orderNr + '.';
+      });
+  }
+
+  document.getElementById('co-place-order').addEventListener('click', function () {
+    var orderNr = 'VR-' + Date.now().toString(36).toUpperCase();
+    var discount = discountApplied ? Math.round(orderTotal * DISCOUNT_RATE) : 0;
+    var orderItems = cart.map(function (item) {
+      var p = productByNr(item.nr);
+      return { nr: item.nr, name: p ? p.name : item.nr, qty: item.qty, price: p ? p.price : 0 };
+    });
+    var order = {
+      orderNr: orderNr,
+      email: document.getElementById('f-email').value.trim(),
+      name: document.getElementById('f-name').value.trim(),
+      phone: document.getElementById('f-phone').value.trim(),
+      city: shipping.city || '',
+      items: orderItems,
+      total: orderTotal - discount
+    };
+
+    if (!STRIPE_WORKER_URL) {
+      finalizeOrder(order);
+      goToStep(5);
+      return;
+    }
+
+    // Stripe: the Worker owns prices, so send only product numbers + qty.
+    var btn = this;
+    btn.disabled = true;
+    fetch(STRIPE_WORKER_URL + '/create-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        orderNr: orderNr,
+        email: order.email,
+        items: cart.map(function (i) { return { nr: i.nr, qty: i.qty }; }),
+        promo: discountApplied ? DISCOUNT_CODE : '',
+        returnUrl: location.origin + location.pathname
+      })
+    }).then(function (r) { return r.json(); }).then(function (res) {
+      if (!res.url) throw new Error(res.error || 'no url');
+      localStorage.setItem(PENDING_KEY, JSON.stringify(order));
+      location.href = res.url;
+    }).catch(function () {
+      btn.disabled = false;
+      var err = document.getElementById('co-payment-error');
+      err.textContent = 'Nie udało się rozpocząć płatności. Spróbuj ponownie za chwilę.';
+      err.hidden = false;
+      goToStep(3);
+    });
   });
 
   goToStep(1);

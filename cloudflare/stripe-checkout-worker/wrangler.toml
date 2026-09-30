@@ -1,0 +1,7 @@
+name = "vairem-stripe-checkout"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# The Stripe secret key is a secret — never put it here.
+# After creating the Worker, set it with:
+#   wrangler secret put STRIPE_SECRET_KEY      (must start with sk_test_ in test mode)
