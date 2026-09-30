@@ -455,7 +455,10 @@ async function handleStripeWebhook(request, env) {
   }
   const raw = await request.text();
   const valid = await verifyStripeSignature(raw, request.headers.get('Stripe-Signature'), env.STRIPE_WEBHOOK_SECRET);
-  if (!valid) return new Response('Bad signature', { status: 400 });
+  if (!valid) {
+    console.log('stripe-webhook: rejected, bad signature');
+    return new Response('Bad signature', { status: 400 });
+  }
 
   let event;
   try {
@@ -468,13 +471,18 @@ async function handleStripeWebhook(request, env) {
   const isPaid =
     (event.type === 'checkout.session.completed' && session && session.payment_status === 'paid') ||
     event.type === 'checkout.session.async_payment_succeeded';
-  if (!isPaid) return new Response('Ignored', { status: 200 });
+  if (!isPaid) {
+    console.log(`stripe-webhook: ignored ${event.type}`);
+    return new Response('Ignored', { status: 200 });
+  }
 
   try {
     const result = await syncPaidSession(session, env.HUBSPOT_PRIVATE_APP_TOKEN);
+    console.log(`stripe-webhook: synced ${JSON.stringify(result)}`);
     return new Response(JSON.stringify(result), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (e) {
     // 5xx makes Stripe retry the delivery.
+    console.log(`stripe-webhook: sync failed ${String(e).slice(0, 300)}`);
     return new Response(String(e), { status: 500 });
   }
 }
