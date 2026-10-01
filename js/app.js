@@ -851,6 +851,7 @@
   function updateKartaChrome() {
     const p = PRODUCTS[state.kartaIndex];
     document.getElementById('karta-eyebrow').textContent = t('karta.eyebrow_tpl')(p.nr);
+    document.getElementById('karta-title').textContent = p.name;
     document.getElementById('karta-prev').setAttribute('aria-label', t('karta.prev'));
     document.getElementById('karta-next').setAttribute('aria-label', t('karta.next'));
     document.querySelectorAll('#karta-dots .karta-dot').forEach((dot, i) => {
