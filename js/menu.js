@@ -242,4 +242,27 @@
       link.addEventListener('mouseleave', () => window.clearTimeout(navTimer));
     });
   }
+  // ---------- "← WSTECZ": return to the previous page when there is one ----------
+
+  let swappedInSession = false;
+  const canGoBack = () =>
+    history.length > 1 && (swappedInSession || (document.referrer && new URL(document.referrer).origin === location.origin));
+
+  function updateBackLinks() {
+    document.querySelectorAll('.legal-back').forEach(a => {
+      a.textContent = canGoBack() ? '← WSTECZ' : '← STRONA GŁÓWNA';
+    });
+  }
+
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('.legal-back');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    if (canGoBack()) {
+      e.preventDefault();
+      history.back();
+    }
+  });
+
+  document.addEventListener('vairem:content-swapped', () => { swappedInSession = true; updateBackLinks(); });
+  updateBackLinks();
 })();
