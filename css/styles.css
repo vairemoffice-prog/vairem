@@ -1361,3 +1361,17 @@ button { font-family: inherit; }
   background: var(--pink-deep-hover);
 }
 
+
+/* free-shipping progress bar (cart) */
+.ship-bar { margin-bottom: 14px; }
+.ship-bar-text { font-size: 11px; letter-spacing: 0.1em; color: var(--text); margin-bottom: 8px; }
+.ship-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.ship-bar-fill { height: 100%; width: 0; background: var(--text); transition: width 0.3s ease; }
+
+/* trust strip */
+.section-trust { padding: 56px 0 0; }
+.trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.trust-item { border-top: 1px solid var(--border); padding-top: 14px; }
+.trust-title { font-size: 11px; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 6px; }
+.trust-desc { font-size: 15px; line-height: 1.4; }
+@media (max-width: 760px) { .trust-grid { grid-template-columns: 1fr 1fr; gap: 18px; } }

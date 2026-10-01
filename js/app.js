@@ -95,6 +95,9 @@
       'footer.vat': 'CENY W PLN, ZAWIERAJĄ VAT',
       'cart.close': 'ZAMKNIJ ✕', 'cart.shipping': 'WYSYŁKA', 'cart.total': 'DO ZAPŁATY',
       'cta.checkout': 'PRZEJDŹ DO PŁATNOŚCI →', 'cart.note': 'ZWROT 30 DNI · SZKŁO DO REFILLU',
+      'cart.ship_left_tpl': n => `Do darmowej wysyłki brakuje ${n} zł`, 'cart.ship_free': 'Darmowa wysyłka odblokowana ✓',
+      'trust.ship.t': 'SZYBKA WYSYŁKA', 'trust.ship.d': 'Wysyłka 1–3 dni', 'trust.ret.t': 'ZWROT', 'trust.ret.d': 'Zwrot 30 dni',
+      'trust.pay.t': 'BEZPIECZNE PŁATNOŚCI', 'trust.pay.d': 'BLIK · karta · Apple/Google Pay · P24', 'trust.vat.t': 'UCZCIWA CENA', 'trust.vat.d': 'Ceny zawierają VAT',
       'cart.title_tpl': n => `KOSZYK · ${n} POZ.`,
       'cart.empty': 'KOSZYK PUSTY — WYBIERZ ZWIĄZEK Z INDEKSU.', 'cart.remove': 'USUŃ',
       'newsletter.subscribed': 'ZAPISANO ✓', 'newsletter.thanks': 'DZIĘKUJEMY — POTWIERDŹ LINK W POCZCIE.',
@@ -166,6 +169,9 @@
       'footer.vat': 'PRICES IN PLN, VAT INCLUDED',
       'cart.close': 'CLOSE ✕', 'cart.shipping': 'SHIPPING', 'cart.total': 'TOTAL DUE',
       'cta.checkout': 'PROCEED TO PAYMENT →', 'cart.note': '30-DAY RETURNS · REFILLABLE GLASS',
+      'cart.ship_left_tpl': n => `${n} PLN left for free shipping`, 'cart.ship_free': 'Free shipping unlocked ✓',
+      'trust.ship.t': 'FAST SHIPPING', 'trust.ship.d': 'Ships in 1–3 days', 'trust.ret.t': 'RETURNS', 'trust.ret.d': '30-day returns',
+      'trust.pay.t': 'SECURE PAYMENTS', 'trust.pay.d': 'BLIK · card · Apple/Google Pay · P24', 'trust.vat.t': 'FAIR PRICE', 'trust.vat.d': 'Prices include VAT',
       'cart.title_tpl': n => `CART · ${n} ITEMS`,
       'cart.empty': 'CART EMPTY — CHOOSE A COMPOUND FROM THE INDEX.', 'cart.remove': 'REMOVE',
       'newsletter.subscribed': 'SUBSCRIBED ✓', 'newsletter.thanks': 'THANK YOU — CONFIRM THE LINK IN YOUR INBOX.',
@@ -237,6 +243,9 @@
       'footer.vat': 'PRECIOS EN PLN, IVA INCLUIDO',
       'cart.close': 'CERRAR ✕', 'cart.shipping': 'ENVÍO', 'cart.total': 'TOTAL A PAGAR',
       'cta.checkout': 'PROCEDER AL PAGO →', 'cart.note': 'DEVOLUCIÓN 30 DÍAS · VIDRIO RECARGABLE',
+      'cart.ship_left_tpl': n => `Te faltan ${n} PLN para el envío gratis`, 'cart.ship_free': 'Envío gratis desbloqueado ✓',
+      'trust.ship.t': 'ENVÍO RÁPIDO', 'trust.ship.d': 'Envío en 1–3 días', 'trust.ret.t': 'DEVOLUCIÓN', 'trust.ret.d': 'Devolución 30 días',
+      'trust.pay.t': 'PAGOS SEGUROS', 'trust.pay.d': 'BLIK · tarjeta · Apple/Google Pay · P24', 'trust.vat.t': 'PRECIO JUSTO', 'trust.vat.d': 'Precios con IVA incluido',
       'cart.title_tpl': n => `CARRITO · ${n} UDS.`,
       'cart.empty': 'CARRITO VACÍO — ELIGE UN COMPUESTO DEL ÍNDICE.', 'cart.remove': 'QUITAR',
       'newsletter.subscribed': 'SUSCRITO ✓', 'newsletter.thanks': 'GRACIAS — CONFIRMA EL ENLACE EN TU CORREO.',
@@ -308,6 +317,9 @@
       'footer.vat': 'ЦІНИ В PLN, З ПДВ',
       'cart.close': 'ЗАКРИТИ ✕', 'cart.shipping': 'ДОСТАВКА', 'cart.total': 'ДО СПЛАТИ',
       'cta.checkout': 'ПЕРЕЙТИ ДО ОПЛАТИ →', 'cart.note': 'ПОВЕРНЕННЯ 30 ДНІВ · СКЛО ДЛЯ ДОЗАПРАВКИ',
+      'cart.ship_left_tpl': n => `До безкоштовної доставки бракує ${n} PLN`, 'cart.ship_free': 'Безкоштовну доставку розблоковано ✓',
+      'trust.ship.t': 'ШВИДКА ДОСТАВКА', 'trust.ship.d': 'Доставка 1–3 дні', 'trust.ret.t': 'ПОВЕРНЕННЯ', 'trust.ret.d': 'Повернення 30 днів',
+      'trust.pay.t': 'БЕЗПЕЧНІ ПЛАТЕЖІ', 'trust.pay.d': 'BLIK · картка · Apple/Google Pay · P24', 'trust.vat.t': 'ЧЕСНА ЦІНА', 'trust.vat.d': 'Ціни включають ПДВ',
       'cart.title_tpl': n => `КОШИК · ${n} ПОЗ.`,
       'cart.empty': 'КОШИК ПОРОЖНІЙ — ОБЕРИ СПОЛУКУ З ІНДЕКСУ.', 'cart.remove': 'ВИДАЛИТИ',
       'newsletter.subscribed': 'ПІДПИСАНО ✓', 'newsletter.thanks': 'ДЯКУЄМО — ПІДТВЕРДЬ ПОСИЛАННЯ В ПОШТІ.',
@@ -379,6 +391,9 @@
       'footer.vat': 'PRIX EN PLN, TVA INCLUSE',
       'cart.close': 'FERMER ✕', 'cart.shipping': 'LIVRAISON', 'cart.total': 'TOTAL À PAYER',
       'cta.checkout': 'PROCÉDER AU PAIEMENT →', 'cart.note': 'RETOUR 30 JOURS · VERRE RECHARGEABLE',
+      'cart.ship_left_tpl': n => `Plus que ${n} PLN pour la livraison offerte`, 'cart.ship_free': 'Livraison offerte débloquée ✓',
+      'trust.ship.t': 'LIVRAISON RAPIDE', 'trust.ship.d': 'Livraison en 1–3 jours', 'trust.ret.t': 'RETOUR', 'trust.ret.d': 'Retour sous 30 jours',
+      'trust.pay.t': 'PAIEMENTS SÉCURISÉS', 'trust.pay.d': 'BLIK · carte · Apple/Google Pay · P24', 'trust.vat.t': 'PRIX JUSTE', 'trust.vat.d': 'Prix TTC',
       'cart.title_tpl': n => `PANIER · ${n} ART.`,
       'cart.empty': "PANIER VIDE — CHOISISSEZ UN COMPOSÉ DANS L'INDEX.", 'cart.remove': 'RETIRER',
       'newsletter.subscribed': 'ABONNÉ ✓', 'newsletter.thanks': 'MERCI — CONFIRMEZ LE LIEN DANS VOTRE BOÎTE MAIL.',
@@ -920,11 +935,23 @@
     renderCart();
   }
 
+  const FREE_SHIPPING_FROM = 300;
+  function renderShippingBar() {
+    const bar = document.getElementById('ship-bar');
+    if (!bar) return;
+    const total = cartTotal();
+    bar.hidden = total <= 0;
+    const left = FREE_SHIPPING_FROM - total;
+    document.getElementById('ship-bar-text').textContent = left > 0 ? t('cart.ship_left_tpl')(left) : t('cart.ship_free');
+    document.getElementById('ship-bar-fill').style.width = Math.min(100, total / FREE_SHIPPING_FROM * 100) + '%';
+  }
+
   function renderCart() {
     const count = cartCount();
     document.getElementById('cart-badge').textContent = String(count);
     document.getElementById('cart-drawer-title').textContent = t('cart.title_tpl')(count);
     document.getElementById('cart-total').textContent = cartTotal() + ' zł';
+    renderShippingBar();
 
     const itemsEl = document.getElementById('cart-items');
     const knownItems = state.cart.filter(item => productByNr(item.nr));
