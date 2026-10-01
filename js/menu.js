@@ -249,7 +249,7 @@
     history.length > 1 && (swappedInSession || (document.referrer && new URL(document.referrer).origin === location.origin));
 
   function updateBackLinks() {
-    document.querySelectorAll('.legal-back').forEach(a => {
+    document.querySelectorAll('.legal-back:not([data-fixed-label])').forEach(a => {
       a.textContent = canGoBack() ? '← WSTECZ' : '← STRONA GŁÓWNA';
     });
   }
