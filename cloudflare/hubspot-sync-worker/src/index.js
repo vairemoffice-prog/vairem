@@ -54,7 +54,7 @@ const PROP_LAST_ORDER = 'vairem__ostatnie_zamowienie';
 //   PROP_CART_ITEMS    single-line text       produkty w porzuconym koszyku
 //   PROP_CART_VALUE    number                 wartość porzuconego koszyka (PLN)
 const PROP_CART_CONSENT = 'vairem_koszyk_zgoda';
-const PROP_CART_ITEMS = 'vairem_koszyk_produkty';
+const PROP_CART_ITEMS = 'vairem__produkty_w_koszyku';
 const PROP_CART_VALUE = 'vairem__wartosc_koszyka_pln';
 
 // Legacy unauthenticated sync endpoint (POST /). The old checkout called it
