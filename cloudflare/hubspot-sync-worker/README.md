@@ -129,8 +129,8 @@ Settings → Properties → Contact properties → Create property:
 
 Tak jak w sekcji 1: sprawdź **rzeczywistą nazwę wewnętrzną** każdej
 właściwości i popraw stałe na górze `src/index.js`, jeśli się różnią
-(domyślnie `vairem_koszyk_zgoda`, `vairem_koszyk_produkty`,
-`vairem_koszyk_wartosc`). Dopóki właściwości nie istnieją, `/abandoned`
+(domyślnie `vairem__zgoda_na_przypomnienie`, `vairem__produkty_w_koszyku`,
+`vairem__wartosc_koszyka_pln`). Dopóki właściwości nie istnieją, `/abandoned`
 zwraca błąd 502, ale **nie wpływa na realizację zamówień**.
 
 ### 8.2 Workflow (Automation → Workflows → Contact-based)
@@ -143,7 +143,7 @@ zwraca błąd 502, ale **nie wpływa na realizację zamówień**.
 3. **Warunek (If/then):** „VAIREM — wartość koszyka” nadal jest znana.
    (Po zakupie Worker ją czyści, więc kupujący odpadają tutaj.)
 4. **Akcja:** wyślij e-mail z przypomnieniem. W treści użyj tokenów kontaktu
-   `{{ contact.vairem_koszyk_produkty }}` i `{{ contact.vairem_koszyk_wartosc }}`
+   `{{ contact.vairem__produkty_w_koszyku }}` i `{{ contact.vairem__wartosc_koszyka_pln }}`
    oraz linku do `https://vairemoffice-prog.github.io/vairem/checkout.html`
    (koszyk jest zapamiętany w przeglądarce klienta, więc działa na tym samym
    urządzeniu).
