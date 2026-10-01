@@ -138,6 +138,7 @@ body::after {
   z-index: -1;
   background-repeat: no-repeat;
   background-image: url('../assets/img/bg-floral-relief.jpg');
+  background-image: image-set(url('../assets/img/bg-floral-relief.webp') type('image/webp'), url('../assets/img/bg-floral-relief.jpg') type('image/jpeg'));
   background-size: 100% auto;
   background-position: center calc(var(--bg-scroll-progress) * 100%);
   transform: translateY(var(--bg-parallax-y));
