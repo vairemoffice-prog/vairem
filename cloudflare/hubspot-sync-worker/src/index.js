@@ -14,6 +14,7 @@
  *
  * Routes:
  *   POST /                 legacy: sync an order straight to HubSpot (no payment)
+ *   POST /abandoned        opted-in cart reminder: stores the cart on the contact
  *   POST /checkout         create a Stripe Checkout Session, returns { url }
  *   GET  /session?id=cs_…  { paid, orderNr } for the return page
  *   POST /stripe-webhook   Stripe (payment_intent.succeeded) -> HubSpot sync
@@ -46,6 +47,15 @@ const HUBSPOT_API = 'https://api.hubapi.com';
 const PROP_LTV = 'vairem__ltv_pln';
 const PROP_ORDER_COUNT = 'vairem__liczba_zamowien';
 const PROP_LAST_ORDER = 'vairem__ostatnie_zamowienie';
+
+// Abandoned-cart reminder properties (see README, section 8). Create them in
+// HubSpot and confirm the internal names — update here if they differ.
+//   PROP_CART_CONSENT  single checkbox        zgoda na przypomnienie ("true")
+//   PROP_CART_ITEMS    single-line text       produkty w porzuconym koszyku
+//   PROP_CART_VALUE    number                 wartość porzuconego koszyka (PLN)
+const PROP_CART_CONSENT = 'vairem_koszyk_zgoda';
+const PROP_CART_ITEMS = 'vairem_koszyk_produkty';
+const PROP_CART_VALUE = 'vairem_koszyk_wartosc';
 
 // Legacy unauthenticated sync endpoint (POST /). The old checkout called it
 // directly; with Stripe the sync happens from the verified webhook instead.
@@ -378,6 +388,7 @@ async function syncPaidPayment(pi, token) {
 
   const contactId = await upsertContact(order, token);
   const dealId = await createDeal(order, contactId, token);
+  await clearAbandonedCart(order.email, token);
   return { orderNr, contactId, dealId };
 }
 
@@ -414,6 +425,69 @@ async function handleLegacySync(request, env, origin) {
     return json({ ok: true, contactId, dealId }, 200, origin);
   } catch (e) {
     return json({ ok: false, error: String(e) }, 502, origin);
+  }
+}
+
+// Opt-in cart reminder. The browser sends { email, name, consent: true, items };
+// the cart is re-priced here from PRODUCTS, never taken from the browser. Only
+// writes the cart properties; a HubSpot workflow does the actual e-mailing.
+async function handleAbandoned(request, env, origin) {
+  if (!env.HUBSPOT_PRIVATE_APP_TOKEN) return json({ ok: false, error: 'Not configured' }, 500, origin);
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return json({ ok: false, error: 'Invalid JSON' }, 400, origin);
+  }
+  const email = String((body && body.email) || '').trim();
+  if (!body || body.consent !== true) return json({ ok: false, error: 'Consent required' }, 400, origin);
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || email.length > 200) {
+    return json({ ok: false, error: 'Invalid email' }, 400, origin);
+  }
+  const priced = priceOrder(body.items, '');
+  if (!priced) return json({ ok: false, error: 'Invalid items' }, 400, origin);
+
+  const [firstname, ...rest] = String(body.name || '').trim().slice(0, 200).split(' ');
+  try {
+    await hubspotFetch('/crm/v3/objects/contacts/batch/upsert', env.HUBSPOT_PRIVATE_APP_TOKEN, {
+      method: 'POST',
+      body: JSON.stringify({
+        inputs: [
+          {
+            idProperty: 'email',
+            id: email,
+            properties: {
+              email,
+              firstname: firstname || undefined,
+              lastname: rest.join(' ') || undefined,
+              [PROP_CART_CONSENT]: 'true',
+              [PROP_CART_ITEMS]: priced.items.map(i => `${i.nr} ${i.name} x${i.qty}`).join(', '),
+              [PROP_CART_VALUE]: String(priced.subtotal),
+            },
+          },
+        ],
+      }),
+    });
+    return json({ ok: true }, 200, origin);
+  } catch (e) {
+    console.log(`abandoned: failed ${String(e).slice(0, 300)}`);
+    return json({ ok: false, error: 'Sync failed' }, 502, origin);
+  }
+}
+
+// After a paid order, empty the cart properties so the reminder workflow does
+// not fire. Best effort and separate from the order sync: if the properties do
+// not exist yet this must never break order processing.
+async function clearAbandonedCart(email, token) {
+  try {
+    await hubspotFetch('/crm/v3/objects/contacts/batch/upsert', token, {
+      method: 'POST',
+      body: JSON.stringify({
+        inputs: [{ idProperty: 'email', id: email, properties: { email, [PROP_CART_ITEMS]: '', [PROP_CART_VALUE]: '' } }],
+      }),
+    });
+  } catch (e) {
+    console.log(`clearAbandonedCart: ${String(e).slice(0, 200)}`);
   }
 }
 
@@ -504,6 +578,9 @@ export default {
 
     if (url.pathname === '/stripe-webhook' && request.method === 'POST') {
       return handleStripeWebhook(request, env);
+    }
+    if (url.pathname === '/abandoned' && request.method === 'POST') {
+      return handleAbandoned(request, env, origin);
     }
     if (url.pathname === '/checkout' && request.method === 'POST') {
       return handleCheckout(request, env, origin);
