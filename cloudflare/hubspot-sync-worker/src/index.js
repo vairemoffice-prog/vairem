@@ -55,7 +55,7 @@ const PROP_LAST_ORDER = 'vairem__ostatnie_zamowienie';
 //   PROP_CART_VALUE    number                 wartość porzuconego koszyka (PLN)
 const PROP_CART_CONSENT = 'vairem_koszyk_zgoda';
 const PROP_CART_ITEMS = 'vairem_koszyk_produkty';
-const PROP_CART_VALUE = 'vairem_koszyk_wartosc';
+const PROP_CART_VALUE = 'vairem__wartosc_koszyka_pln';
 
 // Legacy unauthenticated sync endpoint (POST /). The old checkout called it
 // directly; with Stripe the sync happens from the verified webhook instead.
