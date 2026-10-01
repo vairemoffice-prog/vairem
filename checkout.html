@@ -75,6 +75,8 @@
   .co-form{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
   .co-field{ display:flex; flex-direction:column; gap:6px; }
   .co-field.full{ grid-column:1 / -1; }
+  .co-consent{ display:flex; gap:10px; align-items:flex-start; font-family:inherit !important; font-size:13px !important; letter-spacing:0 !important; color:var(--text) !important; line-height:1.5; cursor:pointer; }
+  .co-consent input{ margin-top:4px; flex:none; width:auto; }
   .co-field label{ font-size:11px; letter-spacing:0.1em; color:var(--muted); font-family:'Martian Mono',monospace; }
   .co-field input, .co-field textarea{
     border:1px solid var(--border-strong); background:var(--bg); color:var(--text);
@@ -314,6 +316,12 @@
               <div class="co-field full">
                 <label for="f-note">UWAGI DO ZAMÓWIENIA (OPCJONALNIE)</label>
                 <textarea id="f-note" name="note"></textarea>
+              </div>
+              <div class="co-field full">
+                <label class="co-consent" for="f-cart-reminder">
+                  <input id="f-cart-reminder" name="cartReminder" type="checkbox">
+                  <span>Chcę otrzymać jedną wiadomość e-mail z przypomnieniem, jeśli nie dokończę zamówienia. Zgodę mogę wycofać w każdej chwili (<a href="polityka-prywatnosci.html">polityka prywatności</a>).</span>
+                </label>
               </div>
             </div>
             <div class="co-error mono" id="co-shipping-error" hidden>Uzupełnij wymagane pola, żeby przejść dalej.</div>
@@ -668,6 +676,23 @@
       city: fd.get('city').trim(),
       note: fd.get('note').trim()
     };
+    // Opt-in only: the e-mail goes to HubSpot (cart-reminder workflow) when the
+    // customer explicitly ticked the box. Fire-and-forget — never blocks checkout.
+    if (fd.get('cartReminder')) {
+      try {
+        fetch(PAYMENT_WORKER_URL + '/abandoned', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
+          body: JSON.stringify({
+            email: shipping.email,
+            name: shipping.name,
+            consent: true,
+            items: cart.map(function (i) { return { nr: i.nr, qty: i.qty }; })
+          })
+        }).catch(function () {});
+      } catch (err) {}
+    }
     goToStep(3);
   });
 
