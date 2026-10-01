@@ -144,7 +144,7 @@
       '#page-content p', '#page-content article',
       '#page-content .cat-add-row',
       '#page-content .co-step-panel', '#page-content .co-summary',
-      '#page-content .legal-main > *'
+      '#page-content .legal-main > *:not(.wrap)'
     ].join(', ');
 
     const observer = ('IntersectionObserver' in window)
