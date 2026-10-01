@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /checkout.html
+Disallow: /zamowienia.html
+Disallow: /ustawienia-konta.html
+
+Sitemap: https://vairemoffice-prog.github.io/vairem/sitemap.xml
