@@ -1,0 +1,34 @@
+name: Site checks
+
+# Runs on every pull request and on pushes to main:
+#   1. static checks (broken links/assets/anchors, title, description, lang,
+#      one <h1>, alt text, duplicate ids) — scripts/check-site.mjs
+#   2. Lighthouse (accessibility + SEO must stay >= 0.9; performance and
+#      best-practices only warn) — lighthouserc.json
+
+on:
+  pull_request: {}
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Static checks
+        run: node scripts/check-site.mjs
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Lighthouse CI
+        run: npx --yes @lhci/cli@0.14.x autorun --config=lighthouserc.json
