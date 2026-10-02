@@ -56,6 +56,32 @@ for (const m of read(cssFile).matchAll(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g)) {
   if (!existsSync(resolve(dirname(cssFile), u.split('?')[0]))) fail('css/styles.css', `missing file "${u}"`);
 }
 
+// The public address must be the same everywhere and match site.json
+// (change it with `node scripts/apply-site-url.mjs`).
+{
+  const site = new URL(JSON.parse(read(join(root, 'site.json'))).url);
+  const base = site.href.replace(/\/+$/, '');
+  const withSlash = base + '/';
+  for (const page of pages) {
+    const html = read(join(root, page));
+    for (const m of html.matchAll(/<(?:link rel="canonical" href|meta property="og:(?:url|image)" content|meta name="twitter:image" content)="([^"]+)"/g)) {
+      if (!m[1].startsWith(withSlash)) fail(page, `address "${m[1]}" does not start with site.json url ${withSlash}`);
+    }
+  }
+  const sitemap = read(join(root, 'sitemap.xml'));
+  for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    if (!m[1].startsWith(withSlash)) fail('sitemap.xml', `"${m[1]}" does not start with ${withSlash}`);
+  }
+  if (!read(join(root, 'robots.txt')).includes(`Sitemap: ${withSlash}sitemap.xml`)) fail('robots.txt', `Sitemap line should be ${withSlash}sitemap.xml`);
+  const worker = read(join(root, 'cloudflare/hubspot-sync-worker/src/index.js'));
+  if (!worker.includes(`const ALLOWED_ORIGIN = '${site.origin}'`)) fail('worker/src/index.js', `ALLOWED_ORIGIN should be ${site.origin}`);
+  if (!worker.includes(`const SITE = '${base}'`)) fail('worker/src/index.js', `SITE should be ${base}`);
+  const hasCname = existsSync(join(root, 'CNAME'));
+  const customDomain = !site.hostname.endsWith('github.io');
+  if (customDomain && (!hasCname || read(join(root, 'CNAME')).trim() !== site.hostname)) fail('CNAME', `should exist and contain ${site.hostname}`);
+  if (!customDomain && hasCname) fail('CNAME', 'must not exist while the site is served from github.io');
+}
+
 if (errors.length) {
   console.error(`\n${errors.length} problem(s):\n` + errors.map(e => ' - ' + e).join('\n'));
   process.exit(1);
