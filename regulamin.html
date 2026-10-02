@@ -31,7 +31,7 @@
 <style id="page-style">
   .legal-header{ padding-block:22px; }
   .legal-header .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-  .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--muted); }
+  .legal-back{ font-size:11px; letter-spacing:0.14em; color:var(--text); }
   .legal-back:hover{ color:var(--text-hover); }
   .page-bottom-back{ display:inline-block; margin-top:40px; padding:8px 0; color:var(--text); font-size:12px; }
 
@@ -53,14 +53,14 @@
   .legal-toc li{ font-size:13px; padding:5px 0; break-inside:avoid; }
   .legal-toc a{ color:var(--text); }
   .legal-toc a:hover{ color:var(--text-hover); }
-  .legal-toc .toc-nr{ font-family:'Martian Mono',monospace; font-size:11px; color:var(--muted); padding-right:8px; }
+  .legal-toc .toc-nr{ font-family:'Martian Mono',monospace; font-size:11px; color:var(--text); padding-right:8px; }
 
   .legal-section{ padding-top:48px; scroll-margin-top:24px; }
   .legal-section h2{
     font-size:20px; letter-spacing:-0.01em; font-weight:500; margin:0 0 18px;
     display:flex; align-items:baseline; gap:12px;
   }
-  .legal-section h2 .sec-nr{ font-family:'Martian Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--muted); font-weight:400; }
+  .legal-section h2 .sec-nr{ font-family:'Martian Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--text); font-weight:400; }
   .legal-section h3{ font-size:15px; font-weight:500; margin:26px 0 10px; letter-spacing:-0.005em; }
   .legal-section p{ font-size:15px; line-height:1.7; color:var(--text); margin:0 0 14px; }
   .legal-section ul, .legal-section ol{ margin:0 0 14px; padding-left:20px; }
@@ -77,6 +77,7 @@
     padding:16px 18px; font-size:14px; line-height:1.7; background:var(--row-bg);
   }
   .legal-notice .tag{ font-size:10px; letter-spacing:0.14em; color:var(--green-deep); font-family:'Martian Mono',monospace; display:block; margin-bottom:8px; }
+  [data-theme="night"] .legal-notice .tag{ color:var(--green-soft); }
   .legal-notice p{ margin:0 0 10px; }
   .legal-notice p:last-child{ margin-bottom:0; }
 
