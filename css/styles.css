@@ -209,9 +209,6 @@
   --muted: #3E4952;
   --muted-strong: #343E47;
   --on-dark: #EAEFF2;
-  --panel: #CCD9E3;        /* surface for tables, spec cells, cards over the relief */
-  --panel-strong: #E4ECF2; /* header rows, hover */
-  --section-gap: clamp(96px, 15vh, 160px);
 
   --border: #6C7C88;
   --border-light: #8A93A0;
@@ -282,8 +279,6 @@
   --newsletter-border: #C3CBD1;
   --newsletter-copy: #4A525C;
   --on-dark: #2B313A;
-  --panel: #333A44;
-  --panel-strong: #3D444F;
 }
 
 * { box-sizing: border-box; }
@@ -505,8 +500,8 @@ button { font-family: inherit; }
   transition: color 0.25s ease;
 }
 .side-index a:hover { color: var(--text-hover); }
-.side-index a.is-active { color: var(--green-accent-text); }
-[data-theme="night"] .side-index a.is-active { color: var(--green-soft); }
+.side-index a.is-active { color: var(--green-deep); }
+[data-theme="night"] .side-index a.is-active { color: var(--green-accent); }
 @media (max-width: 900px) {
   .side-index { display: none; }
 }
@@ -741,8 +736,8 @@ button { font-family: inherit; }
   border: 1px solid var(--border);
   margin-top: 36px;
 }
-.stat { background: var(--panel); padding: 16px 18px; }
-.stat-label { font-size: 11px; letter-spacing: 0.16em; color: var(--muted); }
+.stat { background: var(--bg); padding: 16px 18px; }
+.stat-label { font-size: 10px; letter-spacing: 0.16em; color: var(--muted); }
 .stat-value { font-size: 34px; letter-spacing: -0.02em; padding-top: 4px; }
 
 .hero-strip {
@@ -757,11 +752,11 @@ button { font-family: inherit; }
   border-bottom: 1px solid var(--border);
 }
 .hero-strip-cell {
-  background: var(--panel);
+  background: var(--bg);
   padding: 16px 14px;
   display: block;
 }
-.hero-strip-cell:hover { background: var(--panel-strong); }
+.hero-strip-cell:hover { background: #C2C7CC; }
 @media (max-width: 559px) {
   /* two columns on phones: let an odd last cell take the full row instead of leaving a dark gap */
   .hero-strip-cell:last-child:nth-child(odd) { grid-column: 1 / -1; }
@@ -772,7 +767,7 @@ button { font-family: inherit; }
 
 /* ---------- indeks ---------- */
 
-.section-indeks { padding: var(--section-gap) 0 0; }
+.section-indeks { padding: 10cm 0 0; }
 
 .section-head {
   display: flex;
@@ -789,12 +784,12 @@ button { font-family: inherit; }
 
 .index-row {
   display: grid;
-  grid-template-columns: 52px minmax(140px, 1.1fr) 96px 76px minmax(160px, 1.6fr) 110px 72px 128px 104px;
+  grid-template-columns: 52px minmax(120px, 1.1fr) 96px 64px minmax(160px, 1.6fr) 110px 52px 86px 96px;
 }
 .index-row--head {
-  background: var(--panel-strong);
+  background: #E6F2FB;
   border-bottom: 1px solid var(--border);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--muted-strong);
 }
@@ -803,17 +798,17 @@ button { font-family: inherit; }
 .index-row--body {
   align-items: center;
   border-bottom: 1px solid var(--border-light);
-  background: var(--panel);
+  background: var(--bg);
 }
-.index-row--body:hover { background: var(--panel-strong); }
-.index-row--body > div { padding: 20px 14px; }
+.index-row--body:hover { background: #9FB3C4; }
+.index-row--body > div { padding: 14px; }
 .cell-nr { font-size: 11px; color: var(--muted); }
-.cell-name { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; }
+.cell-name { font-size: 16px; letter-spacing: -0.01em; }
 .cell-formula { font-size: 12px; color: var(--muted-strong); }
 .cell-mw { font-size: 11px; color: var(--muted); }
-.cell-character { font-size: 15px; color: var(--text); }
+.cell-character { font-size: 14px; color: var(--text); }
 .cell-weeks { font-size: 12px; color: var(--text); }
-.cell-price { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; white-space: nowrap; }
+.cell-price { font-size: 13px; }
 
 .intensity-track { height: 6px; background: var(--border-light); }
 .intensity-fill { height: 6px; background: var(--green-mid); width: 0; transition: width 1s ease; }
@@ -826,7 +821,7 @@ button { font-family: inherit; }
 .index-add-btn {
   width: 100%;
   border: 1px solid var(--border-strong);
-  background: var(--panel-strong);
+  background: var(--bg);
   color: var(--text);
   padding: 9px 0;
   cursor: pointer;
@@ -844,7 +839,7 @@ button { font-family: inherit; }
   gap: 20px;
   flex-wrap: wrap;
   padding: 14px;
-  background: var(--panel-strong);
+  background: #E6F2FB;
   font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--muted);
@@ -852,7 +847,7 @@ button { font-family: inherit; }
 
 /* ---------- karta zwiazku ---------- */
 
-.section-karta { padding: var(--section-gap) 0 0; }
+.section-karta { padding: 10cm 0 0; }
 .karta-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
@@ -930,11 +925,11 @@ button { font-family: inherit; }
   justify-content: center;
   border: 1px solid var(--border-strong);
   background: rgba(252, 252, 251, 0.8);
-  color: #262D35; /* the arrow sits on a light tile in both themes */
+  color: var(--text);
   font-size: 14px;
   cursor: pointer;
 }
-.karta-arrow:hover { background: #fff; color: #000; }
+.karta-arrow:hover { background: var(--row-bg); color: var(--text-hover); }
 .karta-arrow--prev { left: 14px; }
 .karta-arrow--next { right: 14px; }
 
@@ -979,13 +974,12 @@ button { font-family: inherit; }
   border: 1px solid var(--border);
   margin-top: 30px;
 }
-.spec { background: var(--panel); padding: 14px 16px; }
-.spec-label { font-size: 11px; letter-spacing: 0.14em; color: var(--muted); }
-.spec-value { font-size: 15px; padding-top: 6px; }
+.spec { background: var(--bg); padding: 14px 16px; }
+.spec-label { font-size: 10px; letter-spacing: 0.14em; color: var(--muted); }
+.spec-value { font-size: 14px; padding-top: 5px; }
 
 .buy-box {
   border: 1px solid var(--dark);
-  background: var(--panel);
   margin-top: 22px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -994,9 +988,9 @@ button { font-family: inherit; }
   padding: 18px;
 }
 .buy-price-row { display: flex; align-items: baseline; gap: 12px; }
-.buy-price { font-size: 46px; font-weight: 500; line-height: 1; letter-spacing: -0.035em; }
-.buy-unit { font-size: 12px; letter-spacing: 0.14em; color: var(--muted); }
-.buy-shipping { font-size: 12px; color: var(--text); padding-top: 8px; }
+.buy-price { font-size: 32px; letter-spacing: -0.03em; }
+.buy-unit { font-size: 11px; letter-spacing: 0.14em; color: var(--muted); }
+.buy-shipping { font-size: 11px; color: var(--text); padding-top: 6px; }
 
 .buy-controls { display: flex; align-items: stretch; gap: 8px; }
 .qty-stepper { display: flex; align-items: center; border: 1px solid var(--border-strong); }
@@ -1004,7 +998,7 @@ button { font-family: inherit; }
   width: 36px;
   height: 44px;
   border: 0;
-  background: var(--panel-strong);
+  background: var(--bg);
   cursor: pointer;
   font-size: 14px;
   color: var(--text);
@@ -1017,7 +1011,7 @@ button { font-family: inherit; }
 
 /* ---------- metoda ---------- */
 
-.section-metoda { padding: var(--section-gap) 0 0; }
+.section-metoda { padding: 10cm 0 0; }
 .metoda-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1025,7 +1019,7 @@ button { font-family: inherit; }
   background: var(--border);
   border-bottom: 1px solid var(--border);
 }
-.metoda-card { background: var(--panel); padding: 30px 26px; }
+.metoda-card { background: var(--bg); padding: 30px 26px; }
 .metoda-index { font-size: 11px; letter-spacing: 0.16em; color: var(--muted); }
 .metoda-title { font-size: 22px; letter-spacing: -0.02em; padding-top: 14px; }
 .metoda-copy { margin: 12px 0 0; font-size: 15px; line-height: 1.6; color: var(--text); }
@@ -1043,7 +1037,7 @@ button { font-family: inherit; }
   left: 50%;
   width: 100vw;
   transform: translateX(-50%);
-  margin-top: var(--section-gap);
+  margin-top: 10cm;
   overflow: hidden;
   line-height: 0;
 }
@@ -1061,7 +1055,7 @@ button { font-family: inherit; }
   .video-fullbleed { height: 42vh; min-height: 240px; }
 }
 
-.section-list { padding: var(--section-gap) 0 0; }
+.section-list { padding: 10cm 0 0; }
 .list-panel {
   border: 1px solid var(--dark);
   background: var(--dark);
@@ -1151,7 +1145,7 @@ button { font-family: inherit; }
 
 /* ---------- footer ---------- */
 
-.site-footer { padding: 88px 0 48px; margin-top: var(--section-gap); border-top: 1px solid var(--border); }
+.site-footer { padding: 88px 0 48px; margin-top: 10cm; border-top: 1px solid var(--border); }
 .footer-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1475,6 +1469,8 @@ button { font-family: inherit; }
      title a bit more room on phones so that stroke stays legible. */
   .hero-title { font-size: clamp(56px, min(26vw, 17vh), 400px); }
 
+  .index-table { overflow-x: auto; }
+  .index-row { min-width: 780px; }
 
   .karta-grid { grid-template-columns: minmax(0, 1fr); }
 
@@ -1609,42 +1605,3 @@ main:focus { outline: none; }
 .list-form input:focus-visible,
 .contact-form input:focus-visible,
 .contact-form textarea:focus-visible { outline: 2px solid var(--green-accent); outline-offset: 2px; }
-
-
-/* ---------- index table becomes cards below 1000px (the 9-column grid needs ~920px) ---------- */
-@media (max-width: 1000px) {
-  .index-row--head { display: none; }
-  .index-row {
-    grid-template-columns: 40px minmax(0, 1fr) auto;
-    grid-template-areas:
-      "nr name price"
-      ".  formula mw"
-      ".  char char"
-      ".  bar weeks"
-      ".  add add";
-    padding: 16px 14px;
-    column-gap: 10px;
-    row-gap: 6px;
-  }
-  .index-row--body > div { padding: 0; }
-  .index-row > :nth-child(1) { grid-area: nr; align-self: center; }
-  .index-row > :nth-child(2) { grid-area: name; }
-  .index-row > :nth-child(3) { grid-area: formula; }
-  .index-row > :nth-child(4) { grid-area: mw; }
-  .index-row > :nth-child(5) { grid-area: char; }
-  .index-row > :nth-child(6) { grid-area: bar; align-self: center; }
-  .index-row > :nth-child(7) { grid-area: weeks; }
-  .index-row > :nth-child(8) { grid-area: price; }
-  .index-row > :nth-child(9) { grid-area: add; padding-top: 6px; }
-  .index-add-cell { padding: 6px 0 0 0 !important; }
-}
-
-/* ---------- phones: content clears the MENU tab, price block stacks ---------- */
-@media (max-width: 760px) {
-  .wrap { padding-left: 40px; padding-right: 20px; }
-
-  .buy-box { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .buy-price-row { flex-wrap: wrap; row-gap: 4px; }
-  .buy-controls { width: 100%; }
-  .buy-controls .btn-green { flex: 1; justify-content: center; }
-}
