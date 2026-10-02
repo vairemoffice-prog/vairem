@@ -1357,12 +1357,19 @@
     function hide() {
       overlay.classList.remove('is-visible');
       window.setTimeout(() => { overlay.hidden = true; }, 320);
+      if (opener && typeof opener.focus === 'function') opener.focus();
     }
 
+    let opener = null;
     function show() {
       try { localStorage.setItem('vairem-promo-shown', '1'); } catch (e) {}
+      opener = document.activeElement;
       overlay.hidden = false;
-      window.setTimeout(() => overlay.classList.add('is-visible'), 20);
+      window.setTimeout(() => {
+        overlay.classList.add('is-visible');
+        const close = document.getElementById('promo-close');
+        if (close) close.focus();
+      }, 20);
     }
 
     document.getElementById('promo-close').addEventListener('click', hide);
@@ -1390,7 +1397,54 @@
       }
     });
 
-    window.setTimeout(show, 6000);
+    // Show it when the visitor has shown interest, not while they are still reading
+    // the hero: after ~45% of the page has been scrolled, or (desktop) when the
+    // pointer leaves through the top of the window — never before 8 s on the page,
+    // and never on top of the cookie banner, the cart, the menu or a form field.
+    const MIN_TIME_MS = 8000;
+    const SCROLL_TRIGGER = 0.45;
+    const pageStart = Date.now();
+    let armed = false;
+    let retries = 0;
+
+    function blocked() {
+      if (Date.now() - pageStart < MIN_TIME_MS) return true;
+      if (document.querySelector('#cookie-banner:not([hidden]), #cart-overlay:not([hidden]), #menu-overlay:not([hidden])')) return true;
+      const a = document.activeElement;
+      return !!(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName));
+    }
+
+    function tryShow() {
+      if (!armed || !overlay.hidden) return;
+      if (blocked()) {
+        if (retries++ < 40) window.setTimeout(tryShow, 1500);
+        return;
+      }
+      armed = false;
+      show();
+    }
+
+    function arm() {
+      if (armed) return;
+      armed = true;
+      removeListeners();
+      tryShow();
+    }
+
+    function onScroll() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max > 0 && window.scrollY / max >= SCROLL_TRIGGER) arm();
+    }
+    function onMouseOut(e) {
+      if (!e.relatedTarget && e.clientY <= 0) arm();
+    }
+    function removeListeners() {
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('mouseout', onMouseOut);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('mouseout', onMouseOut);
   }
 
   // ---------- wire up ----------
