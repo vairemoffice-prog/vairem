@@ -46,6 +46,7 @@
 </style>
 </head>
 <body>
+<a class="skip-link mono" href="#main-content" data-i18n="a11y.skip">Przejdź do treści</a>
 
 <button type="button" id="menu-toggle" class="menu-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Menu">
   <span class="menu-toggle-label mono" aria-hidden="true">MENU</span>
@@ -84,7 +85,7 @@
   </div>
 </header>
 
-<main class="kontakt-main">
+<main class="kontakt-main" id="main-content" tabindex="-1">
   <div class="wrap">
     <div class="kontakt-col">
 
@@ -96,9 +97,9 @@
         <div class="list-panel">
           <div class="list-copy">
             <form class="contact-form" id="contact-form">
-              <input type="text" id="contact-name" placeholder="Imię i nazwisko" required>
-              <input type="email" id="contact-email" placeholder="twoj@email.pl" required>
-              <textarea id="contact-message" placeholder="Wiadomość" rows="5" required></textarea>
+              <input type="text" id="contact-name" autocomplete="name" aria-label="Imię i nazwisko" placeholder="Imię i nazwisko" required>
+              <input type="email" id="contact-email" autocomplete="email" aria-label="Adres e-mail" placeholder="twoj@email.pl" required>
+              <textarea id="contact-message" aria-label="Wiadomość" placeholder="Wiadomość" rows="5" required></textarea>
               <button type="submit" id="contact-submit" class="mono">WYŚLIJ →</button>
             </form>
             <div id="contact-note" class="list-note mono">ODPOWIADAMY ZWYKLE W 1–2 DNI ROBOCZE.</div>
