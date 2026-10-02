@@ -138,12 +138,20 @@ body::after {
   z-index: -1;
   background-repeat: no-repeat;
   background-image: url('../assets/img/bg-floral-relief.jpg');
-  background-image: image-set(url('../assets/img/bg-floral-relief.webp') type('image/webp'), url('../assets/img/bg-floral-relief.jpg') type('image/jpeg'));
+  background-image: image-set(url('../assets/img/bg-floral-relief-1536.webp') type('image/webp'), url('../assets/img/bg-floral-relief.jpg') type('image/jpeg'));
   background-size: 100% auto;
   background-position: center calc(var(--bg-scroll-progress) * 100%);
   transform: translateY(var(--bg-parallax-y));
   transition: transform 0.1s linear;
   pointer-events: none;
+}
+/* Wide or high-density screens get the 3072px-wide version; everyone else
+   (phones, normal laptops) downloads the 1536px one, about a third of the size. */
+@media (min-width: 1600px), (min-width: 1000px) and (min-resolution: 1.5dppx) {
+  body::after {
+    background-image: url('../assets/img/bg-floral-relief.jpg');
+    background-image: image-set(url('../assets/img/bg-floral-relief.webp') type('image/webp'), url('../assets/img/bg-floral-relief.jpg') type('image/jpeg'));
+  }
 }
 [data-theme="night"] body::after {
   background-image: url('../assets/img/paper-emboss-night.svg');
@@ -308,7 +316,7 @@ button { font-family: inherit; }
   flex-shrink: 0;
 }
 .brand-signature--lg { height: 44px; }
-[data-theme="night"] .brand-signature { content: url('../assets/img/logo-vairem-signature-night.png'); }
+[data-theme="night"] .brand-signature { content: url('../assets/img/logo-vairem-signature-night.webp'); }
 .footer-brand-lockup { display: flex; align-items: center; gap: 10px; }
 
 .main-nav {
