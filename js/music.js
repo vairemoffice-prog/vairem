@@ -5,7 +5,7 @@
 (() => {
   'use strict';
 
-  const VOLUME = 0.6; // the pad is soft, so the master gain is above 1
+  const VOLUME = 0.35;
   const STEP = 9; // seconds per chord
   // Slow, soft progression (Hz): Am9 – Fmaj7 – Cmaj7 – G6
   const CHORDS = [
