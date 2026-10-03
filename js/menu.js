@@ -249,14 +249,14 @@
     history.length > 1 && (swappedInSession || (document.referrer && new URL(document.referrer).origin === location.origin));
 
   function updateBackLinks() {
-    document.querySelectorAll('.legal-back:not([data-fixed-label])').forEach(a => {
+    document.querySelectorAll('.legal-back:not([data-fixed-label]):not([data-home])').forEach(a => {
       a.textContent = canGoBack() ? '← WSTECZ' : '← STRONA GŁÓWNA';
     });
   }
 
   document.addEventListener('click', e => {
     const a = e.target.closest && e.target.closest('.legal-back');
-    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    if (!a || a.hasAttribute('data-home') || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     if (canGoBack()) {
       e.preventDefault();
       history.back();
