@@ -302,7 +302,13 @@ async function createCheckoutSession(order, env) {
     metadata: orderMeta,
     // The webhook listens to payment_intent.succeeded, so the order details
     // have to be on the PaymentIntent as well (not only on the session).
-    payment_intent_data: { metadata: orderMeta, description: `VAIREM ${orderNr}` },
+    // receipt_email makes Stripe e-mail the customer a receipt once the
+    // payment succeeds (live mode only — Stripe sends no receipts in test mode).
+    payment_intent_data: {
+      metadata: orderMeta,
+      description: `VAIREM ${orderNr}`,
+      receipt_email: order.email,
+    },
   };
 
   if (priced.discount > 0) {
