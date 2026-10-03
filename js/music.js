@@ -27,8 +27,13 @@
 
   let ctx = null, master = null, timer = null, step = 0, nextTime = 0, playing = false;
   const KEY = 'vairem-music-off';
+  const POS_KEY = 'vairem-music-step';
   let wanted = true;
-  try { wanted = sessionStorage.getItem(KEY) !== '1'; } catch (e) {}
+  try {
+    wanted = sessionStorage.getItem(KEY) !== '1';
+    // Continue where the previous page left off (a page change reloads the script).
+    step = (parseInt(sessionStorage.getItem(POS_KEY), 10) || 0);
+  } catch (e) {}
 
   function build() {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -113,9 +118,24 @@
   }
 
   function pump() {
-    while (nextTime < ctx.currentTime + 0.25) {
+    // Look ahead ~1.2 s so playback survives timer throttling in background tabs.
+    while (nextTime < ctx.currentTime + 1.2) {
       schedule(step++, nextTime);
       nextTime += STEP;
+    }
+    try { sessionStorage.setItem(POS_KEY, String(step)); } catch (e) {}
+  }
+
+  // Timer in a Web Worker: not throttled when the tab is in the background.
+  function makeTimer(fn, ms) {
+    try {
+      const url = URL.createObjectURL(new Blob(['setInterval(function(){postMessage(0)},' + ms + ')']));
+      const w = new Worker(url);
+      w.onmessage = fn;
+      return { stop() { w.terminate(); URL.revokeObjectURL(url); } };
+    } catch (e) {
+      const id = setInterval(fn, ms);
+      return { stop() { clearInterval(id); } };
     }
   }
 
@@ -135,13 +155,13 @@
     master.gain.setTargetAtTime(VOLUME, ctx.currentTime, 0.6);
     nextTime = ctx.currentTime + 0.05;
     pump();
-    timer = setInterval(pump, 50);
+    timer = makeTimer(pump, 100);
   }
 
   function stop() {
     if (!playing) return;
     playing = false;
-    clearInterval(timer);
+    if (timer) timer.stop();
     timer = null;
     master.gain.cancelScheduledValues(ctx.currentTime);
     master.gain.setTargetAtTime(0, ctx.currentTime, 0.2);
