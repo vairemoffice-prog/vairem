@@ -518,6 +518,9 @@ button { font-family: inherit; }
   flex-shrink: 0;
 }
 .brand-signature--lg { height: 44px; }
+/* larger logo in the home page header bar */
+.brand-signature--hero { height: 58px; }
+@media (max-width: 860px) { .brand-signature--hero { height: 48px; } }
 [data-theme="night"] .brand-signature { content: url('../assets/img/logo-vairem-signature-night.webp'); }
 .footer-brand-lockup { display: flex; align-items: center; gap: 10px; }
 
