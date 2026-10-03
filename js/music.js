@@ -134,7 +134,7 @@
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'music-toggle mono';
-  btn.innerHTML = '<span class="music-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>';
+  btn.innerHTML = '<svg class="music-note" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg><span class="music-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>';
 
   function render() {
     const lang = LABELS[document.documentElement.lang] || LABELS.pl;

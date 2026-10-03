@@ -1607,6 +1607,7 @@ main:focus { outline: none; }
   z-index: 900;
   display: flex;
   align-items: center;
+  gap: 8px;
   height: 40px;
   padding: 0 4px;
   color: var(--text);
@@ -1618,6 +1619,7 @@ main:focus { outline: none; }
 }
 .music-toggle:hover { opacity: 1; }
 .music-toggle:focus-visible { outline: 1px solid var(--green-deep); outline-offset: 4px; }
+.music-note { flex: none; }
 .music-bars {
   display: flex;
   align-items: center;
