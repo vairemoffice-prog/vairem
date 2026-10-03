@@ -198,4 +198,50 @@
   document.body.appendChild(btn);
   render();
   if (wanted) start();
+
+  // ---------- welcome screen ----------
+  // If the browser blocked autoplay, show a quiet "enter" screen: the click on it is the
+  // gesture that lets the music start right away.
+
+  const ENTER = { pl: 'WEJDŹ', en: 'ENTER', es: 'ENTRAR', uk: 'УВІЙТИ', fr: 'ENTRER' };
+  let splash = null;
+
+  function hideSplash() {
+    if (!splash) return;
+    const el = splash;
+    splash = null;
+    el.classList.remove('is-visible');
+    setTimeout(() => el.remove(), 600);
+    document.documentElement.classList.remove('music-splash-open');
+  }
+
+  function showSplash() {
+    if (splash || !wanted || !ctx || ctx.state === 'running') return;
+    const lang = ENTER[document.documentElement.lang] ? document.documentElement.lang : 'pl';
+    splash = document.createElement('div');
+    splash.className = 'music-splash';
+    splash.setAttribute('role', 'dialog');
+    splash.setAttribute('aria-modal', 'true');
+    splash.setAttribute('aria-label', 'VAIREM');
+    splash.innerHTML =
+      '<img class="music-splash-logo music-splash-logo--day" src="assets/img/logo-vairem-signature.webp" alt="Vairem" width="400" height="260">' +
+      '<img class="music-splash-logo music-splash-logo--night" src="assets/img/logo-vairem-signature-night.webp" alt="" width="400" height="260">' +
+      '<button type="button" class="music-splash-enter mono">' + ENTER[lang] + '</button>';
+    splash.querySelector('button').addEventListener('click', e => {
+      e.stopPropagation();
+      wanted = true;
+      try { sessionStorage.removeItem(KEY); } catch (err) {}
+      start();
+      unlock();
+      hideSplash();
+    });
+    document.body.appendChild(splash);
+    document.documentElement.classList.add('music-splash-open');
+    requestAnimationFrame(() => splash && splash.classList.add('is-visible'));
+    splash.querySelector('button').focus({ preventScroll: true });
+  }
+
+  // Give autoplay a moment to succeed; if it did not, ask for the one click.
+  if (wanted) setTimeout(showSplash, 700);
+  if (ctx) ctx.addEventListener('statechange', () => { if (ctx.state === 'running') hideSplash(); });
 })();
