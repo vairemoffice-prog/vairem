@@ -52,7 +52,12 @@
     filter.connect(master); filter.connect(delay); wet.connect(master);
     master.connect(ctx.destination);
     ctx.vairemBus = filter;
-    ctx.onstatechange = () => { if (playing && ctx.state === 'running') begin(); };
+    ctx.onstatechange = () => {
+      if (ctx.state === 'running') {
+        GESTURES.forEach(t => document.removeEventListener(t, onGesture, true));
+        if (playing) begin();
+      }
+    };
     return true;
   }
 
@@ -147,6 +152,11 @@
 
   btn.addEventListener('click', e => {
     e.stopPropagation();
+    if (playing && ctx && ctx.state !== 'running') {
+      // Autoplay was blocked: this tap is the gesture that lets the sound start.
+      unlock();
+      return;
+    }
     if (playing) {
       wanted = false;
       stop();
@@ -157,16 +167,29 @@
     try { sessionStorage.setItem(KEY, wanted ? '0' : '1'); } catch (err) {}
   });
 
-  function onFirstGesture(e) {
+  // Mobile browsers (iOS especially) only unlock audio on a finished tap (click/touchend),
+  // so keep listening until the audio context is really running.
+  const GESTURES = ['click', 'touchend', 'pointerup', 'keydown'];
+
+  function unlock() {
+    if (!ctx) return;
+    ctx.resume().catch(() => {});
+    try { // a silent blip helps older iOS Safari wake up the audio output
+      const src = ctx.createBufferSource();
+      src.buffer = ctx.createBuffer(1, 1, 22050);
+      src.connect(ctx.destination);
+      src.start(0);
+    } catch (err) {}
+  }
+
+  function onGesture(e) {
     if (btn.contains(e.target)) return;
-    removeGesture();
     if (wanted) start();
-    if (ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
+    unlock();
   }
-  function removeGesture() {
-    ['pointerdown', 'keydown', 'touchstart'].forEach(t => document.removeEventListener(t, onFirstGesture, true));
-  }
-  ['pointerdown', 'keydown', 'touchstart'].forEach(t => document.addEventListener(t, onFirstGesture, true));
+
+  // Listen for the first gesture even before the context exists (autoplay blocked).
+  GESTURES.forEach(t => document.addEventListener(t, onGesture, true));
 
   new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   document.body.appendChild(btn);
