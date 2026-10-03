@@ -94,7 +94,7 @@
   function initMagnetic() {
     if (reducedMotion || !fineHover) return;
 
-    const SELECTOR = '.btn, .list-form button, .contact-form button';
+    const SELECTOR = '.btn, .list-form button, .contact-form button, .menu-toggle';
     const RADIUS = 90;
     const STRENGTH = 0.45;
 
@@ -118,11 +118,17 @@
         const dy = mouseY - cy;
         const dist = Math.hypot(dx, dy);
         const reach = RADIUS + Math.max(r.width, r.height) / 2;
-        if (dist < reach) {
+        // The side MENU tab positions itself with `transform` (and is draggable), so it is pulled
+        // with the separate `translate` property instead of replacing its transform.
+        const isTab = el.classList.contains('menu-toggle');
+        const prop = isTab ? 'translate' : 'transform';
+        if (dist < reach && el.style.cursor !== 'grabbing') {
           const pull = (1 - dist / reach) * STRENGTH;
-          el.style.transform = `translate(${(dx * pull).toFixed(2)}px, ${(dy * pull).toFixed(2)}px)`;
-        } else if (el.style.transform) {
-          el.style.transform = '';
+          const x = (dx * pull).toFixed(2);
+          const y = (dy * pull).toFixed(2);
+          el.style[prop] = isTab ? `${x}px ${y}px` : `translate(${x}px, ${y}px)`;
+        } else if (el.style[prop]) {
+          el.style[prop] = '';
         }
       });
       requestAnimationFrame(raf);
