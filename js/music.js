@@ -37,13 +37,15 @@
     master = ctx.createGain();
     master.gain.value = 0;
     // Dry bus plus a bouncy echo for the arpeggio.
-    const bus = ctx.createGain();
+    const bus = ctx.createBiquadFilter();
+    bus.type = 'lowpass';
+    bus.frequency.value = 2200; // keeps the sound warm, no shrill highs
     const delay = ctx.createDelay(1);
     delay.delayTime.value = STEP * 3;
     const fb = ctx.createGain();
-    fb.gain.value = 0.35;
+    fb.gain.value = 0.28;
     const wet = ctx.createGain();
-    wet.gain.value = 0.4;
+    wet.gain.value = 0.3;
     delay.connect(fb); fb.connect(delay); delay.connect(wet);
     bus.connect(master); bus.connect(delay); wet.connect(master);
     master.connect(ctx.destination);
@@ -88,7 +90,7 @@
     src.buffer = ctx.vairemNoise;
     const hp = ctx.createBiquadFilter();
     hp.type = 'highpass';
-    hp.frequency.value = 7000;
+    hp.frequency.value = 5000;
     const g = ctx.createGain();
     g.gain.setValueAtTime(peak, t);
     g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
@@ -101,8 +103,8 @@
     const chord = CHORDS[Math.floor(i / 32) % CHORDS.length];
     const s16 = i % 16;
     if (s16 % 4 === 0) kick(t);
-    if (s16 % 4 === 2) hat(t, 0.16);
-    else if (s16 % 2 === 1) hat(t, 0.05);
+    if (s16 % 4 === 2) hat(t, 0.05);
+    else if (s16 % 2 === 1) hat(t, 0.02);
     // Bass: on the beat and a syncopated hit before the next beat.
     if (s16 % 8 === 0 || s16 === 6 || s16 === 14) tone('triangle', chord.bass * (s16 === 14 ? 2 : 1), t, STEP * 3, 0.45);
     const n = ARP[s16];
