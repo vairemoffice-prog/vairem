@@ -1,7 +1,7 @@
 // Ambient pad background music: generated live with the Web Audio API (no audio file,
 // no licensing). It plays whenever the site is opened. If the browser blocks autoplay,
-// sound begins at the first click/key press. Switching it off holds across subpages
-// for the current visit only (sessionStorage), so the next visit starts with music.
+// sound begins at the first click/tap. Switching it off holds across subpages for the
+// current visit (sessionStorage); a page refresh or a new visit starts with music again.
 (() => {
   'use strict';
 
@@ -27,6 +27,9 @@
   const POS_KEY = 'vairem-music-step';
   let wanted = true;
   try {
+    // A page refresh always brings the music back; moving between subpages keeps "off".
+    const nav = performance.getEntriesByType('navigation')[0];
+    if (nav && nav.type === 'reload') sessionStorage.removeItem(KEY);
     wanted = sessionStorage.getItem(KEY) !== '1';
     // Continue where the previous page left off (a page change reloads the script).
     step = (parseInt(sessionStorage.getItem(POS_KEY), 10) || 0);
