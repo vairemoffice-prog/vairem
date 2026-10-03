@@ -152,10 +152,7 @@
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'music-toggle mono';
-  btn.innerHTML =
-    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-    '<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>' +
-    '<path class="music-off-line" d="M3 3l18 18"/></svg>';
+  btn.innerHTML = '<span class="music-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>';
 
   function render() {
     const lang = LABELS[document.documentElement.lang] || LABELS.pl;
