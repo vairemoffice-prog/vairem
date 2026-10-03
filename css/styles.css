@@ -1706,6 +1706,14 @@ main:focus { outline: none; }
 .music-splash-enter:hover { opacity: 1; }
 .music-splash-enter:focus-visible { outline: none; opacity: 1; }
 .music-splash-open { overflow: hidden; }
+/* the page waits invisibly under the welcome screen, then fades in as it dissolves */
+#page-content { transition: opacity 1.5s ease; }
+.music-splash-open #page-content { opacity: 0; transition-duration: 0.5s; }
+.music-splash.is-leaving { opacity: 0; pointer-events: none; transition: opacity 1.5s ease; }
+.music-splash-logo { transition: transform 1.6s ease; }
+.music-splash.is-leaving .music-splash-logo { transform: scale(1.06); }
+.music-splash-enter { transition: opacity 0.4s ease; }
+.music-splash.is-leaving .music-splash-enter { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
-  .music-splash { transition: none; }
+  .music-splash, .music-splash.is-leaving, #page-content, .music-splash-logo { transition: none; }
 }

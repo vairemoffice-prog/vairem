@@ -210,8 +210,10 @@
     if (!splash) return;
     const el = splash;
     splash = null;
+    // Slow cross-fade: the welcome screen dissolves while the hero fades in underneath.
     el.classList.remove('is-visible');
-    setTimeout(() => el.remove(), 600);
+    el.classList.add('is-leaving');
+    setTimeout(() => el.remove(), 1700);
     document.documentElement.classList.remove('music-splash-open');
     if (splashKey) document.removeEventListener('keydown', splashKey, true);
     splashKey = null;
