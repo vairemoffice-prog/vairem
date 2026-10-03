@@ -145,6 +145,7 @@ async function upsertContact(order, token) {
             firstname: firstname || undefined,
             lastname: lastname || undefined,
             phone: order.phone || undefined,
+            company: order.company || undefined,
             [PROP_LTV]: (prevLtv + Number(order.total || 0)).toString(),
             [PROP_ORDER_COUNT]: (prevOrders + 1).toString(),
             [PROP_LAST_ORDER]: String(midnightUtcMs),
@@ -161,6 +162,7 @@ async function createDeal(order, contactId, token) {
   const itemsSummary = (order.items || [])
     .map(i => `${i.nr} ${i.name} x${i.qty}`)
     .join(', ');
+  const invoiceNote = order.nip ? ` | FAKTURA VAT: ${order.company}, NIP ${order.nip}` : '';
 
   const deal = await hubspotFetch('/crm/v3/objects/deals', token, {
     method: 'POST',
@@ -170,7 +172,7 @@ async function createDeal(order, contactId, token) {
         amount: String(order.total || 0),
         dealstage: DEAL_STAGE_CLOSED_WON,
         pipeline: 'default',
-        description: itemsSummary,
+        description: itemsSummary + invoiceNote,
       },
       associations: [
         {
@@ -256,6 +258,14 @@ function paymentMethodTypesFor(method) {
   return ['card']; // card, Apple Pay and Google Pay all run through "card"
 }
 
+// Polish NIP checksum (weights 6,5,7,2,3,4,5,6,7; mod 11 equals the last digit).
+function isValidNip(nip) {
+  if (!/^\d{10}$/.test(nip)) return false;
+  const w = [6, 5, 7, 2, 3, 4, 5, 6, 7];
+  const sum = w.reduce((acc, wt, i) => acc + wt * Number(nip[i]), 0);
+  return sum % 11 === Number(nip[9]);
+}
+
 async function createCheckoutSession(order, env) {
   const priced = priceOrder(order.items, order.discountCode);
   if (!priced) throw Object.assign(new Error('Invalid items'), { status: 400 });
@@ -266,6 +276,15 @@ async function createCheckoutSession(order, env) {
     ? order.orderNr
     : `VR-${Date.now().toString(36).toUpperCase()}`;
 
+  // Optional VAT-invoice details (company + NIP), both or neither.
+  const nip = String(order.nip || '').replace(/[\s-]/g, '');
+  const company = String(order.company || '').trim().slice(0, 200);
+  if (nip || company) {
+    if (!company || !isValidNip(nip)) {
+      throw Object.assign(new Error('Invalid invoice details'), { status: 400 });
+    }
+  }
+
   const orderMeta = {
     orderNr,
     email: order.email,
@@ -273,6 +292,7 @@ async function createCheckoutSession(order, env) {
     phone: String(order.phone || '').slice(0, 50),
     city: String(order.city || '').slice(0, 100),
     items: priced.items.map(i => `${i.nr}x${i.qty}`).join(','),
+    ...(nip ? { company, nip } : {}),
   };
 
   const params = {
@@ -387,6 +407,8 @@ async function syncPaidPayment(pi, token) {
     email: meta.email || pi.receipt_email,
     name: meta.name || '',
     phone: meta.phone || '',
+    company: meta.company || '',
+    nip: meta.nip || '',
     items,
     total: (pi.amount_received || pi.amount || 0) / 100,
   };
