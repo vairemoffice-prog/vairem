@@ -1602,8 +1602,8 @@ main:focus { outline: none; }
 /* ---------- music toggle ---------- */
 .music-toggle {
   position: fixed;
-  right: 76px; /* left of the scroll-to-top button */
-  bottom: 22px;
+  left: 16px;
+  bottom: 16px;
   z-index: 900;
   display: flex;
   align-items: center;
@@ -1619,10 +1619,6 @@ main:focus { outline: none; }
   transition: opacity 0.2s;
 }
 .music-toggle:hover { opacity: 1; }
-/* On phones the cookie banner covers the bottom edge: keep the button visible above it. */
-@media (max-width: 640px) {
-  body:has(.cookie-banner.is-visible) .music-toggle { bottom: auto; top: 88px; right: 16px; }
-}
 .music-toggle:focus-visible { outline: 1px solid var(--green-deep); outline-offset: 4px; }
 .music-note { flex: none; }
 .music-bars {
