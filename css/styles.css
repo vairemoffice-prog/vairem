@@ -237,9 +237,14 @@
   --pink-accent: #DCC1C6;
   --pink-accent-hover: #E7D3D7;
   --pink-accent-text: #3A2226;
-  --pink-deep: #C9A3AA;
-  --pink-deep-hover: #D5B7BC;
-  --pink-btn-text: #2E1418;
+  /* One single powder pink for every button (the old darker "deep" tone
+     is now the same colour). */
+  --pink-deep: var(--pink-accent);
+  --pink-deep-hover: var(--pink-accent-hover);
+  --pink-btn-text: var(--pink-accent-text);
+  /* The custom cursor keeps its slightly deeper tone to stay visible. */
+  --pink-cursor: #C9A3AA;
+  --pink-cursor-hover: #D5B7BC;
 
   --blue-panel: #A8BACB;
   --blue-panel-light: #E4EAEE;
@@ -1566,7 +1571,7 @@ button { font-family: inherit; }
   display: block;
   width: 22px;
   height: 22px;
-  background: var(--pink-deep);
+  background: var(--pink-cursor);
   clip-path: polygon(0 0, 0 70%, 27% 55%, 43% 88%, 58% 80%, 42% 48%, 74% 48%);
   transform: scaleX(-1);
   transform-origin: 0 0;
@@ -1574,7 +1579,7 @@ button { font-family: inherit; }
 }
 .fx-cursor--hover .fx-cursor-arrow {
   transform: scaleX(-1) scale(1.7);
-  background: var(--pink-deep-hover);
+  background: var(--pink-cursor-hover);
 }
 
 
