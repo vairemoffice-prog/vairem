@@ -205,6 +205,10 @@
 
   const ENTER = { pl: 'WEJDŹ', en: 'ENTER', es: 'ENTRAR', uk: 'УВІЙТИ', fr: 'ENTRER' };
   let splash = null, splashKey = null;
+  // High-resolution logo (1195 px wide) so it stays sharp on retina and large screens.
+  const LOGO_DAY = 'assets/img/logo-vairem-signature-1200.webp';
+  const LOGO_NIGHT = 'assets/img/logo-vairem-signature-night-1200.webp';
+  if (wanted) [LOGO_DAY, LOGO_NIGHT].forEach(src => { new Image().src = src; }); // warm the cache
 
   function hideSplash() {
     if (!splash) return;
@@ -228,8 +232,8 @@
     splash.setAttribute('aria-modal', 'true');
     splash.setAttribute('aria-label', 'VAIREM');
     splash.innerHTML =
-      '<img class="music-splash-logo music-splash-logo--day" src="assets/img/logo-vairem-signature.webp" alt="Vairem" width="400" height="260">' +
-      '<img class="music-splash-logo music-splash-logo--night" src="assets/img/logo-vairem-signature-night.webp" alt="" width="400" height="260">' +
+      '<img class="music-splash-logo music-splash-logo--day" src="' + LOGO_DAY + '" alt="Vairem" width="1195" height="777" decoding="async">' +
+      '<img class="music-splash-logo music-splash-logo--night" src="' + LOGO_NIGHT + '" alt="" width="1195" height="777" decoding="async">' +
       '<button type="button" class="music-splash-enter mono">' + ENTER[lang] + '</button>';
     // Any click/tap on the screen or any key (arrows, space, enter...) enters the site.
     const enter = () => {
