@@ -1506,8 +1506,19 @@ button { font-family: inherit; }
   transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 14ms));
 }
 .hero-title.reveal-chars .char {
-  transition: opacity 1.5s ease, transform 1.5s ease;
+  /* letters condense out of a soft haze, one after another */
+  filter: blur(16px);
+  transform: translateY(14px) scale(0.97);
+  transition: opacity 2.2s ease, transform 2.2s cubic-bezier(0.2, 0.6, 0.2, 1), filter 2.2s ease;
   transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 230ms));
+}
+.hero-title.reveal-chars.is-visible .char { filter: blur(0); }
+/* while the welcome screen is up the title waits, fully hidden, so the effect plays when it is dismissed */
+.music-splash-open .hero-title.reveal-chars .char {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(14px) scale(0.97);
+  transition: none;
 }
 .reveal-chars.is-visible .char {
   opacity: 1;
@@ -1520,10 +1531,11 @@ button { font-family: inherit; }
     opacity: 1;
     transform: none;
   }
-  .reveal-chars .char {
+  .reveal-chars .char, .hero-title.reveal-chars .char {
     transition: none;
     opacity: 1;
     transform: none;
+    filter: none;
   }
 }
 
