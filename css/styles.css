@@ -1092,6 +1092,7 @@ button { font-family: inherit; }
   font-size: 11px;
   letter-spacing: 0.16em;
 }
+.list-form button, .contact-form button { transition: transform 0.2s cubic-bezier(0.2, 1, 0.3, 1), background-color 0.2s ease; }
 .list-form button:hover { background: var(--pink-deep-hover); }
 .list-note { font-size: 10px; letter-spacing: 0.14em; color: var(--newsletter-copy); padding-top: 12px; }
 
