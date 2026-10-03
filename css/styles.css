@@ -615,11 +615,19 @@ button { font-family: inherit; }
 .hero[hidden] { display: none; }
 
 .hero-type {
+  --hero-fs: clamp(56px, 23.2vw, 400px);
+  /* The handwritten capital "P" rises above the first line box and the "j"/"p" drop below the last
+     one; this box clips overflow, so it gets matching padding (cancelled by negative margins, so the
+     layout does not move) to keep those strokes from being cut off. */
+  --hero-pad-top: calc(var(--hero-fs) * 0.32);
+  --hero-pad-bottom: calc(var(--hero-fs) * 0.3);
   position: relative;
   left: 50%;
   width: 100vw;
   transform: translateX(-50%);
   overflow: hidden;
+  padding: var(--hero-pad-top) 0 var(--hero-pad-bottom);
+  margin: calc(var(--hero-pad-top) * -1) 0 calc(var(--hero-pad-bottom) * -1);
 }
 
 .hero-title {
@@ -628,7 +636,7 @@ button { font-family: inherit; }
   flex-direction: column;
   align-items: center;
   font-family: 'Zeyada', 'Cabinet Grotesk', cursive;
-  font-size: clamp(56px, 23.2vw, 400px);
+  font-size: var(--hero-fs, clamp(56px, 23.2vw, 400px));
   line-height: 1.1;
   letter-spacing: 0;
   font-weight: 400;
@@ -641,7 +649,7 @@ button { font-family: inherit; }
    initHeroKineticType() takes over their transform in js/app.js. */
 .hero-title--echo {
   position: absolute;
-  inset: 0;
+  inset: var(--hero-pad-top) 0 var(--hero-pad-bottom);
   z-index: 0;
   pointer-events: none;
   color: transparent;
@@ -1466,7 +1474,7 @@ button { font-family: inherit; }
   /* Zeyada's capital "P" has a fine decorative cross-stroke that reads
      as a broken/unfinished loop at very small render sizes — give the
      title a bit more room on phones so that stroke stays legible. */
-  .hero-title { font-size: clamp(56px, 26vw, 400px); }
+  .hero-type { --hero-fs: clamp(56px, 26vw, 400px); }
 
   .index-table { overflow-x: auto; }
   .index-row { min-width: 780px; }
