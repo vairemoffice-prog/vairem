@@ -167,6 +167,8 @@
   function initGenericReveal() {
     if (reducedMotion) return;
 
+    const MAX_CHARS_REVEAL = 90;
+
     const SELECTOR = [
       '#page-content h1', '#page-content h2', '#page-content h3',
       '#page-content p', '#page-content article',
@@ -226,7 +228,10 @@
       const groupIndex = new Map();
       document.querySelectorAll(SELECTOR).forEach(el => {
         if (!el.dataset.revealMode) {
-          const isChars = wrapChars(el);
+          // The per-character dissolve is one animated element per letter, which makes
+          // long paragraphs janky to scroll (thousands of elements, multi-second delays),
+          // so only headings and short lines get it; longer text fades in as one block.
+          const isChars = el.textContent.length <= MAX_CHARS_REVEAL && wrapChars(el);
           el.dataset.revealMode = isChars ? 'chars' : 'block';
           el.classList.add(isChars ? 'reveal-chars' : 'reveal');
         }
