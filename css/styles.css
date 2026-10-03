@@ -1686,6 +1686,7 @@ main:focus { outline: none; }
   background-size: cover;
   background-position: center center;
 }
+.music-splash { cursor: pointer; }
 .music-splash.is-visible { opacity: 1; }
 .music-splash-logo { width: min(280px, 62vw); height: auto; }
 .music-splash-logo--night { display: none; }
