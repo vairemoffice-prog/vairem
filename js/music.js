@@ -1,37 +1,18 @@
-// Calm piano background music (in the spirit of minimalist piano): generated live with the Web Audio API (no audio file,
+// Ambient pad background music: generated live with the Web Audio API (no audio file,
 // no licensing). It plays whenever the site is opened. If the browser blocks autoplay,
 // sound begins at the first click/key press. Switching it off holds across subpages
 // for the current visit only (sessionStorage), so the next visit starts with music.
 (() => {
   'use strict';
 
-  const VOLUME = 0.9;
-  const BPM = 72;
-  const STEP = 60 / BPM / 2; // one 8th note, in seconds
-  const midi = m => 440 * Math.pow(2, (m - 69) / 12);
-  // Eight bars (Am F C G Am F G Em), then it loops. Each bar = 8 eighths.
-  // bass / arp (rolling right-hand pattern) / mel (melody pool) are MIDI notes.
-  const BARS = [
-    { bass: 45, arp: [57, 60, 64, 69], mel: [72, 76, 69] },
-    { bass: 41, arp: [53, 57, 60, 65], mel: [69, 72, 77] },
-    { bass: 48, arp: [55, 60, 64, 67], mel: [72, 76, 79] },
-    { bass: 43, arp: [55, 59, 62, 67], mel: [71, 74, 79] },
-    { bass: 45, arp: [57, 60, 64, 69], mel: [72, 76, 81] },
-    { bass: 41, arp: [53, 57, 60, 65], mel: [77, 72, 69] },
-    { bass: 43, arp: [55, 59, 62, 67], mel: [74, 79, 71] },
-    { bass: 40, arp: [55, 59, 64, 67], mel: [76, 71, 74] },
-  ];
-  const ARP = [0, 1, 2, 3, 2, 1, 2, 1];
-  // Melody: [eighth in bar, index into mel, length in eighths]
-  const MELODY = [
-    [[0, 1, 4], [4, 0, 4]],
-    [[0, 1, 3], [3, 0, 1], [4, 2, 4]],
-    [[0, 0, 4], [4, 1, 4]],
-    [[0, 2, 3], [3, 1, 1], [4, 0, 4]],
-    [[0, 1, 4], [4, 2, 2], [6, 1, 2]],
-    [[0, 0, 3], [3, 1, 1], [4, 2, 4]],
-    [[0, 1, 4], [4, 0, 2], [6, 2, 2]],
-    [[0, 0, 8]],
+  const VOLUME = 2.2; // the pad is soft, so the master gain is above 1
+  const STEP = 9; // seconds per chord
+  // Slow, soft progression (Hz): Am9 – Fmaj7 – Cmaj7 – G6
+  const CHORDS = [
+    [110.0, 164.81, 220.0, 261.63, 329.63],
+    [87.31, 174.61, 220.0, 261.63, 329.63],
+    [130.81, 196.0, 246.94, 329.63, 392.0],
+    [98.0, 196.0, 246.94, 293.66, 329.63],
   ];
   const LABELS = {
     pl: ['Włącz muzykę', 'Wyłącz muzykę'],
@@ -57,58 +38,42 @@
     ctx = new AC();
     master = ctx.createGain();
     master.gain.value = 0;
-    // Soft bus + synthetic hall reverb.
-    const bus = ctx.createBiquadFilter();
-    bus.type = 'lowpass';
-    bus.frequency.value = 3200;
-    const len = Math.floor(ctx.sampleRate * 3);
-    const ir = ctx.createBuffer(2, len, ctx.sampleRate);
-    for (let c = 0; c < 2; c++) {
-      const d = ir.getChannelData(c);
-      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.5);
-    }
-    const reverb = ctx.createConvolver();
-    reverb.buffer = ir;
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 1100;
+    // Simple echo for a roomy, soft sound.
+    const delay = ctx.createDelay(1);
+    delay.delayTime.value = 0.45;
+    const fb = ctx.createGain();
+    fb.gain.value = 0.42;
     const wet = ctx.createGain();
-    wet.gain.value = 0.35;
-    bus.connect(master); bus.connect(reverb); reverb.connect(wet); wet.connect(master);
+    wet.gain.value = 0.45;
+    delay.connect(fb); fb.connect(delay); delay.connect(wet);
+    filter.connect(master); filter.connect(delay); wet.connect(master);
     master.connect(ctx.destination);
-    ctx.vairemBus = bus;
+    ctx.vairemBus = filter;
     ctx.onstatechange = () => { if (playing && ctx.state === 'running') begin(); };
     return true;
   }
 
-  // A piano-like note: a few decaying harmonics with a soft hammer attack.
-  function piano(m, t, dur, vel) {
-    const f = midi(m);
-    const out = ctx.createGain();
-    out.gain.setValueAtTime(0.0001, t);
-    out.gain.exponentialRampToValueAtTime(vel, t + 0.006);
-    out.gain.exponentialRampToValueAtTime(vel * 0.35, t + 0.35);
-    out.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    out.connect(ctx.vairemBus);
-    [[1, 1], [2, 0.42], [3, 0.2], [4, 0.1], [5, 0.04]].forEach(([h, a]) => {
-      const osc = ctx.createOscillator();
-      const g = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = f * h * (1 + 0.0004 * h * h);
-      g.gain.value = a;
-      osc.connect(g); g.connect(out);
-      osc.start(t);
-      osc.stop(t + dur + 0.05);
-    });
-  }
-
+  // One slow pad chord; chords overlap and cross-fade.
   function schedule(i, t) {
-    const bar = Math.floor(i / 8) % BARS.length;
-    const e = i % 8;
-    const chord = BARS[bar];
-    const human = () => (Math.random() - 0.5) * 0.012;
-    if (e === 0) piano(chord.bass, t, 4, 0.34);
-    if (e === 4) piano(chord.bass + 12, t, 2.5, 0.12);
-    piano(chord.arp[ARP[e]], t + Math.max(0, human()), 2.2, 0.1 + Math.random() * 0.025);
-    MELODY[bar].forEach(([at, mi, len]) => {
-      if (at === e) piano(chord.mel[mi], t, Math.min(4.5, len * STEP + 1.8), 0.22);
+    const freqs = CHORDS[i % CHORDS.length];
+    const len = STEP + 3;
+    freqs.forEach((f, k) => {
+      [-3, 3].forEach(detune => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = k === 0 ? 'sine' : 'triangle';
+        osc.frequency.value = f;
+        osc.detune.value = detune;
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.05, t + 4);
+        g.gain.linearRampToValueAtTime(0, t + len);
+        osc.connect(g); g.connect(ctx.vairemBus);
+        osc.start(t);
+        osc.stop(t + len + 0.1);
+      });
     });
   }
 
@@ -147,7 +112,7 @@
   function begin() {
     if (timer) return;
     master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.setTargetAtTime(VOLUME, ctx.currentTime, 0.6);
+    master.gain.setTargetAtTime(VOLUME, ctx.currentTime, 1.2);
     nextTime = ctx.currentTime + 0.05;
     pump();
     timer = makeTimer(pump, 100);
@@ -159,7 +124,7 @@
     if (timer) timer.stop();
     timer = null;
     master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.setTargetAtTime(0, ctx.currentTime, 0.2);
+    master.gain.setTargetAtTime(0, ctx.currentTime, 0.4);
     setTimeout(() => { if (!playing && ctx) ctx.suspend(); }, 1500);
     render();
   }
