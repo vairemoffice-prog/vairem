@@ -315,6 +315,20 @@
                 <textarea id="f-note" name="note"></textarea>
               </div>
               <div class="co-field full">
+                <label class="co-consent" for="f-invoice">
+                  <input id="f-invoice" name="invoice" type="checkbox">
+                  <span>Chcę otrzymać fakturę VAT na firmę.</span>
+                </label>
+              </div>
+              <div class="co-field full" id="co-invoice-fields" hidden>
+                <label for="f-company">NAZWA FIRMY</label>
+                <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="200">
+              </div>
+              <div class="co-field" id="co-invoice-nip" hidden>
+                <label for="f-nip">NIP</label>
+                <input id="f-nip" name="nip" type="text" inputmode="numeric" maxlength="13" placeholder="000-000-00-00">
+              </div>
+              <div class="co-field full">
                 <label class="co-consent" for="f-cart-reminder">
                   <input id="f-cart-reminder" name="cartReminder" type="checkbox">
                   <span>Chcę otrzymać jedną wiadomość e-mail z przypomnieniem, jeśli nie dokończę zamówienia. Zgodę mogę wycofać w każdej chwili (<a href="polityka-prywatnosci.html">polityka prywatności</a>).</span>
@@ -651,6 +665,18 @@
   renderAccountStep();
 
   // ---------- step 2: shipping ----------
+  // Polish NIP checksum (weights 6,5,7,2,3,4,5,6,7; mod 11 must equal the last digit).
+  function isValidNip(nip) {
+    if (!/^\d{10}$/.test(nip)) return false;
+    var w = [6, 5, 7, 2, 3, 4, 5, 6, 7], sum = 0;
+    for (var i = 0; i < 9; i++) sum += w[i] * Number(nip[i]);
+    return sum % 11 === Number(nip[9]);
+  }
+  var invoiceBox = document.getElementById('f-invoice');
+  invoiceBox.addEventListener('change', function () {
+    document.getElementById('co-invoice-fields').hidden = !invoiceBox.checked;
+    document.getElementById('co-invoice-nip').hidden = !invoiceBox.checked;
+  });
   var shippingForm = document.getElementById('co-shipping-form');
   var shippingError = document.getElementById('co-shipping-error');
   var shipping = {};
@@ -664,7 +690,19 @@
     }
     shippingError.hidden = true;
     var fd = new FormData(shippingForm);
+    var wantsInvoice = !!fd.get('invoice');
+    if (wantsInvoice) {
+      var nipVal = String(fd.get('nip') || '').replace(/[\s-]/g, '');
+      if (!String(fd.get('company') || '').trim() || !isValidNip(nipVal)) {
+        shippingError.textContent = 'Do faktury podaj nazwę firmy i poprawny NIP (10 cyfr).';
+        shippingError.hidden = false;
+        return;
+      }
+    }
+    shippingError.textContent = 'Uzupełnij wymagane pola, żeby przejść dalej.';
     shipping = {
+      company: wantsInvoice ? fd.get('company').trim() : '',
+      nip: wantsInvoice ? String(fd.get('nip')).replace(/[\s-]/g, '') : '',
       name: fd.get('name').trim(),
       email: fd.get('email').trim(),
       phone: fd.get('phone').trim(),
@@ -749,7 +787,8 @@
       ? 'Zalogowano jako ' + (getAccount() || {}).name
       : 'Zamówienie jako gość (bez konta)';
     document.getElementById('co-recap-shipping').textContent =
-      shipping.name + ', ' + shipping.address + ', ' + shipping.zip + ' ' + shipping.city + ' — ' + shipping.email + ', ' + shipping.phone;
+      shipping.name + ', ' + shipping.address + ', ' + shipping.zip + ' ' + shipping.city + ' — ' + shipping.email + ', ' + shipping.phone +
+      (shipping.nip ? ' · faktura VAT: ' + shipping.company + ', NIP ' + shipping.nip : '');
     document.getElementById('co-recap-payment').textContent = selectedPayment;
   }
 
@@ -808,6 +847,7 @@
       body: JSON.stringify({
         orderNr: orderNr, email: email, name: name, phone: phone,
         city: shipping.city || '', method: selectedPayment,
+        company: shipping.company || '', nip: shipping.nip || '',
         discountCode: discountApplied ? DISCOUNT_CODE : '',
         items: cart.map(function (item) { return { nr: item.nr, qty: item.qty }; })
       })
