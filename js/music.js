@@ -1,11 +1,10 @@
 // Ambient background music: generated live with the Web Audio API (no audio file,
-// no licensing). Browsers block sound until the visitor interacts, so playback starts
-// on the first click/key press unless the visitor has switched it off before.
+// no licensing). It starts on every page load. If the browser blocks autoplay, sound
+// begins at the first click/key press. The visitor's choice is not remembered.
 (() => {
   'use strict';
 
-  const KEY = 'vairem-music';
-  const VOLUME = 0.16;
+    const VOLUME = 0.16;
   const CHORD_SECONDS = 9;
   // Slow, soft progression (Hz): Am9 – Fmaj7 – Cmaj7 – G6
   const CHORDS = [
@@ -24,7 +23,6 @@
 
   let ctx = null, master = null, timer = null, step = 0, playing = false;
   let wanted = true;
-  try { wanted = localStorage.getItem(KEY) !== 'off'; } catch (e) {}
 
   function build() {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -46,6 +44,7 @@
     filter.connect(master); filter.connect(delay); wet.connect(master);
     master.connect(ctx.destination);
     ctx.vairemInput = filter;
+    ctx.onstatechange = () => { if (playing && ctx.state === 'running') begin(); };
     return true;
   }
 
@@ -77,18 +76,25 @@
     if (playing) return;
     if (!ctx && !build()) return;
     playing = true;
-    ctx.resume();
+    render();
+    ctx.resume().catch(() => {});
+    if (ctx.state === 'running') begin();
+  }
+
+  // Runs once the audio context is actually running (not blocked by autoplay policy).
+  function begin() {
+    if (timer) return;
     master.gain.cancelScheduledValues(ctx.currentTime);
     master.gain.setTargetAtTime(VOLUME, ctx.currentTime, 1.2);
     tick();
     timer = setInterval(tick, CHORD_SECONDS * 1000);
-    render();
   }
 
   function stop() {
     if (!playing) return;
     playing = false;
     clearInterval(timer);
+    timer = null;
     master.gain.cancelScheduledValues(ctx.currentTime);
     master.gain.setTargetAtTime(0, ctx.currentTime, 0.4);
     setTimeout(() => { if (!playing && ctx) ctx.suspend(); }, 2000);
@@ -123,13 +129,13 @@
       wanted = true;
       start();
     }
-    try { localStorage.setItem(KEY, wanted ? 'on' : 'off'); } catch (err) {}
   });
 
   function onFirstGesture(e) {
     if (btn.contains(e.target)) return;
     removeGesture();
     if (wanted) start();
+    if (ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
   }
   function removeGesture() {
     ['pointerdown', 'keydown', 'touchstart'].forEach(t => document.removeEventListener(t, onFirstGesture, true));
@@ -139,4 +145,5 @@
   new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   document.body.appendChild(btn);
   render();
+  start();
 })();
