@@ -1518,7 +1518,10 @@ button { font-family: inherit; }
   transition: opacity 2.2s ease, transform 2.2s cubic-bezier(0.2, 0.6, 0.2, 1), filter 2.2s ease;
   transition-delay: calc(var(--group-delay, 0ms) + (var(--i, 0) * 230ms));
 }
-.hero-title.reveal-chars.is-visible .char { filter: blur(0); }
+.hero-title.reveal-chars.is-visible .char { filter: none; }
+/* The handwritten capitals swing past their letter box; give each letter extra room (cancelled by the
+   negative margin, so the layout is unchanged) so Safari does not clip the overhang. */
+.hero-title .char { padding: 0.12em 0.16em; margin: -0.12em -0.16em; }
 /* while the welcome screen is up the title waits, fully hidden, so the effect plays when it is dismissed */
 .music-splash-open .hero-title.reveal-chars .char {
   opacity: 0;
