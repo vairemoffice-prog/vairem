@@ -5,7 +5,7 @@
 (() => {
   'use strict';
 
-    const VOLUME = 0.16;
+    const VOLUME = 0.7;
   const CHORD_SECONDS = 9;
   // Slow, soft progression (Hz): Am9 – Fmaj7 – Cmaj7 – G6
   const CHORDS = [
@@ -62,7 +62,7 @@
         osc.frequency.value = f;
         osc.detune.value = detune;
         g.gain.setValueAtTime(0, now);
-        g.gain.linearRampToValueAtTime(0.06 / freqs.length * 2, now + 4);
+        g.gain.linearRampToValueAtTime(0.05, now + 4);
         g.gain.linearRampToValueAtTime(0, now + len);
         osc.connect(g); g.connect(ctx.vairemInput);
         osc.start(now);
