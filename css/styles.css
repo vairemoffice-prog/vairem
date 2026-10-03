@@ -1714,6 +1714,24 @@ main:focus { outline: none; }
 .music-splash.is-leaving .music-splash-logo { transform: scale(1.06); }
 .music-splash-enter { transition: opacity 0.4s ease; }
 .music-splash.is-leaving .music-splash-enter { opacity: 0; }
+
+/* the logo condenses out of the air: soft blur and haze clear slowly, then ENTER appears */
+.music-splash.is-visible .music-splash-logo {
+  animation: splash-logo-in 2.8s cubic-bezier(0.2, 0.6, 0.2, 1) 0.35s backwards;
+}
+.music-splash.is-visible .music-splash-enter {
+  animation: splash-enter-in 1.6s ease 2s backwards;
+}
+@keyframes splash-logo-in {
+  0%   { opacity: 0; filter: blur(22px); transform: translateY(10px) scale(0.94); }
+  60%  { opacity: 0.85; }
+  100% { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes splash-enter-in {
+  from { opacity: 0; }
+  to   { opacity: 0.8; }
+}
 @media (prefers-reduced-motion: reduce) {
   .music-splash, .music-splash.is-leaving, #page-content, .music-splash-logo { transition: none; }
+  .music-splash.is-visible .music-splash-logo, .music-splash.is-visible .music-splash-enter { animation: none; }
 }
