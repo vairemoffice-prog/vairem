@@ -205,6 +205,13 @@
 
   const ENTER = { pl: 'WEJDŹ', en: 'ENTER', es: 'ENTRAR', uk: 'УВІЙТИ', fr: 'ENTRER' };
   let splash = null, splashKey = null;
+  const ENTERED_KEY = 'vairem-entered';
+  const isHome = () => /(^|\/)(index\.html)?$/.test(location.pathname);
+  const isReload = () => {
+    const nav = performance.getEntriesByType('navigation')[0];
+    return !!nav && nav.type === 'reload';
+  };
+  const alreadyEntered = () => { try { return sessionStorage.getItem(ENTERED_KEY) === '1'; } catch (e) { return false; } };
   // High-resolution logo (1195 px wide) so it stays sharp on retina and large screens.
   const LOGO_DAY = 'assets/img/logo-vairem-signature-1200.webp';
   const LOGO_NIGHT = 'assets/img/logo-vairem-signature-night-1200.webp';
@@ -225,6 +232,7 @@
 
   function showSplash() {
     if (splash || !wanted || !ctx || ctx.state === 'running') return;
+    if (!isHome() || (alreadyEntered() && !isReload())) return; // only the home page, and not again on the way back
     const lang = ENTER[document.documentElement.lang] ? document.documentElement.lang : 'pl';
     splash = document.createElement('div');
     splash.className = 'music-splash';
@@ -238,7 +246,7 @@
     // Any click/tap on the screen or any key (arrows, space, enter...) enters the site.
     const enter = () => {
       wanted = true;
-      try { sessionStorage.removeItem(KEY); } catch (err) {}
+      try { sessionStorage.removeItem(KEY); sessionStorage.setItem(ENTERED_KEY, '1'); } catch (err) {}
       start();
       unlock();
       hideSplash();
