@@ -94,7 +94,7 @@
   function initMagnetic() {
     if (reducedMotion || !fineHover) return;
 
-    const SELECTOR = '.btn';
+    const SELECTOR = '.btn, .list-form button, .contact-form button';
     const RADIUS = 90;
     const STRENGTH = 0.45;
 
