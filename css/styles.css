@@ -1665,9 +1665,26 @@ main:focus { outline: none; }
   align-items: center;
   justify-content: center;
   gap: 36px;
-  background: var(--bg);
+  background-color: var(--bg);
+  /* same floral relief as the hero (first scene, top of the image) */
+  background-repeat: no-repeat;
+  background-image: url('../assets/img/bg-floral-relief.jpg');
+  background-image: image-set(url('../assets/img/bg-floral-relief-1536.webp') type('image/webp'), url('../assets/img/bg-floral-relief.jpg') type('image/jpeg'));
+  background-size: 100% auto;
+  background-position: center top;
   opacity: 0;
   transition: opacity 0.5s ease;
+}
+@media (min-width: 1600px), (min-width: 1000px) and (min-resolution: 1.5dppx) {
+  .music-splash {
+    background-image: url('../assets/img/bg-floral-relief.jpg');
+    background-image: image-set(url('../assets/img/bg-floral-relief.webp') type('image/webp'), url('../assets/img/bg-floral-relief.jpg') type('image/jpeg'));
+  }
+}
+[data-theme="night"] .music-splash {
+  background-image: url('../assets/img/paper-emboss-night.svg');
+  background-size: cover;
+  background-position: center center;
 }
 .music-splash.is-visible { opacity: 1; }
 .music-splash-logo { width: min(280px, 62vw); height: auto; }
