@@ -105,7 +105,7 @@
   .pay-check svg{ width:11px; height:11px; }
   @media (max-width:520px){ .pay-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 
-  .co-actions{ display:flex; justify-content:space-between; align-items:center; gap:16px; margin-top:32px; }
+  .co-actions{ display:flex; justify-content:flex-end; align-items:center; gap:16px; margin-top:32px; }
   .co-back-step{ font-size:11px; letter-spacing:0.14em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Martian Mono',monospace; }
   .co-back-step:hover{ color:var(--text-hover); }
   .co-error{ font-size:12px; color:#B0463F; margin-top:14px; }
@@ -256,7 +256,6 @@
             </div>
             <div class="co-error mono" id="co-login-error" hidden></div>
             <div class="co-actions">
-              <button type="button" class="co-back-step" data-cancel-account>← WSTECZ</button>
               <button type="submit" class="btn btn-dark mono">ZALOGUJ SIĘ →</button>
             </div>
           </form>
@@ -269,7 +268,6 @@
             </div>
             <div class="co-error mono" id="co-register-error" hidden></div>
             <div class="co-actions">
-              <button type="button" class="co-back-step" data-cancel-account>← WSTECZ</button>
               <button type="submit" class="btn btn-dark mono">ZAŁÓŻ KONTO →</button>
             </div>
           </form>
@@ -337,7 +335,6 @@
             </div>
             <div class="co-error mono" id="co-shipping-error" hidden>Uzupełnij wymagane pola, żeby przejść dalej.</div>
             <div class="co-actions">
-              <button type="button" class="co-back-step" data-back="1">← WSTECZ</button>
               <button type="submit" class="btn btn-dark mono">DALEJ: PŁATNOŚĆ →</button>
             </div>
           </form>
@@ -390,7 +387,6 @@
           </div>
           <div class="co-error mono" id="co-payment-error" hidden>Wybierz formę płatności, żeby przejść dalej.</div>
           <div class="co-actions">
-            <button type="button" class="co-back-step" data-back="2">← WSTECZ</button>
             <button type="button" class="btn btn-dark mono" id="co-to-summary">DALEJ: PODSUMOWANIE →</button>
           </div>
         </section>
@@ -424,7 +420,6 @@
           </div>
 
           <div class="co-actions">
-            <button type="button" class="co-back-step" data-back="3">← WSTECZ</button>
             <button type="button" class="btn btn-green mono" id="co-place-order">ZAPŁAĆ</button>
           </div>
           <div class="co-error mono" id="co-order-error" role="alert" hidden>Nie udało się przejść do płatności. Spróbuj ponownie za chwilę.</div>
@@ -607,12 +602,22 @@
     });
   });
 
-  document.querySelectorAll('[data-cancel-account]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      loginForm.hidden = true;
-      registerForm.hidden = true;
-      accountGrid.hidden = false;
-    });
+  function closeAccountForm() {
+    loginForm.hidden = true;
+    registerForm.hidden = true;
+    accountGrid.hidden = false;
+  }
+
+  // The single "← WSTECZ" under the page (same as on every subpage) also walks
+  // back through the checkout steps; on the first step / confirmation it keeps
+  // its normal behaviour (previous page or home).
+  document.querySelector('.page-bottom-back').addEventListener('click', function (e) {
+    var inAccountForm = currentStep === 1 && (!loginForm.hidden || !registerForm.hidden);
+    if (!inAccountForm && (currentStep < 2 || currentStep > 4)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (inAccountForm) closeAccountForm();
+    else goToStep(currentStep - 1);
   });
 
   loginForm.addEventListener('submit', function (e) {
