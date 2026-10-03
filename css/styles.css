@@ -521,6 +521,9 @@ button { font-family: inherit; }
 [data-theme="night"] .brand-signature { content: url('../assets/img/logo-vairem-signature-night.webp'); }
 .footer-brand-lockup { display: flex; align-items: center; gap: 10px; }
 
+/* header without the centre links (home page): logo left, controls right */
+.header-inner--no-nav { grid-template-columns: auto 1fr; }
+.header-inner--no-nav .header-actions { justify-self: end; }
 .main-nav {
   display: flex;
   gap: 22px;
@@ -1464,6 +1467,7 @@ button { font-family: inherit; }
 
 @media (max-width: 860px) {
   .header-inner { grid-template-columns: auto auto; }
+  .header-inner--no-nav { grid-template-columns: auto 1fr; }
   .main-nav { display: none; }
   .header-actions { gap: 6px; }
   .lang-toggle, .theme-toggle { padding: 7px 9px; font-size: 10px; }
