@@ -204,7 +204,7 @@
   // gesture that lets the music start right away.
 
   const ENTER = { pl: 'WEJDŹ', en: 'ENTER', es: 'ENTRAR', uk: 'УВІЙТИ', fr: 'ENTRER' };
-  let splash = null;
+  let splash = null, splashKey = null;
 
   function hideSplash() {
     if (!splash) return;
@@ -213,6 +213,8 @@
     el.classList.remove('is-visible');
     setTimeout(() => el.remove(), 600);
     document.documentElement.classList.remove('music-splash-open');
+    if (splashKey) document.removeEventListener('keydown', splashKey, true);
+    splashKey = null;
   }
 
   function showSplash() {
@@ -227,14 +229,22 @@
       '<img class="music-splash-logo music-splash-logo--day" src="assets/img/logo-vairem-signature.webp" alt="Vairem" width="400" height="260">' +
       '<img class="music-splash-logo music-splash-logo--night" src="assets/img/logo-vairem-signature-night.webp" alt="" width="400" height="260">' +
       '<button type="button" class="music-splash-enter mono">' + ENTER[lang] + '</button>';
-    splash.querySelector('button').addEventListener('click', e => {
-      e.stopPropagation();
+    // Any click/tap on the screen or any key (arrows, space, enter...) enters the site.
+    const enter = () => {
       wanted = true;
       try { sessionStorage.removeItem(KEY); } catch (err) {}
       start();
       unlock();
       hideSplash();
-    });
+    };
+    splash.addEventListener('click', e => { e.stopPropagation(); enter(); });
+    splash.addEventListener('touchend', e => { e.preventDefault(); enter(); }, { passive: false });
+    splashKey = e => {
+      if (['Tab', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock'].includes(e.key)) return;
+      e.preventDefault();
+      enter();
+    };
+    document.addEventListener('keydown', splashKey, true);
     document.body.appendChild(splash);
     document.documentElement.classList.add('music-splash-open');
     requestAnimationFrame(() => splash && splash.classList.add('is-visible'));
