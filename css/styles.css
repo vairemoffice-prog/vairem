@@ -1720,7 +1720,7 @@ main:focus { outline: none; }
   animation: splash-logo-in 2.8s cubic-bezier(0.2, 0.6, 0.2, 1) 0.35s backwards;
 }
 .music-splash.is-visible .music-splash-enter {
-  animation: splash-enter-in 1.6s ease 2s backwards;
+  animation: splash-enter-in 2.2s cubic-bezier(0.2, 0.6, 0.2, 1) 1.8s backwards;
 }
 @keyframes splash-logo-in {
   0%   { opacity: 0; filter: blur(22px); transform: translateY(10px) scale(0.94); }
@@ -1728,8 +1728,8 @@ main:focus { outline: none; }
   100% { opacity: 1; filter: blur(0); transform: none; }
 }
 @keyframes splash-enter-in {
-  from { opacity: 0; }
-  to   { opacity: 0.8; }
+  0%   { opacity: 0; filter: blur(10px); transform: translateY(6px); letter-spacing: 0.4em; }
+  100% { opacity: 0.8; filter: blur(0); transform: none; letter-spacing: 0.3em; }
 }
 @media (prefers-reduced-motion: reduce) {
   .music-splash, .music-splash.is-leaving, #page-content, .music-splash-logo { transition: none; }
