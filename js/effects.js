@@ -43,6 +43,28 @@
       requestTick();
     }, { passive: false });
 
+    // keyboard scrolling gets the same inertia (arrows, space, page up/down, home/end)
+    window.addEventListener('keydown', e => {
+      if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON|A|VIDEO|AUDIO)$/.test(t.tagName))) return;
+      const page = window.innerHeight * 0.9;
+      let next = null;
+      switch (e.key) {
+        case 'ArrowDown': next = target + 90; break;
+        case 'ArrowUp': next = target - 90; break;
+        case 'PageDown': next = target + page; break;
+        case 'PageUp': next = target - page; break;
+        case ' ': next = target + (e.shiftKey ? -page : page); break;
+        case 'Home': next = 0; break;
+        case 'End': next = maxScroll(); break;
+        default: return;
+      }
+      e.preventDefault();
+      target = Math.min(Math.max(next, 0), maxScroll());
+      requestTick();
+    });
+
     // stay in sync with scroll changes we didn't drive ourselves
     // (hash jumps, AJAX page swaps, browser back/forward)
     window.addEventListener('scroll', () => {
@@ -230,8 +252,94 @@
     document.addEventListener('vairem:content-swapped', scan);
   }
 
+
+  // ---------- showcase scroll (home page) ----------
+  // After the welcome screen, the home page glides from top to bottom and back again, without
+  // stopping, as a slow showcase. Any touch, click, wheel, key press or manual scroll hands control
+  // back to the visitor for good (until the page is reloaded). Not run with reduced motion.
+
+  function initShowcaseScroll() {
+    if (reducedMotion || !document.getElementById('hero-region') || location.hash) return;
+
+    const PERIOD = 150000;   // ms for one full trip down and back
+    const START_DELAY = 3500; // ms after the welcome screen is gone
+    let running = false;
+    let stopped = false;
+    let phase0 = 0;
+    let t0 = 0;
+    let lastY = -1;
+    let rafId = 0;
+
+    const maxScroll = () => Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
+
+    function stop() {
+      if (stopped) return;
+      stopped = true;
+      running = false;
+      cancelAnimationFrame(rafId);
+      INPUTS.forEach(t => window.removeEventListener(t, onInput, true));
+      document.removeEventListener('vairem:content-swapped', stop);
+    }
+    const INPUTS = ['wheel', 'touchstart', 'pointerdown', 'mousedown', 'keydown'];
+
+    function frame(now) {
+      if (!running) return;
+      const max = maxScroll();
+      if (max < 50 || !document.getElementById('hero-region')) { stop(); return; }
+      // somebody else moved the page (scrollbar drag, anchor jump, momentum): hand over control
+      if (lastY >= 0 && Math.abs(window.scrollY - lastY) > 3) { stop(); return; }
+      // position follows a cosine: top -> bottom -> top; no abrupt stop at either end
+      const phase = phase0 + ((now - t0) / PERIOD) * Math.PI * 2;
+      const y = max * (0.5 - 0.5 * Math.cos(phase));
+      window.scrollTo(0, y);
+      lastY = window.scrollY;
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function begin() {
+      if (stopped) return;
+      running = true;
+      const max = maxScroll();
+      const y = window.scrollY;
+      // start from wherever the page is now
+      phase0 = Math.acos(Math.min(Math.max(1 - (2 * y) / Math.max(max, 1), -1), 1));
+      t0 = performance.now();
+      lastY = -1;
+      rafId = requestAnimationFrame(frame);
+    }
+
+    // input on the welcome screen (entering the site) must not cancel the showcase
+    const onInput = () => {
+      if (document.documentElement.classList.contains('music-splash-open')) return;
+      stop();
+    };
+    INPUTS.forEach(t => window.addEventListener(t, onInput, { capture: true, passive: true }));
+    document.addEventListener('vairem:content-swapped', stop);
+    document.addEventListener('visibilitychange', () => {
+      if (stopped) return;
+      if (document.hidden) { running = false; cancelAnimationFrame(rafId); }
+      else if (!running && started) begin();
+    });
+
+    // wait until the welcome screen (if any) is dismissed, then a short pause so the hero can be seen
+    let started = false;
+    let quietSince = 0;
+    const poll = setInterval(() => {
+      if (stopped) { clearInterval(poll); return; }
+      const blocked = document.documentElement.classList.contains('music-splash-open');
+      if (blocked) { quietSince = 0; return; }
+      if (!quietSince) quietSince = Date.now();
+      if (Date.now() - quietSince >= START_DELAY) {
+        clearInterval(poll);
+        started = true;
+        begin();
+      }
+    }, 250);
+  }
+
   initSmoothScroll();
   initCustomCursor();
   initMagnetic();
   initGenericReveal();
+  initShowcaseScroll();
 })();
