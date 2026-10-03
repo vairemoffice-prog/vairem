@@ -75,7 +75,7 @@
     window.addEventListener('mouseleave', () => dot.classList.remove('fx-cursor--shown'));
 
     document.addEventListener('mouseover', e => {
-      dot.classList.toggle('fx-cursor--hover', !!e.target.closest('a, button, .btn, [data-add]'));
+      dot.classList.toggle('fx-cursor--hover', !!e.target.closest('a, button, .btn, [data-add], .music-splash'));
     });
 
     function raf() {
