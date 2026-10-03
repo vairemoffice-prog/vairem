@@ -1675,17 +1675,18 @@ main:focus { outline: none; }
 [data-theme="night"] .music-splash-logo--day { display: none; }
 [data-theme="night"] .music-splash-logo--night { display: block; }
 .music-splash-enter {
-  padding: 14px 34px;
-  font-size: 11px;
-  letter-spacing: 0.28em;
+  padding: 14px 20px;
+  font-size: 12px;
+  letter-spacing: 0.3em;
   color: var(--text);
   background: none;
-  border: 1px solid var(--border);
+  border: 0;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  opacity: 0.8;
+  transition: opacity 0.2s;
 }
-.music-splash-enter:hover { background: var(--dark); color: var(--bg); }
-.music-splash-enter:focus-visible { outline: 1px solid var(--green-deep); outline-offset: 4px; }
+.music-splash-enter:hover { opacity: 1; }
+.music-splash-enter:focus-visible { outline: none; opacity: 1; }
 .music-splash-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .music-splash { transition: none; }
