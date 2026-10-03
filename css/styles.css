@@ -1543,7 +1543,7 @@ button { font-family: inherit; }
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 200;
+  z-index: 4000; /* above the welcome screen (3000) */
   opacity: 0;
   transition: opacity 0.2s ease;
 }
