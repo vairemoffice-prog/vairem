@@ -1,6 +1,7 @@
 // Ambient background music: generated live with the Web Audio API (no audio file,
-// no licensing). It starts on every page load. If the browser blocks autoplay, sound
-// begins at the first click/key press. The visitor's choice is not remembered.
+// no licensing). It plays whenever the site is opened. If the browser blocks autoplay,
+// sound begins at the first click/key press. Switching it off holds across subpages
+// for the current visit only (sessionStorage), so the next visit starts with music.
 (() => {
   'use strict';
 
@@ -22,7 +23,9 @@
   };
 
   let ctx = null, master = null, timer = null, step = 0, playing = false;
+  const KEY = 'vairem-music-off';
   let wanted = true;
+  try { wanted = sessionStorage.getItem(KEY) !== '1'; } catch (e) {}
 
   function build() {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -129,6 +132,7 @@
       wanted = true;
       start();
     }
+    try { sessionStorage.setItem(KEY, wanted ? '0' : '1'); } catch (err) {}
   });
 
   function onFirstGesture(e) {
@@ -145,5 +149,5 @@
   new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   document.body.appendChild(btn);
   render();
-  start();
+  if (wanted) start();
 })();
