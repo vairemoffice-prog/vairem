@@ -1,6 +1,14 @@
 (() => {
   'use strict';
 
+  // The home page always opens at the top (hero), also after a refresh or the back button.
+  // A link with an anchor (index.html#metoda) still jumps to its section.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const scrollToTop = () => { if (!location.hash) window.scrollTo(0, 0); };
+  scrollToTop();
+  window.addEventListener('load', scrollToTop);
+  window.addEventListener('pageshow', e => { if (e.persisted) scrollToTop(); });
+
   const PRODUCTS = [
     { nr: '017', name: 'Before It Dries', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
     { nr: '042', name: 'Within', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
