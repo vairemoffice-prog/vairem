@@ -61,7 +61,7 @@ const PROP_CART_VALUE = 'vairem__wartosc_koszyka_pln';
 // directly; with Stripe the sync happens from the verified webhook instead.
 // Set to false once the Stripe checkout is live so nobody can create deals
 // without paying.
-const LEGACY_SYNC_ENABLED = true;
+const LEGACY_SYNC_ENABLED = false;
 
 // ---- Shop / Stripe settings ------------------------------------------------
 const SITE = 'https://vairemoffice-prog.github.io/vairem';
