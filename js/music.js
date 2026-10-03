@@ -1,22 +1,38 @@
-// Upbeat background music: generated live with the Web Audio API (no audio file,
+// Calm piano background music (in the spirit of minimalist piano): generated live with the Web Audio API (no audio file,
 // no licensing). It plays whenever the site is opened. If the browser blocks autoplay,
 // sound begins at the first click/key press. Switching it off holds across subpages
 // for the current visit only (sessionStorage), so the next visit starts with music.
 (() => {
   'use strict';
 
-  const VOLUME = 0.6;
-  const BPM = 112;
-  const STEP = 60 / BPM / 4; // one 16th note, in seconds
-  // Chords: Am – F – C – G, two bars (32 sixteenths) each. [bass, arpeggio notes] in Hz.
-  const CHORDS = [
-    { bass: 55.0, arp: [220.0, 261.63, 329.63, 440.0] },
-    { bass: 43.65, arp: [174.61, 220.0, 261.63, 349.23] },
-    { bass: 65.41, arp: [196.0, 261.63, 329.63, 392.0] },
-    { bass: 49.0, arp: [196.0, 246.94, 293.66, 392.0] },
+  const VOLUME = 0.9;
+  const BPM = 72;
+  const STEP = 60 / BPM / 2; // one 8th note, in seconds
+  const midi = m => 440 * Math.pow(2, (m - 69) / 12);
+  // Eight bars (Am F C G Am F G Em), then it loops. Each bar = 8 eighths.
+  // bass / arp (rolling right-hand pattern) / mel (melody pool) are MIDI notes.
+  const BARS = [
+    { bass: 45, arp: [57, 60, 64, 69], mel: [72, 76, 69] },
+    { bass: 41, arp: [53, 57, 60, 65], mel: [69, 72, 77] },
+    { bass: 48, arp: [55, 60, 64, 67], mel: [72, 76, 79] },
+    { bass: 43, arp: [55, 59, 62, 67], mel: [71, 74, 79] },
+    { bass: 45, arp: [57, 60, 64, 69], mel: [72, 76, 81] },
+    { bass: 41, arp: [53, 57, 60, 65], mel: [77, 72, 69] },
+    { bass: 43, arp: [55, 59, 62, 67], mel: [74, 79, 71] },
+    { bass: 40, arp: [55, 59, 64, 67], mel: [76, 71, 74] },
   ];
-  // Arpeggio pattern per bar (index into chord notes, -1 = rest).
-  const ARP = [0, -1, 1, -1, 2, 1, -1, 3, 2, -1, 1, -1, 0, 1, 2, 3];
+  const ARP = [0, 1, 2, 3, 2, 1, 2, 1];
+  // Melody: [eighth in bar, index into mel, length in eighths]
+  const MELODY = [
+    [[0, 1, 4], [4, 0, 4]],
+    [[0, 1, 3], [3, 0, 1], [4, 2, 4]],
+    [[0, 0, 4], [4, 1, 4]],
+    [[0, 2, 3], [3, 1, 1], [4, 0, 4]],
+    [[0, 1, 4], [4, 2, 2], [6, 1, 2]],
+    [[0, 0, 3], [3, 1, 1], [4, 2, 4]],
+    [[0, 1, 4], [4, 0, 2], [6, 2, 2]],
+    [[0, 0, 8]],
+  ];
   const LABELS = {
     pl: ['Włącz muzykę', 'Wyłącz muzykę'],
     en: ['Turn music on', 'Turn music off'],
@@ -41,80 +57,59 @@
     ctx = new AC();
     master = ctx.createGain();
     master.gain.value = 0;
-    // Dry bus plus a bouncy echo for the arpeggio.
+    // Soft bus + synthetic hall reverb.
     const bus = ctx.createBiquadFilter();
     bus.type = 'lowpass';
-    bus.frequency.value = 2200; // keeps the sound warm, no shrill highs
-    const delay = ctx.createDelay(1);
-    delay.delayTime.value = STEP * 3;
-    const fb = ctx.createGain();
-    fb.gain.value = 0.28;
+    bus.frequency.value = 3200;
+    const len = Math.floor(ctx.sampleRate * 3);
+    const ir = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (let c = 0; c < 2; c++) {
+      const d = ir.getChannelData(c);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.5);
+    }
+    const reverb = ctx.createConvolver();
+    reverb.buffer = ir;
     const wet = ctx.createGain();
-    wet.gain.value = 0.3;
-    delay.connect(fb); fb.connect(delay); delay.connect(wet);
-    bus.connect(master); bus.connect(delay); wet.connect(master);
+    wet.gain.value = 0.35;
+    bus.connect(master); bus.connect(reverb); reverb.connect(wet); wet.connect(master);
     master.connect(ctx.destination);
     ctx.vairemBus = bus;
-    // Short noise buffer for hi-hats.
-    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.1), ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    ctx.vairemNoise = buf;
     ctx.onstatechange = () => { if (playing && ctx.state === 'running') begin(); };
     return true;
   }
 
-  function tone(type, freq, t, dur, peak, dest) {
-    const osc = ctx.createOscillator();
-    const g = ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, t);
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(peak, t + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    osc.connect(g); g.connect(dest || ctx.vairemBus);
-    osc.start(t);
-    osc.stop(t + dur + 0.05);
-  }
-
-  function kick(t) {
-    const osc = ctx.createOscillator();
-    const g = ctx.createGain();
-    osc.frequency.setValueAtTime(120, t);
-    osc.frequency.exponentialRampToValueAtTime(42, t + 0.14);
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.7, t + 0.005);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
-    osc.connect(g); g.connect(ctx.vairemBus);
-    osc.start(t);
-    osc.stop(t + 0.35);
-  }
-
-  function hat(t, peak) {
-    const src = ctx.createBufferSource();
-    src.buffer = ctx.vairemNoise;
-    const hp = ctx.createBiquadFilter();
-    hp.type = 'highpass';
-    hp.frequency.value = 5000;
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(peak, t);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
-    src.connect(hp); hp.connect(g); g.connect(ctx.vairemBus);
-    src.start(t);
-    src.stop(t + 0.1);
+  // A piano-like note: a few decaying harmonics with a soft hammer attack.
+  function piano(m, t, dur, vel) {
+    const f = midi(m);
+    const out = ctx.createGain();
+    out.gain.setValueAtTime(0.0001, t);
+    out.gain.exponentialRampToValueAtTime(vel, t + 0.006);
+    out.gain.exponentialRampToValueAtTime(vel * 0.35, t + 0.35);
+    out.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    out.connect(ctx.vairemBus);
+    [[1, 1], [2, 0.42], [3, 0.2], [4, 0.1], [5, 0.04]].forEach(([h, a]) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = f * h * (1 + 0.0004 * h * h);
+      g.gain.value = a;
+      osc.connect(g); g.connect(out);
+      osc.start(t);
+      osc.stop(t + dur + 0.05);
+    });
   }
 
   function schedule(i, t) {
-    const chord = CHORDS[Math.floor(i / 32) % CHORDS.length];
-    const s16 = i % 16;
-    if (s16 % 4 === 0) kick(t);
-    if (s16 % 4 === 2) hat(t, 0.05);
-    else if (s16 % 2 === 1) hat(t, 0.02);
-    // Bass: on the beat and a syncopated hit before the next beat.
-    if (s16 % 8 === 0 || s16 === 6 || s16 === 14) tone('triangle', chord.bass * (s16 === 14 ? 2 : 1), t, STEP * 3, 0.45);
-    const n = ARP[s16];
-    if (n >= 0) tone('triangle', chord.arp[n], t, STEP * 2.5, 0.2);
-    if (s16 === 0 && i % 32 === 0) tone('sine', chord.arp[0] / 2, t, STEP * 30, 0.1);
+    const bar = Math.floor(i / 8) % BARS.length;
+    const e = i % 8;
+    const chord = BARS[bar];
+    const human = () => (Math.random() - 0.5) * 0.012;
+    if (e === 0) piano(chord.bass, t, 4, 0.34);
+    if (e === 4) piano(chord.bass + 12, t, 2.5, 0.12);
+    piano(chord.arp[ARP[e]], t + Math.max(0, human()), 2.2, 0.1 + Math.random() * 0.025);
+    MELODY[bar].forEach(([at, mi, len]) => {
+      if (at === e) piano(chord.mel[mi], t, Math.min(4.5, len * STEP + 1.8), 0.22);
+    });
   }
 
   function pump() {
