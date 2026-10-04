@@ -99,7 +99,7 @@
       'footer.moje_konto': 'MOJE KONTO', 'footer.zamowienia': 'Twoje zamówienia', 'footer.ustawienia_konta': 'Ustawienia konta',
       'footer.platnosc_dostawa': 'PŁATNOŚĆ I DOSTAWA', 'footer.formy_platnosci': 'Formy płatności', 'footer.czas_koszty_dostawy': 'Czas i koszty dostawy', 'footer.czas_realizacji': 'Czas realizacji zamówienia',
       'footer.informacje': 'INFORMACJE', 'footer.polityka_prywatnosci': 'Polityka prywatności',
-      'footer.o_nas': 'O NAS', 'footer.blog': 'Blog', 'footer.o_firmie': 'O firmie',
+      'footer.o_nas': 'O NAS', 'footer.blog': 'Journal', 'footer.o_firmie': 'O firmie',
       'footer.vat': 'CENY W PLN, ZAWIERAJĄ VAT',
       'cart.close': 'ZAMKNIJ ✕', 'cart.shipping': 'WYSYŁKA', 'cart.total': 'DO ZAPŁATY',
       'cta.checkout': 'PRZEJDŹ DO PŁATNOŚCI →', 'cart.note': 'ZWROT 30 DNI · SZKŁO DO REFILLU',
