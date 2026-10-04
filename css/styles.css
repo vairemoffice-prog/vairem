@@ -1792,3 +1792,29 @@ main:focus { outline: none; }
     background-position: center top;
   }
 }
+
+/* ---------- mobile polish: readability + tap targets (light theme; night has its own contrast) ---------- */
+@media (max-width: 900px) {
+  /* body text was 3.5:1 and muted labels 1.4:1 against the photo - too faint on a small screen */
+  :root:not([data-theme="night"]) {
+    --text: #333B45;
+    --text-hover: #4A5662;
+    --muted: #52606C;
+    --muted-strong: #44515C;
+  }
+  /* soften the relief photo so it stays as atmosphere and text sits on a calm surface */
+  :root:not([data-theme="night"]) body::after { opacity: 0.55; }
+
+  /* comfortable (>= 40px) touch targets for tiny links and toggles */
+  .lang-toggle, .theme-toggle { min-height: 40px; }
+  .legal-back,
+  .footer-links a,
+  .footer-bottom a,
+  .index-foot a { display: inline-flex; align-items: center; min-height: 40px; }
+  .footer-links { gap: 0; }
+}
+
+/* the draggable MENU tab sits on the left edge at mid-height; keep reading text clear of it */
+@media (max-width: 900px) {
+  main .wrap { padding-left: max(36px, env(safe-area-inset-left)); }
+}

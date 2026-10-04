@@ -692,7 +692,9 @@
     const groupIndex = new Map();
     root.querySelectorAll(REVEAL_SELECTOR).forEach(el => {
       if (!el.dataset.revealMode) {
-        const isChars = wrapChars(el);
+        // long text on phones: whole-block fade instead of hundreds of animated letter spans (scroll jank)
+        const longOnPhone = (window.innerWidth <= 900 || !window.matchMedia('(hover: hover)').matches) && el.textContent.length > 60;
+        const isChars = !longOnPhone && wrapChars(el);
         el.dataset.revealMode = isChars ? 'chars' : 'block';
         el.classList.add(isChars ? 'reveal-chars' : 'reveal');
       } else if (el.dataset.revealMode === 'chars') {
