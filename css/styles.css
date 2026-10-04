@@ -1772,3 +1772,30 @@ main:focus { outline: none; }
   .music-splash, .music-splash.is-leaving, #page-content, .music-splash-logo { transition: none; }
   .music-splash.is-visible .music-splash-logo, .music-splash.is-visible .music-splash-enter { animation: none; }
 }
+
+/* ---------- mobile / touch performance ----------
+   On phones the fixed full-page photo (repainted under a blurred sticky header on every scroll frame)
+   makes long text pages like o-firmie.html stutter. Drop the blur, promote the background to its own
+   GPU layer and remove the transform transition. */
+@media (max-width: 900px), (hover: none) {
+  .site-header,
+  .legal-header,
+  .menu-drawer,
+  .cart-drawer {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .site-header,
+  .legal-header { background: var(--bg); }
+  .menu-drawer,
+  .cart-drawer { background: var(--bg); }
+  body::after {
+    top: 0;
+    bottom: 0;
+    transform: translateZ(0);
+    transition: none;
+    will-change: transform;
+    background-size: cover;
+    background-position: center top;
+  }
+}
