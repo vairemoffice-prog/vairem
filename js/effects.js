@@ -268,7 +268,7 @@
   function initShowcaseScroll() {
     if (reducedMotion || !document.getElementById('hero-region') || location.hash) return;
 
-    const PERIOD = 150000;   // ms for one full trip down and back
+    const AVG_SPEED = 28;    // px per second, averaged over the trip (peak is about 1.6x that, mid-page)
     const START_DELAY = 3500; // ms after the welcome screen is gone
     let running = false;
     let stopped = false;
@@ -276,6 +276,7 @@
     let t0 = 0;
     let lastY = -1;
     let rafId = 0;
+    let period = 0;          // ms for one full trip down and back, from the page length
 
     const maxScroll = () => Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
 
@@ -296,7 +297,7 @@
       // somebody else moved the page (scrollbar drag, anchor jump, momentum): hand over control
       if (lastY >= 0 && Math.abs(window.scrollY - lastY) > 3) { stop(); return; }
       // position follows a cosine: top -> bottom -> top; no abrupt stop at either end
-      const phase = phase0 + ((now - t0) / PERIOD) * Math.PI * 2;
+      const phase = phase0 + ((now - t0) / period) * Math.PI * 2;
       const y = max * (0.5 - 0.5 * Math.cos(phase));
       window.scrollTo(0, y);
       lastY = window.scrollY;
@@ -310,6 +311,8 @@
       const y = window.scrollY;
       // start from wherever the page is now
       phase0 = Math.acos(Math.min(Math.max(1 - (2 * y) / Math.max(max, 1), -1), 1));
+      // same pace on every screen: a long (phone) page takes longer instead of racing past
+      period = Math.max((2 * max / AVG_SPEED) * 1000, 60000);
       t0 = performance.now();
       lastY = -1;
       rafId = requestAnimationFrame(frame);
