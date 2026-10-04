@@ -1782,15 +1782,8 @@ main:focus { outline: none; }
   }
   .menu-drawer,
   .cart-drawer { background: var(--bg); }
-  body::after {
-    top: 0;
-    bottom: 0;
-    transform: translateZ(0);
-    transition: none;
-    will-change: transform;
-    background-size: cover;
-    background-position: center top;
-  }
+  /* background keeps the exact hero look/position; only promote it to its own GPU layer */
+  body::after { will-change: transform; }
 }
 
 /* ---------- mobile polish: readability + tap targets (light theme; night has its own contrast) ---------- */
@@ -1802,8 +1795,6 @@ main:focus { outline: none; }
     --muted: #52606C;
     --muted-strong: #44515C;
   }
-  /* soften the relief photo so it stays as atmosphere and text sits on a calm surface */
-  :root:not([data-theme="night"]) body::after { opacity: 0.55; }
 
   /* comfortable (>= 40px) touch targets for tiny links and toggles */
   .lang-toggle, .theme-toggle { min-height: 40px; }
