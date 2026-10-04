@@ -183,6 +183,13 @@
       }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
       : null;
 
+    // On phones a long paragraph split into hundreds of animated letter spans stutters while scrolling,
+    // so long text gets the whole-block fade instead (short headings keep the letter dissolve).
+    const compact = !fineHover || window.innerWidth <= 900;
+    function skipChars(el) {
+      return compact && el.textContent.length > 60;
+    }
+
     function wrapChars(el) {
       const nodes = Array.from(el.childNodes);
       const isLeaf = nodes.length > 0 && nodes.every(n =>
@@ -226,7 +233,7 @@
       const groupIndex = new Map();
       document.querySelectorAll(SELECTOR).forEach(el => {
         if (!el.dataset.revealMode) {
-          const isChars = wrapChars(el);
+          const isChars = !skipChars(el) && wrapChars(el);
           el.dataset.revealMode = isChars ? 'chars' : 'block';
           el.classList.add(isChars ? 'reveal-chars' : 'reveal');
         }
