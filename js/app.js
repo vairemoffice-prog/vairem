@@ -46,7 +46,7 @@
       'tabbar.label': 'WARIANT HERO', 'tab.tablica': '02 · TABLICA', 'tab.wykres': '03 · WYKRES',
       'hero1.eyebrow': 'MOLEKULARNY ZAPACH DO WNĘTRZ · TRZY ZWIĄZKI',
       'hero1.title': 'Powietrze<br>nie jest<br>puste',
-      'hero1.lede': 'Jedna molekuła zapachowa naraz, nierozcieńczona opowieścią. Bez nuty głowy, bez wytrącania, bez klasycznej piramidy — czysta forma zapachu, uwalniana powoli do powietrza.<br><br>To, czego nie widać, zmienia to, co czujesz. Nie możesz zobaczyć.<br>Możesz tylko sprawdzić, czy do Ciebie pasuje.<br>Przymierzysz?',
+      'hero1.lede': 'Bez klasycznej piramidy, bez nadmiaru. Zapach skomponowany jako czysta forma, która powoli przenika do powietrza i zmienia sposób, w jaki odbieramy przestrzeń.<br><br>To, czego nie widać, zmienia to, co czujesz. Nie możesz zobaczyć.<br>Możesz tylko sprawdzić, czy do Ciebie pasuje.<br>Przymierzysz?',
       'cta.wybierz': 'WYBIERZ ZWIĄZEK →', 'cta.metoda_dyfuzji': 'METODA DYFUZJI',
       'stat.zwiazkow': 'ZWIĄZKÓW W INDEKSIE', 'stat.stezenie': 'STĘŻENIE', 'stat.pojemnosc': 'POJEMNOŚĆ',
       'stat.czas': 'CZAS TRWANIA', 'stat.czas_value': '10–14 tyg.',
