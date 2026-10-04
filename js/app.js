@@ -1014,31 +1014,6 @@
     video.load();
   }
 
-  // The full-bleed video sits far below the fold: don't fetch it until it is
-  // about to scroll into view, play only while visible, and keep the poster
-  // for reduced-motion / data-saver users.
-  function initLazyVideo() {
-    const video = document.querySelector('video[data-lazy-video]');
-    if (!video || !('IntersectionObserver' in window)) return;
-    const conn = navigator.connection;
-    if (prefersReducedMotion || (conn && conn.saveData)) return;
-    let loaded = false;
-    new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          if (!loaded) {
-            loaded = true;
-            video.querySelectorAll('source[data-src]').forEach(src => { src.src = src.dataset.src; });
-            video.load();
-          }
-          video.play().catch(() => {});
-        } else if (loaded) {
-          video.pause();
-        }
-      });
-    }, { rootMargin: '300px 0px' }).observe(video);
-  }
-
   function initProductPhotos(root = document) {
     root.querySelectorAll('.karta-photo[data-src]').forEach(img => {
       const probe = new Image();
@@ -1484,7 +1459,6 @@
     initProductPhotos();
     initHeroKineticType();
     initBackgroundScrollFade();
-    initLazyVideo();
 
     document.getElementById('index-rows').addEventListener('click', e => {
       const btn = e.target.closest('[data-add]');
