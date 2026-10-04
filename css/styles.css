@@ -354,10 +354,9 @@ body::after {
     background-image: image-set(url('../assets/img/bg-floral-relief.webp') type('image/webp'), url('../assets/img/bg-floral-relief.jpg') type('image/jpeg'));
   }
 }
+/* night theme: plain solid --bg, no texture */
 [data-theme="night"] body::after {
-  background-image: url('../assets/img/paper-emboss-night.svg');
-  background-size: cover;
-  background-position: center center;
+  background-image: none;
 }
 
 a { color: var(--text); text-decoration: none; }
@@ -1719,9 +1718,7 @@ main:focus { outline: none; }
   }
 }
 [data-theme="night"] .music-splash {
-  background-image: url('../assets/img/paper-emboss-night.svg');
-  background-size: cover;
-  background-position: center center;
+  background-image: none;
 }
 .music-splash { cursor: pointer; }
 .music-splash.is-visible { opacity: 1; }
