@@ -1035,12 +1035,6 @@ button { font-family: inherit; }
 .metoda-index { font-size: 11px; letter-spacing: 0.16em; color: var(--muted); }
 .metoda-title { font-size: 22px; letter-spacing: -0.02em; padding-top: 14px; }
 .metoda-copy { margin: 12px 0 0; font-size: 15px; line-height: 1.6; color: var(--text); }
-.metoda-bars { display: flex; gap: 3px; padding-top: 20px; }
-.metoda-bars--five .metoda-bar { height: 26px; flex: 1; }
-.metoda-bars--rising { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end; height: 26px; }
-.metoda-bars--twelve { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); }
-.metoda-bars--twelve .metoda-bar { height: 26px; }
-.metoda-caption { font-size: 10px; letter-spacing: 0.14em; color: var(--muted); padding-top: 8px; }
 
 /* ---------- newsletter ---------- */
 
