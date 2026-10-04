@@ -1,4 +1,4 @@
-/* Self-hosted fonts (Google Fonts: Space Grotesk, Martian Mono, Zeyada, MedievalSharp — SIL OFL; Fontshare: Cabinet Grotesk — ITF Free Font License). */
+/* Self-hosted fonts (Google Fonts: Space Grotesk, Martian Mono, Zeyada — SIL OFL; Fontshare: Cabinet Grotesk — ITF Free Font License). */
 /* Martian Mono cyrillic */
 @font-face {
   font-family: 'Martian Mono';
@@ -161,24 +161,6 @@
   src: url('../assets/fonts/zeyada-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* MedievalSharp - main (body) typeface. Single weight, declared for the full weight range so the
-   browser never fakes bold on top of it. */
-@font-face {
-  font-family: 'MedievalSharp';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../assets/fonts/medievalsharp-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'MedievalSharp';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../assets/fonts/medievalsharp-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 /* Cabinet Grotesk 400 */
 @font-face {
   font-family: 'Cabinet Grotesk';
@@ -313,7 +295,7 @@ html {
 }
 
 body {
-  font-family: 'MedievalSharp', 'Cabinet Grotesk', Helvetica, Arial, sans-serif;
+  font-family: 'Cabinet Grotesk', 'Space Grotesk', Helvetica, Arial, sans-serif;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
@@ -659,7 +641,7 @@ button { font-family: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Zeyada', 'MedievalSharp', cursive;
+  font-family: 'Zeyada', 'Cabinet Grotesk', cursive;
   font-size: var(--hero-fs, clamp(56px, 23.2vw, 400px));
   line-height: 1.1;
   letter-spacing: 0;
