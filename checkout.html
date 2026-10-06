@@ -852,7 +852,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         orderNr: orderNr, email: email, name: name, phone: phone,
-        city: shipping.city || '', method: selectedPayment,
+        address: shipping.address || '', zip: shipping.zip || '', city: shipping.city || '', method: selectedPayment,
         company: shipping.company || '', nip: shipping.nip || '',
         discountCode: discountApplied ? DISCOUNT_CODE : '',
         items: cart.map(function (item) { return { nr: item.nr, qty: item.qty }; })
@@ -938,6 +938,7 @@
 
 </div><!-- /page-content -->
 
+<script src="js/track.js" defer></script>
 <script src="js/menu.js" defer></script>
 <script src="js/effects.js" defer></script>
 <script src="js/music.js" defer></script>
