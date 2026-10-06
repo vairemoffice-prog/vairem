@@ -843,6 +843,9 @@
     try {
       localStorage.setItem(PENDING_KEY, JSON.stringify({
         orderNr: orderNr, date: Date.now(), items: orderItems, total: finalTotal,
+        discount: discount, shipping: shippingCost, method: selectedPayment || '',
+        company: shipping.company || '', nip: shipping.nip || '',
+        address: shipping.address || '', zip: shipping.zip || '',
         city: shipping.city || '', email: email, name: name, phone: phone
       }));
     } catch (e) {}
@@ -896,8 +899,16 @@
         if (!Array.isArray(orders)) orders = [];
         // Reloading the return page must not duplicate the order.
         if (!orders.some(function (o) { return o.orderNr === orderNr; })) {
+          // Everything a VAT invoice / receipt needs is frozen with the order
+          // (buyer data, discount, shipping, payment) so later account edits
+          // can never change an already issued document.
           orders.unshift({ orderNr: orderNr, date: pending.date, items: pending.items,
-                           total: pending.total, city: pending.city || '' });
+                           total: pending.total, discount: pending.discount || 0,
+                           shipping: pending.shipping || 0, method: pending.method || '',
+                           name: pending.name || '', email: pending.email || '',
+                           company: pending.company || '', nip: pending.nip || '',
+                           address: pending.address || '', zip: pending.zip || '',
+                           city: pending.city || '' });
           localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
           sendOwnerNotification(pending);
         }
