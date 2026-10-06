@@ -88,7 +88,7 @@
   .ac-doc-btn:hover{ border-color:var(--green-deep); color:var(--green-deep); }
 
   .ac-status .meta + .meta{ margin-top:2px; }
-  .ac-stats{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); margin-bottom:14px; }
+  .ac-stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); margin-bottom:14px; }
   .ac-stat{ background:var(--bg); padding:16px 14px; }
   .ac-stat .v{ font-size:20px; letter-spacing:-0.02em; }
   .ac-stat .l{ font-size:10px; letter-spacing:0.1em; color:var(--muted); font-family:'Martian Mono',monospace; margin-top:4px; }
@@ -660,7 +660,6 @@
   // ---------- orders summary ----------
   function renderOrderStats() {
     var orders = getOrders();
-    var total = orders.reduce(function (sum, o) { return sum + (Number(o.total) || 0); }, 0);
     var statsEl = document.getElementById('ac-order-stats');
     var recentEl = document.getElementById('ac-order-recent');
     if (orders.length === 0) {
@@ -672,7 +671,6 @@
     statsEl.style.border = ''; statsEl.style.display = '';
     statsEl.innerHTML =
       '<div class="ac-stat"><div class="v">' + orders.length + '</div><div class="l">ZAMÓWIEŃ</div></div>' +
-      '<div class="ac-stat"><div class="v">' + total.toFixed(2).replace('.', ',') + ' zł</div><div class="l">WYDANO ŁĄCZNIE</div></div>' +
       '<div class="ac-stat"><div class="v">' + formatDate(orders[0].date) + '</div><div class="l">OSTATNIE ZAMÓWIENIE</div></div>';
     recentEl.innerHTML = orders.slice(0, 3).map(function (o) {
       var names = (o.items || []).map(function (i) { return esc(i.name) + ' × ' + i.qty; }).join(', ');
