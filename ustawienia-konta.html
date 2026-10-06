@@ -86,6 +86,25 @@
   .ac-doc-actions{ display:flex; gap:8px; }
   .ac-doc-btn{ font-size:10px; letter-spacing:0.1em; padding:8px 12px; border:1px solid var(--border-strong); background:none; color:var(--text); cursor:pointer; font-family:'Martian Mono',monospace; }
   .ac-doc-btn:hover{ border-color:var(--green-deep); color:var(--green-deep); }
+
+  .ac-status .meta + .meta{ margin-top:2px; }
+  .ac-stats{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); margin-bottom:14px; }
+  .ac-stat{ background:var(--bg); padding:16px 14px; }
+  .ac-stat .v{ font-size:20px; letter-spacing:-0.02em; }
+  .ac-stat .l{ font-size:10px; letter-spacing:0.1em; color:var(--muted); font-family:'Martian Mono',monospace; margin-top:4px; }
+  .ac-addr-list{ display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); }
+  .ac-addr-list:empty{ display:none; }
+  .ac-addr-row{ background:var(--bg); padding:16px 18px; display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; }
+  .ac-addr-label{ font-size:11px; letter-spacing:0.1em; color:var(--muted); font-family:'Martian Mono',monospace; }
+  .ac-addr-text{ font-size:14px; margin-top:4px; line-height:1.5; }
+  .ac-badge{ color:var(--green-deep); }
+  .ac-toggle{ display:flex; gap:12px; align-items:flex-start; font-size:13px; line-height:1.55; margin-bottom:14px; cursor:pointer; }
+  .ac-toggle input{ margin-top:4px; accent-color:var(--green-deep); }
+  .ac-help{ font-size:12px; color:var(--muted); line-height:1.6; margin:14px 0 18px; }
+  .ac-help a{ color:var(--green-deep); }
+  .ac-danger{ border-color:#B0463F; color:#B0463F; }
+  .ac-danger:hover{ background:#B0463F; color:#fff; border-color:#B0463F; }
+  @media (max-width:520px){ .ac-stats{ grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -187,31 +206,47 @@
           <div>
             <div class="name" id="ac-profile-name"></div>
             <div class="meta" id="ac-profile-email"></div>
+            <div class="meta" id="ac-profile-since"></div>
           </div>
-          <button type="button" class="ac-logout mono" id="ac-logout">WYLOGUJ SIĘ</button>
         </div>
 
         <form id="ac-details-form" novalidate>
-          <div class="ac-section-label" style="margin-top:0; padding-top:0; border-top:0;">DANE KONTA</div>
+          <div class="ac-section-label" style="margin-top:0; padding-top:0; border-top:0;">DANE OSOBOWE I KONTA</div>
           <div class="ac-fields">
             <div class="ac-field full"><label for="d-name">IMIĘ I NAZWISKO</label><input id="d-name" type="text" autocomplete="name" required></div>
-            <div class="ac-field full"><label for="d-email">E-MAIL</label><input id="d-email" type="email" autocomplete="email" required></div>
+            <div class="ac-field"><label for="d-email">E-MAIL (LOGIN)</label><input id="d-email" type="email" autocomplete="email" required></div>
             <div class="ac-field"><label for="d-phone">TELEFON</label><input id="d-phone" type="tel" autocomplete="tel"></div>
           </div>
-
-          <div class="ac-section-label">DOMYŚLNY ADRES DOSTAWY</div>
-          <div class="ac-fields">
-            <div class="ac-field full"><label for="d-address">ADRES (ULICA I NUMER)</label><input id="d-address" type="text" autocomplete="street-address"></div>
-            <div class="ac-field"><label for="d-zip">KOD POCZTOWY</label><input id="d-zip" type="text" autocomplete="postal-code" pattern="\d{2}-\d{3}" placeholder="00-000"></div>
-            <div class="ac-field"><label for="d-city">MIASTO</label><input id="d-city" type="text" autocomplete="address-level2"></div>
-          </div>
-
+          <div class="ac-error mono" id="ac-details-error" hidden></div>
           <div class="ac-note mono" id="ac-saved-note" hidden>ZAPISANO ZMIANY</div>
           <div class="ac-actions">
             <span></span>
             <button type="submit" class="btn btn-green mono">ZAPISZ ZMIANY</button>
           </div>
         </form>
+
+        <div class="ac-section-label">ADRESY DOSTAWY</div>
+        <div class="ac-addr-list" id="ac-addr-list"></div>
+        <form id="ac-addr-form" class="ac-form" hidden novalidate style="margin-top:16px;">
+          <input type="hidden" id="a-id">
+          <div class="ac-fields">
+            <div class="ac-field full"><label for="a-label">NAZWA ADRESU (NP. DOM, PRACA)</label><input id="a-label" type="text" maxlength="40"></div>
+            <div class="ac-field full"><label for="a-address">ULICA I NUMER</label><input id="a-address" type="text" autocomplete="street-address" required></div>
+            <div class="ac-field"><label for="a-zip">KOD POCZTOWY</label><input id="a-zip" type="text" autocomplete="postal-code" pattern="\d{2}-\d{3}" placeholder="00-000" required></div>
+            <div class="ac-field"><label for="a-city">MIASTO</label><input id="a-city" type="text" autocomplete="address-level2" required></div>
+          </div>
+          <div class="ac-error mono" id="ac-addr-error" hidden></div>
+          <div class="ac-actions">
+            <button type="button" class="ac-back-link" id="ac-addr-cancel">ANULUJ</button>
+            <button type="submit" class="btn btn-green mono">ZAPISZ ADRES</button>
+          </div>
+        </form>
+        <button type="button" class="ac-doc-btn" id="ac-addr-add" style="margin-top:14px;">+ DODAJ ADRES</button>
+
+        <div class="ac-section-label">ZAMÓWIENIA</div>
+        <div class="ac-stats" id="ac-order-stats"></div>
+        <div class="ac-doc-list" id="ac-order-recent"></div>
+        <a href="zamowienia.html" class="ac-pay-change mono" style="display:inline-block; margin-top:14px;">WSZYSTKIE ZAMÓWIENIA →</a>
 
         <div class="ac-section-label">SPOSÓB PŁATNOŚCI</div>
         <div class="ac-pay-row">
@@ -227,6 +262,42 @@
           Nie masz jeszcze żadnych zamówień. Faktury i paragony pojawią się tutaj po pierwszym zamówieniu — <a href="katalog.html">przejrzyj katalog →</a>
         </div>
         <div class="ac-doc-list" id="ac-doc-list"></div>
+
+        <div class="ac-section-label">ZMIANA HASŁA</div>
+        <form id="ac-password-form" novalidate>
+          <div class="ac-fields" style="grid-template-columns:1fr;">
+            <div class="ac-field"><label for="p-current">OBECNE HASŁO</label><input id="p-current" type="password" autocomplete="current-password" required></div>
+            <div class="ac-field"><label for="p-new">NOWE HASŁO (MIN. 6 ZNAKÓW)</label><input id="p-new" type="password" autocomplete="new-password" minlength="6" required></div>
+          </div>
+          <div class="ac-error mono" id="ac-password-error" hidden></div>
+          <div class="ac-note mono" id="ac-password-note" hidden>HASŁO ZMIENIONE</div>
+          <div class="ac-actions">
+            <span></span>
+            <button type="submit" class="btn btn-green mono">ZMIEŃ HASŁO</button>
+          </div>
+        </form>
+
+        <div class="ac-section-label">PRYWATNOŚĆ I ZGODY</div>
+        <label class="ac-toggle"><input type="checkbox" id="c-analytics"><span>Analityka — pozwalam zapisywać, jak korzystam ze strony (odwiedziny, zamówienia, przybliżona lokalizacja), żeby VAIREM mógł ją ulepszać.</span></label>
+        <label class="ac-toggle"><input type="checkbox" id="c-marketing"><span>Wiadomości e-mail — chcę otrzymywać informacje o nowych zapachach i premierach.</span></label>
+        <div class="ac-note mono" id="ac-consent-note" hidden>ZAPISANO</div>
+        <p class="ac-help">Zgody możesz zmienić w każdej chwili. Szczegóły w <a href="polityka-prywatnosci.html">polityce prywatności</a>.</p>
+        <button type="button" class="ac-doc-btn" id="ac-export">POBIERZ MOJE DANE</button>
+
+        <div class="ac-section-label">STREFA ZAGROŻENIA</div>
+        <p class="ac-help" style="margin-top:0;">Usunięcie konta kasuje dane zapisane w tej przeglądarce: profil, adresy, historię zamówień i zgody. Dane zamówień przechowywane w systemach sklepu (np. do celów księgowych) wymagają osobnej prośby — napisz na <a href="mailto:vairem.office@gmail.com">vairem.office@gmail.com</a>.</p>
+        <div class="ac-error mono" id="ac-delete-confirm" hidden>
+          CZY NA PEWNO USUNĄĆ KONTO? TEJ OPERACJI NIE MOŻNA COFNĄĆ.
+          <div class="ac-actions" style="margin-top:12px;">
+            <button type="button" class="ac-back-link" id="ac-delete-no">ANULUJ</button>
+            <button type="button" class="ac-doc-btn ac-danger" id="ac-delete-yes">TAK, USUŃ KONTO</button>
+          </div>
+        </div>
+        <button type="button" class="ac-doc-btn ac-danger" id="ac-delete">USUŃ KONTO</button>
+
+        <div class="ac-actions" style="margin-top:44px; justify-content:center;">
+          <button type="button" class="btn btn-dark mono" id="ac-logout">WYLOGUJ SIĘ</button>
+        </div>
       </div>
 
       <a href="index.html" class="legal-back ac-bottom-back mono" data-fixed-label>← WSTECZ</a>
@@ -394,9 +465,11 @@
       document.getElementById('d-name').value = account.name || '';
       document.getElementById('d-email').value = account.email || '';
       document.getElementById('d-phone').value = account.phone || '';
-      document.getElementById('d-address').value = account.address || '';
-      document.getElementById('d-zip').value = account.zip || '';
-      document.getElementById('d-city').value = account.city || '';
+      document.getElementById('ac-profile-since').textContent = account.createdAt ? 'KONTO OD ' + formatDate(account.createdAt).toUpperCase() : '';
+      document.getElementById('c-analytics').checked = getConsent() === 'accepted';
+      document.getElementById('c-marketing').checked = !!account.marketing;
+      renderAddresses(account);
+      renderOrderStats();
       renderPayment();
       renderDocs(account);
     } else {
@@ -452,7 +525,7 @@
       return;
     }
     errEl.hidden = true;
-    saveAccount({ name: name, email: email, password: password, phone: '', address: '', zip: '', city: '' });
+    saveAccount({ name: name, email: email, password: password, phone: '', address: '', zip: '', city: '', addresses: [], marketing: false, createdAt: Date.now() });
     try { localStorage.setItem(SESSION_KEY, '1'); } catch (e2) {}
     render();
   });
@@ -462,22 +535,210 @@
     render();
   });
 
+  function show(el, text, ms) {
+    if (text) el.textContent = text;
+    el.hidden = false;
+    if (ms) setTimeout(function () { el.hidden = true; }, ms);
+  }
+
+  // ---------- personal data ----------
   document.getElementById('ac-details-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var account = getAccount() || {};
-    account.name = document.getElementById('d-name').value.trim();
-    account.email = document.getElementById('d-email').value.trim();
+    var errEl = document.getElementById('ac-details-error');
+    var name = document.getElementById('d-name').value.trim();
+    var email = document.getElementById('d-email').value.trim();
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      show(errEl, 'Podaj imię i nazwisko oraz poprawny adres e-mail.');
+      return;
+    }
+    errEl.hidden = true;
+    account.name = name;
+    account.email = email;
     account.phone = document.getElementById('d-phone').value.trim();
-    account.address = document.getElementById('d-address').value.trim();
-    account.zip = document.getElementById('d-zip').value.trim();
-    account.city = document.getElementById('d-city').value.trim();
     saveAccount(account);
-    var note = document.getElementById('ac-saved-note');
-    note.hidden = false;
     document.getElementById('ac-profile-name').textContent = account.name;
     document.getElementById('ac-profile-email').textContent = account.email;
-    renderDocs(account);
-    setTimeout(function () { note.hidden = true; }, 2500);
+    show(document.getElementById('ac-saved-note'), null, 2500);
+  });
+
+  // ---------- delivery addresses ----------
+  // account.addresses is the source of truth; the default one is mirrored to
+  // account.address/zip/city because checkout pre-fills from those fields.
+  function getAddresses(account) {
+    if (!Array.isArray(account.addresses)) account.addresses = [];
+    if (account.addresses.length === 0 && account.address) {
+      account.addresses.push({ id: 'a' + Date.now(), label: 'Adres 1', address: account.address, zip: account.zip || '', city: account.city || '', isDefault: true });
+    }
+    return account.addresses;
+  }
+  function persistAddresses(account) {
+    var list = account.addresses;
+    if (list.length && !list.some(function (a) { return a.isDefault; })) list[0].isDefault = true;
+    var def = list.filter(function (a) { return a.isDefault; })[0];
+    account.address = def ? def.address : '';
+    account.zip = def ? def.zip : '';
+    account.city = def ? def.city : '';
+    saveAccount(account);
+  }
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  var addrList = document.getElementById('ac-addr-list');
+  var addrForm = document.getElementById('ac-addr-form');
+  var addrAdd = document.getElementById('ac-addr-add');
+
+  function renderAddresses(account) {
+    var list = getAddresses(account);
+    addrList.innerHTML = list.map(function (a) {
+      return '<div class="ac-addr-row"><div>' +
+        '<div class="ac-addr-label">' + esc(a.label || 'ADRES').toUpperCase() + (a.isDefault ? ' · <span class="ac-badge">DOMYŚLNY</span>' : '') + '</div>' +
+        '<div class="ac-addr-text">' + esc(a.address) + '<br>' + esc(a.zip) + ' ' + esc(a.city) + '</div></div>' +
+        '<div class="ac-doc-actions">' +
+          (a.isDefault ? '' : '<button type="button" class="ac-doc-btn" data-addr-default="' + esc(a.id) + '">DOMYŚLNY</button>') +
+          '<button type="button" class="ac-doc-btn" data-addr-edit="' + esc(a.id) + '">ZMIEŃ</button>' +
+          '<button type="button" class="ac-doc-btn" data-addr-del="' + esc(a.id) + '">USUŃ</button>' +
+        '</div></div>';
+    }).join('');
+  }
+  function closeAddrForm() { addrForm.hidden = true; addrAdd.hidden = false; addrForm.reset(); document.getElementById('a-id').value = ''; document.getElementById('ac-addr-error').hidden = true; }
+  function openAddrForm(addr) {
+    document.getElementById('a-id').value = addr ? addr.id : '';
+    document.getElementById('a-label').value = addr ? addr.label || '' : '';
+    document.getElementById('a-address').value = addr ? addr.address : '';
+    document.getElementById('a-zip').value = addr ? addr.zip : '';
+    document.getElementById('a-city').value = addr ? addr.city : '';
+    addrForm.hidden = false;
+    addrAdd.hidden = true;
+    document.getElementById('a-address').focus();
+  }
+  addrAdd.addEventListener('click', function () { openAddrForm(null); });
+  document.getElementById('ac-addr-cancel').addEventListener('click', closeAddrForm);
+
+  addrList.addEventListener('click', function (e) {
+    var t = e.target.closest('button');
+    if (!t) return;
+    var account = getAccount();
+    var list = getAddresses(account);
+    if (t.dataset.addrEdit) {
+      openAddrForm(list.filter(function (a) { return a.id === t.dataset.addrEdit; })[0]);
+    } else if (t.dataset.addrDel) {
+      account.addresses = list.filter(function (a) { return a.id !== t.dataset.addrDel; });
+      persistAddresses(account);
+      renderAddresses(account);
+    } else if (t.dataset.addrDefault) {
+      list.forEach(function (a) { a.isDefault = a.id === t.dataset.addrDefault; });
+      persistAddresses(account);
+      renderAddresses(account);
+    }
+  });
+
+  addrForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var errEl = document.getElementById('ac-addr-error');
+    var address = document.getElementById('a-address').value.trim();
+    var zip = document.getElementById('a-zip').value.trim();
+    var city = document.getElementById('a-city').value.trim();
+    if (!address || !/^\d{2}-\d{3}$/.test(zip) || !city) {
+      show(errEl, 'Uzupełnij ulicę, kod pocztowy (00-000) i miasto.');
+      return;
+    }
+    var account = getAccount();
+    var list = getAddresses(account);
+    var id = document.getElementById('a-id').value;
+    var label = document.getElementById('a-label').value.trim();
+    var existing = list.filter(function (a) { return a.id === id; })[0];
+    if (existing) {
+      existing.label = label; existing.address = address; existing.zip = zip; existing.city = city;
+    } else {
+      list.push({ id: 'a' + Date.now(), label: label || 'Adres ' + (list.length + 1), address: address, zip: zip, city: city, isDefault: list.length === 0 });
+    }
+    persistAddresses(account);
+    renderAddresses(account);
+    closeAddrForm();
+  });
+
+  // ---------- orders summary ----------
+  function renderOrderStats() {
+    var orders = getOrders();
+    var total = orders.reduce(function (sum, o) { return sum + (Number(o.total) || 0); }, 0);
+    var statsEl = document.getElementById('ac-order-stats');
+    var recentEl = document.getElementById('ac-order-recent');
+    if (orders.length === 0) {
+      statsEl.innerHTML = '<div class="ac-docs-empty">Nie masz jeszcze zamówień.</div>';
+      statsEl.style.border = '0'; statsEl.style.display = 'block';
+      recentEl.innerHTML = '';
+      return;
+    }
+    statsEl.style.border = ''; statsEl.style.display = '';
+    statsEl.innerHTML =
+      '<div class="ac-stat"><div class="v">' + orders.length + '</div><div class="l">ZAMÓWIEŃ</div></div>' +
+      '<div class="ac-stat"><div class="v">' + total.toFixed(2).replace('.', ',') + ' zł</div><div class="l">WYDANO ŁĄCZNIE</div></div>' +
+      '<div class="ac-stat"><div class="v">' + formatDate(orders[0].date) + '</div><div class="l">OSTATNIE ZAMÓWIENIE</div></div>';
+    recentEl.innerHTML = orders.slice(0, 3).map(function (o) {
+      var names = (o.items || []).map(function (i) { return esc(i.name) + ' × ' + i.qty; }).join(', ');
+      return '<div class="ac-doc-row"><div><div class="ac-doc-nr">' + esc(o.orderNr) + '</div><div class="ac-doc-date">' + formatDate(o.date) + ' · ' + names + '</div></div><div>' + formatPrice(o.total) + '</div></div>';
+    }).join('');
+  }
+
+  // ---------- password ----------
+  document.getElementById('ac-password-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var account = getAccount();
+    var errEl = document.getElementById('ac-password-error');
+    var noteEl = document.getElementById('ac-password-note');
+    noteEl.hidden = true;
+    var current = document.getElementById('p-current').value;
+    var next = document.getElementById('p-new').value;
+    if (!account || account.password !== current) { show(errEl, 'Obecne hasło jest nieprawidłowe.'); return; }
+    if (next.length < 6) { show(errEl, 'Nowe hasło musi mieć min. 6 znaków.'); return; }
+    errEl.hidden = true;
+    account.password = next;
+    saveAccount(account);
+    e.target.reset();
+    show(noteEl, null, 2500);
+  });
+
+  // ---------- consents ----------
+  var CONSENT_KEY = 'vairem-cookie-consent';
+  function getConsent() { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } }
+  var consentNote = document.getElementById('ac-consent-note');
+  document.getElementById('c-analytics').addEventListener('change', function (e) {
+    try { localStorage.setItem(CONSENT_KEY, e.target.checked ? 'accepted' : 'rejected'); } catch (err) {}
+    show(consentNote, null, 2000);
+  });
+  document.getElementById('c-marketing').addEventListener('change', function (e) {
+    var account = getAccount() || {};
+    account.marketing = e.target.checked;
+    saveAccount(account);
+    show(consentNote, null, 2000);
+  });
+
+  // ---------- export / delete ----------
+  document.getElementById('ac-export').addEventListener('click', function () {
+    var account = getAccount() || {};
+    var copy = {};
+    Object.keys(account).forEach(function (k) { if (k !== 'password') copy[k] = account[k]; });
+    var blob = new Blob([JSON.stringify({ konto: copy, zamowienia: getOrders(), zgody: { analityka: getConsent() } }, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'vairem-moje-dane.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  var delBtn = document.getElementById('ac-delete');
+  var delConfirm = document.getElementById('ac-delete-confirm');
+  delBtn.addEventListener('click', function () { delConfirm.hidden = false; delBtn.hidden = true; });
+  document.getElementById('ac-delete-no').addEventListener('click', function () { delConfirm.hidden = true; delBtn.hidden = false; });
+  document.getElementById('ac-delete-yes').addEventListener('click', function () {
+    try {
+      [ACCOUNT_KEY, SESSION_KEY, ORDERS_KEY, PAYMENT_KEY, 'vairem-cart', 'vairem-visits'].forEach(function (k) { localStorage.removeItem(k); });
+    } catch (e) {}
+    delConfirm.hidden = true;
+    delBtn.hidden = false;
+    render();
   });
 
   render();
@@ -486,6 +747,7 @@
 
 </div><!-- /page-content -->
 
+<script src="js/track.js" defer></script>
 <script src="js/menu.js" defer></script>
 <script src="js/effects.js" defer></script>
 <script src="js/music.js" defer></script>

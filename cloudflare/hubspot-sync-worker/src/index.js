@@ -15,6 +15,7 @@
  * Routes:
  *   POST /                 legacy: sync an order straight to HubSpot (no payment)
  *   POST /abandoned        opted-in cart reminder: stores the cart on the contact
+ *   POST /event            consented visit tracking for a known customer (visits, last visit, location)
  *   POST /checkout         create a Stripe Checkout Session, returns { url }
  *   GET  /session?id=cs_…  { paid, orderNr } for the return page
  *   POST /stripe-webhook   Stripe (payment_intent.succeeded) -> HubSpot sync
@@ -56,6 +57,19 @@ const PROP_LAST_ORDER = 'vairem__ostatnie_zamowienie';
 const PROP_CART_CONSENT = 'vairem__zgoda_na_przypomnienie';
 const PROP_CART_ITEMS = 'vairem__produkty_w_koszyku';
 const PROP_CART_VALUE = 'vairem__wartosc_koszyka_pln';
+
+// Visit-tracking properties (see README, section 9). Only written for people who
+// are logged in AND accepted analytics cookies.
+//   PROP_VISITS         number       number of visits (sessions) since tracking began
+//   PROP_FIRST_VISIT    date picker  first tracked visit
+//   PROP_LAST_VISIT     date picker  most recent tracked visit
+//   PROP_VISIT_COUNTRY  single-line  country of the most recent visit (from Cloudflare)
+//   PROP_VISIT_CITY     single-line  approximate city of the most recent visit
+const PROP_VISITS = 'vairem__liczba_wizyt';
+const PROP_FIRST_VISIT = 'vairem__pierwsza_wizyta';
+const PROP_LAST_VISIT = 'vairem__ostatnia_wizyta';
+const PROP_VISIT_COUNTRY = 'vairem__kraj_ostatniej_wizyty';
+const PROP_VISIT_CITY = 'vairem__miasto_ostatniej_wizyty';
 
 // Legacy unauthenticated sync endpoint (POST /). The old checkout called it
 // directly; with Stripe the sync happens from the verified webhook instead.
@@ -146,6 +160,9 @@ async function upsertContact(order, token) {
             lastname: lastname || undefined,
             phone: order.phone || undefined,
             company: order.company || undefined,
+            address: order.address || undefined,
+            zip: order.zip || undefined,
+            city: order.city || undefined,
             [PROP_LTV]: (prevLtv + Number(order.total || 0)).toString(),
             [PROP_ORDER_COUNT]: (prevOrders + 1).toString(),
             [PROP_LAST_ORDER]: String(midnightUtcMs),
@@ -290,6 +307,8 @@ async function createCheckoutSession(order, env) {
     email: order.email,
     name: String(order.name || '').slice(0, 200),
     phone: String(order.phone || '').slice(0, 50),
+    address: String(order.address || '').slice(0, 200),
+    zip: String(order.zip || '').slice(0, 20),
     city: String(order.city || '').slice(0, 100),
     items: priced.items.map(i => `${i.nr}x${i.qty}`).join(','),
     ...(nip ? { company, nip } : {}),
@@ -409,6 +428,9 @@ async function syncPaidPayment(pi, token) {
     phone: meta.phone || '',
     company: meta.company || '',
     nip: meta.nip || '',
+    address: meta.address || '',
+    zip: meta.zip || '',
+    city: meta.city || '',
     items,
     total: (pi.amount_received || pi.amount || 0) / 100,
   };
@@ -519,6 +541,58 @@ async function clearAbandonedCart(email, token) {
   }
 }
 
+// Consented visit tracking. The browser sends { email, consent: true } once per
+// browser session. Only EXISTING HubSpot contacts are updated (PATCH, never
+// create), so this cannot be used to add arbitrary addresses to the CRM.
+// Location comes from Cloudflare's request.cf (country / approximate city of the
+// visitor's IP); the IP itself is never stored.
+async function handleEvent(request, env, origin) {
+  if (!env.HUBSPOT_PRIVATE_APP_TOKEN) return json({ ok: false, error: 'Not configured' }, 500, origin);
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return json({ ok: false, error: 'Invalid JSON' }, 400, origin);
+  }
+  const email = String((body && body.email) || '').trim();
+  if (!body || body.consent !== true) return json({ ok: false, error: 'Consent required' }, 400, origin);
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || email.length > 200) {
+    return json({ ok: false, error: 'Invalid email' }, 400, origin);
+  }
+
+  const token = env.HUBSPOT_PRIVATE_APP_TOKEN;
+  const path = `/crm/v3/objects/contacts/${encodeURIComponent(email)}?idProperty=email`;
+  let current;
+  try {
+    current = await hubspotFetch(`${path}&properties=${PROP_VISITS},${PROP_FIRST_VISIT}`, token, { method: 'GET' });
+  } catch (e) {
+    return json({ ok: true, known: false }, 200, origin); // not a customer yet: nothing to update
+  }
+
+  const props = (current && current.properties) || {};
+  const now = new Date();
+  const midnightUtcMs = String(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const cf = request.cf || {};
+  try {
+    await hubspotFetch(path, token, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        properties: {
+          [PROP_VISITS]: String(Number(props[PROP_VISITS] || 0) + 1),
+          [PROP_FIRST_VISIT]: props[PROP_FIRST_VISIT] || midnightUtcMs,
+          [PROP_LAST_VISIT]: midnightUtcMs,
+          ...(cf.country ? { [PROP_VISIT_COUNTRY]: String(cf.country).slice(0, 60) } : {}),
+          ...(cf.city ? { [PROP_VISIT_CITY]: String(cf.city).slice(0, 100) } : {}),
+        },
+      }),
+    });
+    return json({ ok: true, known: true }, 200, origin);
+  } catch (e) {
+    console.log(`event: failed ${String(e).slice(0, 300)}`);
+    return json({ ok: false, error: 'Sync failed' }, 502, origin);
+  }
+}
+
 async function handleCheckout(request, env, origin) {
   if (!env.STRIPE_SECRET_KEY) return json({ ok: false, error: 'Payments not configured' }, 500, origin);
   let order;
@@ -609,6 +683,9 @@ export default {
     }
     if (url.pathname === '/abandoned' && request.method === 'POST') {
       return handleAbandoned(request, env, origin);
+    }
+    if (url.pathname === '/event' && request.method === 'POST') {
+      return handleEvent(request, env, origin);
     }
     if (url.pathname === '/checkout' && request.method === 'POST') {
       return handleCheckout(request, env, origin);
