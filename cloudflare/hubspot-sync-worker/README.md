@@ -163,3 +163,40 @@ npx wrangler deploy
 Uwaga: zaznaczenie pola przez osobę wpisującą cudzy adres nie jest tu
 weryfikowane (brak double opt-in). Jeśli to ryzyko jest niepożądane, dodaj
 w workflow krok z potwierdzeniem adresu przed wysyłką.
+
+## 9. Statystyki klientów (wizyty, lokalizacja, zamówienia)
+
+Dla **zalogowanych klientów, którzy zaakceptowali cookies/analitykę**, strona
+(`js/track.js`) wysyła raz na sesję `POST /event`. Worker dopisuje wizytę do
+istniejącego kontaktu HubSpot (nigdy nie tworzy nowego) i zapisuje przybliżoną
+lokalizację z Cloudflare (kraj/miasto; adres IP nie jest zapisywany).
+Cofnięcie zgody w *Ustawieniach konta → Prywatność i zgody* zatrzymuje wysyłkę.
+
+### 9.1 Właściwości kontaktu w HubSpot (raz)
+
+| Etykieta (dowolna)                  | Typ              | Stała w `src/index.js` |
+|-------------------------------------|------------------|------------------------|
+| VAIREM — liczba wizyt               | Number           | `PROP_VISITS`          |
+| VAIREM — pierwsza wizyta            | Date picker      | `PROP_FIRST_VISIT`     |
+| VAIREM — ostatnia wizyta            | Date picker      | `PROP_LAST_VISIT`      |
+| VAIREM — kraj ostatniej wizyty      | Single-line text | `PROP_VISIT_COUNTRY`   |
+| VAIREM — miasto ostatniej wizyty    | Single-line text | `PROP_VISIT_CITY`      |
+
+Jak w sekcji 1: sprawdź rzeczywistą nazwę wewnętrzną i popraw stałe. Dopóki
+właściwości nie istnieją, `/event` zwraca 502, ale nie wpływa na zamówienia.
+
+### 9.2 Gdzie oglądać statystyki
+
+Zamówienia trafiają do HubSpot po płatności (kontakt: LTV, liczba zamówień —
+czyli powroty i kolejne zamówienia, data ostatniego; adres/miasto dostawy;
+Deal: kwota i produkty). W HubSpot → Reports → Dashboards zbuduj raporty
+z tych właściwości: częstotliwość zamówień, co i za ile, powtórne zamówienia,
+częstotliwość powrotów (liczba/ostatnia wizyta), lokalizacja (miasto dostawy
+i miasto/kraj wizyty).
+
+Anonimowy ruch (osoby niezalogowane) nie jest przypisywany do osób. Do tego
+włącz **Cloudflare Web Analytics** (bez cookies) albo analitykę w HubSpot.
+
+Pamiętaj o aktualizacji polityki prywatności o opis tych danych.
+
+Po zmianach: `npx wrangler deploy`.
