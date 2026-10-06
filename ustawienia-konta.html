@@ -351,53 +351,118 @@
     catch (e) { return ''; }
   }
 
-  // No PDF backend behind this static site — "download" opens a
-  // printable document in a new tab; the browser's own print dialog
-  // (Zapisz jako PDF) covers saving it.
+  // ---------- sales documents (faktura VAT / paragon) ----------
+  // Printable documents built from the order frozen at purchase time. No PDF
+  // backend: the browser's print dialog ("Zapisz jako PDF") covers saving.
+  //
+  // !!! Fill in SELLER with the real registry data before going live.
+  // VAT_RATE assumes the seller is an active VAT payer and perfumes are taxed
+  // at 23% — change it (or the document wording) if that is not the case.
+  var SELLER = {
+    name: '[PEŁNA NAZWA FIRMY]',
+    address: '[ADRES]',
+    zipCity: '[KOD POCZTOWY] [MIASTO]',
+    nip: '[NIP]',
+    place: 'Warszawa'
+  };
+  var VAT_RATE = 23;
+
+  function esc2(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function r2(n) { return Math.round(n * 100) / 100; }
+  function money(n) { return r2(n).toFixed(2).replace('.', ',') + ' zł'; }
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+  function dateIso(ts) { var d = new Date(ts); return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+
+  // Gross sale lines: products, then shipping (+), then discount (-).
+  // Orders saved before discount/shipping were stored are reconstructed from
+  // the difference between the paid total and the product sum.
+  function saleLines(order) {
+    var lines = (order.items || []).map(function (item) {
+      return { name: item.name + ' (' + item.nr + '), 200 ml', qty: item.qty, unitGross: Number(item.price) || 0, gross: r2((Number(item.price) || 0) * item.qty) };
+    });
+    var itemsSum = lines.reduce(function (s, l) { return s + l.gross; }, 0);
+    var shipping = order.shipping, discount = order.discount;
+    if (shipping == null && discount == null) {
+      var diff = r2((Number(order.total) || 0) - itemsSum);
+      shipping = diff > 0 ? diff : 0;
+      discount = diff < 0 ? -diff : 0;
+    }
+    if (shipping > 0) lines.push({ name: 'Koszt dostawy', qty: 1, unitGross: r2(shipping), gross: r2(shipping) });
+    if (discount > 0) lines.push({ name: 'Rabat (kod rabatowy)', qty: 1, unitGross: -r2(discount), gross: -r2(discount) });
+    lines.forEach(function (l) {
+      l.net = r2(l.gross / (1 + VAT_RATE / 100));
+      l.vat = r2(l.gross - l.net);
+      l.unitNet = r2(l.unitGross / (1 + VAT_RATE / 100));
+    });
+    return lines;
+  }
+
   function buildDocumentHtml(order, account, kind) {
     var isInvoice = kind === 'faktura';
-    var docNr = (isInvoice ? 'FV/' : 'PAR/') + order.orderNr;
-    var buyerName = (account && account.name) || '[IMIĘ I NAZWISKO]';
-    var buyerAddress = (account && account.address) || '[ADRES]';
-    var buyerZipCity = ((account && account.zip) || '[KOD POCZTOWY]') + ' ' + ((account && account.city) || '[MIASTO]');
+    var lines = saleLines(order);
+    var sum = lines.reduce(function (s, l) { s.net += l.net; s.vat += l.vat; s.gross += l.gross; return s; }, { net: 0, vat: 0, gross: 0 });
+    sum.net = r2(sum.net); sum.vat = r2(sum.vat); sum.gross = r2(sum.gross);
 
-    var rowsHtml = (order.items || []).map(function (item) {
-      return (
-        '<tr>' +
-          '<td>' + item.name + ' (' + item.nr + ')</td>' +
-          '<td style="text-align:center;">' + item.qty + '</td>' +
-          '<td style="text-align:right;">' + formatPrice(item.price) + '</td>' +
-          '<td style="text-align:right;">' + formatPrice(item.price * item.qty) + '</td>' +
-        '</tr>'
-      );
+    var docNr = (isInvoice ? 'FV/' : 'PAR/') + order.orderNr;
+    var issued = dateIso(order.date);
+
+    // Buyer: data frozen with the order; older orders fall back to the account.
+    var company = order.company || '';
+    var buyerName = company || order.name || (account && account.name) || '';
+    var buyerAddr = order.address || (account && account.address) || '';
+    var buyerZipCity = ((order.zip || (account && account.zip) || '') + ' ' + (order.city || (account && account.city) || '')).trim();
+    var buyerNip = order.nip || '';
+
+    var css =
+      'body{ font-family:Arial,sans-serif; color:#1a1a1a; max-width:760px; margin:32px auto; padding:0 24px; font-size:13px; }' +
+      'h1{ font-size:20px; margin:0 0 4px; } h2{ font-size:12px; margin:0 0 6px; letter-spacing:.08em; }' +
+      '.muted{ color:#666; font-size:12px; }' +
+      '.head{ display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:24px; border-bottom:2px solid #1a1a1a; padding-bottom:14px; }' +
+      '.cols{ display:flex; justify-content:space-between; gap:24px; margin-bottom:24px; line-height:1.6; }' +
+      'table{ width:100%; border-collapse:collapse; } th,td{ padding:7px 5px; border-bottom:1px solid #ddd; text-align:left; vertical-align:top; }' +
+      'th{ font-size:11px; } td.n,th.n{ text-align:right; white-space:nowrap; }' +
+      '.sum td{ border-bottom:0; font-weight:bold; } .tot{ margin-top:16px; text-align:right; font-size:16px; font-weight:bold; }' +
+      '.note{ margin-top:28px; font-size:11px; color:#777; line-height:1.5; }' +
+      '.back-link{ display:inline-flex; font-size:12px; color:#1a1a1a; background:none; border:0; cursor:pointer; padding:0; margin-bottom:18px; font-family:Arial,sans-serif; }' +
+      '@media print{ .back-link{ display:none; } }';
+
+    var rows = lines.map(function (l, i) {
+      return '<tr><td>' + (i + 1) + '</td><td>' + esc2(l.name) + '</td><td class="n">' + l.qty + ' szt.</td>' +
+        (isInvoice
+          ? '<td class="n">' + money(l.unitNet) + '</td><td class="n">' + money(l.net) + '</td><td class="n">' + VAT_RATE + '%</td><td class="n">' + money(l.vat) + '</td><td class="n">' + money(l.gross) + '</td>'
+          : '<td class="n">' + money(l.unitGross) + '</td><td class="n">' + money(l.gross) + ' A</td>') +
+        '</tr>';
     }).join('');
 
+    var head = isInvoice
+      ? '<tr><th>Lp.</th><th>Nazwa towaru / usługi</th><th class="n">Ilość</th><th class="n">Cena jedn. netto</th><th class="n">Wartość netto</th><th class="n">Stawka VAT</th><th class="n">Kwota VAT</th><th class="n">Wartość brutto</th></tr>'
+      : '<tr><th>Lp.</th><th>Nazwa towaru / usługi</th><th class="n">Ilość</th><th class="n">Cena brutto</th><th class="n">Wartość (stawka)</th></tr>';
+
+    var summary = isInvoice
+      ? '<table style="margin-top:18px;"><thead><tr><th>Stawka VAT</th><th class="n">Wartość netto</th><th class="n">Kwota VAT</th><th class="n">Wartość brutto</th></tr></thead><tbody>' +
+        '<tr><td>' + VAT_RATE + '%</td><td class="n">' + money(sum.net) + '</td><td class="n">' + money(sum.vat) + '</td><td class="n">' + money(sum.gross) + '</td></tr>' +
+        '<tr class="sum"><td>Razem</td><td class="n">' + money(sum.net) + '</td><td class="n">' + money(sum.vat) + '</td><td class="n">' + money(sum.gross) + '</td></tr></tbody></table>'
+      : '<table style="margin-top:18px;"><tbody><tr><td>Sprzedaż opodatkowana A (' + VAT_RATE + '%)</td><td class="n">' + money(sum.net) + '</td></tr>' +
+        '<tr><td>Podatek PTU A (' + VAT_RATE + '%)</td><td class="n">' + money(sum.vat) + '</td></tr>' +
+        '<tr class="sum"><td>Suma PTU</td><td class="n">' + money(sum.vat) + '</td></tr></tbody></table>';
+
+    var method = order.method ? esc2(order.method) : 'płatność online';
+
     return (
-      '<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8">' +
-      '<title>' + docNr + ' — VAIREM</title>' +
-      '<style>' +
-        'body{ font-family:Arial,sans-serif; color:#1a1a1a; max-width:720px; margin:40px auto; padding:0 24px; }' +
-        'h1{ font-size:20px; margin:0 0 4px; } .muted{ color:#666; font-size:12px; }' +
-        '.head{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:32px; border-bottom:2px solid #1a1a1a; padding-bottom:16px; }' +
-        '.cols{ display:flex; justify-content:space-between; gap:24px; margin-bottom:28px; }' +
-        '.cols div{ font-size:13px; line-height:1.6; }' +
-        'table{ width:100%; border-collapse:collapse; font-size:13px; }' +
-        'th,td{ padding:8px 6px; border-bottom:1px solid #ddd; text-align:left; }' +
-        'tfoot td{ border-bottom:0; font-weight:bold; }' +
-        '.note{ margin-top:32px; font-size:11px; color:#888; }' +
-        '.back-link{ display:inline-flex; align-items:center; gap:6px; font-size:12px; color:#1a1a1a; text-decoration:none; background:none; border:0; cursor:pointer; padding:0; margin-bottom:20px; font-family:Arial,sans-serif; }' +
-        '.back-link:hover{ text-decoration:underline; }' +
-        '@media print{ .back-link{ display:none; } }' +
-      '</style></head><body>' +
+      '<!DOCTYPE html><html lang="pl"><head><meta charset="utf-8"><title>' + esc2(docNr) + ' — VAIREM</title><style>' + css + '</style></head><body>' +
       '<button type="button" class="back-link" onclick="window.close();">← Poprzednia strona</button>' +
-      '<div class="head"><div><h1>VAIREM</h1><div class="muted">' + (isInvoice ? 'NIP: [NIP]' : 'Sprzedaż detaliczna') + '</div></div>' +
-      '<div><h1>' + (isInvoice ? 'Faktura' : 'Paragon') + '</h1><div class="muted">' + docNr + '</div><div class="muted">' + formatDate(order.date) + '</div></div></div>' +
-      '<div class="cols"><div><b>SPRZEDAWCA</b><br>VAIREM<br>Warszawa, PL</div>' +
-      '<div><b>' + (isInvoice ? 'NABYWCA' : 'KLIENT') + '</b><br>' + buyerName + '<br>' + buyerAddress + '<br>' + buyerZipCity + '</div></div>' +
-      '<table><thead><tr><th>Produkt</th><th style="text-align:center;">Ilość</th><th style="text-align:right;">Cena</th><th style="text-align:right;">Wartość</th></tr></thead>' +
-      '<tbody>' + rowsHtml + '</tbody>' +
-      '<tfoot><tr><td colspan="3">DO ZAPŁATY</td><td style="text-align:right;">' + formatPrice(order.total) + '</td></tr></tfoot></table>' +
-      '<div class="note">Dokument wygenerowany elektronicznie, bez podpisu — VAIREM.</div>' +
+      '<div class="head"><div><h1>' + (isInvoice ? 'Faktura VAT' : 'Paragon') + '</h1><div class="muted">Nr ' + esc2(docNr) + '</div></div>' +
+      '<div class="muted" style="text-align:right;line-height:1.7;">Miejsce wystawienia: ' + esc2(SELLER.place) + '<br>Data wystawienia: ' + issued + '<br>Data sprzedaży: ' + issued + '</div></div>' +
+      '<div class="cols"><div><h2>SPRZEDAWCA</h2>' + esc2(SELLER.name) + '<br>' + esc2(SELLER.address) + '<br>' + esc2(SELLER.zipCity) + '<br>NIP: ' + esc2(SELLER.nip) + '</div>' +
+      (isInvoice
+        ? '<div><h2>NABYWCA</h2>' + esc2(buyerName) + '<br>' + esc2(buyerAddr) + '<br>' + esc2(buyerZipCity) + (buyerNip ? '<br>NIP: ' + esc2(buyerNip) : '') + '</div>'
+        : '<div><h2>KLIENT</h2>' + esc2(buyerName) + '</div>') + '</div>' +
+      '<table><thead>' + head + '</thead><tbody>' + rows + '</tbody></table>' + summary +
+      '<div class="tot">' + (isInvoice ? 'Razem do zapłaty: ' : 'SUMA PLN: ') + money(sum.gross) + '</div>' +
+      '<div class="muted" style="text-align:right;margin-top:6px;">Forma płatności: ' + method + ' · zapłacono w całości · waluta: PLN</div>' +
+      '<div class="note">' + (isInvoice
+        ? 'Faktura wystawiona elektronicznie, ważna bez podpisu. Faktura w formie elektronicznej została udostępniona nabywcy za jego akceptacją.'
+        : 'Dokument sprzedaży detalicznej wygenerowany elektronicznie.') + '</div>' +
       '</body></html>'
     );
   }
