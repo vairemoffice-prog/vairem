@@ -2,6 +2,7 @@
 /* Courier Prime 400 latin-ext */
 @font-face {
   font-family: 'Courier Prime';
+  size-adjust: 125%;
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -11,6 +12,7 @@
 /* Courier Prime 400 latin */
 @font-face {
   font-family: 'Courier Prime';
+  size-adjust: 125%;
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -20,6 +22,7 @@
 /* Courier Prime 700 latin-ext */
 @font-face {
   font-family: 'Courier Prime';
+  size-adjust: 125%;
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -29,6 +32,7 @@
 /* Courier Prime 700 latin */
 @font-face {
   font-family: 'Courier Prime';
+  size-adjust: 125%;
   font-style: normal;
   font-weight: 700;
   font-display: swap;
