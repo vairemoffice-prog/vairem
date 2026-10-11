@@ -11,7 +11,7 @@
 <meta name="robots" content="noindex">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/cabinet-grotesk-400.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/cabinet-grotesk-700.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="assets/fonts/square-peg-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/martian-mono-latin.woff2" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
 <link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
 <style id="page-style">
@@ -29,7 +29,7 @@
   .co-steps{ display:flex; border:1px solid var(--border); margin-bottom:44px; }
   .co-step{ flex:1; min-width:0; padding:14px 16px; display:flex; align-items:baseline; gap:8px; color:var(--muted); }
   .co-step + .co-step{ border-left:1px solid var(--border); }
-  .co-step .nr{ font-family:'Square Peg','Martian Mono',monospace; font-size:11px; flex-shrink:0; }
+  .co-step .nr{ font-family:'Martian Mono',monospace; font-size:11px; flex-shrink:0; }
   .co-step .lbl{ font-size:12px; letter-spacing:0.06em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   @media (max-width:560px){
     .co-step{ padding:10px 6px; gap:4px; }
@@ -58,8 +58,8 @@
     align-items:center; gap:16px; flex-wrap:wrap;
   }
   .co-account-status .name{ font-size:15px; }
-  .co-account-status .meta{ font-size:11px; color:var(--muted); font-family:'Square Peg','Martian Mono',monospace; margin-top:4px; }
-  .co-account-logout{ font-size:11px; letter-spacing:0.1em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Square Peg','Martian Mono',monospace; }
+  .co-account-status .meta{ font-size:11px; color:var(--muted); font-family:'Martian Mono',monospace; margin-top:4px; }
+  .co-account-logout{ font-size:11px; letter-spacing:0.1em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Martian Mono',monospace; }
   .co-account-logout:hover{ color:var(--text-hover); }
 
   .co-panel[hidden]{ display:none; }
@@ -72,7 +72,7 @@
   .co-field.full{ grid-column:1 / -1; }
   .co-consent{ display:flex; gap:10px; align-items:flex-start; font-family:inherit !important; font-size:13px !important; letter-spacing:0 !important; color:var(--text) !important; line-height:1.5; cursor:pointer; }
   .co-consent input{ margin-top:4px; flex:none; width:auto; }
-  .co-field label{ font-size:11px; letter-spacing:0.1em; color:var(--muted); font-family:'Square Peg','Martian Mono',monospace; }
+  .co-field label{ font-size:11px; letter-spacing:0.1em; color:var(--muted); font-family:'Martian Mono',monospace; }
   .co-field input, .co-field textarea{
     border:1px solid var(--border-strong); background:var(--bg); color:var(--text);
     padding:12px 14px; font-size:14px; font-family:inherit; outline:none;
@@ -106,7 +106,7 @@
   @media (max-width:520px){ .pay-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 
   .co-actions{ display:flex; justify-content:flex-end; align-items:center; gap:16px; margin-top:32px; }
-  .co-back-step{ font-size:11px; letter-spacing:0.14em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Square Peg','Martian Mono',monospace; }
+  .co-back-step{ font-size:11px; letter-spacing:0.14em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Martian Mono',monospace; }
   .co-back-step:hover{ color:var(--text-hover); }
   .co-error{ font-size:12px; color:#B0463F; margin-top:14px; }
   .co-error[hidden]{ display:none; }
@@ -116,10 +116,10 @@
   .co-summary-row{ display:flex; justify-content:space-between; gap:16px; padding:14px 16px; }
   .co-summary-row + .co-summary-row{ border-top:1px solid var(--border-light); }
   .co-summary-row .name{ font-size:14px; }
-  .co-summary-row .meta{ font-size:11px; color:var(--muted); font-family:'Square Peg','Martian Mono',monospace; padding-top:3px; }
-  .co-summary-row .price{ font-size:13px; font-family:'Square Peg','Martian Mono',monospace; white-space:nowrap; }
+  .co-summary-row .meta{ font-size:11px; color:var(--muted); font-family:'Martian Mono',monospace; padding-top:3px; }
+  .co-summary-row .price{ font-size:13px; font-family:'Martian Mono',monospace; white-space:nowrap; }
   .co-summary-total{ display:flex; justify-content:space-between; align-items:baseline; padding:16px; background:var(--row-bg); border-top:1px solid var(--border); }
-  .co-summary-total .lbl{ font-size:11px; letter-spacing:0.14em; color:var(--muted); font-family:'Square Peg','Martian Mono',monospace; }
+  .co-summary-total .lbl{ font-size:11px; letter-spacing:0.14em; color:var(--muted); font-family:'Martian Mono',monospace; }
   .co-summary-total .val{ font-size:26px; letter-spacing:-0.02em; }
 
   .co-promo-row{ display:flex; gap:8px; margin:0 0 20px; }
@@ -135,15 +135,15 @@
   .co-promo-msg.is-error{ color:#B0463F; }
 
   .co-recap{ border:1px solid var(--border); padding:16px 18px; margin-bottom:24px; font-size:13px; line-height:1.7; }
-  .co-recap .lbl{ font-size:10px; letter-spacing:0.14em; color:var(--muted); font-family:'Square Peg','Martian Mono',monospace; display:block; margin-bottom:4px; }
-  .co-recap .edit{ float:right; font-size:11px; letter-spacing:0.1em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Square Peg','Martian Mono',monospace; }
+  .co-recap .lbl{ font-size:10px; letter-spacing:0.14em; color:var(--muted); font-family:'Martian Mono',monospace; display:block; margin-bottom:4px; }
+  .co-recap .edit{ float:right; font-size:11px; letter-spacing:0.1em; color:var(--muted); background:none; border:0; cursor:pointer; font-family:'Martian Mono',monospace; }
   .co-recap .edit:hover{ color:var(--text-hover); }
   .co-recap + .co-recap{ margin-top:16px; }
 
   /* confirmation */
   .co-confirm{ text-align:center; padding:32px 0; }
   .co-confirm-icon{ width:56px; height:56px; margin:0 auto 24px; color:var(--green-deep); }
-  .co-order-nr{ font-family:'Square Peg','Martian Mono',monospace; font-size:13px; letter-spacing:0.1em; color:var(--muted); margin-top:8px; }
+  .co-order-nr{ font-family:'Martian Mono',monospace; font-size:13px; letter-spacing:0.1em; color:var(--muted); margin-top:8px; }
 
   .co-empty{ text-align:center; padding:64px 0; }
   .co-empty p{ color:var(--muted); font-size:14px; margin:14px 0 26px; }
