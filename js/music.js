@@ -240,7 +240,6 @@
     splash.setAttribute('aria-modal', 'true');
     splash.setAttribute('aria-label', 'VAIREM');
     splash.innerHTML =
-      '<video class="music-splash-video" src="assets/video/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>' +
       '<img class="music-splash-logo music-splash-logo--day" src="' + LOGO_DAY + '" alt="Vairem" width="1195" height="777" decoding="async">' +
       '<img class="music-splash-logo music-splash-logo--night" src="' + LOGO_NIGHT + '" alt="" width="1195" height="777" decoding="async">' +
       '<button type="button" class="music-splash-enter mono">' + ENTER[lang] + '</button>';
@@ -261,8 +260,6 @@
     };
     document.addEventListener('keydown', splashKey, true);
     document.body.appendChild(splash);
-    const sv = splash.querySelector('.music-splash-video');
-    if (sv && window.matchMedia('(prefers-reduced-motion: reduce)').matches) sv.pause();
     document.documentElement.classList.add('music-splash-open');
     requestAnimationFrame(() => splash && splash.classList.add('is-visible'));
     splash.querySelector('button').focus({ preventScroll: true });
