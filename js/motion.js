@@ -71,8 +71,9 @@
     if (frames.length < 2) return;
     const imgs = frames.map(f => f.querySelector('img'));
     const SMALL = 0.3;
+    const stage = adSection.querySelector('.ad-stage');
     try {
-      adSection.classList.add('is-scrub');
+      adSection.classList.add('is-pinned');
       gsap.set(frames, { clearProps: 'transform,opacity' });
       gsap.set(frames, { xPercent: -50, yPercent: -50, left: '50%', top: '50%', scale: SMALL, opacity: 0, force3D: true });
       gsap.set(frames[0], { opacity: 1 }); // visible (small) as soon as the section scrolls into view
@@ -85,7 +86,9 @@
       // one timeline across the whole section (length 1 = full scroll range)
       const tl = gsap.timeline({
         defaults: { ease: 'power2.inOut' },
-        scrollTrigger: { trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8 }
+        // pinned by ScrollTrigger (position: fixed while pinned) instead of CSS sticky: works in every WebKit
+        scrollTrigger: { trigger: stage, start: 'top top', end: () => '+=' + Math.round(window.innerHeight * 3), pin: true, anticipatePin: 1, invalidateOnRefresh: true, scrub: 0.8,
+          onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.9); } }
       });
       tl.to(frames[0], { scale: 1, borderRadius: '0%', duration: 0.3 }, 0)
         .to(imgs[0], { scale: 1, duration: 0.3 }, 0)
@@ -98,7 +101,7 @@
       window.__vairemAdScene = true; // app.js keeps its own fallback off only when this succeeded
     } catch (err) {
       // back to plain stacked photos: always visible
-      adSection.classList.remove('is-scrub');
+      adSection.classList.remove('is-pinned');
       // clear only what was animated; the inline --ar custom property on each frame must stay
       gsap.set(frames, { clearProps: 'transform,opacity,borderRadius,left,top' });
       gsap.set(imgs, { clearProps: 'transform' });
