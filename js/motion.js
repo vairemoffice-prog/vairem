@@ -37,6 +37,26 @@
     syncLock();
   }
 
+  // ---------- menu: hides when scrolling down, returns when scrolling up ----------
+
+  const header = document.querySelector('.site-header');
+  if (header) {
+    let lastY = window.scrollY;
+    let hidden = false;
+    const setHidden = h => { if (h !== hidden) { hidden = h; header.classList.toggle('is-hidden', h); } };
+    const onScrollY = () => {
+      const y = window.scrollY;
+      const menuOpen = !!header.querySelector('[aria-expanded="true"]');
+      const cart = document.getElementById('cart-overlay');
+      if (y < 120 || menuOpen || (cart && !cart.hidden)) setHidden(false);
+      else if (y > lastY + 4) setHidden(true);
+      else if (y < lastY - 4) setHidden(false);
+      lastY = y;
+    };
+    window.addEventListener('scroll', onScrollY, { passive: true });
+    header.addEventListener('focusin', () => setHidden(false));
+  }
+
   // ---------- advertising photos: pinned scene, photos grow from small and cross-fade ----------
 
   const adSection = document.getElementById('ad-scroll');
@@ -49,6 +69,9 @@
       gsap.set(frames, { clearProps: 'transform,opacity' });
       gsap.set(frames, { xPercent: -50, yPercent: -50, left: '50%', top: '50%', scale: SMALL, opacity: 0, force3D: true });
       gsap.set(frames[0], { opacity: 1 }); // visible (small) as soon as the section scrolls into view
+      // geometry morph: photo 1 starts as an ellipse, photo 2 as an arch; both settle into rectangles
+      gsap.set(frames[0], { borderRadius: '50%' });
+      gsap.set(frames[1], { borderRadius: '50% 50% 0% 0%' });
       gsap.set(frames.map(f => f.querySelector('img')), { scale: 1.18 });
       if (caption) gsap.set(caption, { opacity: 0, y: 24 });
 
@@ -57,11 +80,11 @@
         defaults: { ease: 'power2.inOut' },
         scrollTrigger: { trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8 }
       });
-      tl.to(frames[0], { scale: 1, duration: 0.3 }, 0)
+      tl.to(frames[0], { scale: 1, borderRadius: '0%', duration: 0.3 }, 0)
         .to(frames[0].querySelector('img'), { scale: 1, duration: 0.3 }, 0)
         .to(frames[0], { opacity: 0, scale: 1.08, duration: 0.23 }, 0.55)
         .to(frames[1], { opacity: 1, duration: 0.14, ease: 'none' }, 0.42)
-        .to(frames[1], { scale: 1, duration: 0.36 }, 0.42)
+        .to(frames[1], { scale: 1, borderRadius: '0% 0% 0% 0%', duration: 0.36 }, 0.42)
         .to(frames[1].querySelector('img'), { scale: 1, duration: 0.36 }, 0.42);
       if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.14 }, 0.82);
       tl.to({}, { duration: 0.04 }, 0.96); // pad so the timeline length is exactly 1
@@ -96,6 +119,39 @@
         gsap.fromTo(el, { '--py': depth + 'vh' }, { '--py': -depth + 'vh', ease: 'none', scrollTrigger: trigger });
       });
     });
+  }
+
+  // ---------- worlds: the page dims to dusk behind the pinned photos, mist over the method section ----------
+
+  if (adSection) {
+    gsap.timeline({
+      scrollTrigger: { trigger: adSection, start: 'top 85%', end: 'bottom 15%', scrub: 0.6 }
+    })
+      .fromTo(root, { '--world-a': 0 }, { '--world-a': 0.55, ease: 'none', duration: 0.18 })
+      .to(root, { '--world-a': 0.55, ease: 'none', duration: 0.64 })
+      .to(root, { '--world-a': 0, ease: 'none', duration: 0.18 });
+  }
+  const metodaSection = document.getElementById('metoda');
+  if (metodaSection) {
+    gsap.timeline({
+      scrollTrigger: { trigger: metodaSection, start: 'top 80%', end: 'bottom 20%', scrub: 0.6 }
+    })
+      .fromTo(root, { '--mist-a': 0 }, { '--mist-a': 0.22, ease: 'none', duration: 0.25 })
+      .to(root, { '--mist-a': 0.22, ease: 'none', duration: 0.5 })
+      .to(root, { '--mist-a': 0, ease: 'none', duration: 0.25 });
+  }
+
+  // ---------- inertia: headings lean into the scroll direction and settle back ----------
+
+  if (lenis && !narrow()) {
+    const heads = [...document.querySelectorAll('.section-head')];
+    if (heads.length) {
+      const skew = gsap.quickTo(heads, 'skewX', { duration: 0.6, ease: 'power3.out' });
+      gsap.ticker.add(() => {
+        const v = lenis.velocity || 0;
+        skew(Math.max(-7, Math.min(7, -v * 0.35)));
+      });
+    }
   }
 
   // layout may change after fonts / images load or the language is switched
