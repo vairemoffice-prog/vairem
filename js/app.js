@@ -1009,7 +1009,7 @@
   function initAdScroll() {
     const section = document.getElementById('ad-scroll');
     if (!section) return;
-    if (window.__vairemMotion) return; // GSAP ScrollTrigger (js/motion.js) drives this scene
+    if (window.__vairemAdScene) return; // GSAP ScrollTrigger (js/motion.js) drives this scene
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const frames = [...section.querySelectorAll('[data-ad-frame]')];
     const caption = section.querySelector('.ad-caption');
@@ -1031,7 +1031,7 @@
       // photo 1 grows 0 -> .30, holds, then fades out while photo 2 grows in .42 -> .78
       const g1 = ease(seg(p, 0, 0.30));
       const out1 = ease(seg(p, 0.55, 0.78));
-      frames[0].style.opacity = String(clamp(g1 * 3) * (1 - out1));
+      frames[0].style.opacity = String(1 - out1);
       frames[0].style.transform = 'translate(-50%, -50%) scale(' + (SMALL + (1 - SMALL) * g1 + 0.06 * out1).toFixed(4) + ')';
 
       const g2 = ease(seg(p, 0.42, 0.78));
