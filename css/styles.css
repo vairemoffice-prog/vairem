@@ -819,21 +819,36 @@ button { font-family: inherit; }
 
 /* ---------- indeks ---------- */
 
-/* advertising slide under the hero: full-bleed photo with a caption + CTA */
-.hero-ad { position: relative; margin: 0; line-height: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.hero-ad img { display: block; width: 100%; height: auto; max-height: 100vh; object-fit: cover; }
-.hero-ad-caption {
-  position: absolute; left: 0; right: 0; bottom: 0;
+/* advertising photos under the hero. Without JS / with reduced motion they are plain stacked
+   photos. With JS (.is-scrub) the section is pinned: the page stays put while the photos
+   grow from small and cross-fade one into the other as you scroll (see initAdScroll). */
+.ad-scroll { position: relative; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ad-stage { position: relative; display: flex; flex-direction: column; }
+.ad-frame { position: relative; margin: 0; width: 100%; aspect-ratio: var(--ar); }
+.ad-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ad-caption {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px clamp(16px, 4vw, 48px);
+}
+.ad-caption .eyebrow { padding-bottom: 0; }
+
+.ad-scroll.is-scrub { height: 420vh; }
+.ad-scroll.is-scrub .ad-stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: block; overflow: hidden; }
+.ad-scroll.is-scrub .ad-frame {
+  position: absolute; left: 50%; top: 50%;
+  /* largest box with the photo's own proportions that fits the stage: never cropped */
+  width: min(100%, calc(100vh * var(--ar))); width: min(100%, calc(100svh * var(--ar)));
+  transform: translate(-50%, -50%) scale(.3); opacity: 0;
+  will-change: transform, opacity;
+}
+.ad-scroll.is-scrub .ad-caption {
+  position: absolute; left: 0; right: 0; bottom: 0; opacity: 0; pointer-events: none;
   padding: 64px clamp(16px, 4vw, 48px) 24px;
-  line-height: 1.4;
   background: linear-gradient(to top, rgba(30,36,44,.6), rgba(30,36,44,0));
 }
-.hero-ad-caption .eyebrow { color: #fff; text-shadow: 0 0 12px rgba(0,0,0,.45); padding-bottom: 0; }
-@media (max-width: 860px) { .hero-ad-caption { padding: 48px 16px 16px; } }
-
-/* square photo slide: full page width, whole frame, no crop */
-.hero-ad--square img { max-height: none; aspect-ratio: 1 / 1; }
+.ad-scroll.is-scrub .ad-caption.is-on { pointer-events: auto; }
+.ad-scroll.is-scrub .ad-caption .eyebrow { color: #fff; text-shadow: 0 0 12px rgba(0,0,0,.45); }
+@media (max-width: 860px) { .ad-scroll.is-scrub .ad-caption { padding: 48px 16px 16px; } }
 
 .section-indeks { padding: 10cm 0 0; }
 
