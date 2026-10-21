@@ -819,6 +819,19 @@ button { font-family: inherit; }
 
 /* ---------- indeks ---------- */
 
+/* advertising slide under the hero: full-bleed photo with a caption + CTA */
+.hero-ad { position: relative; margin: 0; line-height: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.hero-ad img { display: block; width: 100%; height: auto; max-height: 100vh; object-fit: cover; }
+.hero-ad-caption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 64px clamp(16px, 4vw, 48px) 24px;
+  line-height: 1.4;
+  background: linear-gradient(to top, rgba(30,36,44,.6), rgba(30,36,44,0));
+}
+.hero-ad-caption .eyebrow { color: #fff; text-shadow: 0 0 12px rgba(0,0,0,.45); padding-bottom: 0; }
+@media (max-width: 860px) { .hero-ad-caption { padding: 48px 16px 16px; } }
+
 .section-indeks { padding: 10cm 0 0; }
 
 .section-head {
