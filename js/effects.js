@@ -7,7 +7,7 @@
   // ---------- inertia (smooth) scroll ----------
 
   function initSmoothScroll() {
-    if (reducedMotion || !fineHover) return;
+    if (reducedMotion || !fineHover || window.__vairemLenis) return; // Lenis (js/motion.js) smooths wheel scrolling instead
 
     let current = window.scrollY;
     let target = window.scrollY;

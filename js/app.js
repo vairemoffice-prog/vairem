@@ -1009,6 +1009,7 @@
   function initAdScroll() {
     const section = document.getElementById('ad-scroll');
     if (!section) return;
+    if (window.__vairemMotion) return; // GSAP ScrollTrigger (js/motion.js) drives this scene
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const frames = [...section.querySelectorAll('[data-ad-frame]')];
     const caption = section.querySelector('.ad-caption');
