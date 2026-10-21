@@ -1007,12 +1007,12 @@
   // Advertising photos: the section is pinned while you scroll; the photos grow from small and
   // cross-fade one into the other. Falls back to plain stacked photos for reduced motion.
   function initAdScroll() {
-    const section = document.getElementById('ad-scroll');
+    const section = document.getElementById('photo-scene');
     if (!section) return;
     if (window.__vairemAdScene) return; // GSAP ScrollTrigger (js/motion.js) drives this scene
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const frames = [...section.querySelectorAll('[data-ad-frame]')];
-    const caption = section.querySelector('.ad-caption');
+    const frames = [...section.querySelectorAll('[data-photo-frame]')];
+    const caption = section.querySelector('.photo-caption');
     if (frames.length < 2) return;
     section.classList.add('is-scrub');
 

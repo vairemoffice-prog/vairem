@@ -64,14 +64,14 @@
 
   // ---------- advertising photos: pinned scene, photos grow from small and cross-fade ----------
 
-  const adSection = document.getElementById('ad-scroll');
+  const adSection = document.getElementById('photo-scene');
   if (adSection) safe('ad scene', () => {
-    const frames = [...adSection.querySelectorAll('[data-ad-frame]')];
-    const caption = adSection.querySelector('.ad-caption');
+    const frames = [...adSection.querySelectorAll('[data-photo-frame]')];
+    const caption = adSection.querySelector('.photo-caption');
     if (frames.length < 2) return;
     const imgs = frames.map(f => f.querySelector('img'));
     const SMALL = 0.3;
-    const stage = adSection.querySelector('.ad-stage');
+    const stage = adSection.querySelector('.photo-stage');
     try {
       adSection.classList.add('is-pinned');
       gsap.set(frames, { clearProps: 'transform,opacity' });
