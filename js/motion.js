@@ -48,6 +48,7 @@
       const SMALL = 0.3;
       gsap.set(frames, { clearProps: 'transform,opacity' });
       gsap.set(frames, { xPercent: -50, yPercent: -50, left: '50%', top: '50%', scale: SMALL, opacity: 0, force3D: true });
+      gsap.set(frames[0], { opacity: 1 }); // visible (small) as soon as the section scrolls into view
       gsap.set(frames.map(f => f.querySelector('img')), { scale: 1.18 });
       if (caption) gsap.set(caption, { opacity: 0, y: 24 });
 
@@ -56,8 +57,7 @@
         defaults: { ease: 'power2.inOut' },
         scrollTrigger: { trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8 }
       });
-      tl.to(frames[0], { opacity: 1, duration: 0.1, ease: 'none' }, 0)
-        .to(frames[0], { scale: 1, duration: 0.3 }, 0)
+      tl.to(frames[0], { scale: 1, duration: 0.3 }, 0)
         .to(frames[0].querySelector('img'), { scale: 1, duration: 0.3 }, 0)
         .to(frames[0], { opacity: 0, scale: 1.08, duration: 0.23 }, 0.55)
         .to(frames[1], { opacity: 1, duration: 0.14, ease: 'none' }, 0.42)
