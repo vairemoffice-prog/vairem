@@ -1032,11 +1032,11 @@
       const g1 = ease(seg(p, 0, 0.30));
       const out1 = ease(seg(p, 0.55, 0.78));
       frames[0].style.opacity = String(1 - out1);
-      frames[0].style.transform = 'translate(-50%, -50%) scale(' + (SMALL + (1 - SMALL) * g1 + 0.06 * out1).toFixed(4) + ')';
+      frames[0].style.transform = 'scale(' + (SMALL + (1 - SMALL) * g1 + 0.06 * out1).toFixed(4) + ')';
 
       const g2 = ease(seg(p, 0.42, 0.78));
       frames[1].style.opacity = String(clamp(g2 * 3));
-      frames[1].style.transform = 'translate(-50%, -50%) scale(' + (SMALL + (1 - SMALL) * g2).toFixed(4) + ')';
+      frames[1].style.transform = 'scale(' + (SMALL + (1 - SMALL) * g2).toFixed(4) + ')';
 
       if (caption) {
         const c = ease(seg(p, 0.82, 0.96));

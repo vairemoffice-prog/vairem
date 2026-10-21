@@ -437,8 +437,7 @@ button { font-family: inherit; }
 .btn[disabled] { cursor: not-allowed; opacity: 0.45; }
 .btn[disabled]:hover { background: var(--pink-accent); }
 
-/* Colour of the "world" changes with scroll: the page dims to dusk while the photos are pinned and
-   gets a light mist over the method section. Alphas are animated by js/motion.js. */
+/* The page gets a light mist over the method section (alpha animated by js/motion.js); it never darkens. */
 html::after {
   content: '';
   position: fixed;
@@ -446,7 +445,6 @@ html::after {
   z-index: -1;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(24, 34, 52, var(--world-a, 0)), rgba(24, 34, 52, var(--world-a, 0))),
     linear-gradient(rgba(240, 246, 252, var(--mist-a, 0)), rgba(240, 246, 252, var(--mist-a, 0)));
 }
 
@@ -840,41 +838,22 @@ html::after {
    photos. With JS (.is-scrub) the section is pinned: the page stays put while the photos
    grow from small and cross-fade one into the other as you scroll (see initAdScroll). */
 .photo-scene { position: relative; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.photo-stage { position: relative; display: flex; flex-direction: column; }
-.photo-frame { position: relative; margin: 0; width: 100%; aspect-ratio: var(--ar); overflow: hidden; isolation: isolate; }
+.photo-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 16px 0; }
+/* square, whole photo: as large as fits the screen height */
+.photo-frame { position: relative; margin: 0; width: min(100%, 88vh); width: min(100%, 88svh); aspect-ratio: var(--ar); }
 .photo-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .photo-caption {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; align-self: stretch;
   padding: 16px clamp(16px, 4vw, 48px);
 }
 .photo-caption .eyebrow { padding-bottom: 0; }
 
-/* GSAP-pinned variant (js/motion.js): ScrollTrigger pins .photo-stage and adds the scroll length itself */
-.photo-scene.is-pinned .photo-stage { position: relative; height: 100vh; height: 100svh; display: block; overflow: hidden; }
-.photo-scene.is-pinned .photo-frame {
-  position: absolute; left: 50%; top: 50%;
-  width: min(100%, calc(100vh * var(--ar))); width: min(100%, calc(100svh * var(--ar)));
-  transform: translate(-50%, -50%) scale(.3);
-  will-change: transform, opacity;
-}
-.photo-scene.is-pinned .photo-caption {
-  position: absolute; left: 0; right: 0; bottom: 0; opacity: 0; pointer-events: none;
-  padding: 64px clamp(16px, 4vw, 48px) 24px;
-  background: linear-gradient(to top, rgba(30,36,44,.6), rgba(30,36,44,0));
-}
-.photo-scene.is-pinned .photo-caption.is-on { pointer-events: auto; }
-.photo-scene.is-pinned .photo-caption .eyebrow { color: #fff; text-shadow: 0 0 12px rgba(0,0,0,.45); }
-@media (max-width: 860px) { .photo-scene.is-pinned .photo-caption { padding: 48px 16px 16px; } }
-
+/* Scroll scene (js/motion.js or the app.js fallback adds .is-scrub): the stage is pinned with native
+   position: sticky; the photos grow from small and cross-fade while the page stays in place. */
 .photo-scene.is-scrub { height: 420vh; }
-.photo-scene.is-scrub .photo-stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: block; overflow: hidden; }
-.photo-scene.is-scrub .photo-frame {
-  position: absolute; left: 50%; top: 50%;
-  /* largest box with the photo's own proportions that fits the stage: never cropped */
-  width: min(100%, calc(100vh * var(--ar))); width: min(100%, calc(100svh * var(--ar)));
-  transform: translate(-50%, -50%) scale(.3);
-  will-change: transform, opacity;
-}
+/* stacked in one grid cell and centred by the grid: JS only animates scale and opacity */
+.photo-scene.is-scrub .photo-stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; place-items: center; padding: 0; gap: 0; }
+.photo-scene.is-scrub .photo-frame { grid-area: 1 / 1; transform: scale(.3); will-change: transform, opacity; }
 .photo-scene.is-scrub .photo-caption {
   position: absolute; left: 0; right: 0; bottom: 0; opacity: 0; pointer-events: none;
   padding: 64px clamp(16px, 4vw, 48px) 24px;
