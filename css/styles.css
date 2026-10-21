@@ -833,7 +833,8 @@ button { font-family: inherit; }
 @media (max-width: 860px) { .hero-ad-caption { padding: 48px 16px 16px; } }
 
 .hero-ad--video { background: var(--bg); }
-.hero-ad-video { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; max-height: 100vh; object-fit: cover; object-position: center top; }
+/* show the whole square frame, uncropped, at most its native 1080 px (no upscaling blur) */
+.hero-ad-video { display: block; width: min(100%, 100vh, 1080px); height: auto; aspect-ratio: 1 / 1; margin: 0 auto; object-fit: contain; }
 
 .section-indeks { padding: 10cm 0 0; }
 
