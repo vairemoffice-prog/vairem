@@ -1004,20 +1004,6 @@
     video.load();
   }
 
-  // Advertising video slide: plays only while on screen, stays on the poster for reduced motion.
-  function initAdVideo() {
-    const video = document.querySelector('.hero-ad-video');
-    if (!video) return;
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!('IntersectionObserver' in window)) return;
-    new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) video.play().catch(() => {});
-        else video.pause();
-      });
-    }, { threshold: 0.25 }).observe(video);
-  }
-
   function initProductPhotos(root = document) {
     root.querySelectorAll('.karta-photo[data-src]').forEach(img => {
       const probe = new Image();
@@ -1460,7 +1446,6 @@
     initSideIndex();
     initScrollTopButton();
     initHeroVideo();
-    initAdVideo();
     initProductPhotos();
     initHeroKineticType();
     initBackgroundScrollFade();
