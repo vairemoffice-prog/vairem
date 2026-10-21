@@ -832,7 +832,15 @@ button { font-family: inherit; }
 .hero-ad-caption .eyebrow { color: #fff; text-shadow: 0 0 12px rgba(0,0,0,.45); padding-bottom: 0; }
 @media (max-width: 860px) { .hero-ad-caption { padding: 48px 16px 16px; } }
 
-.hero-ad--video { background: var(--bg); }
+.hero-ad--video { position: relative; overflow: hidden; background: #1e242c; }
+/* blurred copy of the poster fills the sides next to the square video */
+.hero-ad--video::before {
+  content: ""; position: absolute; inset: -40px;
+  background: url("../assets/video/hero-ad-poster.webp") center / cover no-repeat;
+  filter: blur(36px) saturate(1.1);
+  transform: scale(1.1);
+}
+.hero-ad--video .hero-ad-video { position: relative; }
 /* show the whole square frame, uncropped, at most its native 1080 px (no upscaling blur) */
 .hero-ad-video { display: block; width: min(100%, 100vh, 1080px); height: auto; aspect-ratio: 1 / 1; margin: 0 auto; object-fit: contain; }
 
