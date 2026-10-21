@@ -28,9 +28,9 @@ jobs:
           fi
 
           MESSAGE=$(cat <<'EOF'
-          VAIREM — molekularny zapach do wnętrz
+          VAIREM — niszowe zapachy do wnętrz
 
-          Trzy związki, jedna molekuła naraz:
+          Trzy zapachy w archiwum snów:
           017 · Before It Dries
           042 · Within
           086 · Afterlight
