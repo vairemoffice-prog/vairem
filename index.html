@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/cabinet-grotesk-400.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/cabinet-grotesk-700.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/courier-prime-400-latin.woff2" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=20261024d">
+<link rel="stylesheet" href="css/styles.css?v=20261025a">
 <link rel="icon" type="image/svg+xml" href="assets/logo/vairem-mark.svg">
 </head>
 <body>
@@ -152,6 +152,34 @@
         <div class="eyebrow mono" data-i18n="hero1.eyebrow">NISZOWE ZAPACHY DO WNĘTRZ · OBIEKTY ARTYSTYCZNE</div>
         <a href="#indeks" class="btn btn-dark mono" data-i18n="cta.pelny_indeks">PEŁNE ARCHIWUM SNÓW →</a>
       </div>
+    </div>
+  </section>
+
+  <!-- KARUZELA ZDJĘĆ — zdjęcia przesuwają się osobno -->
+  <section class="photo-reel" id="photo-reel" aria-roledescription="karuzela" aria-label="Zdjęcia VAIREM">
+    <div class="reel-viewport" tabindex="0">
+      <div class="reel-track">
+        <figure class="reel-slide is-active" aria-roledescription="slajd" aria-label="1 z 2">
+          <picture>
+            <source type="image/webp" srcset="assets/img/photo-1-900.webp 900w, assets/img/photo-1-1200.webp 1200w, assets/img/photo-1.webp 1497w" sizes="(max-width: 860px) 100vw, 80vh">
+            <img src="assets/img/photo-1.webp" width="1497" height="1497" loading="lazy" decoding="async" draggable="false" alt="Trzy modelki w białych, fakturowanych strojach z papieru i tkanin na jasnym niebie; jedna ma niebieski pas farby na twarzy.">
+          </picture>
+        </figure>
+        <figure class="reel-slide" aria-roledescription="slajd" aria-label="2 z 2">
+          <picture>
+            <source type="image/webp" srcset="assets/img/photo-2-900.webp 900w, assets/img/photo-2-1200.webp 1200w, assets/img/photo-2.webp 1500w" sizes="(max-width: 860px) 100vw, 80vh">
+            <img src="assets/img/photo-2.webp" width="1500" height="1500" loading="lazy" decoding="async" draggable="false" alt="Modelka w kremowej sukni z koronki, tiulu i pereł, ujęta od dołu na tle błękitnego nieba; na kolanie porcelanowy fragment z niebieskim kwiatowym wzorem.">
+          </picture>
+        </figure>
+      </div>
+    </div>
+    <div class="reel-controls">
+      <button type="button" class="reel-btn mono" data-reel="prev" aria-label="Poprzednie zdjęcie">←</button>
+      <div class="reel-dots" role="tablist" aria-label="Wybór zdjęcia">
+        <button type="button" class="reel-dot is-active" role="tab" aria-selected="true" aria-label="Zdjęcie 1" data-reel-go="0"></button>
+        <button type="button" class="reel-dot" role="tab" aria-selected="false" aria-label="Zdjęcie 2" data-reel-go="1"></button>
+      </div>
+      <button type="button" class="reel-btn mono" data-reel="next" aria-label="Następne zdjęcie">→</button>
     </div>
   </section>
 
@@ -438,6 +466,7 @@
 <script src="assets/vendor/lenis.min.js?v=20261024d" defer></script>
 <script src="js/motion.js?v=20261024d" defer></script>
 <script src="js/app.js?v=20261024d" defer></script>
+<script src="js/reel.js?v=20261025a" defer></script>
 
 </div><!-- /page-content -->
 

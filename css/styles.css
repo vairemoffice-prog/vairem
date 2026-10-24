@@ -863,6 +863,25 @@ html::after {
 .photo-scene.is-scrub .photo-caption .eyebrow { color: #fff; text-shadow: 0 0 12px rgba(0,0,0,.45); }
 @media (max-width: 860px) { .photo-scene.is-scrub .photo-caption { padding: 48px 16px 16px; } }
 
+/* ---------- photo reel (carousel): photos move one at a time, each on its own ---------- */
+.photo-reel { position: relative; padding: 48px 0 8px; }
+.reel-viewport { position: relative; overflow: hidden; touch-action: pan-y; cursor: grab; outline-offset: -2px; }
+.reel-viewport.is-dragging { cursor: grabbing; }
+.reel-track { display: flex; gap: 24px; will-change: transform; transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1); }
+.reel-viewport.is-dragging .reel-track { transition: none; }
+.reel-slide { flex: 0 0 auto; margin: 0; width: min(100%, 80vh); width: min(100%, 80svh); aspect-ratio: 1 / 1; opacity: 0.4; transform: scale(0.92); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1); }
+.reel-slide.is-active { opacity: 1; transform: none; }
+.reel-slide img { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none; }
+.reel-controls { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0 0; }
+.reel-btn { appearance: none; background: transparent; color: var(--text); border: 1px solid var(--border); width: 44px; height: 44px; font-size: 18px; line-height: 1; cursor: pointer; transition: background 0.2s ease; }
+.reel-btn:hover, .reel-btn:focus-visible { background: var(--border); }
+.reel-dots { display: flex; gap: 10px; }
+.reel-dot { appearance: none; width: 10px; height: 10px; padding: 0; border: 1px solid var(--text); background: transparent; border-radius: 50%; cursor: pointer; }
+.reel-dot.is-active { background: var(--text); }
+@media (prefers-reduced-motion: reduce) {
+  .reel-track, .reel-slide { transition: none; }
+}
+
 .section-indeks { padding: 10cm 0 0; }
 
 .section-head {
