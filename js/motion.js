@@ -62,8 +62,8 @@
     header.addEventListener('focusin', () => setHidden(false));
   });
 
-  // ---------- photos: pinned scene. Photo 1 grows from small, then slides out to the left while
-  // ---------- photo 2 slides in from the right (separately, never on top of each other) ----------
+  // ---------- photos: pinned scene. Both photos travel right -> left like a film strip, one after
+  // ---------- the other: photo 1 arrives and rests in the centre, moves on to the left, photo 2 follows ----------
 
   const adSection = document.getElementById('photo-scene');
   if (adSection) safe('photo scene', () => {
@@ -71,29 +71,33 @@
     const frames = [...adSection.querySelectorAll('[data-photo-frame]')];
     const caption = adSection.querySelector('.photo-caption');
     if (!stage || frames.length < 2) return;
-    const SMALL = 0.3;
-    // distance a photo travels to leave (or enter) the screen completely, plus a small margin
-    const travel = () => stage.clientWidth / 2 + frames[0].offsetWidth / 2 + 24;
+    // geometry is measured on every update, so it is right on any viewport and after resize
+    const gap = () => Math.max(40, stage.clientWidth * 0.05);
+    const pitch = () => frames[0].offsetWidth + gap();          // distance between the two photo centres
+    const start = () => stage.clientWidth / 2;                  // photo 1 starts with its centre on the right edge
+    const track = { t: 0 };                                     // how far the strip has moved to the left, in px
+    const place = () => {
+      const s = start(), p = pitch();
+      frames.forEach((f, i) => { f.style.transform = 'translateX(' + (s + i * p - track.t).toFixed(1) + 'px)'; });
+    };
     try {
       adSection.classList.add('is-scrub');
       gsap.set(frames, { clearProps: 'transform,opacity' });
-      gsap.set(frames[0], { scale: SMALL, opacity: 1 }); // visible (small) as soon as the section scrolls into view
-      gsap.set(frames[1], { scale: 1, opacity: 0, x: travel });
       if (caption) gsap.set(caption, { opacity: 0, y: 24 });
+      place();
 
       // one timeline across the whole section (length 1 = full scroll range)
       const tl = gsap.timeline({
         defaults: { ease: 'power2.inOut' },
         scrollTrigger: {
           trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8, invalidateOnRefresh: true,
-          onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.9); }
+          onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.78); },
+          onRefresh: place
         }
       });
-      tl.to(frames[0], { scale: 1, duration: 0.3 }, 0)                       // photo 1 grows
-        .set(frames[1], { opacity: 1 }, 0.5)                                  // photo 2 waits off-screen right
-        .to(frames[0], { x: () => -travel(), duration: 0.35 }, 0.5)          // photo 1 leaves to the left
-        .to(frames[1], { x: 0, duration: 0.35 }, 0.5);                       // photo 2 arrives from the right
-      if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.1 }, 0.87);
+      tl.to(track, { t: start, duration: 0.25, ease: 'power2.out', onUpdate: place }, 0)                  // photo 1 arrives in the centre
+        .to(track, { t: () => start() + pitch(), duration: 0.3, onUpdate: place }, 0.35);                  // strip moves on: photo 1 goes left, photo 2 arrives
+      if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.1 }, 0.72);
       tl.to({}, { duration: 0.03 }, 0.97); // pad so the timeline length is exactly 1
       window.__vairemAdScene = true; // app.js keeps its own fallback off only when this succeeded
     } catch (err) {

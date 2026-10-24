@@ -853,7 +853,7 @@ html::after {
 .photo-scene.is-scrub { height: 420vh; width: 100vw; margin-left: calc(50% - 50vw); } /* full-bleed so photos slide across the whole screen */
 /* stacked in one grid cell and centred by the grid: JS only animates scale and opacity */
 .photo-scene.is-scrub .photo-stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; place-items: center; padding: 0; gap: 0; overflow: hidden; }
-.photo-scene.is-scrub .photo-frame { grid-area: 1 / 1; transform: scale(.3); will-change: transform, opacity; }
+.photo-scene.is-scrub .photo-frame { grid-area: 1 / 1; will-change: transform; }
 .photo-scene.is-scrub .photo-caption {
   position: absolute; left: 0; right: 0; bottom: 0; opacity: 0; pointer-events: none;
   padding: 64px clamp(16px, 4vw, 48px) 24px;

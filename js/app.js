@@ -1020,7 +1020,6 @@
     const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
     const seg = (p, a, b) => clamp((p - a) / (b - a));
     const ease = t => t * t * (3 - 2 * t);
-    const SMALL = 0.3;
 
     let ticking = false;
     function update() {
@@ -1029,17 +1028,14 @@
       const range = rect.height - window.innerHeight;
       const p = range > 0 ? clamp(-rect.top / range) : 0;
 
-      // photo 1 grows 0 -> .30, holds, then slides out to the left while photo 2 slides in from the right
-      const g1 = ease(seg(p, 0, 0.30));
-      const slide = ease(seg(p, 0.5, 0.85));
-      const D = stage.clientWidth / 2 + frames[0].offsetWidth / 2 + 24;
-      frames[0].style.opacity = '1';
-      frames[0].style.transform = 'translateX(' + (-D * slide).toFixed(1) + 'px) scale(' + (SMALL + (1 - SMALL) * g1).toFixed(4) + ')';
-      frames[1].style.opacity = p >= 0.5 ? '1' : '0';
-      frames[1].style.transform = 'translateX(' + (D * (1 - slide)).toFixed(1) + 'px)';
+      // film strip, right -> left: photo 1 arrives (0 -> .25), rests, strip moves on (.35 -> .65), photo 2 rests
+      const W = stage.clientWidth, w = frames[0].offsetWidth;
+      const pitch = w + Math.max(40, W * 0.05), s0 = W / 2;
+      const t = s0 * ease(seg(p, 0, 0.25)) + pitch * ease(seg(p, 0.35, 0.65));
+      frames.forEach((f, i) => { f.style.opacity = '1'; f.style.transform = 'translateX(' + (s0 + i * pitch - t).toFixed(1) + 'px)'; });
 
       if (caption) {
-        const c = ease(seg(p, 0.87, 0.97));
+        const c = ease(seg(p, 0.72, 0.82));
         caption.style.opacity = String(c);
         caption.classList.toggle('is-on', c > 0.5);
       }
