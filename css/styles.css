@@ -850,7 +850,7 @@ html::after {
 
 /* Scroll scene (js/motion.js or the app.js fallback adds .is-scrub): the stage is pinned with native
    position: sticky; the photos grow from small and cross-fade while the page stays in place. */
-.photo-scene.is-scrub { height: 420vh; width: 100vw; margin-left: calc(50% - 50vw); } /* full-bleed so photos slide across the whole screen */
+.photo-scene.is-scrub { height: 1000vh; width: 100vw; margin-left: calc(50% - 50vw); } /* full-bleed so photos slide across the whole screen */
 /* stacked in one grid cell and centred by the grid: JS only animates scale and opacity */
 .photo-scene.is-scrub .photo-stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; place-items: center; padding: 0; gap: 0; overflow: hidden; }
 .photo-scene.is-scrub .photo-frame { grid-area: 1 / 1; will-change: transform; }
