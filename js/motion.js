@@ -62,36 +62,50 @@
     header.addEventListener('focusin', () => setHidden(false));
   });
 
-  // ---------- advertising photos: pinned scene, photos grow from small and cross-fade ----------
+  // ---------- photos: pinned scene. Both photos travel right -> left like a film strip, one after
+  // ---------- the other: each photo arrives small, grows to full size in the centre, then moves on to the left ----------
 
   const adSection = document.getElementById('photo-scene');
-  if (adSection) safe('ad scene', () => {
+  if (adSection) safe('photo scene', () => {
+    const stage = adSection.querySelector('.photo-stage');
     const frames = [...adSection.querySelectorAll('[data-photo-frame]')];
     const caption = adSection.querySelector('.photo-caption');
-    if (frames.length < 2) return;
-    const SMALL = 0.3;
+    if (!stage || frames.length < 2) return;
+    // geometry is measured on every update, so it is right on any viewport and after resize
+    const gap = () => Math.max(40, stage.clientWidth * 0.05);
+    const pitch = () => frames[0].offsetWidth + gap();          // distance between the two photo centres
+    const start = () => stage.clientWidth / 2;                  // photo 1 starts with its centre on the right edge
+    const track = { t: 0 };                                     // how far the strip has moved to the left, in px
+    const SMALL = 0.3;                                          // size of a photo that is still far on the right
+    const ease = v => v * v * (3 - 2 * v);
+    // a photo grows from small to full as it approaches the centre, and stays full once it has passed it
+    const scaleAt = (d, s) => d <= 0 ? 1 : SMALL + (1 - SMALL) * ease(Math.min(1, Math.max(0, 1 - d / s)));
+    const place = () => {
+      const s = start(), p = pitch();
+      frames.forEach((f, i) => {
+        const d = s + i * p - track.t;                          // offset of this photo's centre from the screen centre
+        f.style.transform = 'translateX(' + d.toFixed(1) + 'px) scale(' + scaleAt(d, s).toFixed(4) + ')';
+      });
+    };
     try {
       adSection.classList.add('is-scrub');
       gsap.set(frames, { clearProps: 'transform,opacity' });
-      gsap.set(frames, { scale: SMALL, opacity: 0 });
-      gsap.set(frames[0], { opacity: 1 }); // visible (small) as soon as the section scrolls into view
       if (caption) gsap.set(caption, { opacity: 0, y: 24 });
+      place();
 
       // one timeline across the whole section (length 1 = full scroll range)
       const tl = gsap.timeline({
         defaults: { ease: 'power2.inOut' },
         scrollTrigger: {
-          trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8,
-          onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.9); }
+          trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8, invalidateOnRefresh: true,
+          onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.78); },
+          onRefresh: place
         }
       });
-      tl.to(frames[0], { scale: 1, duration: 0.3 }, 0)
-        .to(frames[0], { opacity: 0, scale: 1.08, duration: 0.23 }, 0.55)
-        .to(frames[1], { opacity: 1, duration: 0.14, ease: 'none' }, 0.42)
-        .to(frames[1], { scale: 1, duration: 0.36 }, 0.42)
-        ;
-      if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.14 }, 0.82);
-      tl.to({}, { duration: 0.04 }, 0.96); // pad so the timeline length is exactly 1
+      tl.to(track, { t: start, duration: 0.25, ease: 'power2.out', onUpdate: place }, 0)                  // photo 1 arrives in the centre
+        .to(track, { t: () => start() + pitch(), duration: 0.3, onUpdate: place }, 0.35);                  // strip moves on: photo 1 goes left, photo 2 arrives
+      if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.1 }, 0.72);
+      tl.to({}, { duration: 0.03 }, 0.97); // pad so the timeline length is exactly 1
       window.__vairemAdScene = true; // app.js keeps its own fallback off only when this succeeded
     } catch (err) {
       // back to plain stacked photos: always visible

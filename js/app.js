@@ -1011,15 +1011,15 @@
     if (!section) return;
     if (window.__vairemAdScene) return; // GSAP ScrollTrigger (js/motion.js) drives this scene
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const stage = section.querySelector('.photo-stage');
     const frames = [...section.querySelectorAll('[data-photo-frame]')];
     const caption = section.querySelector('.photo-caption');
-    if (frames.length < 2) return;
+    if (!stage || frames.length < 2) return;
     section.classList.add('is-scrub');
 
     const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
     const seg = (p, a, b) => clamp((p - a) / (b - a));
     const ease = t => t * t * (3 - 2 * t);
-    const SMALL = 0.3;
 
     let ticking = false;
     function update() {
@@ -1028,18 +1028,19 @@
       const range = rect.height - window.innerHeight;
       const p = range > 0 ? clamp(-rect.top / range) : 0;
 
-      // photo 1 grows 0 -> .30, holds, then fades out while photo 2 grows in .42 -> .78
-      const g1 = ease(seg(p, 0, 0.30));
-      const out1 = ease(seg(p, 0.55, 0.78));
-      frames[0].style.opacity = String(1 - out1);
-      frames[0].style.transform = 'scale(' + (SMALL + (1 - SMALL) * g1 + 0.06 * out1).toFixed(4) + ')';
-
-      const g2 = ease(seg(p, 0.42, 0.78));
-      frames[1].style.opacity = String(clamp(g2 * 3));
-      frames[1].style.transform = 'scale(' + (SMALL + (1 - SMALL) * g2).toFixed(4) + ')';
+      // film strip, right -> left: photo 1 arrives (0 -> .25), rests, strip moves on (.35 -> .65), photo 2 rests
+      const W = stage.clientWidth, w = frames[0].offsetWidth;
+      const pitch = w + Math.max(40, W * 0.05), s0 = W / 2;
+      const t = s0 * ease(seg(p, 0, 0.25)) + pitch * ease(seg(p, 0.35, 0.65));
+      frames.forEach((f, i) => {
+        const d = s0 + i * pitch - t;
+        const sc = d <= 0 ? 1 : 0.3 + 0.7 * ease(clamp(1 - d / s0));   // grows while approaching the centre
+        f.style.opacity = '1';
+        f.style.transform = 'translateX(' + d.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
+      });
 
       if (caption) {
-        const c = ease(seg(p, 0.82, 0.96));
+        const c = ease(seg(p, 0.72, 0.82));
         caption.style.opacity = String(c);
         caption.classList.toggle('is-on', c > 0.5);
       }
