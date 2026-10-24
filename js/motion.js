@@ -62,36 +62,39 @@
     header.addEventListener('focusin', () => setHidden(false));
   });
 
-  // ---------- advertising photos: pinned scene, photos grow from small and cross-fade ----------
+  // ---------- photos: pinned scene. Photo 1 grows from small, then slides out to the left while
+  // ---------- photo 2 slides in from the right (separately, never on top of each other) ----------
 
   const adSection = document.getElementById('photo-scene');
-  if (adSection) safe('ad scene', () => {
+  if (adSection) safe('photo scene', () => {
+    const stage = adSection.querySelector('.photo-stage');
     const frames = [...adSection.querySelectorAll('[data-photo-frame]')];
     const caption = adSection.querySelector('.photo-caption');
-    if (frames.length < 2) return;
+    if (!stage || frames.length < 2) return;
     const SMALL = 0.3;
+    // distance a photo travels to leave (or enter) the screen completely, plus a small margin
+    const travel = () => stage.clientWidth / 2 + frames[0].offsetWidth / 2 + 24;
     try {
       adSection.classList.add('is-scrub');
       gsap.set(frames, { clearProps: 'transform,opacity' });
-      gsap.set(frames, { scale: SMALL, opacity: 0 });
-      gsap.set(frames[0], { opacity: 1 }); // visible (small) as soon as the section scrolls into view
+      gsap.set(frames[0], { scale: SMALL, opacity: 1 }); // visible (small) as soon as the section scrolls into view
+      gsap.set(frames[1], { scale: 1, opacity: 0, x: travel });
       if (caption) gsap.set(caption, { opacity: 0, y: 24 });
 
       // one timeline across the whole section (length 1 = full scroll range)
       const tl = gsap.timeline({
         defaults: { ease: 'power2.inOut' },
         scrollTrigger: {
-          trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8,
+          trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8, invalidateOnRefresh: true,
           onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.9); }
         }
       });
-      tl.to(frames[0], { scale: 1, duration: 0.3 }, 0)
-        .to(frames[0], { opacity: 0, scale: 1.08, duration: 0.23 }, 0.55)
-        .to(frames[1], { opacity: 1, duration: 0.14, ease: 'none' }, 0.42)
-        .to(frames[1], { scale: 1, duration: 0.36 }, 0.42)
-        ;
-      if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.14 }, 0.82);
-      tl.to({}, { duration: 0.04 }, 0.96); // pad so the timeline length is exactly 1
+      tl.to(frames[0], { scale: 1, duration: 0.3 }, 0)                       // photo 1 grows
+        .set(frames[1], { opacity: 1 }, 0.5)                                  // photo 2 waits off-screen right
+        .to(frames[0], { x: () => -travel(), duration: 0.35 }, 0.5)          // photo 1 leaves to the left
+        .to(frames[1], { x: 0, duration: 0.35 }, 0.5);                       // photo 2 arrives from the right
+      if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.1 }, 0.87);
+      tl.to({}, { duration: 0.03 }, 0.97); // pad so the timeline length is exactly 1
       window.__vairemAdScene = true; // app.js keeps its own fallback off only when this succeeded
     } catch (err) {
       // back to plain stacked photos: always visible

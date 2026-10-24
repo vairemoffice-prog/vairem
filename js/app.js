@@ -1011,9 +1011,10 @@
     if (!section) return;
     if (window.__vairemAdScene) return; // GSAP ScrollTrigger (js/motion.js) drives this scene
     if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const stage = section.querySelector('.photo-stage');
     const frames = [...section.querySelectorAll('[data-photo-frame]')];
     const caption = section.querySelector('.photo-caption');
-    if (frames.length < 2) return;
+    if (!stage || frames.length < 2) return;
     section.classList.add('is-scrub');
 
     const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -1028,18 +1029,17 @@
       const range = rect.height - window.innerHeight;
       const p = range > 0 ? clamp(-rect.top / range) : 0;
 
-      // photo 1 grows 0 -> .30, holds, then fades out while photo 2 grows in .42 -> .78
+      // photo 1 grows 0 -> .30, holds, then slides out to the left while photo 2 slides in from the right
       const g1 = ease(seg(p, 0, 0.30));
-      const out1 = ease(seg(p, 0.55, 0.78));
-      frames[0].style.opacity = String(1 - out1);
-      frames[0].style.transform = 'scale(' + (SMALL + (1 - SMALL) * g1 + 0.06 * out1).toFixed(4) + ')';
-
-      const g2 = ease(seg(p, 0.42, 0.78));
-      frames[1].style.opacity = String(clamp(g2 * 3));
-      frames[1].style.transform = 'scale(' + (SMALL + (1 - SMALL) * g2).toFixed(4) + ')';
+      const slide = ease(seg(p, 0.5, 0.85));
+      const D = stage.clientWidth / 2 + frames[0].offsetWidth / 2 + 24;
+      frames[0].style.opacity = '1';
+      frames[0].style.transform = 'translateX(' + (-D * slide).toFixed(1) + 'px) scale(' + (SMALL + (1 - SMALL) * g1).toFixed(4) + ')';
+      frames[1].style.opacity = p >= 0.5 ? '1' : '0';
+      frames[1].style.transform = 'translateX(' + (D * (1 - slide)).toFixed(1) + 'px)';
 
       if (caption) {
-        const c = ease(seg(p, 0.82, 0.96));
+        const c = ease(seg(p, 0.87, 0.97));
         caption.style.opacity = String(c);
         caption.classList.toggle('is-on', c > 0.5);
       }
