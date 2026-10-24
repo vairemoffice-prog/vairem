@@ -97,7 +97,7 @@
       const tl = gsap.timeline({
         defaults: { ease: 'power2.inOut' },
         scrollTrigger: {
-          trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 0.8, invalidateOnRefresh: true,
+          trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 1.6, invalidateOnRefresh: true,
           onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.78); },
           onRefresh: place
         }
