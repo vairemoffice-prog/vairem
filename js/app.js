@@ -1032,7 +1032,12 @@
       const W = stage.clientWidth, w = frames[0].offsetWidth;
       const pitch = w + Math.max(40, W * 0.05), s0 = W / 2;
       const t = s0 * ease(seg(p, 0, 0.25)) + pitch * ease(seg(p, 0.35, 0.65));
-      frames.forEach((f, i) => { f.style.opacity = '1'; f.style.transform = 'translateX(' + (s0 + i * pitch - t).toFixed(1) + 'px)'; });
+      frames.forEach((f, i) => {
+        const d = s0 + i * pitch - t;
+        const sc = d <= 0 ? 1 : 0.3 + 0.7 * ease(clamp(1 - d / s0));   // grows while approaching the centre
+        f.style.opacity = '1';
+        f.style.transform = 'translateX(' + d.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
+      });
 
       if (caption) {
         const c = ease(seg(p, 0.72, 0.82));
