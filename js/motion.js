@@ -62,9 +62,8 @@
     header.addEventListener('focusin', () => setHidden(false));
   });
 
-  // ---------- photos: pinned scene, a carousel of two photos. They move one at a time, each on its own:
-  // ---------- a photo arrives from the right (small), grows to full size in the centre, rests, then leaves
-  // ---------- to the left completely before the next photo starts its way in from the right ----------
+  // ---------- photos: pinned scene. Both photos travel right -> left like a film strip, one after
+  // ---------- the other: each photo arrives small, grows to full size in the centre, then moves on to the left ----------
 
   const adSection = document.getElementById('photo-scene');
   if (adSection) safe('photo scene', () => {
@@ -72,22 +71,20 @@
     const frames = [...adSection.querySelectorAll('[data-photo-frame]')];
     const caption = adSection.querySelector('.photo-caption');
     if (!stage || frames.length < 2) return;
-    const SMALL = 0.3;                                           // size of a photo that is still far on the right
-    const ease = v => v * v * (3 - 2 * v);
-    // per photo: q = 0 waiting on the right, 1 resting in the centre, 2 gone off the left edge
-    const q = [{ v: 0 }, { v: 0 }];
     // geometry is measured on every update, so it is right on any viewport and after resize
+    const gap = () => Math.max(40, stage.clientWidth * 0.05);
+    const pitch = () => frames[0].offsetWidth + gap();          // distance between the two photo centres
+    const start = () => stage.clientWidth / 2;                  // photo 1 starts with its centre on the right edge
+    const track = { t: 0 };                                     // how far the strip has moved to the left, in px
+    const SMALL = 0.3;                                          // size of a photo that is still far on the right
+    const ease = v => v * v * (3 - 2 * v);
+    // a photo grows from small to full as it approaches the centre, and stays full once it has passed it
+    const scaleAt = (d, s) => d <= 0 ? 1 : SMALL + (1 - SMALL) * ease(Math.min(1, Math.max(0, 1 - d / s)));
     const place = () => {
-      const W = stage.clientWidth, w = frames[0].offsetWidth;
-      const exit = W / 2 + w / 2 + 24;                           // centre offset when fully off the left edge
+      const s = start(), p = pitch();
       frames.forEach((f, i) => {
-        // photo 1 starts with its centre on the right edge (so the section is not empty while it scrolls in);
-        // photo 2 waits just outside the right edge until photo 1 has left
-        const from = i === 0 ? W / 2 : W / 2 + SMALL * w / 2 + 12;
-        const v = q[i].v;
-        const d = v <= 1 ? from * (1 - v) : -exit * (v - 1);      // centre offset from the screen centre
-        const sc = d <= 0 ? 1 : SMALL + (1 - SMALL) * ease(Math.min(1, Math.max(0, 1 - d / from)));
-        f.style.transform = 'translateX(' + d.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
+        const d = s + i * p - track.t;                          // offset of this photo's centre from the screen centre
+        f.style.transform = 'translateX(' + d.toFixed(1) + 'px) scale(' + scaleAt(d, s).toFixed(4) + ')';
       });
     };
     try {
@@ -98,18 +95,17 @@
 
       // one timeline across the whole section (length 1 = full scroll range)
       const tl = gsap.timeline({
-        defaults: { ease: 'power2.inOut', onUpdate: place },
+        defaults: { ease: 'power2.inOut' },
         scrollTrigger: {
           trigger: adSection, start: 'top top', end: 'bottom bottom', scrub: 1.6, invalidateOnRefresh: true,
-          onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.8); },
+          onUpdate: self => { if (caption) caption.classList.toggle('is-on', self.progress > 0.78); },
           onRefresh: place
         }
       });
-      tl.to(q[0], { v: 1, duration: 0.2, ease: 'power2.out' }, 0)    // photo 1 arrives and grows
-        .to(q[0], { v: 2, duration: 0.2 }, 0.3)                      // photo 1 leaves to the left, alone
-        .to(q[1], { v: 1, duration: 0.2, ease: 'power2.out' }, 0.5);  // photo 2 arrives and grows, alone
-      if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.1 }, 0.74);
-      tl.to({}, { duration: 0.05 }, 0.95); // pad so the timeline length is exactly 1
+      tl.to(track, { t: start, duration: 0.25, ease: 'power2.out', onUpdate: place }, 0)                  // photo 1 arrives in the centre
+        .to(track, { t: () => start() + pitch(), duration: 0.3, onUpdate: place }, 0.35);                  // strip moves on: photo 1 goes left, photo 2 arrives
+      if (caption) tl.to(caption, { opacity: 1, y: 0, duration: 0.1 }, 0.72);
+      tl.to({}, { duration: 0.03 }, 0.97); // pad so the timeline length is exactly 1
       window.__vairemAdScene = true; // app.js keeps its own fallback off only when this succeeded
     } catch (err) {
       // back to plain stacked photos: always visible

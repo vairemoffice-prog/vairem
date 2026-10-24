@@ -1028,22 +1028,19 @@
       const range = rect.height - window.innerHeight;
       const p = range > 0 ? clamp(-rect.top / range) : 0;
 
-      // carousel, right -> left, one photo at a time: photo 1 arrives (0 -> .2), rests, leaves (.3 -> .5);
-      // photo 2 then arrives (.5 -> .7) and rests
+      // film strip, right -> left: photo 1 arrives (0 -> .25), rests, strip moves on (.35 -> .65), photo 2 rests
       const W = stage.clientWidth, w = frames[0].offsetWidth;
-      const exit = W / 2 + w / 2 + 24;
-      const qs = [ease(seg(p, 0, 0.2)) + ease(seg(p, 0.3, 0.5)), ease(seg(p, 0.5, 0.7))];
+      const pitch = w + Math.max(40, W * 0.05), s0 = W / 2;
+      const t = s0 * ease(seg(p, 0, 0.25)) + pitch * ease(seg(p, 0.35, 0.65));
       frames.forEach((f, i) => {
-        const from = i === 0 ? W / 2 : W / 2 + 0.3 * w / 2 + 12;
-        const v = qs[i];
-        const d = v <= 1 ? from * (1 - v) : -exit * (v - 1);
-        const sc = d <= 0 ? 1 : 0.3 + 0.7 * ease(clamp(1 - d / from));   // grows while approaching the centre
+        const d = s0 + i * pitch - t;
+        const sc = d <= 0 ? 1 : 0.3 + 0.7 * ease(clamp(1 - d / s0));   // grows while approaching the centre
         f.style.opacity = '1';
         f.style.transform = 'translateX(' + d.toFixed(1) + 'px) scale(' + sc.toFixed(4) + ')';
       });
 
       if (caption) {
-        const c = ease(seg(p, 0.74, 0.84));
+        const c = ease(seg(p, 0.72, 0.82));
         caption.style.opacity = String(c);
         caption.classList.toggle('is-on', c > 0.5);
       }
