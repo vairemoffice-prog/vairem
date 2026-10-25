@@ -559,8 +559,11 @@ html::after {
 .side-index a:hover { color: var(--text-hover); }
 .side-index a.is-active { color: var(--green-deep); }
 [data-theme="night"] .side-index a.is-active { color: var(--green-accent); }
+/* same vertical section index as on desktop, just tighter against the edge on phones */
 @media (max-width: 900px) {
-  .side-index { display: none; }
+  .side-index { right: 4px; gap: 18px; }
+  .side-index a { font-size: 10px; letter-spacing: 0.12em; }
+  main.wrap:has(> .side-index) { padding-right: max(28px, env(safe-area-inset-right)); }
 }
 .brand-tag { font-size: 10px; letter-spacing: 0.14em; color: var(--muted); }
 
