@@ -542,32 +542,11 @@
   function renderHeroDatasheetRows() {
     const el = document.getElementById('hero-datasheet-rows');
     el.innerHTML = PRODUCTS.map(p => `
-      <a href="#indeks" class="hero-strip-cell">
+      <a href="#karta" class="hero-strip-cell">
         <div class="cell-nr mono">${p.nr}</div>
         <div class="cell-formula mono">${p.formula}</div>
         <div class="cell-name">${p.name}</div>
       </a>
-    `).join('');
-  }
-
-  function renderIndexRows() {
-    const el = document.getElementById('index-rows');
-    el.innerHTML = PRODUCTS.map(p => `
-      <div class="index-row index-row--body" data-nr="${p.nr}">
-        <div class="cell-nr mono">${p.nr}</div>
-        <div class="cell-name">${p.name}</div>
-        <div class="cell-formula mono">${p.formula}</div>
-        <div class="cell-mw mono ta-r">${p.mw}</div>
-        <div class="cell-character">${characterFor(p.nr)}</div>
-        <div>
-          <div class="intensity-track"><div class="intensity-fill" data-width="${p.intensity}%"></div></div>
-        </div>
-        <div class="cell-weeks mono ta-r">${p.weeks}</div>
-        <div class="cell-price mono ta-r">${formatPrice(p.price)}</div>
-        <div class="index-add-cell">
-          <button type="button" class="index-add-btn mono" data-add="${p.nr}">${t('add_btn')}</button>
-        </div>
-      </div>
     `).join('');
   }
 
@@ -1055,7 +1034,6 @@
   }
 
   function refreshDynamicContent() {
-    renderIndexRows();
     updateKartaChrome();
     renderCart();
     renderHeroTitleKinetic();
@@ -1255,7 +1233,6 @@
   function init() {
     saveCart();
     renderHeroDatasheetRows();
-    renderIndexRows();
     renderKartaSlides();
     renderKartaDots();
     updateKartaChrome();
@@ -1278,12 +1255,6 @@
     initProductPhotos();
     initHeroKineticType();
     initBackgroundScrollFade();
-
-    document.getElementById('index-rows').addEventListener('click', e => {
-      const btn = e.target.closest('[data-add]');
-      if (!btn) return;
-      addToCart(btn.dataset.add, 1);
-    });
 
     document.getElementById('qty-dec').addEventListener('click', () => setHeroQty(state.heroQty - 1));
     document.getElementById('qty-inc').addEventListener('click', () => setHeroQty(state.heroQty + 1));
