@@ -42,26 +42,6 @@
   });
   if (lenis && !window.__vairemLenis) lenis = null;
 
-  // ---------- menu: hides when scrolling down, returns when scrolling up ----------
-
-  const header = document.querySelector('.site-header');
-  if (header) safe('menu', () => {
-    let lastY = window.scrollY;
-    let hidden = false;
-    const setHidden = h => { if (h !== hidden) { hidden = h; header.classList.toggle('is-hidden', h); } };
-    const onScrollY = () => {
-      const y = window.scrollY;
-      const menuOpen = !!header.querySelector('[aria-expanded="true"]');
-      const cart = document.getElementById('cart-overlay');
-      if (y < 120 || menuOpen || (cart && !cart.hidden)) setHidden(false);
-      else if (y > lastY + 4) setHidden(true);
-      else if (y < lastY - 4) setHidden(false);
-      lastY = y;
-    };
-    window.addEventListener('scroll', onScrollY, { passive: true });
-    header.addEventListener('focusin', () => setHidden(false));
-  });
-
   // ---------- photos: pinned scene. Both photos travel right -> left like a film strip, one after
   // ---------- the other: each photo arrives small, grows to full size in the centre, then moves on to the left ----------
 

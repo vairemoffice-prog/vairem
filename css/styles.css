@@ -463,8 +463,7 @@ html::after {
 [data-theme="night"] .site-header {
   background: rgba(43, 49, 58, 0.16);
 }
-/* hides when scrolling down, comes back when scrolling up (js/motion.js) */
-.site-header.is-hidden { translate: 0 -110%; }
+/* header stays visible while scrolling in both directions */
 
 .legal-header {
   position: sticky;
@@ -863,7 +862,6 @@ html::after {
 .photo-scene.is-scrub .photo-caption .eyebrow { color: #fff; text-shadow: 0 0 12px rgba(0,0,0,.45); }
 @media (max-width: 860px) { .photo-scene.is-scrub .photo-caption { padding: 48px 16px 16px; } }
 
-.section-indeks { padding: 10cm 0 0; }
 
 .section-head {
   display: flex;

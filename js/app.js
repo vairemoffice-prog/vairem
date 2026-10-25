@@ -33,10 +33,7 @@
 
   const CHARACTER_I18N = {
     pl: { '017': '[CHARAKTER]', '042': '[CHARAKTER]', '086': '[CHARAKTER]' },
-    en: { '017': '[CHARACTER]', '042': '[CHARACTER]', '086': '[CHARACTER]' },
-    es: { '017': '[CARÁCTER]', '042': '[CARÁCTER]', '086': '[CARÁCTER]' },
-    uk: { '017': '[ХАРАКТЕР]', '042': '[ХАРАКТЕР]', '086': '[ХАРАКТЕР]' },
-    fr: { '017': '[CARACTÈRE]', '042': '[CARACTÈRE]', '086': '[CARACTÈRE]' }
+    en: { '017': '[CHARACTER]', '042': '[CHARACTER]', '086': '[CHARACTER]' }
   };
 
   const I18N = {
@@ -187,226 +184,10 @@
       'promo.title': '10% off<br>your first order',
       'promo.text': 'New to VAIREM? Take a one-time discount code with you. Enter it at checkout summary — the discount applies automatically.',
       'promo.copy': 'COPY', 'promo.copied': 'COPIED', 'promo.dismiss': 'No, thanks'
-    },
-    es: {
-      'nav.indeks': 'ARCHIVO DE SUEÑOS', 'nav.metoda': 'MÉTODO', 'nav.list': 'CARTA', 'a11y.skip': 'Saltar al contenido', 'nav.menu': 'MENÚ', 'menu.produkty': 'CATÁLOGO',
-      'theme.day': 'DÍA', 'theme.night': 'NOCHE', 'cart.label': 'CARRITO',
-      'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLERO', 'tab.wykres': '03 · GRÁFICO',
-      'hero1.eyebrow': 'FRAGANCIAS DE NICHO PARA EL HOGAR · OBJETOS ARTÍSTICOS',
-      'hero1.title': 'El aire<br>no está<br>vacío',
-      'hero1.lede': "Sin pirámide clásica, sin exceso. Un aroma compuesto como forma pura, que penetra lentamente en el aire y cambia cómo percibimos el espacio.<br><br>Lo que no se ve cambia lo que sientes. No puedes verlo.<br>Solo puedes comprobar si te va.<br>¿Te lo probarás?",
-      'cta.wybierz': "ELIGE UN AROMA →", 'cta.metoda_dyfuzji': 'MÉTODO DE DIFUSIÓN',
-      'stat.zwiazkow': "AROMAS EN EL ARCHIVO DE SUEÑOS", 'stat.stezenie': 'CONCENTRACIÓN', 'stat.pojemnosc': 'VOLUMEN',
-      'stat.czas': 'DURACIÓN', 'stat.czas_value': '10–14 sem.',
-      'hero2.eyebrow': "TABLERO DE AROMAS · 017—086",
-      'hero2.title': "Tres aromas. Cada uno con su forma.",
-      'hero2.lede': "Eliges un aroma por su carácter. Cada frasco contiene una composición, descrita en la etiqueta.",
-      'cta.pelny_indeks': 'ARCHIVO DE SUEÑOS COMPLETO →', 'upcoming.copy': 'En estudio.<br>Cuatro veces al año.', 'cta.zapisz': 'SUSCRIBIRSE →',
-      'hero3.eyebrow': 'CURVA DE LIBERACIÓN · MEDICIÓN PROPIA · 40 M²',
-      'hero3.title': 'El aroma como<br>función del tiempo.',
-      'hero3.lede': 'Difusión pasiva a temperatura ambiente. El aroma abandona el soporte al ritmo que exige la habitación — las habitaciones más cálidas simplemente suenan más fuerte.',
-      'cta.metoda': 'MÉTODO', 'wykres.intensywnosc': 'INTENSIDAD / SEMANA',
-      'metric.prog': 'UMBRAL', 'metric.zasieg': 'ALCANCE', 'metric.cena': 'PRECIO',
-      'indeks.title': 'Archivo de sueños', 'indeks.note': "TRES AROMAS · 200 ML CADA UNO · PRECIO POR FRASCO",
-      'th.nr': 'N.º', 'th.zwiazek': "AROMA", 'th.wzor': 'FÓRMULA', 'th.mw': 'M [G/MOL]',
-      'th.charakter': 'CARÁCTER', 'th.intensywnosc': 'INTENSIDAD', 'th.tyg': 'SEM.', 'th.cena': 'PRECIO',
-      'index.foot1': 'INTENSIDAD MEDIDA AL 0,8% EN SOPORTE NEUTRO, 22 °C',
-      'index.foot2': 'ENTREGA EN 1–3 DÍAS LABORABLES · PL / UE',
-      'karta.image_tag': 'FOTO DEL PRODUCTO — FRASCO, 4:5',
-      'karta.thumb.etykieta': 'ETIQUETA', 'karta.thumb.nosnik': 'SOPORTE', 'karta.thumb.wnetrze': 'INTERIOR', 'karta.thumb.detal': 'DETALLE',
-      'karta.eyebrow_tpl': nr => `${nr} · [ESLOGAN]`, 'karta.title': '[TÍTULO]',
-      'karta.lede': '[DESCRIPCIÓN]', 'karta.prev': 'Producto anterior', 'karta.next': 'Producto siguiente',
-      'spec.stezenie': 'CONCENTRACIÓN', 'spec.stezenie_value': '0,8 % en soporte neutro',
-      'spec.dyfuzja': 'DIFUSIÓN', 'spec.dyfuzja_value': 'pasiva, sin calor',
-      'spec.wielkosc': 'TAMAÑO DE LA HABITACIÓN', 'spec.wielkosc_value': 'hasta 40 m²',
-      'spec.czas': 'DURACIÓN', 'spec.czas_value': 'doce semanas',
-      'spec.masa': 'MASA MOLAR', 'spec.prog': 'UMBRAL DE DETECCIÓN',
-      'karta.shipping': 'Envío en 1–3 días laborables · devolución 30 días', 'cta.do_koszyka': 'AÑADIR AL CARRITO',
-      'badge.szklo': 'VIDRIO REUTILIZABLE', 'badge.nosnik': 'SOPORTE BIODEGRADABLE', 'badge.alkohol': 'SIN ALCOHOL',
-      'metoda.title': 'Tres decisiones y nada más.', 'metoda.note': 'MÉTODO · DIFUSIÓN PASIVA',
-      'metoda1.title': "Una forma clara",
-      'metoda1.copy': "No construimos el aroma según la pirámide clásica. Cada composición tiene su propia estructura, carácter y manera de estar presente en el espacio.",
-      'metoda2.title': "Sin fuente de energía adicional",
-      'metoda2.copy': "No necesita calor, electricidad ni pulverización. Dejamos que el aroma se libere de forma natural y reaccione a las condiciones de la habitación.",
-      'metoda3.title': "Presencia lenta",
-      'metoda3.copy': "El aroma necesita tiempo para formar parte del espacio. En lugar de un efecto breve, aparece gradualmente y permanece durante semanas.",
-      'list.eyebrow': 'VAIREM.PL/LIST · 4–5 ENVÍOS AL AÑO',
-      'list.title': "Una carta, cuando llega un nuevo aroma.",
-      'list.lede': "Un aroma explicado con claridad, con el motivo por el que llevó su tiempo. Sin ofertas, sin cuentas atrás.",
-      'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'SUSCRIBIRSE',
-      'list.note': 'SIN OFERTAS. TE DAS DE BAJA CON UN CLIC.',
-      'archive.next': 'PRÓXIMA CARTA', 'archive.next_value': '[SIGUIENTE]',
-      'archive.last': 'ÚLTIMA', 'archive.last_value': '086 · Afterlight — [DESCRIPCIÓN]',
-      'archive.archive': 'ARCHIVO', 'archive.archive_value': '017—086 · notas completas',
-      'footer.address': 'FRAGANCIAS DE NICHO PARA EL HOGAR<br>VARSOVIA · PL<br>NIF 000 000 00 00',
-      'footer.pelny_indeks': 'Archivo de sueños completo →', 'footer.sny': 'Interpretación de sueños', 'footer.archiwum': 'ARCHIVO DE SUEÑOS', 'footer.marka': 'MARCA',
-      'footer.metoda': 'Método', 'footer.list': 'Carta', 'footer.refill': 'Frascos y recambios',
-      'footer.obsluga': 'ATENCIÓN AL CLIENTE', 'footer.kontakt': 'Contacto', 'footer.wysylka': 'Envíos y devoluciones', 'footer.regulamin': 'Términos',
-      'footer.vat': 'PRECIOS EN PLN, IVA INCLUIDO',
-      'cart.close': 'CERRAR ✕', 'cart.shipping': 'ENVÍO', 'cart.total': 'TOTAL A PAGAR',
-      'cta.checkout': 'PROCEDER AL PAGO →', 'cart.note': 'DEVOLUCIÓN 30 DÍAS · VIDRIO RECARGABLE',
-      'cart.ship_left_tpl': n => `Te faltan ${n} PLN para el envío gratis`, 'cart.ship_free': 'Envío gratis desbloqueado ✓',
-      'trust.ship.t': 'ENVÍO RÁPIDO', 'trust.ship.d': 'Envío en 1–3 días', 'trust.ret.t': 'DEVOLUCIÓN', 'trust.ret.d': 'Devolución 30 días',
-      'trust.pay.t': 'PAGOS SEGUROS', 'trust.pay.d': 'BLIK · tarjeta · Apple/Google Pay · P24', 'trust.vat.t': 'PRECIO JUSTO', 'trust.vat.d': 'Precios con IVA incluido',
-      'cart.title_tpl': n => `CARRITO · ${n} UDS.`,
-      'cart.empty': "CARRITO VACÍO — ELIGE UN AROMA DEL ARCHIVO DE SUEÑOS.", 'cart.remove': 'QUITAR',
-      'newsletter.subscribed': 'SUSCRITO ✓', 'newsletter.thanks': 'GRACIAS — CONFIRMA EL ENLACE EN TU CORREO.',
-      'tile.weeks_suffix': 'SEM.', 'add_btn': 'AÑADIR',
-      'cookie.title': 'COOKIES',
-      'cookie.text': 'Usamos cookies para recordar tu idioma, tema y el contenido del carrito, y para entender cómo usas el sitio. Las funciones básicas siguen funcionando sin tu consentimiento.',
-      'cookie.accept': 'ACEPTAR', 'cookie.reject': 'RECHAZAR',
-      'promo.eyebrow': 'OFERTA DE BIENVENIDA',
-      'promo.title': '10% de descuento<br>en tu primer pedido',
-      'promo.text': '¿Nuevo en VAIREM? Llévate un código de descuento de un solo uso. Introdúcelo en el resumen del pedido — el descuento se aplica automáticamente.',
-      'promo.copy': 'COPIAR', 'promo.copied': 'COPIADO', 'promo.dismiss': 'No, gracias'
-    },
-    uk: {
-      'nav.indeks': 'АРХІВ СНІВ', 'nav.metoda': 'МЕТОД', 'nav.list': 'ЛИСТ', 'a11y.skip': 'Перейти до вмісту', 'nav.menu': 'МЕНЮ', 'menu.produkty': 'КАТАЛОГ',
-      'theme.day': 'ДЕНЬ', 'theme.night': 'НІЧ', 'cart.label': 'КОШИК',
-      'tabbar.label': 'ВАРІАНТ HERO', 'tab.tablica': '02 · ТАБЛИЦЯ', 'tab.wykres': '03 · ГРАФІК',
-      'hero1.eyebrow': "НІШЕВІ АРОМАТИ ДЛЯ ІНТЕР'ЄРУ · АРТОБ'ЄКТИ",
-      'hero1.title': 'Повітря<br>не<br>порожнє',
-      'hero1.lede': "Без класичної піраміди, без надміру. Аромат, складений як чиста форма, що повільно проникає в повітря й змінює те, як ми сприймаємо простір.<br><br>Те, чого не видно, змінює те, що ти відчуваєш. Ти не можеш цього побачити.<br>Можеш лише перевірити, чи воно тобі пасує.<br>Приміряєш?",
-      'cta.wybierz': "ОБЕРИ АРОМАТ →", 'cta.metoda_dyfuzji': 'МЕТОД ДИФУЗІЇ',
-      'stat.zwiazkow': "АРОМАТІВ В АРХІВІ СНІВ", 'stat.stezenie': 'КОНЦЕНТРАЦІЯ', 'stat.pojemnosc': "ОБ'ЄМ",
-      'stat.czas': 'ТРИВАЛІСТЬ', 'stat.czas_value': '10–14 тиж.',
-      'hero2.eyebrow': "ТАБЛИЦЯ АРОМАТІВ · 017—086",
-      'hero2.title': "Три аромати. Кожен зі своєю формою.",
-      'hero2.lede': "Ти обираєш аромат за характером. Кожна посудина містить одну композицію, описану на етикетці.",
-      'cta.pelny_indeks': 'ПОВНИЙ АРХІВ СНІВ →', 'upcoming.copy': 'У дослідженні.<br>Чотири рази на рік.', 'cta.zapisz': 'ПІДПИСАТИСЯ →',
-      'hero3.eyebrow': 'КРИВА ВИВІЛЬНЕННЯ · ВЛАСНИЙ ВИМІР · 40 М²',
-      'hero3.title': 'Аромат як<br>функція часу.',
-      'hero3.lede': 'Пасивна дифузія за кімнатної температури. Аромат залишає носій у темпі, якого вимагає приміщення — тепліші кімнати просто звучать голосніше.',
-      'cta.metoda': 'МЕТОД', 'wykres.intensywnosc': 'ІНТЕНСИВНІСТЬ / ТИЖДЕНЬ',
-      'metric.prog': 'ПОРІГ', 'metric.zasieg': 'ОХОПЛЕННЯ', 'metric.cena': 'ЦІНА',
-      'indeks.title': 'Архів снів', 'indeks.note': "ТРИ АРОМАТИ · ПО 200 МЛ · ЦІНА ЗА ПОСУДИНУ",
-      'th.nr': '№', 'th.zwiazek': "АРОМАТ", 'th.wzor': 'ФОРМУЛА', 'th.mw': 'M [Г/МОЛЬ]',
-      'th.charakter': 'ХАРАКТЕР', 'th.intensywnosc': 'ІНТЕНСИВНІСТЬ', 'th.tyg': 'ТИЖ.', 'th.cena': 'ЦІНА',
-      'index.foot1': 'ІНТЕНСИВНІСТЬ ВИМІРЯНА ПРИ 0,8% У НЕЙТРАЛЬНОМУ НОСІЇ, 22 °C',
-      'index.foot2': 'ДОСТАВКА 1–3 РОБОЧІ ДНІ · PL / ЄС',
-      'karta.image_tag': "ФОТО ПРОДУКТУ — ПОСУДИНА, 4:5",
-      'karta.thumb.etykieta': 'ЕТИКЕТКА', 'karta.thumb.nosnik': 'НОСІЙ', 'karta.thumb.wnetrze': "ІНТЕР'ЄР", 'karta.thumb.detal': 'ДЕТАЛЬ',
-      'karta.eyebrow_tpl': nr => `${nr} · [СЛОГАН]`, 'karta.title': '[НАЗВА]',
-      'karta.lede': '[ОПИС]', 'karta.prev': 'Попередній продукт', 'karta.next': 'Наступний продукт',
-      'spec.stezenie': 'КОНЦЕНТРАЦІЯ', 'spec.stezenie_value': 'у нейтральному носії 0,8 %',
-      'spec.dyfuzja': 'ДИФУЗІЯ', 'spec.dyfuzja_value': 'пасивна, без тепла',
-      'spec.wielkosc': 'РОЗМІР ПРИМІЩЕННЯ', 'spec.wielkosc_value': 'до 40 м²',
-      'spec.czas': 'ТРИВАЛІСТЬ', 'spec.czas_value': 'дванадцять тижнів',
-      'spec.masa': 'МОЛЯРНА МАСА', 'spec.prog': 'ПОРІГ ВИЯВЛЕННЯ',
-      'karta.shipping': 'Доставка 1–3 робочі дні · повернення 30 днів', 'cta.do_koszyka': 'ДО КОШИКА',
-      'badge.szklo': 'СКЛО БАГАТОРАЗОВОГО ВИКОРИСТАННЯ', 'badge.nosnik': 'БІОРОЗКЛАДНИЙ НОСІЙ', 'badge.alkohol': 'БЕЗ АЛКОГОЛЮ',
-      'metoda.title': 'Три рішення і нічого більше.', 'metoda.note': 'МЕТОД · ПАСИВНА ДИФУЗІЯ',
-      'metoda1.title': "Одна чітка форма",
-      'metoda1.copy': "Ми не будуємо аромат за класичною пірамідою. Кожна композиція має власну структуру, характер і спосіб присутності в просторі.",
-      'metoda2.title': "Без додаткового джерела енергії",
-      'metoda2.copy': "Не потребує тепла, струму чи розпилення. Ми дозволяємо аромату вивільнятися природно й реагувати на умови в приміщенні.",
-      'metoda3.title': "Повільна присутність",
-      'metoda3.copy': "Аромату потрібен час, щоб стати частиною простору. Замість короткого ефекту він з'являється поступово й залишається протягом тижнів.",
-      'list.eyebrow': 'VAIREM.PL/LIST · 4–5 РОЗСИЛОК НА РІК',
-      'list.title': "Лист, коли з'являється новий аромат.",
-      'list.lede': "Один аромат, пояснений прямо, з причиною, чому це зайняло час. Без пропозицій, без відліку.",
-      'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'ПІДПИСАТИСЯ',
-      'list.note': 'БЕЗ ПРОПОЗИЦІЙ. ВІДПИСКА ОДНИМ КЛІКОМ.',
-      'archive.next': 'НАЙБЛИЖЧИЙ ЛИСТ', 'archive.next_value': '[НАСТУПНИЙ]',
-      'archive.last': 'ОСТАННІЙ', 'archive.last_value': '086 · Afterlight — [ОПИС]',
-      'archive.archive': 'АРХІВ', 'archive.archive_value': '017—086 · повні нотатки',
-      'footer.address': "НІШЕВІ АРОМАТИ ДЛЯ ІНТЕР'ЄРУ<br>ВАРШАВА · PL<br>НІП 000 000 00 00",
-      'footer.pelny_indeks': 'Повний архів снів →', 'footer.sny': 'Тлумачення снів', 'footer.archiwum': 'АРХІВ СНІВ', 'footer.marka': 'БРЕНД',
-      'footer.metoda': 'Метод', 'footer.list': 'Лист', 'footer.refill': 'Посудини й дозаправка',
-      'footer.obsluga': 'ПІДТРИМКА', 'footer.kontakt': 'Контакти', 'footer.wysylka': 'Доставка і повернення', 'footer.regulamin': 'Умови',
-      'footer.vat': 'ЦІНИ В PLN, З ПДВ',
-      'cart.close': 'ЗАКРИТИ ✕', 'cart.shipping': 'ДОСТАВКА', 'cart.total': 'ДО СПЛАТИ',
-      'cta.checkout': 'ПЕРЕЙТИ ДО ОПЛАТИ →', 'cart.note': 'ПОВЕРНЕННЯ 30 ДНІВ · СКЛО ДЛЯ ДОЗАПРАВКИ',
-      'cart.ship_left_tpl': n => `До безкоштовної доставки бракує ${n} PLN`, 'cart.ship_free': 'Безкоштовну доставку розблоковано ✓',
-      'trust.ship.t': 'ШВИДКА ДОСТАВКА', 'trust.ship.d': 'Доставка 1–3 дні', 'trust.ret.t': 'ПОВЕРНЕННЯ', 'trust.ret.d': 'Повернення 30 днів',
-      'trust.pay.t': 'БЕЗПЕЧНІ ПЛАТЕЖІ', 'trust.pay.d': 'BLIK · картка · Apple/Google Pay · P24', 'trust.vat.t': 'ЧЕСНА ЦІНА', 'trust.vat.d': 'Ціни включають ПДВ',
-      'cart.title_tpl': n => `КОШИК · ${n} ПОЗ.`,
-      'cart.empty': "КОШИК ПОРОЖНІЙ — ОБЕРИ АРОМАТ З АРХІВУ СНІВ.", 'cart.remove': 'ВИДАЛИТИ',
-      'newsletter.subscribed': 'ПІДПИСАНО ✓', 'newsletter.thanks': 'ДЯКУЄМО — ПІДТВЕРДЬ ПОСИЛАННЯ В ПОШТІ.',
-      'tile.weeks_suffix': 'ТИЖ.', 'add_btn': 'ДОДАТИ',
-      'cookie.title': 'ФАЙЛИ COOKIE',
-      'cookie.text': "Ми використовуємо файли cookie, щоб запам'ятати вашу мову, тему й вміст кошика, а також зрозуміти, як ви користуєтесь сайтом. Основні функції працюють і без згоди.",
-      'cookie.accept': 'ПРИЙНЯТИ', 'cookie.reject': 'ВІДХИЛИТИ',
-      'promo.eyebrow': 'ПРИВІТАЛЬНА ПРОПОЗИЦІЯ',
-      'promo.title': 'Знижка 10%<br>на перше замовлення',
-      'promo.text': 'Новачок у VAIREM? Отримай одноразовий промокод. Введи його в підсумку замовлення — знижка застосується автоматично.',
-      'promo.copy': 'КОПІЮВАТИ', 'promo.copied': 'СКОПІЙОВАНО', 'promo.dismiss': 'Ні, дякую'
-    },
-    fr: {
-      'nav.indeks': 'ARCHIVE DES RÊVES', 'nav.metoda': 'MÉTHODE', 'nav.list': 'LETTRE', 'a11y.skip': 'Aller au contenu', 'nav.menu': 'MENU', 'menu.produkty': 'CATALOGUE',
-      'theme.day': 'JOUR', 'theme.night': 'NUIT', 'cart.label': 'PANIER',
-      'tabbar.label': 'VARIANTE HERO', 'tab.tablica': '02 · TABLEAU', 'tab.wykres': '03 · GRAPHIQUE',
-      'hero1.eyebrow': "PARFUMS DE NICHE POUR L'INTÉRIEUR · OBJETS D'ART",
-      'hero1.title': "L'air<br>n'est pas<br>vide",
-      'hero1.lede': "Sans pyramide classique, sans excès. Un parfum composé comme une forme pure, qui pénètre lentement dans l'air et change notre perception de l'espace.<br><br>Ce que l'on ne voit pas change ce que l'on ressent. Vous ne pouvez pas le voir.<br>Vous pouvez seulement vérifier s'il vous convient.<br>Vous l'essayez ?",
-      'cta.wybierz': "CHOISIR UN PARFUM →", 'cta.metoda_dyfuzji': 'MÉTHODE DE DIFFUSION',
-      'stat.zwiazkow': "PARFUMS DANS L'ARCHIVE DES RÊVES", 'stat.stezenie': 'CONCENTRATION', 'stat.pojemnosc': 'VOLUME',
-      'stat.czas': 'DURÉE', 'stat.czas_value': '10–14 sem.',
-      'hero2.eyebrow': "TABLEAU DES PARFUMS · 017—086",
-      'hero2.title': "Trois parfums. Chacun avec sa forme.",
-      'hero2.lede': "Vous choisissez un parfum selon son caractère. Chaque flacon contient une composition, décrite sur l'étiquette.",
-      'cta.pelny_indeks': 'ARCHIVE DES RÊVES COMPLÈTE →', 'upcoming.copy': "À l'étude.<br>Quatre fois par an.", 'cta.zapisz': "S'ABONNER →",
-      'hero3.eyebrow': 'COURBE DE DIFFUSION · MESURE MAISON · 40 M²',
-      'hero3.title': 'Le parfum comme<br>fonction du temps.',
-      'hero3.lede': "Diffusion passive à température ambiante. Le parfum quitte le support au rythme que demande la pièce — les pièces plus chaudes se font simplement entendre plus fort.",
-      'cta.metoda': 'MÉTHODE', 'wykres.intensywnosc': 'INTENSITÉ / SEMAINE',
-      'metric.prog': 'SEUIL', 'metric.zasieg': 'PORTÉE', 'metric.cena': 'PRIX',
-      'indeks.title': 'Archive des rêves', 'indeks.note': "TROIS PARFUMS · 200 ML CHACUN · PRIX PAR FLACON",
-      'th.nr': 'N°', 'th.zwiazek': "PARFUM", 'th.wzor': 'FORMULE', 'th.mw': 'M [G/MOL]',
-      'th.charakter': 'CARACTÈRE', 'th.intensywnosc': 'INTENSITÉ', 'th.tyg': 'SEM.', 'th.cena': 'PRIX',
-      'index.foot1': 'INTENSITÉ MESURÉE À 0,8 % DANS UN SUPPORT NEUTRE, 22 °C',
-      'index.foot2': 'LIVRAISON 1–3 JOURS OUVRÉS · PL / UE',
-      'karta.image_tag': 'PHOTO PRODUIT — FLACON, 4:5',
-      'karta.thumb.etykieta': 'ÉTIQUETTE', 'karta.thumb.nosnik': 'SUPPORT', 'karta.thumb.wnetrze': 'INTÉRIEUR', 'karta.thumb.detal': 'DÉTAIL',
-      'karta.eyebrow_tpl': nr => `${nr} · [SLOGAN]`, 'karta.title': '[TITRE]',
-      'karta.lede': '[DESCRIPTION]', 'karta.prev': 'Produit précédent', 'karta.next': 'Produit suivant',
-      'spec.stezenie': 'CONCENTRATION', 'spec.stezenie_value': 'dans un support neutre 0,8 %',
-      'spec.dyfuzja': 'DIFFUSION', 'spec.dyfuzja_value': 'passive, sans chaleur',
-      'spec.wielkosc': 'TAILLE DE LA PIÈCE', 'spec.wielkosc_value': "jusqu'à 40 m²",
-      'spec.czas': 'DURÉE', 'spec.czas_value': 'douze semaines',
-      'spec.masa': 'MASSE MOLAIRE', 'spec.prog': 'SEUIL DE DÉTECTION',
-      'karta.shipping': 'Livraison en 1–3 jours ouvrés · retour sous 30 jours', 'cta.do_koszyka': 'AJOUTER AU PANIER',
-      'badge.szklo': 'VERRE RÉUTILISABLE', 'badge.nosnik': 'SUPPORT BIODÉGRADABLE', 'badge.alkohol': 'SANS ALCOOL',
-      'metoda.title': 'Trois décisions, rien de plus.', 'metoda.note': 'MÉTHODE · DIFFUSION PASSIVE',
-      'metoda1.title': "Une forme claire",
-      'metoda1.copy': "Nous ne construisons pas le parfum selon la pyramide classique. Chaque composition a sa propre structure, son caractère et sa manière d'être présente dans l'espace.",
-      'metoda2.title': "Sans source d'énergie supplémentaire",
-      'metoda2.copy': "Il n'a besoin ni de chaleur, ni d'électricité, ni de vaporisation. Nous laissons le parfum se libérer naturellement et réagir aux conditions de la pièce.",
-      'metoda3.title': "Présence lente",
-      'metoda3.copy': "Le parfum a besoin de temps pour devenir une partie de l'espace. Au lieu d'un effet bref, il apparaît progressivement et reste pendant des semaines.",
-      'list.eyebrow': 'VAIREM.PL/LIST · 4 À 5 ENVOIS PAR AN',
-      'list.title': "Une lettre, à l'arrivée d'un nouveau parfum.",
-      'list.lede': "Un parfum expliqué simplement, avec la raison pour laquelle cela a pris du temps. Pas d'offres, pas de compte à rebours.",
-      'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': "S'ABONNER",
-      'list.note': "PAS D'OFFRES. DÉSABONNEMENT EN UN CLIC.",
-      'archive.next': 'PROCHAINE LETTRE', 'archive.next_value': '[SUIVANT]',
-      'archive.last': 'DERNIÈRE', 'archive.last_value': '086 · Afterlight — [DESCRIPTION]',
-      'archive.archive': 'ARCHIVES', 'archive.archive_value': '017—086 · notes complètes',
-      'footer.address': "PARFUMS DE NICHE POUR L'INTÉRIEUR<br>VARSOVIE · PL<br>TVA 000 000 00 00",
-      'footer.pelny_indeks': 'Archive des rêves complète →', 'footer.sny': 'Interprétation de rêves', 'footer.archiwum': 'ARCHIVE DES RÊVES', 'footer.marka': 'MARQUE',
-      'footer.metoda': 'Méthode', 'footer.list': 'Lettre', 'footer.refill': 'Flacons et recharges',
-      'footer.obsluga': 'SERVICE CLIENT', 'footer.kontakt': 'Contact', 'footer.wysylka': 'Livraison et retours', 'footer.regulamin': 'Conditions',
-      'footer.vat': 'PRIX EN PLN, TVA INCLUSE',
-      'cart.close': 'FERMER ✕', 'cart.shipping': 'LIVRAISON', 'cart.total': 'TOTAL À PAYER',
-      'cta.checkout': 'PROCÉDER AU PAIEMENT →', 'cart.note': 'RETOUR 30 JOURS · VERRE RECHARGEABLE',
-      'cart.ship_left_tpl': n => `Plus que ${n} PLN pour la livraison offerte`, 'cart.ship_free': 'Livraison offerte débloquée ✓',
-      'trust.ship.t': 'LIVRAISON RAPIDE', 'trust.ship.d': 'Livraison en 1–3 jours', 'trust.ret.t': 'RETOUR', 'trust.ret.d': 'Retour sous 30 jours',
-      'trust.pay.t': 'PAIEMENTS SÉCURISÉS', 'trust.pay.d': 'BLIK · carte · Apple/Google Pay · P24', 'trust.vat.t': 'PRIX JUSTE', 'trust.vat.d': 'Prix TTC',
-      'cart.title_tpl': n => `PANIER · ${n} ART.`,
-      'cart.empty': "PANIER VIDE — CHOISISSEZ UN PARFUM DANS L'ARCHIVE DES RÊVES.", 'cart.remove': 'RETIRER',
-      'newsletter.subscribed': 'ABONNÉ ✓', 'newsletter.thanks': 'MERCI — CONFIRMEZ LE LIEN DANS VOTRE BOÎTE MAIL.',
-      'tile.weeks_suffix': 'SEM.', 'add_btn': 'AJOUTER',
-      'cookie.title': 'COOKIES',
-      'cookie.text': 'Nous utilisons des cookies pour mémoriser votre langue, votre thème et le contenu de votre panier, et pour comprendre comment vous utilisez le site. Les fonctions de base restent disponibles sans consentement.',
-      'cookie.accept': 'ACCEPTER', 'cookie.reject': 'REFUSER',
-      'promo.eyebrow': "OFFRE DE BIENVENUE",
-      'promo.title': '10% de réduction<br>sur votre première commande',
-      'promo.text': "Nouveau chez VAIREM ? Profitez d'un code de réduction à usage unique. Saisissez-le dans le récapitulatif de commande — la réduction s'applique automatiquement.",
-      'promo.copy': 'COPIER', 'promo.copied': 'COPIÉ', 'promo.dismiss': 'Non merci'
     }
   };
 
-  const LANGS = ['pl', 'en', 'es', 'uk', 'fr'];
+  const LANGS = ['pl', 'en'];
   let currentLang = 'pl';
 
   const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -761,32 +542,11 @@
   function renderHeroDatasheetRows() {
     const el = document.getElementById('hero-datasheet-rows');
     el.innerHTML = PRODUCTS.map(p => `
-      <a href="#indeks" class="hero-strip-cell">
+      <a href="#karta" class="hero-strip-cell">
         <div class="cell-nr mono">${p.nr}</div>
         <div class="cell-formula mono">${p.formula}</div>
         <div class="cell-name">${p.name}</div>
       </a>
-    `).join('');
-  }
-
-  function renderIndexRows() {
-    const el = document.getElementById('index-rows');
-    el.innerHTML = PRODUCTS.map(p => `
-      <div class="index-row index-row--body" data-nr="${p.nr}">
-        <div class="cell-nr mono">${p.nr}</div>
-        <div class="cell-name">${p.name}</div>
-        <div class="cell-formula mono">${p.formula}</div>
-        <div class="cell-mw mono ta-r">${p.mw}</div>
-        <div class="cell-character">${characterFor(p.nr)}</div>
-        <div>
-          <div class="intensity-track"><div class="intensity-fill" data-width="${p.intensity}%"></div></div>
-        </div>
-        <div class="cell-weeks mono ta-r">${p.weeks}</div>
-        <div class="cell-price mono ta-r">${formatPrice(p.price)}</div>
-        <div class="index-add-cell">
-          <button type="button" class="index-add-btn mono" data-add="${p.nr}">${t('add_btn')}</button>
-        </div>
-      </div>
     `).join('');
   }
 
@@ -1274,7 +1034,6 @@
   }
 
   function refreshDynamicContent() {
-    renderIndexRows();
     updateKartaChrome();
     renderCart();
     renderHeroTitleKinetic();
@@ -1474,7 +1233,6 @@
   function init() {
     saveCart();
     renderHeroDatasheetRows();
-    renderIndexRows();
     renderKartaSlides();
     renderKartaDots();
     updateKartaChrome();
@@ -1497,12 +1255,6 @@
     initProductPhotos();
     initHeroKineticType();
     initBackgroundScrollFade();
-
-    document.getElementById('index-rows').addEventListener('click', e => {
-      const btn = e.target.closest('[data-add]');
-      if (!btn) return;
-      addToCart(btn.dataset.add, 1);
-    });
 
     document.getElementById('qty-dec').addEventListener('click', () => setHeroQty(state.heroQty - 1));
     document.getElementById('qty-inc').addEventListener('click', () => setHeroQty(state.heroQty + 1));
