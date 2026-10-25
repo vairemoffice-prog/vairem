@@ -1851,16 +1851,8 @@ main:focus { outline: none; }
   body::after { will-change: transform; }
 }
 
-/* ---------- mobile polish: readability + tap targets (light theme; night has its own contrast) ---------- */
+/* ---------- mobile polish: tap targets (text colours stay the same as on desktop) ---------- */
 @media (max-width: 900px) {
-  /* body text was 3.5:1 and muted labels 1.4:1 against the photo - too faint on a small screen */
-  :root:not([data-theme="night"]) {
-    --text: #333B45;
-    --text-hover: #4A5662;
-    --muted: #52606C;
-    --muted-strong: #44515C;
-  }
-
   /* comfortable (>= 40px) touch targets for tiny links and toggles */
   .lang-toggle, .theme-toggle { min-height: 40px; }
   .legal-back,
