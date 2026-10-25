@@ -542,7 +542,7 @@
   function renderHeroDatasheetRows() {
     const el = document.getElementById('hero-datasheet-rows');
     el.innerHTML = PRODUCTS.map(p => `
-      <a href="#indeks" class="hero-strip-cell">
+      <a href="#karta" class="hero-strip-cell">
         <div class="cell-nr mono">${p.nr}</div>
         <div class="cell-formula mono">${p.formula}</div>
         <div class="cell-name">${p.name}</div>
