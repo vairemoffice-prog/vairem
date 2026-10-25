@@ -1297,6 +1297,7 @@ html::after {
   width: min(360px, 100%);
   height: 100%;
   background: rgba(168, 186, 203, 0.16);
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   border-right: 1px solid var(--border);
   display: flex;
@@ -1370,6 +1371,7 @@ html::after {
   width: min(420px, 100%);
   height: 100%;
   background: rgba(168, 186, 203, 0.16);
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   border-left: 1px solid var(--border);
   display: flex;
@@ -1614,6 +1616,17 @@ html::after {
   transform: none;
 }
 
+/* the hero lede is typed out slowly, letter by letter, starting while the title is still condensing */
+.hero-lede.reveal-chars .char {
+  transform: none;
+  transition: opacity 0.9s ease;
+  transition-delay: calc(var(--group-delay, 0ms) + 1400ms + (var(--i, 0) * 32ms));
+}
+.music-splash-open .hero-lede.reveal-chars .char {
+  opacity: 0;
+  transition: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     transition: none;
@@ -1837,16 +1850,9 @@ main:focus { outline: none; }
 
 /* ---------- mobile / touch performance ----------
    On phones the fixed full-page photo (repainted under a blurred sticky header on every scroll frame)
-   makes long text pages like o-marce.html stutter. Drop the blur on the drawers, promote the background to its own
-   GPU layer and remove the transform transition. */
+   makes long text pages like o-marce.html stutter. The menu and cart drawers keep the same translucent
+   look as on desktop; only the background layer is promoted to its own GPU layer. */
 @media (max-width: 900px), (hover: none) {
-  .menu-drawer,
-  .cart-drawer {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-  .menu-drawer,
-  .cart-drawer { background: var(--bg); }
   /* background keeps the exact hero look/position; only promote it to its own GPU layer */
   body::after { will-change: transform; }
 }
