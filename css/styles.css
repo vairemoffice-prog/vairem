@@ -261,14 +261,14 @@
 
   --scrim-bg: rgba(38, 45, 51, 0.32);
 
-  --green-accent: #7C9B84;
-  --green-accent-hover: #9DBAA4;
-  --green-accent-text: #1E2A22;
-  --green-deep: #3F5A47;
-  --green-deep-hover: #4F6B57;
-  --green-mid: #4F6B57;
-  --green-soft: #8FA98D;
-  --green-btn-text: #F1F4EF;
+  --green-accent: #6C7C88;
+  --green-accent-hover: #8A93A0;
+  --green-accent-text: #1F252C;
+  --green-deep: #525A65;
+  --green-deep-hover: #6C7C88;
+  --green-mid: #6C7C88;
+  --green-soft: #93A0A9;
+  --green-btn-text: #F5F6F4;
 
   /* Delicate powder pink for actual buttons (kept separate from the
      greens above, which still color non-button accents like the
@@ -289,9 +289,9 @@
   --blue-panel: #A8BACB;
   --blue-panel-light: #E4EAEE;
 
-  --tile-green-bg: #E9EFE9;
-  --tile-green-text: #5E7A66;
-  --tile-green-link: #3F5A47;
+  --tile-green-bg: #E4EAEE;
+  --tile-green-text: #525A65;
+  --tile-green-link: #525A65;
 
   --newsletter-border: #5E6773;
   --newsletter-copy: #C0CAD1;
@@ -302,6 +302,15 @@
 }
 
 [data-theme="night"] {
+  --green-accent: #A8BACB;
+  --green-accent-hover: #C0CAD1;
+  --green-deep: #A8BACB;
+  --green-deep-hover: #C0CAD1;
+  --green-mid: #A8BACB;
+  --green-soft: #8A93A0;
+  --tile-green-bg: #323942;
+  --tile-green-text: #A6AEB9;
+  --tile-green-link: #A8BACB;
   --bg: #2B313A;
   --text: #E5E9EC;
   --text-hover: #FFFFFF;
