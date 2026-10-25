@@ -1167,10 +1167,14 @@
       const done = () => {
         btn.textContent = t('promo.copied');
         btn.classList.add('is-copied');
+        // the offer closes by itself a moment after the code is copied
         window.setTimeout(() => {
-          btn.textContent = t('promo.copy');
-          btn.classList.remove('is-copied');
-        }, 1800);
+          hide();
+          window.setTimeout(() => {
+            btn.textContent = t('promo.copy');
+            btn.classList.remove('is-copied');
+          }, 400);
+        }, 1200);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(code).then(done, done);
