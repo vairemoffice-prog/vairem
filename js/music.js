@@ -5,7 +5,7 @@
 (() => {
   'use strict';
 
-  const VOLUME = 0.06;
+  const VOLUME = 0.03;
   const STEP = 9; // seconds per chord
   // Slow, soft progression (Hz): Am9 – Fmaj7 – Cmaj7 – G6
   const CHORDS = [
