@@ -1623,11 +1623,11 @@ html::after {
   transform: none;
 }
 
-/* the hero lede is typed out slowly, letter by letter, starting while the title is still condensing */
+/* the hero lede is typed out letter by letter, quickly, so it is readable as soon as you scroll to it */
 .hero-lede.reveal-chars .char {
   transform: none;
-  transition: opacity 0.9s ease;
-  transition-delay: calc(var(--group-delay, 0ms) + 1400ms + (var(--i, 0) * 32ms));
+  transition: opacity 0.35s ease;
+  transition-delay: calc(var(--group-delay, 0ms) + 150ms + (var(--i, 0) * 6ms));
 }
 .music-splash-open .hero-lede.reveal-chars .char {
   opacity: 0;
