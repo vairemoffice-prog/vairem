@@ -15,7 +15,10 @@
     fr: ['Activer la musique', 'Couper la musique'],
   };
 
-  let ctx = null, master = null, audio = null, saveTimer = null, started = false, playing = false;
+  const XF = 4; // seconds of cross-fade where the recording ends and starts again
+  let ctx = null, master = null, saveTimer = null, loopTimer = null, started = false, playing = false;
+  const els = [], gains = [];
+  let cur = 0, fading = false;
   const KEY = 'vairem-music-off';
   const POS_KEY = 'vairem-music-pos';
   let wanted = true, resumeAt = 0;
@@ -29,8 +32,12 @@
   } catch (e) {}
 
   function savePos() {
-    try { if (audio) sessionStorage.setItem(POS_KEY, String(audio.currentTime)); } catch (e) {}
+    try { if (els[cur]) sessionStorage.setItem(POS_KEY, String(els[cur].currentTime)); } catch (e) {}
   }
+
+  // Equal-power curves so the two copies cross-fade without a dip in loudness.
+  const FADE_IN = Float32Array.from({ length: 64 }, (_, i) => Math.sin((i / 63) * Math.PI / 2));
+  const FADE_OUT = Float32Array.from({ length: 64 }, (_, i) => Math.cos((i / 63) * Math.PI / 2));
 
   function build() {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -39,16 +46,24 @@
     master = ctx.createGain();
     master.gain.value = 0;
     master.connect(ctx.destination);
-    // The recording streams through an <audio> element (a decoded copy would take ~60 MB of memory).
-    audio = new Audio();
-    audio.loop = true;
-    audio.preload = 'auto';
-    audio.addEventListener('loadedmetadata', () => {
-      if (resumeAt > 0 && resumeAt < audio.duration) { try { audio.currentTime = resumeAt; } catch (e) {} }
-      resumeAt = 0;
-    });
-    audio.src = SRC;
-    ctx.createMediaElementSource(audio).connect(master);
+    // Two copies of the recording stream through <audio> elements (a decoded copy would take ~60 MB of
+    // memory). Near the end of one, the other starts from the beginning and they cross-fade: a seamless loop.
+    for (let i = 0; i < 2; i++) {
+      const el = new Audio();
+      el.preload = 'auto';
+      if (i === 0) {
+        el.addEventListener('loadedmetadata', () => {
+          if (resumeAt > 0 && resumeAt < el.duration) { try { el.currentTime = resumeAt; } catch (e) {} }
+          resumeAt = 0;
+        });
+      }
+      el.src = SRC;
+      const g = ctx.createGain();
+      g.gain.value = i === 0 ? 1 : 0;
+      ctx.createMediaElementSource(el).connect(g);
+      g.connect(master);
+      els.push(el); gains.push(g);
+    }
     window.addEventListener('pagehide', savePos);
     ctx.onstatechange = () => {
       if (ctx.state === 'running') {
@@ -57,6 +72,27 @@
       }
     };
     return true;
+  }
+
+  function loopTick() {
+    const el = els[cur];
+    if (fading || !el.duration || el.paused) return;
+    if (el.duration - el.currentTime > XF) return;
+    fading = true;
+    const next = 1 - cur, now = ctx.currentTime;
+    els[next].currentTime = 0;
+    els[next].play().catch(() => {});
+    gains[next].gain.cancelScheduledValues(now);
+    gains[cur].gain.cancelScheduledValues(now);
+    gains[next].gain.setValueCurveAtTime(FADE_IN, now, XF);
+    gains[cur].gain.setValueCurveAtTime(FADE_OUT, now, XF);
+    const old = cur;
+    setTimeout(() => {
+      if (!fading) return;
+      els[old].pause();
+      cur = next;
+      fading = false;
+    }, XF * 1000 + 150);
   }
 
   function start() {
@@ -74,8 +110,9 @@
     started = true;
     master.gain.cancelScheduledValues(ctx.currentTime);
     master.gain.setTargetAtTime(VOLUME, ctx.currentTime, 1.2);
-    audio.play().catch(() => {});
+    els[cur].play().catch(() => {});
     saveTimer = setInterval(savePos, 2000);
+    loopTimer = setInterval(loopTick, 250);
   }
 
   function stop() {
@@ -83,10 +120,18 @@
     playing = false;
     started = false;
     clearInterval(saveTimer);
+    clearInterval(loopTimer);
     savePos();
     master.gain.cancelScheduledValues(ctx.currentTime);
     master.gain.setTargetAtTime(0, ctx.currentTime, 0.4);
-    setTimeout(() => { if (!playing && ctx) { audio.pause(); ctx.suspend(); } }, 1500);
+    setTimeout(() => {
+      if (playing || !ctx) return;
+      // Silence both copies; the current one keeps its position (and full gain) for the next start.
+      els.forEach(el => el.pause());
+      fading = false;
+      gains.forEach((g, i) => { g.gain.cancelScheduledValues(0); g.gain.value = i === cur ? 1 : 0; });
+      ctx.suspend();
+    }, 1500);
     render();
   }
 
@@ -130,7 +175,7 @@
   function unlock() {
     if (!ctx) return;
     ctx.resume().catch(() => {});
-    if (playing && audio && audio.paused && ctx.state === 'running') audio.play().catch(() => {});
+    if (playing && ctx.state === 'running') els.forEach((el, i) => { if (el.paused && (i === cur || fading)) el.play().catch(() => {}); });
     try { // a silent blip helps older iOS Safari wake up the audio output
       const src = ctx.createBufferSource();
       src.buffer = ctx.createBuffer(1, 1, 22050);
