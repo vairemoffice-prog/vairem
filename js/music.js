@@ -1,19 +1,12 @@
-// Ambient pad background music: generated live with the Web Audio API (no audio file,
-// no licensing). It plays whenever the site is opened. If the browser blocks autoplay,
-// sound begins at the first click/tap. Switching it off holds across subpages for the
+// Background music: a looping recording, "Night Music" by Alex-Morgan (Pixabay Content License,
+// details in docs/muzyka-licencja.md). It plays whenever the site is opened. If the browser blocks
+// autoplay, sound begins at the first click/tap. Switching it off holds across subpages for the
 // current visit (sessionStorage); a page refresh or a new visit starts with music again.
 (() => {
   'use strict';
 
-  const VOLUME = 0.03;
-  const STEP = 9; // seconds per chord
-  // Slow, soft progression (Hz): Am9 – Fmaj7 – Cmaj7 – G6
-  const CHORDS = [
-    [110.0, 164.81, 220.0, 261.63, 329.63],
-    [87.31, 174.61, 220.0, 261.63, 329.63],
-    [130.81, 196.0, 246.94, 329.63, 392.0],
-    [98.0, 196.0, 246.94, 293.66, 329.63],
-  ];
+  const VOLUME = 0.04; // about -40 dBFS average for this track; raise it to make the music louder
+  const SRC = 'assets/audio/night-music.mp3';
   const LABELS = {
     pl: ['Włącz muzykę', 'Wyłącz muzykę'],
     en: ['Turn music on', 'Turn music off'],
@@ -22,18 +15,22 @@
     fr: ['Activer la musique', 'Couper la musique'],
   };
 
-  let ctx = null, master = null, timer = null, step = 0, nextTime = 0, playing = false;
+  let ctx = null, master = null, audio = null, saveTimer = null, started = false, playing = false;
   const KEY = 'vairem-music-off';
-  const POS_KEY = 'vairem-music-step';
-  let wanted = true;
+  const POS_KEY = 'vairem-music-pos';
+  let wanted = true, resumeAt = 0;
   try {
     // A page refresh always brings the music back; moving between subpages keeps "off".
     const nav = performance.getEntriesByType('navigation')[0];
     if (nav && nav.type === 'reload') sessionStorage.removeItem(KEY);
     wanted = sessionStorage.getItem(KEY) !== '1';
     // Continue where the previous page left off (a page change reloads the script).
-    step = (parseInt(sessionStorage.getItem(POS_KEY), 10) || 0);
+    resumeAt = parseFloat(sessionStorage.getItem(POS_KEY)) || 0;
   } catch (e) {}
+
+  function savePos() {
+    try { if (audio) sessionStorage.setItem(POS_KEY, String(audio.currentTime)); } catch (e) {}
+  }
 
   function build() {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -41,20 +38,18 @@
     ctx = new AC();
     master = ctx.createGain();
     master.gain.value = 0;
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 1100;
-    // Simple echo for a roomy, soft sound.
-    const delay = ctx.createDelay(1);
-    delay.delayTime.value = 0.45;
-    const fb = ctx.createGain();
-    fb.gain.value = 0.42;
-    const wet = ctx.createGain();
-    wet.gain.value = 0.45;
-    delay.connect(fb); fb.connect(delay); delay.connect(wet);
-    filter.connect(master); filter.connect(delay); wet.connect(master);
     master.connect(ctx.destination);
-    ctx.vairemBus = filter;
+    // The recording streams through an <audio> element (a decoded copy would take ~60 MB of memory).
+    audio = new Audio();
+    audio.loop = true;
+    audio.preload = 'auto';
+    audio.addEventListener('loadedmetadata', () => {
+      if (resumeAt > 0 && resumeAt < audio.duration) { try { audio.currentTime = resumeAt; } catch (e) {} }
+      resumeAt = 0;
+    });
+    audio.src = SRC;
+    ctx.createMediaElementSource(audio).connect(master);
+    window.addEventListener('pagehide', savePos);
     ctx.onstatechange = () => {
       if (ctx.state === 'running') {
         GESTURES.forEach(t => document.removeEventListener(t, onGesture, true));
@@ -62,49 +57,6 @@
       }
     };
     return true;
-  }
-
-  // One slow pad chord; chords overlap and cross-fade.
-  function schedule(i, t) {
-    const freqs = CHORDS[i % CHORDS.length];
-    const len = STEP + 3;
-    freqs.forEach((f, k) => {
-      [-3, 3].forEach(detune => {
-        const osc = ctx.createOscillator();
-        const g = ctx.createGain();
-        osc.type = k === 0 ? 'sine' : 'triangle';
-        osc.frequency.value = f;
-        osc.detune.value = detune;
-        g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(0.05, t + 4);
-        g.gain.linearRampToValueAtTime(0, t + len);
-        osc.connect(g); g.connect(ctx.vairemBus);
-        osc.start(t);
-        osc.stop(t + len + 0.1);
-      });
-    });
-  }
-
-  function pump() {
-    // Look ahead ~1.2 s so playback survives timer throttling in background tabs.
-    while (nextTime < ctx.currentTime + 1.2) {
-      schedule(step++, nextTime);
-      nextTime += STEP;
-    }
-    try { sessionStorage.setItem(POS_KEY, String(step)); } catch (e) {}
-  }
-
-  // Timer in a Web Worker: not throttled when the tab is in the background.
-  function makeTimer(fn, ms) {
-    try {
-      const url = URL.createObjectURL(new Blob(['setInterval(function(){postMessage(0)},' + ms + ')']));
-      const w = new Worker(url);
-      w.onmessage = fn;
-      return { stop() { w.terminate(); URL.revokeObjectURL(url); } };
-    } catch (e) {
-      const id = setInterval(fn, ms);
-      return { stop() { clearInterval(id); } };
-    }
   }
 
   function start() {
@@ -118,22 +70,23 @@
 
   // Runs once the audio context is actually running (not blocked by autoplay policy).
   function begin() {
-    if (timer) return;
+    if (started) return;
+    started = true;
     master.gain.cancelScheduledValues(ctx.currentTime);
     master.gain.setTargetAtTime(VOLUME, ctx.currentTime, 1.2);
-    nextTime = ctx.currentTime + 0.05;
-    pump();
-    timer = makeTimer(pump, 100);
+    audio.play().catch(() => {});
+    saveTimer = setInterval(savePos, 2000);
   }
 
   function stop() {
     if (!playing) return;
     playing = false;
-    if (timer) timer.stop();
-    timer = null;
+    started = false;
+    clearInterval(saveTimer);
+    savePos();
     master.gain.cancelScheduledValues(ctx.currentTime);
     master.gain.setTargetAtTime(0, ctx.currentTime, 0.4);
-    setTimeout(() => { if (!playing && ctx) ctx.suspend(); }, 1500);
+    setTimeout(() => { if (!playing && ctx) { audio.pause(); ctx.suspend(); } }, 1500);
     render();
   }
 
@@ -177,6 +130,7 @@
   function unlock() {
     if (!ctx) return;
     ctx.resume().catch(() => {});
+    if (playing && audio && audio.paused && ctx.state === 'running') audio.play().catch(() => {});
     try { // a silent blip helps older iOS Safari wake up the audio output
       const src = ctx.createBufferSource();
       src.buffer = ctx.createBuffer(1, 1, 22050);
