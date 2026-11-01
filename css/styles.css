@@ -1860,6 +1860,7 @@ main:focus { outline: none; }
 
 /* ----- home: sections ----- */
 .section-title { translate: calc(6vw * var(--sx)) 0; }
+#metoda .section-head { translate: 0 calc(70px * var(--sx)); } /* "Trzy zasady" heading lower */
 .karta-title { translate: calc(3vw * var(--sx)) 0; }
 .karta-lede { translate: calc(8vw * var(--sx)) 0; }
 .list-title { translate: calc(-2vw * var(--sx)) 0; }
