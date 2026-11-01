@@ -1869,6 +1869,7 @@ main:focus { outline: none; }
 .metoda-grid .metoda-card:nth-child(1) .metoda-title { padding-top: 2px; }
 .metoda-grid .metoda-card:nth-child(1) .metoda-copy { margin-top: 6px; }
 .metoda-grid .metoda-card:nth-child(3) .metoda-copy { margin-top: 4px; }
+.trust-grid .trust-item:nth-child(1) { translate: 0 calc(-210px * var(--sx)); } /* up under the text of card 01 */
 .trust-grid .trust-item:nth-child(2) { translate: 0 calc(26px * var(--sx)); }
 .trust-grid .trust-item:nth-child(3) { translate: 0 calc(-10px * var(--sx)); }
 .trust-grid .trust-item:nth-child(4) { translate: 0 calc(40px * var(--sx)); }
