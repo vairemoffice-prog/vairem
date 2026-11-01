@@ -927,7 +927,7 @@ html::after {
   min-width: 0;
   border: 1px solid var(--border);
   background: var(--blue-panel);
-  background-image: repeating-linear-gradient(135deg, rgba(252, 252, 251, 0.55) 0 1px, transparent 1px 9px);
+  background-image: repeating-linear-gradient(135deg, rgba(220, 230, 238, 0.55) 0 1px, transparent 1px 9px);
   aspect-ratio: 4 / 5;
   overflow: hidden;
 }
@@ -963,7 +963,7 @@ html::after {
   font-size: 10px;
   letter-spacing: 0.14em;
   color: var(--placeholder-label);
-  background: rgba(252, 252, 251, 0.8);
+  background: rgba(220, 230, 238, 0.8);
   display: inline-block;
   padding: 6px 9px;
 }
@@ -992,7 +992,7 @@ html::after {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border-strong);
-  background: rgba(252, 252, 251, 0.8);
+  background: rgba(220, 230, 238, 0.8);
   color: var(--text);
   font-size: 14px;
   cursor: pointer;
@@ -1022,7 +1022,7 @@ html::after {
 .karta-thumb {
   border: 1px solid var(--border);
   background: var(--blue-panel-light);
-  background-image: repeating-linear-gradient(135deg, rgba(252, 252, 251, 0.6) 0 1px, transparent 1px 8px);
+  background-image: repeating-linear-gradient(135deg, rgba(220, 230, 238, 0.6) 0 1px, transparent 1px 8px);
   aspect-ratio: 1;
   display: flex;
   align-items: flex-end;
@@ -1365,7 +1365,7 @@ html::after {
 .cart-item-swatch {
   aspect-ratio: 4 / 5;
   background: var(--blue-panel);
-  background-image: repeating-linear-gradient(135deg, rgba(252, 252, 251, 0.55) 0 1px, transparent 1px 7px);
+  background-image: repeating-linear-gradient(135deg, rgba(220, 230, 238, 0.55) 0 1px, transparent 1px 7px);
   border: 1px solid var(--border);
 }
 .cart-item-meta { font-size: 10px; letter-spacing: 0.14em; color: var(--muted); }
