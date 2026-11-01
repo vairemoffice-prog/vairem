@@ -687,12 +687,12 @@ html::after {
 }
 
 .hero-lede {
-  margin: 10cm auto 0;
+  margin: 4cm auto 0;
   max-width: 44ch;
   font-size: 16px;
   line-height: 1.6;
   color: var(--text);
-  padding-bottom: 10cm;
+  padding-bottom: 4cm;
 }
 .hero-ctas {
   display: flex;
@@ -1502,8 +1502,6 @@ html::after {
   .cart-btn { padding: 7px 10px; font-size: 10px; gap: 6px; }
 
   .hero-top { padding: 56px 0 40px; }
-  /* shorter gaps on phones: title -> lede and lede -> "Wybierz zapach" button (10cm on desktop) */
-  .hero-lede { margin-top: 4cm; padding-bottom: 4cm; }
   .hero-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   /* Zeyada's capital "P" has a fine decorative cross-stroke that reads
