@@ -745,7 +745,7 @@ html::after {
   justify-content: center;
 }
 .hero-copy { max-width: 760px; width: 100%; text-align: center; }
-.hero-copy .eyebrow { padding-bottom: 10cm; }
+.hero-copy .eyebrow { padding-bottom: 4cm; }
 
 /* Transparent over the eyebrow/title/lede so the fixed background photo
    (swallows and flowers) shows through there too, same as the rest of
