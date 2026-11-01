@@ -1836,7 +1836,7 @@ main:focus { outline: none; }
 @media (max-width: 900px) { :root { --sx: 0.32; } }
 
 /* ----- home: hero ----- */
-.hero-copy-top .eyebrow { text-align: left; padding-left: calc(6vw * var(--sx) + 16px); }
+.hero-copy-top .eyebrow { text-align: center; }
 .hero-lede {
   margin: 4cm 0 0 calc(7vw * var(--sx) + 16px);
   max-width: 32ch;
