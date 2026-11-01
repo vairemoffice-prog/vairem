@@ -1858,13 +1858,17 @@ main:focus { outline: none; }
 .karta-lede { translate: calc(8vw * var(--sx)) 0; }
 .list-title { translate: calc(-2vw * var(--sx)) 0; }
 .list-lede { translate: calc(6vw * var(--sx)) 0; }
-.metoda-grid { gap: 24px; background: none; border-bottom: 0; }
+.metoda-grid { gap: 56px 6vw; background: none; border-bottom: 0; margin: 90px 0 210px; }
 .metoda-card { background: transparent; border: 0; }
 #metoda .section-head--bordered { border-bottom: 0; padding-bottom: 0; }
 #metoda .metoda-grid { border: 0; }
 .metoda-grid .metoda-card:nth-child(1) { translate: 0 0; }
-.metoda-grid .metoda-card:nth-child(2) { translate: calc(2vw * var(--sx)) calc(64px * var(--sx)); }
-.metoda-grid .metoda-card:nth-child(3) { translate: calc(-2vw * var(--sx)) calc(24px * var(--sx)); }
+.metoda-grid .metoda-card:nth-child(2) { translate: calc(3vw * var(--sx)) calc(180px * var(--sx)); }
+.metoda-grid .metoda-card:nth-child(3) { translate: calc(-3vw * var(--sx)) calc(70px * var(--sx)); }
+/* 01: text sits closer under the number; 03: text closer to its title; 02 keeps the default spacing */
+.metoda-grid .metoda-card:nth-child(1) .metoda-title { padding-top: 2px; }
+.metoda-grid .metoda-card:nth-child(1) .metoda-copy { margin-top: 6px; }
+.metoda-grid .metoda-card:nth-child(3) .metoda-copy { margin-top: 4px; }
 .trust-grid .trust-item:nth-child(2) { translate: 0 calc(26px * var(--sx)); }
 .trust-grid .trust-item:nth-child(3) { translate: 0 calc(-10px * var(--sx)); }
 .trust-grid .trust-item:nth-child(4) { translate: 0 calc(40px * var(--sx)); }
