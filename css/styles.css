@@ -1837,3 +1837,64 @@ main:focus { outline: none; }
 @media (max-width: 900px) {
   main .wrap { padding-left: max(36px, env(safe-area-inset-left)); }
 }
+
+/* =====================================================================
+   Scattered ("chaotic") layout — small text fragments, titles and buttons sit at
+   different offsets instead of one centered column. Uses the independent `translate`
+   property, so it never interferes with the JS-driven `transform` effects and never
+   changes the page flow. --sx scales every offset: full on desktop, gentle on phones.
+   The background photo, forms and long legal text are left readable/untouched.
+   ===================================================================== */
+:root { --sx: 1; }
+@media (max-width: 900px) { :root { --sx: 0.32; } }
+
+/* ----- home: hero ----- */
+.hero-copy-top .eyebrow { text-align: left; padding-left: calc(6vw * var(--sx) + 16px); }
+.hero-lede {
+  margin: 4cm 0 0 calc(7vw * var(--sx) + 16px);
+  max-width: 32ch;
+  text-align: left;
+}
+.hero-ctas { justify-content: flex-start; padding-left: calc(44vw * var(--sx) + 16px); }
+.hero-ctas .btn:last-child { translate: calc(9vw * var(--sx)) calc(34px * var(--sx)); }
+.hero-stats { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 0 2vw; background: none; border: 0; margin-top: 28px; padding-bottom: 110px; }
+@media (max-width: 900px) { .hero-stats { grid-template-columns: repeat(2, auto); padding-bottom: 70px; } }
+.stat { background: none; padding: 10px 6px; }
+.hero-stats .stat:nth-child(1) { translate: calc(-6vw * var(--sx)) 0; }
+.hero-stats .stat:nth-child(2) { translate: 0 calc(46px * var(--sx)); }
+.hero-stats .stat:nth-child(3) { translate: 0 calc(12px * var(--sx)); }
+.hero-stats .stat:nth-child(4) { translate: calc(5vw * var(--sx)) calc(70px * var(--sx)); }
+
+/* ----- home: sections ----- */
+.section-title { translate: calc(6vw * var(--sx)) 0; }
+.karta-title { translate: calc(3vw * var(--sx)) 0; }
+.karta-lede { translate: calc(8vw * var(--sx)) 0; }
+.list-title { translate: calc(-2vw * var(--sx)) 0; }
+.list-lede { translate: calc(6vw * var(--sx)) 0; }
+.metoda-grid { gap: 24px; background: none; border-bottom: 0; }
+.metoda-card { background: transparent; border-top: 1px solid var(--border); }
+.metoda-grid .metoda-card:nth-child(1) { translate: 0 0; }
+.metoda-grid .metoda-card:nth-child(2) { translate: calc(2vw * var(--sx)) calc(64px * var(--sx)); }
+.metoda-grid .metoda-card:nth-child(3) { translate: calc(-2vw * var(--sx)) calc(24px * var(--sx)); }
+.trust-grid .trust-item:nth-child(2) { translate: 0 calc(26px * var(--sx)); }
+.trust-grid .trust-item:nth-child(3) { translate: 0 calc(-10px * var(--sx)); }
+.trust-grid .trust-item:nth-child(4) { translate: 0 calc(40px * var(--sx)); }
+
+/* ----- sub-pages: titles, eyebrows, lead text ----- */
+.about-eyebrow, .cat-eyebrow, .kontakt-eyebrow, .legal-eyebrow { translate: calc(-12vw * var(--sx)) 0; }
+.about-title, .cat-title, .kontakt-page-title, .legal-title { translate: calc(5vw * var(--sx)) 0; }
+.about-col { text-align: left; }
+.about-body > p:nth-child(odd) { translate: calc(-4vw * var(--sx)) 0; }
+.about-body > p:nth-child(even) { translate: calc(6vw * var(--sx)) 0; }
+.cat-lede, .kontakt-page-lede { translate: calc(8vw * var(--sx)) 0; }
+.legal-updated { translate: calc(12vw * var(--sx)) 0; }
+.legal-section:nth-of-type(3n+2) { translate: calc(4vw * var(--sx)) 0; }
+.legal-section:nth-of-type(3n) { translate: calc(9vw * var(--sx)) 0; }
+.cat-product:nth-of-type(odd) { translate: calc(-3vw * var(--sx)) 0; }
+.cat-product:nth-of-type(even) { translate: calc(5vw * var(--sx)) 0; }
+
+/* ----- checkout / account / orders: headings and navigation only (fields stay put) ----- */
+.co-title { translate: calc(-5vw * var(--sx)) 0; }
+.co-back-step, .page-bottom-back { translate: calc(6vw * var(--sx)) 0; }
+.legal-back:not(.page-bottom-back) { translate: 0 0; }
+@media (prefers-reduced-motion: reduce) { :root { --sx: 0.32; } }
