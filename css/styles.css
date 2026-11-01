@@ -538,6 +538,9 @@ html::after {
 /* larger logo in the home page header bar */
 .brand-signature--hero { height: 58px; }
 @media (max-width: 860px) { .brand-signature--hero { height: 48px; } }
+/* sub-page header bars have the same height as the home page bar (76px, see .header-inner) */
+header.legal-header, header.nf-header { padding-block: 0; }
+header.legal-header .wrap, header.nf-header .wrap { height: 76px; flex-wrap: nowrap; }
 /* every page header uses the same logo size as the home page hero */
 .legal-header .brand-signature, .site-header .brand-signature, .nf-header .brand-signature { height: 58px; }
 @media (max-width: 860px) { .legal-header .brand-signature, .site-header .brand-signature, .nf-header .brand-signature { height: 48px; } }
