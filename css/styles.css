@@ -1872,7 +1872,7 @@ main:focus { outline: none; }
 .trust-grid .trust-item:nth-child(1) { translate: 0 calc(-210px * var(--sx)); } /* up under the text of card 01 */
 .trust-grid .trust-item:nth-child(2) { translate: 0 calc(-130px * var(--sx)); }
 .trust-grid .trust-item:nth-child(3) { translate: 0 calc(-10px * var(--sx)); }
-.trust-grid .trust-item:nth-child(4) { translate: 0 calc(40px * var(--sx)); }
+.trust-grid .trust-item:nth-child(4) { translate: 0 calc(-170px * var(--sx)); }
 
 /* ----- sub-pages: titles, eyebrows, lead text ----- */
 .about-eyebrow, .cat-eyebrow, .kontakt-eyebrow, .legal-eyebrow { translate: calc(-12vw * var(--sx)) 0; }
