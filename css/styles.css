@@ -1654,7 +1654,7 @@ header.legal-header .wrap, header.nf-header .wrap { height: 76px; flex-wrap: now
 /* trust strip */
 .section-trust { padding: 56px 0 0; }
 .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.trust-item { border-top: 1px solid var(--border); padding-top: 14px; }
+.trust-item { padding-top: 14px; }
 .trust-title { font-size: 11px; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 6px; }
 .trust-desc { font-size: 15px; line-height: 1.4; }
 @media (max-width: 760px) { .trust-grid { grid-template-columns: 1fr 1fr; gap: 18px; } }
