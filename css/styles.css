@@ -1872,7 +1872,9 @@ main:focus { outline: none; }
 .list-title { translate: calc(-2vw * var(--sx)) 0; }
 .list-lede { translate: calc(6vw * var(--sx)) 0; }
 .metoda-grid { gap: 24px; background: none; border-bottom: 0; }
-.metoda-card { background: transparent; border-top: 1px solid var(--border); }
+.metoda-card { background: transparent; border: 0; }
+#metoda .section-head--bordered { border-bottom: 0; padding-bottom: 0; }
+#metoda .metoda-grid { border: 0; }
 .metoda-grid .metoda-card:nth-child(1) { translate: 0 0; }
 .metoda-grid .metoda-card:nth-child(2) { translate: calc(2vw * var(--sx)) calc(64px * var(--sx)); }
 .metoda-grid .metoda-card:nth-child(3) { translate: calc(-2vw * var(--sx)) calc(24px * var(--sx)); }
