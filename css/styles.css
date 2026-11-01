@@ -1854,7 +1854,7 @@ main:focus { outline: none; }
 
 /* hero title ("Powietrze / nie jest / puste"): each line at its own offset; the echo copies get the same
    offsets so the ghost effect stays aligned with the real title */
-.hero-title .hero-title-line:nth-child(1) { translate: calc(-17vw * var(--sx)) 0; }
+.hero-title .hero-title-line:nth-child(1) { translate: calc(-10vw * var(--sx)) 0; }
 .hero-title .hero-title-line:nth-child(2) { translate: calc(19vw * var(--sx)) calc(3vw * var(--sx)); }
 .hero-title .hero-title-line:nth-child(3) { translate: calc(-8vw * var(--sx)) calc(-2vw * var(--sx)); }
 
