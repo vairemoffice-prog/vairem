@@ -538,6 +538,9 @@ html::after {
 /* larger logo in the home page header bar */
 .brand-signature--hero { height: 58px; }
 @media (max-width: 860px) { .brand-signature--hero { height: 48px; } }
+/* every page header uses the same logo size as the home page hero */
+.legal-header .brand-signature, .site-header .brand-signature, .nf-header .brand-signature { height: 58px; }
+@media (max-width: 860px) { .legal-header .brand-signature, .site-header .brand-signature, .nf-header .brand-signature { height: 48px; } }
 [data-theme="night"] .brand-signature { content: url('../assets/img/logo-vairem-signature-night.webp'); }
 .footer-brand-lockup { display: flex; align-items: center; gap: 10px; }
 
