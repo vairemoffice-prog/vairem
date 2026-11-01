@@ -1852,6 +1852,12 @@ main:focus { outline: none; }
 .hero-stats .stat:nth-child(3) { translate: 0 calc(12px * var(--sx)); }
 .hero-stats .stat:nth-child(4) { translate: calc(5vw * var(--sx)) calc(70px * var(--sx)); }
 
+/* hero title ("Powietrze / nie jest / puste"): each line at its own offset; the echo copies get the same
+   offsets so the ghost effect stays aligned with the real title */
+.hero-title .hero-title-line:nth-child(1) { translate: calc(-17vw * var(--sx)) 0; }
+.hero-title .hero-title-line:nth-child(2) { translate: calc(19vw * var(--sx)) calc(3vw * var(--sx)); }
+.hero-title .hero-title-line:nth-child(3) { translate: calc(-8vw * var(--sx)) calc(-2vw * var(--sx)); }
+
 /* ----- home: sections ----- */
 .section-title { translate: calc(6vw * var(--sx)) 0; }
 .karta-title { translate: calc(3vw * var(--sx)) 0; }
