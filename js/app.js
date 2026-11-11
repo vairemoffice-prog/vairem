@@ -10,9 +10,9 @@
   window.addEventListener('pageshow', e => { if (e.persisted) scrollToTop(); });
 
   const PRODUCTS = [
-    { nr: '017', name: 'Before It Dries', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
-    { nr: '042', name: 'Within', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
-    { nr: '086', name: 'Afterlight', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 }
+    { nr: '017', name: 'Anamnesis', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
+    { nr: '042', name: 'Nocturne', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
+    { nr: '086', name: 'Liminal', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 }
   ];
 
   const productByNr = nr => PRODUCTS.find(p => p.nr === nr);
@@ -85,7 +85,7 @@
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'ZAPISZ SIĘ',
       'list.note': 'BEZ OFERT. WYPISUJESZ SIĘ JEDNYM KLIKNIĘCIEM.',
       'archive.next': 'NAJBLIŻSZY LIST', 'archive.next_value': '[NASTĘPNY]',
-      'archive.last': 'OSTATNI', 'archive.last_value': '086 · Afterlight — [OPIS]',
+      'archive.last': 'OSTATNI', 'archive.last_value': '086 · Liminal — [OPIS]',
       'archive.archive': 'ARCHIWUM', 'archive.archive_value': '017—086 · pełne noty',
       'footer.address': 'NISZOWE ZAPACHY DO WNĘTRZ<br>WARSZAWA · PL<br>NIP 000 000 00 00',
       'footer.pelny_indeks': 'Pełne archiwum snów →', 'footer.sny': 'Personal Memory', 'footer.archiwum': 'ARCHIWUM SNÓW', 'footer.marka': 'MARKA',
@@ -161,7 +161,7 @@
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'SUBSCRIBE',
       'list.note': 'NO OFFERS. UNSUBSCRIBE WITH ONE CLICK.',
       'archive.next': 'NEXT LETTER', 'archive.next_value': '[NEXT]',
-      'archive.last': 'LAST', 'archive.last_value': '086 · Afterlight — [DESCRIPTION]',
+      'archive.last': 'LAST', 'archive.last_value': '086 · Liminal — [DESCRIPTION]',
       'archive.archive': 'ARCHIVE', 'archive.archive_value': '017—086 · full notes',
       'footer.address': 'NICHE HOME FRAGRANCES<br>WARSAW · PL<br>VAT 000 000 00 00',
       'footer.pelny_indeks': 'Full dream archive →', 'footer.sny': 'Personal Memory', 'footer.archiwum': 'DREAM ARCHIVE', 'footer.marka': 'BRAND',
