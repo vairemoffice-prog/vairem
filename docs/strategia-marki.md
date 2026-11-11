@@ -1,4 +1,4 @@
-# VAIREM — strategia marki 2026/2027 (wersja robocza v0.4)
+# VAIREM — strategia marki 2026/2027 (wersja robocza v0.5)
 
 **THE SCENT OF MEMORY**
 *Dreams made of scent. Memories that never happened.*
@@ -53,7 +53,7 @@ Numeracja zapisów wg Twoich wiadomości. Zapisów nr 2 i 3 nie dostałam w tre�
 | Model biznesowy | Produkt jako centrum biznesu |
 | Produkt flagowy | Ceramic Vessel + Glass Refill |
 
-**Następny krok:** skala pierwszej kolekcji. Rekomendacja: **3 kompozycje** (różnorodność świata bez rozpraszania budżetu). Nazwy i nuty jeszcze niezatwierdzone. **[?] czeka na Twoją decyzję.**
+**Następny krok:** skala pierwszej kolekcji. **Zapis nr 10 — skala pierwszej kolekcji: 3 kompozycje [D].** Wystarczająco, by pokazać różnorodność świata marki, bez rozpraszania budżetu i uwagi. Nazwy i nuty jeszcze niezatwierdzone (robocze: WHITE MINERAL SKIN, NOCTURNE RESIN WOOD, BLACK INCENSE VAULT — patrz §7).
 
 ---
 
@@ -281,7 +281,7 @@ Najważniejsze: VAIREM nie może próbować podobać się każdemu.
 | Główna idea: The Scent of Memory | Rekomendacja |
 | Sny + wspomnienia + wyobraźnia | Rekomendacja |
 | Trzy obszary kolekcji | Do zatwierdzenia |
-| Jedna kolekcja premierowa najpierw | Do zatwierdzenia (rekomendacja: 3 kompozycje) |
+| Jedna kolekcja premierowa najpierw | Skala ustalona: 3 kompozycje (zapis nr 10); wybór kompozycji do zatwierdzenia |
 | Grupa docelowa, powód zakupu, wyróżnik, model, produkt flagowy | Ustalone (zapisy nr 4–9) |
 | Personal Memory | Kierunek ustalony (zapis nr 7), szczegóły do opracowania |
 | Manifest | Wersja robocza |
@@ -289,7 +289,7 @@ Najważniejsze: VAIREM nie może próbować podobać się każdemu.
 
 ## 17. Następne pytania Etapu 1 **[?]**
 
-0. **Skala pierwszej kolekcji:** 3 kompozycje (rekomendacja) czy inaczej?
+0. **Kompozycje pierwszej kolekcji:** skala ustalona (3); do wyboru które 3, nazwy i nuty, układ względem DREAMS / MEMORIES / IMAGINATIONS.
 1. **Grupa docelowa — doprecyzowanie:** profil jest wybrany (zapis nr 4); brakuje konkretów: wiek, wnętrza, miejsca zakupu niszy, budżet na vessel i refill. Czy są dane o obecnych klientach?
 2. **Wyróżnik — jedno zdanie komunikacyjne** oparte na filarze 1 (świat artystyczny), np. „zapach jako interpretacja nieistniejącej pamięci".
 2b. **Weryfikacja Ceramic Vessel:** koszt ceramiki, szczelność, ergonomia wymiany, transport, ekonomia refilla.
