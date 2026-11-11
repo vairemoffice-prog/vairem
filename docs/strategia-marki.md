@@ -1,4 +1,4 @@
-# VAIREM — strategia marki 2026/2027 (wersja robocza v0.3)
+# VAIREM — strategia marki 2026/2027 (wersja robocza v0.4)
 
 **THE SCENT OF MEMORY**
 *Dreams made of scent. Memories that never happened.*
@@ -23,6 +23,37 @@ Status: obszary 1, 2, 5, 6 mają wersję roboczą poniżej; **obszar 3 (grupa do
 2. **Świat artystyczny** — pamięć, sny, wyobraźnia, emocje, narracje, obiekty, tożsamość wizualna.
 
 Konsekwencja: klient może kupić VAIREM, bo zapach jest wyjątkowy, nawet nie znając filozofii marki. Osoba zainteresowana światem znajduje w nim więcej niż produkt. Ani „zwykła marka dyfuzorów z ładną identyfikacją", ani projekt artystyczny z produktem na drugim planie.
+
+### Rejestr decyzji Etapu 1 **[D]**
+
+Numeracja zapisów wg Twoich wiadomości. Zapisów nr 2 i 3 nie dostałam w treści — z tabeli podsumowania wynikają „rynek wejścia: Polska" i „pozycjonowanie: High Premium / Niche"; proszę o potwierdzenie numeracji.
+
+**Zapis nr 4 — grupa docelowa: „Świadomy estetycznie klient premium".** Połączenie estety, konesera niszowych zapachów i odbiorcy sztuki jako **jeden wspólny profil**, nie trzy osobne grupy. Ceni: przemyślany design i architekturę; niszowe, nieoczywiste kompozycje; autorskie przedmioty i niezależne marki; historię, koncepcję i emocjonalny wymiar produktu.
+
+**Zapis nr 5 — wartość marki: „The Complete Sensory Experience".** Głównym powodem zakupu jest całościowe doświadczenie (zapach + obiekt + koncepcja). Trzy elementy: *sensoryczny* (jakość i charakter zapachu), *materialny* (forma, materiały, wzornictwo), *emocjonalny* (pamięć, sny, wyobraźnia). Hierarchia: doświadczenie przyciąga, **jakość zapachu i wykonania uzasadnia cenę i ponowny zakup** (LTV).
+
+**Zapis nr 6 — wyróżnik: system czterech filarów.** (1) Artystyczny świat, (2) Autorska perfumeria, (3) Obiekty artystyczne, (4) Indywidualne interpretacje. Główny wyróżnik komunikacyjny: filar 1. Zastrzeżenia: nie wszystkie cztery muszą być od razu pełnymi produktami (interpretacje startują jako projekt autorski, nie główne źródło przychodu) i wszystkie wynikają z jednej idei — *The Scent of Memory* — bez czterech osobnych obietnic.
+
+**Zapis nr 7 — rola snów i pamięci: dwa równoległe kierunki.** *VAIREM Collections* (kolekcje regularne i limitowane) oraz *VAIREM Personal Memory* (indywidualna interpretacja snu, wspomnienia lub wyobrażonego miejsca). To dwa sposoby wyrażania tej samej idei, nie dwa biznesy. Trzy warunki: (a) kolekcje są atrakcyjne samodzielnie, bez znajomości historii marki; (b) Personal Memory daje konkretną wartość, na starcie jako interpretacja literacka i artystyczna, bez obietnicy indywidualnej kompozycji; (c) wspólna estetyka, język i filozofia.
+
+**Zapis nr 8 — model biznesowy: product-led (A).** Główne przychody: dyfuzory/vessele, refille, spraye, kolekcje regularne i limitowane. Personal Memory — usługa premium rozwijana stopniowo, nie warunek zakupu ani główny komunikat strony głównej. Cel: powtarzalna sprzedaż, wysoki koszyk, lojalność. Dyfuzor musi być dobrym produktem, nie tylko pięknym obiektem; refill musi zachęcać do ponownego zakupu.
+
+**Zapis nr 9 — produkt flagowy: VAIREM Ceramic Vessel (B).** Ceramiczny obiekt wielokrotnego użytku + wymienny **Glass Refill** (200 ml wg poziomu A). Model: zakup zestawu startowego, potem ponowny zakup refillów.
+*Warunek przed ostatecznym zatwierdzeniem:* sprawdzić koszt ceramiki, produkcji i transportu, szczelność oraz ergonomię wymiany wkładu — przewagi nie budujemy na obiekcie nieopłacalnym.
+
+| Obszar | Przyjęta decyzja |
+|---|---|
+| Charakter marki | Niezależny dom artystyczny i marka zapachowa |
+| Rynek wejścia | Polska |
+| Pozycjonowanie | High Premium / Niche |
+| Grupa docelowa | Świadomy estetycznie klient premium (esteta + koneser + odbiorca sztuki) |
+| Powód zakupu | Całościowe doświadczenie |
+| Wyróżnik | System: świat artystyczny, perfumeria, obiekty, interpretacje |
+| Sny i wspomnienia | Dwa równoległe kierunki |
+| Model biznesowy | Produkt jako centrum biznesu |
+| Produkt flagowy | Ceramic Vessel + Glass Refill |
+
+**Następny krok:** skala pierwszej kolekcji. Rekomendacja: **3 kompozycje** (różnorodność świata bez rozpraszania budżetu). Nazwy i nuty jeszcze niezatwierdzone. **[?] czeka na Twoją decyzję.**
 
 ---
 
@@ -250,15 +281,18 @@ Najważniejsze: VAIREM nie może próbować podobać się każdemu.
 | Główna idea: The Scent of Memory | Rekomendacja |
 | Sny + wspomnienia + wyobraźnia | Rekomendacja |
 | Trzy obszary kolekcji | Do zatwierdzenia |
-| Jedna kolekcja premierowa najpierw | Do zatwierdzenia |
-| Personal Memory | Do opracowania |
+| Jedna kolekcja premierowa najpierw | Do zatwierdzenia (rekomendacja: 3 kompozycje) |
+| Grupa docelowa, powód zakupu, wyróżnik, model, produkt flagowy | Ustalone (zapisy nr 4–9) |
+| Personal Memory | Kierunek ustalony (zapis nr 7), szczegóły do opracowania |
 | Manifest | Wersja robocza |
 | Nowa identyfikacja wizualna | Nie wymaga całkowitej zmiany |
 
 ## 17. Następne pytania Etapu 1 **[?]**
 
-1. **Grupa docelowa** (obszar 3): kim konkretnie jest klient — wiek, styl życia, wnętrza, gdzie kupuje niszę, ile wydaje na dyfuzor? Czy są dane o obecnych klientach?
-2. **Wyróżnik** (obszar 4): jak jednym zdaniem odróżnić VAIREM od niszowych marek zapachów do wnętrz? (kandydat: „zapach jako interpretacja nieistniejącej pamięci")
+0. **Skala pierwszej kolekcji:** 3 kompozycje (rekomendacja) czy inaczej?
+1. **Grupa docelowa — doprecyzowanie:** profil jest wybrany (zapis nr 4); brakuje konkretów: wiek, wnętrza, miejsca zakupu niszy, budżet na vessel i refill. Czy są dane o obecnych klientach?
+2. **Wyróżnik — jedno zdanie komunikacyjne** oparte na filarze 1 (świat artystyczny), np. „zapach jako interpretacja nieistniejącej pamięci".
+2b. **Weryfikacja Ceramic Vessel:** koszt ceramiki, szczelność, ergonomia wymiany, transport, ekonomia refilla.
 3. **Hasło:** *The Scent of Memory* jako główne; co z *A trace of a dream* z „O marce"?
 4. **Kolekcja premierowa:** które zapachy wchodzą na start?
 5. **Nazewnictwo** obszarów i kolekcji: po angielsku czy z polskimi odpowiednikami w interfejsie?
