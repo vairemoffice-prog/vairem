@@ -1,20 +1,34 @@
-# VAIREM — strategia marki 2026/2027 (wersja robocza v0.2)
+# VAIREM — strategia marki 2026/2027 (wersja robocza v0.3)
 
 **THE SCENT OF MEMORY**
 *Dreams made of scent. Memories that never happened.*
 
 Niszowe zapachy do wnętrz i obiekty artystyczne inspirowane pamięcią, snami i wyobraźnią.
 
-> Legenda: **[D]** decyzja strategiczna (rekomendacja właścicielki marki) · **[P]** propozycja kreatywna (do wyboru) · **[?]** pytanie otwarte.
+> Legenda: **[D]** decyzja zatwierdzona · **[R]** rekomendacja (do zatwierdzenia) · **[P]** propozycja kreatywna · **[?]** pytanie otwarte.
 > Rozdzielamy je celowo, żeby atrakcyjna estetyka nie została pomylona z modelem biznesowym.
 
-## 0. Rekomendacja nadrzędna
+---
 
-**[D]** VAIREM to niezależny świat artystyczny, w którym zapach staje się materialną interpretacją pamięci, snów i wyobraźni.
+## ETAP 1 — Fundament strategiczny (aktualny etap)
 
-To nie jest marka wyłącznie nostalgii, interpretacji snów ani klasyczna perfumeria wnętrz. Wyróżnikiem jest **sposób, w jaki marka przekształca niematerialne doświadczenia w zapach, przedmioty i historie**.
+Sześć obszarów: (1) istota marki, (2) pozycjonowanie, (3) grupa docelowa, (4) wyróżnik, (5) architektura marki, (6) komunikacja.
+Status: obszary 1, 2, 5, 6 mają wersję roboczą poniżej; **obszar 3 (grupa docelowa) i 4 (wyróżnik) wymagają dopracowania** — patrz §14.
 
-Trzy funkcje, które współpracują, ale nie mogą się nawzajem zastępować:
+### Zapis strategiczny nr 1 — **[D]**
+
+**Wybrany kierunek: C.** VAIREM jest marką zapachową rozwijaną jak niezależny dom artystyczny. Dwa równorzędne filary:
+
+1. **Produkt i perfumeria** — autorskie kompozycje, jakość surowców, trwałość, projekcja, wzornictwo, doświadczenie użytkowania.
+2. **Świat artystyczny** — pamięć, sny, wyobraźnia, emocje, narracje, obiekty, tożsamość wizualna.
+
+Konsekwencja: klient może kupić VAIREM, bo zapach jest wyjątkowy, nawet nie znając filozofii marki. Osoba zainteresowana światem znajduje w nim więcej niż produkt. Ani „zwykła marka dyfuzorów z ładną identyfikacją", ani projekt artystyczny z produktem na drugim planie.
+
+---
+
+## 0. Rekomendacja nadrzędna **[R]**
+
+VAIREM to niezależny świat artystyczny, w którym zapach staje się materialną interpretacją pamięci, snów i wyobraźni. Wyróżnik: **sposób, w jaki marka przekształca niematerialne doświadczenia w zapach, przedmioty i historie.**
 
 | Element | Funkcja |
 |---|---|
@@ -22,9 +36,7 @@ Trzy funkcje, które współpracują, ale nie mogą się nawzajem zastępować:
 | Sztuka | **Język** |
 | Pamięć i wyobraźnia | **Źródło inspiracji** |
 
----
-
-## 1. Fundament strategiczny **[D]**
+## 1. Fundament **[D]**
 
 | Element | Decyzja |
 |---|---|
@@ -33,76 +45,42 @@ Trzy funkcje, które współpracują, ale nie mogą się nawzajem zastępować:
 | Pozycjonowanie | Premium / artystyczna perfumeria wnętrz |
 | Model | B2C |
 | Główne produkty | Dyfuzory zapachowe |
-| Produkty uzupełniające | Spraye do wnętrz, wymienne wkłady |
+| Uzupełniające | Spraye do wnętrz, wymienne wkłady |
 | Charakter | Artystyczny, surrealistyczny, wyrafinowany |
 | Idea | Zapach jako forma pamięci |
-| Świat marki | Sny, wspomnienia, wyobrażenia |
-| Odbiorca | Osoby poszukujące indywidualności, estetyki i niszowych doświadczeń |
+| Odbiorca (hipoteza) | Osoby poszukujące indywidualności, estetyki i niszowych doświadczeń |
 
-Stan obecny strony (fakty): tytuł „VAIREM — niszowe zapachy do wnętrz", trzy zapachy w „archiwum snów", „O marce" wyjaśnia nazwę przez fazę REM i kończy się linią *„VAIREM – A trace of a dream."*
+Stan strony dziś (fakty): „VAIREM — niszowe zapachy do wnętrz", trzy zapachy w „archiwum snów", „O marce" wyjaśnia nazwę przez fazę REM i kończy się linią *„VAIREM – A trace of a dream."*
 
----
-
-## 2. Pozycjonowanie **[D]**
+## 2. Pozycjonowanie **[R]**
 
 > VAIREM to niezależna marka niszowych zapachów do wnętrz, która interpretuje niewidzialny świat pamięci, snów i wyobraźni poprzez autorskie kompozycje zapachowe oraz obiekty artystyczne.
 
-Marka nie konkuruje wyłącznie intensywnością zapachu, trwałością ani wyglądem dyfuzora. Buduje wartość na czterech elementach:
+Wartość buduje na: (1) autorskich kompozycjach, (2) rozpoznawalnym świecie wizualnym, (3) artystycznej interpretacji emocji i wyobrażeń, (4) fizycznym obiekcie jako części wnętrza — nie na samej intensywności, trwałości czy wyglądzie dyfuzora.
 
-1. Autorskie kompozycje zapachowe.
-2. Rozpoznawalny świat wizualny.
-3. Artystyczna interpretacja emocji i wyobrażeń.
-4. Fizyczny obiekt, który jest częścią estetyki wnętrza.
+**Czym VAIREM nie jest:** marką zapachów „jak w hotelu"; aromaterapią; obietnicą poprawy samopoczucia; usługą interpretowania snów; sklepem z odświeżaczami; marką nostalgicznych zapachów vintage.
 
-### Czym VAIREM nie jest
+**Zasada pierwszych sekund:** klient od razu wie, że to niszowe zapachy do wnętrz. Kolejność: co to jest → jak wygląda → dlaczego porusza → akcja.
 
-- Nie jest kolejną marką zapachów inspirowanych hotelami.
-- Nie jest marką aromaterapeutyczną.
-- Nie sprzedaje obietnic poprawy samopoczucia.
-- Nie jest usługą interpretowania snów.
-- Nie jest klasycznym sklepem z odświeżaczami powietrza.
-- Nie jest marką nostalgicznych zapachów w stylu vintage.
+## 3. Trzy warstwy komunikacji **[R]**
 
-Szeroka koncepcja artystyczna nie może oznaczać niejasnej oferty.
-
-### Zasada pierwszych sekund **[D]**
-
-Klient od razu wie, że VAIREM tworzy niszowe zapachy do wnętrz. Kolejność na stronie głównej: **co to jest → jak wygląda → dlaczego porusza → akcja**.
-
-1. `VAIREM`
-2. `The Scent of Memory.`
-3. `Niszowe zapachy do wnętrz i obiekty artystyczne inspirowane snami, wspomnieniami i wyobraźnią.`
-4. Widoczny produkt i przejście do katalogu.
-
----
-
-## 3. Trzy warstwy marki
-
-| Warstwa | Funkcja | Gdzie żyje |
+| Warstwa | Funkcja | Gdzie |
 |---|---|---|
-| **The Scent of Memory** | Główna idea marki | Nagłówek, opisy, SEO |
-| **Dreams made of scent** | Świat artystyczny | Edycje, obiekty, fotografia, archiwum snów |
-| **Memories that never happened** | Emocjonalny podpis | Manifest, teksty narracyjne, opakowanie |
+| The Scent of Memory | Główna idea | Nagłówek, opisy, SEO |
+| Dreams made of scent | Świat artystyczny | Edycje, obiekty, fotografia |
+| Memories that never happened | Emocjonalny podpis | Manifest, narracje, opakowanie |
 
-Reguła: w jednym komunikacie dominuje jedna warstwa.
+W jednym komunikacie dominuje jedna warstwa.
 
----
+## 4. Filozofia **[P]**
 
-## 4. Filozofia — The Scent of Memory **[P]**
-
-> Zapach jest jedną z najbardziej niezwykłych form przywoływania tego, co niewidzialne.
+> Zapach jest jedną z najbardziej niezwykłych form przywoływania tego, co niewidzialne. Niektóre wspomnienia pozostają z nami jako obrazy, inne jako emocje, których nie potrafimy dokładnie nazwać. Są miejsca, które wydają się znajome, chociaż nigdy w nich nie byliśmy. Istnieją sny, które pamiętamy dłużej niż wydarzenia z rzeczywistości.
 >
-> Niektóre wspomnienia pozostają z nami jako obrazy, inne jako emocje, których nie potrafimy dokładnie nazwać. Są miejsca, które wydają się znajome, chociaż nigdy w nich nie byliśmy. Istnieją sny, które pamiętamy dłużej niż wydarzenia z rzeczywistości.
->
-> VAIREM czerpie inspirację z tej niejednoznacznej przestrzeni pomiędzy tym, co przeżyte, zapamiętane i wyobrażone.
->
-> Przekształca ulotne wrażenia w autorskie kompozycje zapachowe i obiekty, nadając materialną formę temu, czego nie można zobaczyć ani zatrzymać.
+> VAIREM czerpie inspirację z tej niejednoznacznej przestrzeni pomiędzy tym, co przeżyte, zapamiętane i wyobrażone. Przekształca ulotne wrażenia w autorskie kompozycje zapachowe i obiekty, nadając materialną formę temu, czego nie można zobaczyć ani zatrzymać.
 >
 > **Nie próbujemy odtwarzać rzeczywistości. Tworzymy jej własne interpretacje.**
 
----
-
-## 5. Manifest **[P]** — podstawa tekstu About / Manifesto
+## 5. Manifest (wersja robocza) **[P]**
 
 > **VAIREM**
 >
@@ -122,71 +100,166 @@ Reguła: w jednym komunikacie dominuje jedna warstwa.
 >
 > **VAIREM. The Scent of Memory.**
 
-### Krótka wersja DNA (PL / EN) — do użycia jako sygnatura **[P]**
+**Krótkie DNA (PL / EN):**
+Niektóre wspomnienia nigdy się nie wydarzyły. Niektóre sny nigdy nie zniknęły. / *Some memories never happened. Some dreams never disappeared.*
+Nie wszystko, co pamiętamy, wydarzyło się naprawdę. Nie wszystko, co czujemy, można wyjaśnić. / *Not everything we remember has happened. Not everything we feel can be explained.*
 
-> Niektóre wspomnienia nigdy się nie wydarzyły. Niektóre sny nigdy nie zniknęły.
-> *Some memories never happened. Some dreams never disappeared.*
->
-> Nie wszystko, co pamiętamy, wydarzyło się naprawdę. Nie wszystko, co czujemy, można wyjaśnić.
-> *Not everything we remember has happened. Not everything we feel can be explained.*
-
-Rekomendacja: ostatnie zdanie jest najmocniejszym elementem filozofii — tajemnicze, emocjonalne i nie zamyka marki w snach ani nostalgii. Warto je powtarzać jako motyw (stopka, opakowanie, koniec newslettera).
+Ostatnie zdanie rekomendowane jako zasada filozofii marki i powracający motyw (stopka, opakowanie, newsletter).
 
 ---
 
-## 6. Architektura oferty
+## 6. Architektura świata VAIREM **[R]**
 
-**[D]** Model biznesowy bez zmian: premium dyfuzory, spraye i wkłady. Poniższe obszary porządkują ofertę — nie zmieniają jej podstawy.
+Struktura strategiczna na wiele lat — nowe produkty nie wymuszają zmiany koncepcji. To **nie muszą być osobne kategorie w menu sklepu**; porządkują twórczość marki.
 
-| Obszar | Funkcja | Status |
+| # | Obszar | Opis | Rola |
+|---|---|---|---|
+| 01 | **DREAMS** | Sny i obrazy z pogranicza rzeczywistości; surrealistyczne kolekcje i wizualne opowieści | Źródło inspiracji |
+| 02 | **MEMORIES** | Wspomnienia osobiste i zbiorowe, miejsca, atmosfera, chwile | Źródło inspiracji |
+| 03 | **IMAGINATIONS** | Nieistniejące miejsca, fikcyjne historie, obrazy przyszłości, alternatywne rzeczywistości | Źródło inspiracji |
+| 04 | **OBJECTS** | Dyfuzory, spraye, ceramiczne naczynia, inne przedmioty artystyczne | Produkty |
+| 05 | **PERSONAL MEMORY** | Indywidualne interpretacje historii, snów i wyobrażeń klientów | Usługa premium |
+
+## 7. Architektura kolekcji zapachowych **[R]**
+
+Kolekcje nie wokół składników (wanilia, cedr, piżmo, ambra). **Każdy zapach ma własny świat.**
+
+| Kolekcja | Koncepcja | Charakter |
 |---|---|---|
-| **VAIREM Collection** | Gotowe kompozycje zapachowe (dyfuzory, spraye, wkłady) | **[D]** rdzeń sprzedaży |
-| **Dream Editions** | Artystyczne, limitowane kolekcje i obiekty | **[P]** |
-| **Personal Memory** | Indywidualna interpretacja historii klienta | **[P] + [?]** patrz niżej |
+| DREAMS | Obrazy ze snów | Surrealistyczny, nieoczywisty |
+| MEMORIES | Atmosfera wspomnień | Emocjonalny, przestrzenny |
+| IMAGINATIONS | Nieistniejące miejsca | Eksperymentalny, artystyczny |
 
-**Ścieżka klienta:** gotowy zapach → głębiej w świat (Dream Editions, archiwum snów) → ewentualnie zamówienie indywidualne.
+Przykładowe przypisanie istniejących kierunków (**nie zatwierdzone receptury ani gotowe produkty**):
 
-### Napięcie do rozstrzygnięcia **[?]**
+| Nazwa robocza | Kolekcja | Opis |
+|---|---|---|
+| WHITE MINERAL SKIN | MEMORIES | Mineralne powietrze, chłodna architektura, jasne drewno |
+| NOCTURNE RESIN WOOD | DREAMS | Ciemne żywice, kadzidło, drewno, nocna atmosfera |
+| BLACK INCENSE VAULT | IMAGINATIONS | Głęboka przestrzeń, mineralność, dymność, metaliczne akcenty |
 
-Strategia mówi, że VAIREM **nie jest usługą interpretowania snów**, a strona ma dziś podstronę „Interpretacja snu". Proponuję, żeby Personal Memory było **pracownią artystyczną na zamówienie**: klient powierza historię, marka tworzy z niej zapach i obiekt. Bez „odczytywania znaczeń", bez obietnic psychologicznych i terapeutycznych. Wtedy usługa wspiera markę zamiast ją przekierowywać.
+**Decyzja do zatwierdzenia [R]:** nie wprowadzać od razu trzech dużych kolekcji. Na start **jedna mocna kolekcja premierowa**, potem kolejne światy.
+**[?]** Która z trzech kolekcji (lub które zapachy) jest premierowa?
 
----
+## 8. Personal Memory — „YOUR MEMORY, INTERPRETED." **[R]**
 
-## 7. Język komunikacji **[P]**
+Potencjalnie najbardziej wyróżniający element i produkt o wysokiej wartości jednostkowej.
 
-**Głos:** spokojny, precyzyjny, z dystansem. Krótkie zdania, konkretne obrazy, niedopowiedzenie zamiast tłumaczenia.
+**Proces:**
+1. Klient opisuje wspomnienie, sen, miejsce lub wyobrażenie.
+2. VAIREM analizuje historię i wybiera najważniejsze motywy.
+3. Powstaje autorska interpretacja: tekst, koncepcja wizualna, opis atmosfery zapachowej.
+4. Klient otrzymuje indywidualny podpis swojej historii.
+5. W przyszłości: indywidualna kompozycja zapachowa.
 
-| Robimy | Nie robimy |
+**Przykład:** klientka opisuje dom z dzieciństwa. Nie tworzymy „zapachu starego drewna i kurzu", tylko interpretację atmosfery: światło przez okno, chłód poranka, powietrze, poczucie bezpieczeństwa.
+
+**Rekomendacja biznesowa:** na początku sprzedawać autorską interpretację jako **ograniczoną usługę premium**. Nie obiecywać indywidualnej receptury, dopóki nie ma ustalonego procesu laboratoryjnego, kosztów i warunków produkcji.
+
+**Rozstrzygnięcie napięcia z poprzedniej wersji:** to interpretacja artystyczna historii, **nie odczytywanie snów** i nie obietnica terapeutyczna. Istniejąca podstrona „Interpretacja snu" wymaga w tym duchu przeformułowania **[?]**.
+
+## 9. Model biznesowy i priorytety **[R]**
+
+Piękna filozofia nie wystarczy, jeśli nie przełoży się na sprzedaż. Dwa równoległe poziomy:
+
+| Poziom | Zawartość | Rola |
+|---|---|---|
+| **A — produkt skalowalny** | Gotowe dyfuzory; wymienne szklane wkłady 200 ml; spraye do wnętrz; limitowane edycje | Główne źródło sprzedaży. Klient kupuje zapach, obiekt i świat |
+| **B — oferta autorska** | Indywidualna interpretacja wspomnienia; personalizowana historia; indywidualny podpis; w przyszłości autorska kompozycja | Oferta premium. Klient płaci za proces twórczy i osobisty charakter |
+
+Zasada: czasochłonna usługa indywidualna **nie może być warunkiem rozwoju marki**. Ma podnosić prestiż, nie blokować sprzedaży produktów.
+
+## 10. Język komunikacji **[P]**
+
+Marka mówi jak niezależny dom artystyczny, nie jak typowy sklep internetowy.
+
+| Unikać | Stosować |
 |---|---|
-| Pierwsze zdanie: co to jest | Mglisty wstęp bez informacji o produkcie |
-| Konkretny obraz (porcelana, szkło, niebo) | „Magiczny", „unikalne doznania", „relaks" |
-| Pytanie i niedopowiedzenie | Wyjaśnianie snów, obietnice poprawy samopoczucia |
-| PL jako język główny, EN jako sygnatura | Mieszanie PL/EN w jednym zdaniu |
-| Jedno zdanie-sygnatura na stronę | Hasło w każdym akapicie |
+| Piękny zapach do domu | Autorska kompozycja zapachowa |
+| Stwórz wyjątkową atmosferę | Nadaj przestrzeni własny charakter |
+| Idealny pomysł na prezent | Obiekt, który opowiada własną historię |
+| Relaksujący zapach | Interpretacja określonego wrażenia |
+| Zapach inspirowany naturą | Zapach inspirowany obrazem, miejscem lub wyobrażeniem |
 
----
+**Głos:** literacki, ale nie przesadnie poetycki · inteligentny, ale nie akademicki · tajemniczy, ale nie niezrozumiały · luksusowy bez epatowania · emocjonalny bez sentymentalizmu · autorski, ale nie pretensjonalny.
+**Nadużywane słowa (ograniczać):** magia, dusza, energia, rytuał, harmonia, wyjątkowość.
 
-## 8. Tożsamość wizualna **[P]**, część **[D]**
+## 11. Strategia strony **[P]**
 
-**[D] Zachować:** błękit VAIREM `#A8BACB`; delikatny pudrowy róż; surrealistyczne niebo, chmury i nierealne przestrzenie; porcelanę, szkło i obiekty artystyczne; fotografie jak kadry z nieistniejącego filmu; subtelną atmosferę niepokoju i piękna.
+Prowadzić od emocji do produktu, ale z jasnym produktem od pierwszego ekranu (zasada §2).
 
-**[D] Unikać:** beżowych zdjęć starych fotografii i nostalgicznych opisów.
+| # | Sekcja | Zawartość |
+|---|---|---|
+| 01 | Homepage | VAIREM · THE SCENT OF MEMORY · „Niszowe zapachy do wnętrz inspirowane snami, wspomnieniami i wyobraźnią." CTA: **Odkryj kolekcję** |
+| 02 | The World of VAIREM | Filozofia i manifest |
+| 03 | Fragrance Collection | Kolekcje, kompozycje, nuty, dyfuzory i spraye |
+| 04 | Personal Memory | Indywidualna interpretacja historii |
+| 05 | Objects | Ceramiczne naczynia, wkłady, przedmioty artystyczne |
+| 06 | Journal | Historie, inspiracje, obrazy, sztuka, architektura, zapach i pamięć |
 
-**[P] Zasada:** produkt zawsze czytelny; surrealizm w tle i kompozycji, nie kosztem rozpoznania przedmiotu.
+## 12. Identyfikacja wizualna **[R]**
 
----
+**Nie zmieniać teraz logo, kolorów ani całej identyfikacji.** Najpierw zatwierdzić fundamenty i sprawdzić, czy nowa filozofia wzmacnia produkt.
 
-## 9. Pytania otwarte **[?]**
+| Kolor | HEX | Status |
+|---|---|---|
+| VAIREM BLUE | `#A8BACB` | Potwierdzony |
+| LOGO GREY | `#525A65` | Z palety bazowej |
+| DEEP GRAPHITE | `#3F464F` | Z palety bazowej |
+| POWDER PINK | do ustalenia | Kolor uzupełniający — propozycja |
 
-1. **Hasło:** *The Scent of Memory* jako główne; co z *A trace of a dream* ze strony „O marce"? Propozycja: sygnatura w „O marce".
-2. **Personal Memory vs „Interpretacja snu"** — patrz §6.
-3. **Nazwy obszarów** (Collection / Dream Editions / Personal Memory): po angielsku czy z polskimi odpowiednikami w interfejsie?
-4. **Odbiorca** to hipoteza — czy są dane o obecnych klientach?
-5. **Ostatnie zdanie manifestu** jako zasada filozofii marki — potwierdzasz?
+Kierunek: surrealizm + realizm fotograficzny; błękitne i różowe niebo; architektura i nierealne przestrzenie; porcelana, szkło, nieoczywiste formy; delikatna groteska i uncanny; edytorialna fotografia produktowa; subtelne filmowe efekty ruchu na stronie.
+Nie każdy obraz z dyfuzorem — świat marki ma istnieć także niezależnie od produktów.
 
-## 10. Następne kroki
+## 13. Plan wdrożenia **[R]**
 
-1. Zatwierdzenie §9.
-2. Aktualizacja hero strony głównej i „O marce" zgodnie z §2 i §5.
-3. Wytyczne fotograficzne (moodboard + zasady kadru) jako osobny dokument.
-4. Opis obszarów oferty w katalogu i menu.
+1. **ETAP 1 — Strategia i pozycjonowanie** (priorytet najwyższy): główna idea, ostateczny manifest, grupa docelowa, język, ostateczna architektura oferty.
+2. **ETAP 2 — Produkt i kolekcja premierowa:** wybór kompozycji, nazewnictwo, opisy, opakowania, kalkulacja kosztów i marż.
+3. **ETAP 3 — Identyfikacja i komunikacja:** art direction, fotografia, materiały, strona, Journal.
+4. **ETAP 4 — Sprzedaż i rozwój:** sklep, premiera, weryfikacja cen i konwersji, Personal Memory, kolejne edycje.
+
+## 14. Zagrożenia strategiczne
+
+| Ryzyko | Zapobieganie |
+|---|---|
+| Zbyt abstrakcyjna komunikacja | Zawsze jasno pokazywać produkty |
+| Zbyt wiele koncepcji | Jedna nadrzędna idea: pamięć |
+| Brak rozpoznawalności zapachów | Wyraziste, autorskie kompozycje |
+| Kosztowna personalizacja | Ograniczona liczba zamówień |
+| Estetyka ważniejsza niż produkt | Testowanie jakości i parametrów zapachów |
+| Rozmycie grupy docelowej | Konsekwentne pozycjonowanie premium |
+
+Najważniejsze: VAIREM nie może próbować podobać się każdemu.
+
+## 15. Ostateczna rekomendacja
+
+- **Czym jest?** Niezależnym światem artystycznym i marką niszowych zapachów do wnętrz.
+- **O czym opowiada?** O pamięci, snach, wyobraźni i niewidzialnych wrażeniach.
+- **Co tworzy?** Autorskie kompozycje zapachowe, dyfuzory, spraye i obiekty artystyczne.
+- **Co ją wyróżnia?** Przekładanie niematerialnych historii na materialne doświadczenia.
+- **Dokąd zmierza?** Ku niezależnemu domowi artystycznemu, który stopniowo rozwija kolekcje, obiekty i projekty indywidualne.
+
+## 16. Status decyzji
+
+| Element | Status |
+|---|---|
+| VAIREM jako nazwa | Ustalony |
+| Premium, B2C | Ustalony |
+| Niszowe zapachy do wnętrz | Ustalony |
+| **Kierunek C (marka zapachowa jak dom artystyczny)** | **Ustalony (zapis nr 1)** |
+| Główna idea: The Scent of Memory | Rekomendacja |
+| Sny + wspomnienia + wyobraźnia | Rekomendacja |
+| Trzy obszary kolekcji | Do zatwierdzenia |
+| Jedna kolekcja premierowa najpierw | Do zatwierdzenia |
+| Personal Memory | Do opracowania |
+| Manifest | Wersja robocza |
+| Nowa identyfikacja wizualna | Nie wymaga całkowitej zmiany |
+
+## 17. Następne pytania Etapu 1 **[?]**
+
+1. **Grupa docelowa** (obszar 3): kim konkretnie jest klient — wiek, styl życia, wnętrza, gdzie kupuje niszę, ile wydaje na dyfuzor? Czy są dane o obecnych klientach?
+2. **Wyróżnik** (obszar 4): jak jednym zdaniem odróżnić VAIREM od niszowych marek zapachów do wnętrz? (kandydat: „zapach jako interpretacja nieistniejącej pamięci")
+3. **Hasło:** *The Scent of Memory* jako główne; co z *A trace of a dream* z „O marce"?
+4. **Kolekcja premierowa:** które zapachy wchodzą na start?
+5. **Nazewnictwo** obszarów i kolekcji: po angielsku czy z polskimi odpowiednikami w interfejsie?
+6. **Personal Memory:** przeformułowanie podstrony „Interpretacja snu".
