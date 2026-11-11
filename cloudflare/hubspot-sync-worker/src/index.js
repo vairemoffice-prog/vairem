@@ -35,7 +35,7 @@
  *     "email": "person@example.com",
  *     "name": "Jan Kowalski",
  *     "phone": "+48 000 000 000",
- *     "items": [{ "nr": "017", "name": "Before It Dries", "qty": 1, "price": 189 }],
+ *     "items": [{ "nr": "017", "name": "Anamnesis", "qty": 1, "price": 189 }],
  *     "total": 189
  *   }
  */
@@ -82,9 +82,9 @@ const SITE = 'https://vairemoffice-prog.github.io/vairem';
 const STRIPE_API = 'https://api.stripe.com/v1';
 // Prices are authoritative HERE — never trust amounts sent by the browser.
 const PRODUCTS = {
-  '017': { name: 'Before It Dries', price: 249 },
-  '042': { name: 'Within', price: 249 },
-  '086': { name: 'Afterlight', price: 249 },
+  '017': { name: 'Anamnesis', price: 249 },
+  '042': { name: 'Nocturne', price: 249 },
+  '086': { name: 'Liminal', price: 249 },
 };
 const DISCOUNT_CODE = 'WITAJ10';
 const DISCOUNT_RATE = 0.1;

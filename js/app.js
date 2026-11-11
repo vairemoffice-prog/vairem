@@ -10,9 +10,9 @@
   window.addEventListener('pageshow', e => { if (e.persisted) scrollToTop(); });
 
   const PRODUCTS = [
-    { nr: '017', name: 'Before It Dries', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
-    { nr: '042', name: 'Within', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
-    { nr: '086', name: 'Afterlight', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 }
+    { nr: '017', name: 'Anamnesis', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
+    { nr: '042', name: 'Nocturne', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 },
+    { nr: '086', name: 'Liminal', formula: '[FORMULA]', mw: '[MW]', weeks: '[WEEKS]', price: 249, intensity: 0 }
   ];
 
   const productByNr = nr => PRODUCTS.find(p => p.nr === nr);
@@ -43,7 +43,7 @@
       'tabbar.label': 'WARIANT HERO', 'tab.tablica': '02 · TABLICA', 'tab.wykres': '03 · WYKRES',
       'hero1.eyebrow': 'NISZOWE ZAPACHY DO WNĘTRZ · OBIEKTY ARTYSTYCZNE',
       'hero1.title': 'Powietrze<br>nie jest<br>puste',
-      'hero1.lede': 'Bez klasycznej piramidy, bez nadmiaru. Zapach skomponowany jako czysta forma, która powoli przenika do powietrza i zmienia sposób, w jaki odbieramy przestrzeń.<br><br>To, czego nie widać, zmienia to, co czujesz. Nie możesz zobaczyć.<br>Możesz tylko sprawdzić, czy do Ciebie pasuje.<br>Przymierzysz?',
+      'hero1.lede': 'Zapach skomponowany jako czysta forma, która powoli przenika do powietrza i zmienia sposób, w jaki odbieramy przestrzeń.<br><br>To, czego nie widać, zmienia to, co czujesz. Nie da się tego zobaczyć.<br>Można tylko sprawdzić, czy pasuje do Twojej przestrzeni.<br>Wypróbujesz?',
       'cta.wybierz': "WYBIERZ ZAPACH →", 'cta.metoda_dyfuzji': 'METODA DYFUZJI',
       'stat.zwiazkow': "ZAPACHÓW W ARCHIWUM SNÓW", 'stat.stezenie': 'STĘŻENIE', 'stat.pojemnosc': 'POJEMNOŚĆ',
       'stat.czas': 'CZAS TRWANIA', 'stat.czas_value': '10–14 tyg.',
@@ -74,7 +74,7 @@
       'badge.szklo': 'SZKŁO WIELOKROTNEGO UŻYTKU', 'badge.nosnik': 'NOŚNIK BIODEGRADOWALNY', 'badge.alkohol': 'BEZ ALKOHOLU',
       'metoda.title': 'Trzy zasady. Nic ponad to.', 'metoda.note': 'DYFUZJA PASYWNA',
       'metoda1.title': 'Jedna wyraźna forma',
-      'metoda1.copy': 'Nie budujemy zapachu według klasycznej piramidy. Każda kompozycja ma własną strukturę, charakter i sposób obecności w przestrzeni.',
+      'metoda1.copy': 'Każda kompozycja ma własną strukturę, charakter i sposób obecności w przestrzeni.',
       'metoda2.title': 'Bez dodatkowego źródła energii',
       'metoda2.copy': 'Nie potrzebuje ciepła, prądu ani rozpylania. Pozwalamy, żeby zapach uwalniał się naturalnie i reagował na warunki panujące w pomieszczeniu.',
       'metoda3.title': 'Powolna obecność',
@@ -85,10 +85,10 @@
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'ZAPISZ SIĘ',
       'list.note': 'BEZ OFERT. WYPISUJESZ SIĘ JEDNYM KLIKNIĘCIEM.',
       'archive.next': 'NAJBLIŻSZY LIST', 'archive.next_value': '[NASTĘPNY]',
-      'archive.last': 'OSTATNI', 'archive.last_value': '086 · Afterlight — [OPIS]',
+      'archive.last': 'OSTATNI', 'archive.last_value': '086 · Liminal — [OPIS]',
       'archive.archive': 'ARCHIWUM', 'archive.archive_value': '017—086 · pełne noty',
       'footer.address': 'NISZOWE ZAPACHY DO WNĘTRZ<br>WARSZAWA · PL<br>NIP 000 000 00 00',
-      'footer.pelny_indeks': 'Pełne archiwum snów →', 'footer.sny': 'Interpretacja snu', 'footer.archiwum': 'ARCHIWUM SNÓW', 'footer.marka': 'MARKA',
+      'footer.pelny_indeks': 'Pełne archiwum snów →', 'footer.sny': 'Personal Memory', 'footer.archiwum': 'ARCHIWUM SNÓW', 'footer.marka': 'MARKA',
       'footer.metoda': 'Metoda', 'footer.list': 'List', 'footer.refill': 'Naczynia i refill',
       'footer.obsluga': 'POMOC', 'footer.kontakt': 'Kontakt', 'footer.wysylka': 'Wysyłka i zwroty', 'footer.regulamin': 'Regulamin',
       'footer.moje_konto': 'MOJE KONTO', 'footer.zamowienia': 'Twoje zamówienia', 'footer.ustawienia_konta': 'Ustawienia konta',
@@ -119,7 +119,7 @@
       'tabbar.label': 'HERO VARIANT', 'tab.tablica': '02 · BOARD', 'tab.wykres': '03 · CHART',
       'hero1.eyebrow': 'NICHE HOME FRAGRANCES · ART OBJECTS',
       'hero1.title': 'Air<br>is not<br>empty',
-      'hero1.lede': "No classic pyramid, no excess. A fragrance composed as a pure form, slowly entering the air and changing how we experience a space.<br><br>What you cannot see changes what you feel. You cannot see it.<br>You can only check whether it suits you.<br>Will you try it on?",
+      'hero1.lede': "A fragrance composed as a pure form, slowly entering the air and changing how we experience a space.<br><br>What you cannot see changes what you feel. It cannot be seen.<br>You can only check whether it suits your space.<br>Will you try it?",
       'cta.wybierz': "CHOOSE A FRAGRANCE →", 'cta.metoda_dyfuzji': 'DIFFUSION METHOD',
       'stat.zwiazkow': "FRAGRANCES IN THE DREAM ARCHIVE", 'stat.stezenie': 'CONCENTRATION', 'stat.pojemnosc': 'VOLUME',
       'stat.czas': 'DURATION', 'stat.czas_value': '10–14 wks',
@@ -150,7 +150,7 @@
       'badge.szklo': 'REUSABLE GLASS', 'badge.nosnik': 'BIODEGRADABLE CARRIER', 'badge.alkohol': 'ALCOHOL-FREE',
       'metoda.title': 'Three decisions and nothing else.', 'metoda.note': 'METHOD · PASSIVE DIFFUSION',
       'metoda1.title': "One clear form",
-      'metoda1.copy': "We don't build fragrance on the classic pyramid. Each composition has its own structure, character and way of being present in a space.",
+      'metoda1.copy': "Each composition has its own structure, character and way of being present in a space.",
       'metoda2.title': "No extra source of energy",
       'metoda2.copy': "It needs no heat, electricity or spraying. We let the fragrance release naturally and respond to the conditions in the room.",
       'metoda3.title': "Slow presence",
@@ -161,10 +161,10 @@
       'list.placeholder': 'vairem.office@gmail.com', 'cta.zapisz_plain': 'SUBSCRIBE',
       'list.note': 'NO OFFERS. UNSUBSCRIBE WITH ONE CLICK.',
       'archive.next': 'NEXT LETTER', 'archive.next_value': '[NEXT]',
-      'archive.last': 'LAST', 'archive.last_value': '086 · Afterlight — [DESCRIPTION]',
+      'archive.last': 'LAST', 'archive.last_value': '086 · Liminal — [DESCRIPTION]',
       'archive.archive': 'ARCHIVE', 'archive.archive_value': '017—086 · full notes',
       'footer.address': 'NICHE HOME FRAGRANCES<br>WARSAW · PL<br>VAT 000 000 00 00',
-      'footer.pelny_indeks': 'Full dream archive →', 'footer.sny': 'Dream interpretation', 'footer.archiwum': 'DREAM ARCHIVE', 'footer.marka': 'BRAND',
+      'footer.pelny_indeks': 'Full dream archive →', 'footer.sny': 'Personal Memory', 'footer.archiwum': 'DREAM ARCHIVE', 'footer.marka': 'BRAND',
       'footer.metoda': 'Method', 'footer.list': 'Letter', 'footer.refill': 'Vessels & refills',
       'footer.obsluga': 'SUPPORT', 'footer.kontakt': 'Contact', 'footer.wysylka': 'Shipping & returns', 'footer.regulamin': 'Terms',
       'footer.vat': 'PRICES IN PLN, VAT INCLUDED',
