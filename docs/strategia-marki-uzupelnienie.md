@@ -2,6 +2,8 @@
 
 Uzupełnia dokument „Vairem — Strategia marki" (12.11.2026) o to, co już wiadomo o Vairem ze strony i repozytorium (stan: commit `2b84e2b`, 12.11.2026). Każdy fakt poniżej pochodzi ze strony lub kodu; to, co jest moją propozycją, jest oznaczone jako **propozycja**.
 
+**Status (12.11.2026):** rozbieżności z sekcji 2 zostały już rozstrzygnięte w dokumencie głównym „Vairem — Strategia marki” (przyjęto stan strony: ceny 249 zł / 149 zł, nazwy Anamnesis / Nocturne / Liminal, czcionki ze strony, „List” po premierze, KPI 40 dyfuzorów w 3 miesiące, premiera na przełomie lutego i marca 2027, Personal Memory po premierze). Sekcje 1–5 zostają jako uzasadnienie tych zmian. PDF `Vairem-Strategia-marki-z-uzupelnieniem.pdf` to migawka sprzed tych poprawek.
+
 ---
 
 ## 1. Co już wiemy o Vairem (a czego nie ma w PDF-ie)
@@ -118,7 +120,7 @@ Persona „Szukająca prezentu" potrzebuje dat. Jeśli premiera wypadnie w lutym
 
 ---
 
-## 6. Do potwierdzenia przez Ciebie
+## 6. Do potwierdzenia przez Ciebie (przyjęte robocze w dokumencie głównym)
 
 1. Cena dyfuzora: 219 zł (PDF) czy 249 zł (strona)? A refill 149 zł?
 2. Nazwy snów: zostają **Anamnesis / Nocturne / Liminal**, a „Porcelana / Szklarnia nocą / Wosk i perła" stają się scenami?
